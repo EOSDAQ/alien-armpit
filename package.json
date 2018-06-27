@@ -1,0 +1,35 @@
+{
+  "name": "eosdaq",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://constell@bitbucket.org/indegser/eosdaq.git"
+  },
+  "author": "eosdaq",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/indegser/eosdaq#readme",
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.10.0",    
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-emotion": "^9.2.4",
+    "babel-preset-react": "^6.24.1",
+    "emotion": "^9.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-emotion": "^9.2.4",
+    "webpack": "^4.12.1",
+    "webpack-cli": "^3.0.8"
+  }
+}
