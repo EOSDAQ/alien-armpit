@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
-  './js/main/App.js',
+  './js/app.js',
 ];
 
 const output = {
@@ -28,6 +29,10 @@ const rules = [
 
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
+  new htmlWebpackPlugin({
+    template: 'static/index.html',
+    inject: true,
+  }),
 ];
 
 module.exports = {
@@ -36,6 +41,10 @@ module.exports = {
   output,
   resolve,  
   plugins,
+  serve: {
+    hot: true,
+    port: 3001,
+  },
   module: {
     rules,
   },
