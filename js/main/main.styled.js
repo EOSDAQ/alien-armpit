@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'react-emotion';
 import { Text } from '../common/components/atom/Text';
+import Box from '../common/components/atom/Box';
 
-export const Section = styled.section`
-  padding: 140px 96px;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
+export const Section = (props) =>
+  <Box pt={80} pb={72} {...props} />
+
+export const Container = (props) =>
+  <Box 
+    maxWidth={980} 
+    mx="auto"
+    px={24}
+    {...props} 
+  />;
 
 export const Headline = styled.h1`
   font-size: 48px;
@@ -43,7 +49,7 @@ export const ContentTitle = styled(Text)({
 });
 
 export const Description = styled(Text)({
-  fontSize: 22,
+  fontSize: 20,
   lineHeight: 1.46,
   color: `#000c`,
   marginTop: 16,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description } from './main.styled';
+import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container } from './main.styled';
 import Box from '../common/components/atom/Box';
 import { Text } from '../common/components/atom/Text';
 
@@ -18,8 +18,8 @@ class Decentralized extends Component {
 class Holder extends Component {
   render() {
     return (
-      <Section>
-        <Box border="1px solid #dedede">
+      <Section bg="#eee">
+        <Container>
           <Headline>
             EOS 홀더를 위한 특권
           </Headline>
@@ -37,7 +37,7 @@ class Holder extends Component {
             </Content>
           </ContentWrapper>
           <img src="/images/blur.png" />
-        </Box>
+        </Container>
       </Section>
     )
   }
@@ -46,23 +46,25 @@ class Holder extends Component {
 class Transaction extends Component {
   render() {
     return (
-      <Section>
-        <Headline>
-          빠른 거래
-        </Headline>
-        <SubHeadline>
-          순간적인 대량 거래를 안정적으로 처리하려 노력합니다.
-        </SubHeadline>
-        <ContentWrapper>
-          <Content>
-            <ContentTitle>안정적인 EOS 플랫폼</ContentTitle>
-            <Description>EOS는 0.5초마다 블록이 생성되며 초당 10000건의 트랜잭션을 처리합니다. 거래소의 거래 속도와 안정성을 위해 EOS Network로부터 충분한 NET, CPU, RAM을 확보합니다.</Description>
-          </Content>
-          <Content>
-            <ContentTitle>스마트 컨트랙트를 통한 주문</ContentTitle>
-            <Description>모든 주문 행위는 EOSDAQ 스마트 컨트랙트를 통해 EOS Blockchain에 기록됩니다. EOSDAQ은 주문을 조작하지도 않고 시장을 기만하지도 않습니다.</Description>
-          </Content>
-        </ContentWrapper>
+      <Section bg="black" color="white" >
+        <Container>
+          <Headline>
+            빠른 거래
+          </Headline>
+          <SubHeadline>
+            순간적인 대량 거래를 안정적으로 처리하려 노력합니다.
+          </SubHeadline>
+          <ContentWrapper>
+            <Content>
+              <ContentTitle>안정적인 EOS 플랫폼</ContentTitle>
+              <Description>EOS는 0.5초마다 블록이 생성되며 초당 10000건의 트랜잭션을 처리합니다. 거래소의 거래 속도와 안정성을 위해 EOS Network로부터 충분한 NET, CPU, RAM을 확보합니다.</Description>
+            </Content>
+            <Content>
+              <ContentTitle>스마트 컨트랙트를 통한 주문</ContentTitle>
+              <Description>모든 주문 행위는 EOSDAQ 스마트 컨트랙트를 통해 EOS Blockchain에 기록됩니다. EOSDAQ은 주문을 조작하지도 않고 시장을 기만하지도 않습니다.</Description>
+            </Content>
+          </ContentWrapper>
+        </Container>
       </Section>
     )
   }
@@ -72,22 +74,24 @@ class Wallet extends Component {
   render() {
     return (
       <Section>
-        <Headline>
-          강력한 개인 지갑
-        </Headline>
-        <SubHeadline>
-          개인이 자산을 직접 보관하는 탈중앙화 방식의 지갑을 제공합니다. 이 방식은 기존 거래소들이 사용하는 중앙집중화된 자산보관 방식과 차별화 되며, 해킹 위험이 현저히 낮습니다.
-        </SubHeadline>
-        <ContentWrapper>
-          <Content>
-            <ContentTitle>안전한 자산</ContentTitle>
-            <Description>개인 지갑의 Private key 정보와 거래하지 않는 자산은 거래소에서 보관하지 않습니다. 해킹으로부터 안전하게 내 자산을 지킬 수 있습니다.</Description>
-          </Content>
-          <Content>
-            <ContentTitle>다중 권한 지갑</ContentTitle>
-            <Description>다중 권한 지갑을 통해 트레이딩 전문가에게 거래를 맡겨 내 자산을 운용할 수 있습니다.</Description>
-          </Content>
-        </ContentWrapper>
+        <Container>
+          <Headline>
+            강력한 개인 지갑
+          </Headline>
+          <SubHeadline>
+            개인이 자산을 직접 보관하는 탈중앙화 방식의 지갑을 제공합니다. 이 방식은 기존 거래소들이 사용하는 중앙집중화된 자산보관 방식과 차별화 되며, 해킹 위험이 현저히 낮습니다.
+          </SubHeadline>
+          <ContentWrapper>
+            <Content>
+              <ContentTitle>안전한 자산</ContentTitle>
+              <Description>개인 지갑의 Private key 정보와 거래하지 않는 자산은 거래소에서 보관하지 않습니다. 해킹으로부터 안전하게 내 자산을 지킬 수 있습니다.</Description>
+            </Content>
+            <Content>
+              <ContentTitle>다중 권한 지갑</ContentTitle>
+              <Description>다중 권한 지갑을 통해 트레이딩 전문가에게 거래를 맡겨 내 자산을 운용할 수 있습니다.</Description>
+            </Content>
+          </ContentWrapper>
+        </Container>
       </Section>
     )
   }
@@ -97,7 +101,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Section>
+        <div>
           <Text
             fontWeight={700}
             fontSize={72}
@@ -118,11 +122,13 @@ class Main extends Component {
               모든 거래내역은 투명하게 블록체인에 기록됩니다.
             </Text>
           </Box>
-        </Section>
-        <Decentralized />
-        <Holder />
-        <Transaction />
-        <Wallet />
+          <img src="/images/airdrop-bg.png" width="100%" />
+        </div>
+        <Box maxWidth={1366} mx="auto">
+          <Holder />
+          <Transaction />
+          <Wallet />
+        </Box>
       </div>
     );
   }
