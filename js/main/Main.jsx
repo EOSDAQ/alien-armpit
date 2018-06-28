@@ -18,7 +18,7 @@ class Decentralized extends Component {
 class Holder extends Component {
   render() {
     return (
-      <Section bg="#eee">
+      <Section bg="#fafafa">
         <Container>
           <Headline>
             EOS 홀더를 위한 특권
@@ -101,7 +101,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <div>
+        <Box height="90vh">
           <Text
             fontWeight={700}
             fontSize={72}
@@ -123,7 +123,7 @@ class Main extends Component {
             </Text>
           </Box>
           <img src="/images/airdrop-bg.png" width="100%" />
-        </div>
+        </Box>
         <Box maxWidth={1366} mx="auto">
           <Holder />
           <Transaction />

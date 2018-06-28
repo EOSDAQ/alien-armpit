@@ -4,7 +4,7 @@ import { Text } from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
 
 export const Section = (props) =>
-  <Box pt={80} pb={72} {...props} />
+  <Box pt={120} pb={80} {...props} />
 
 export const Container = (props) =>
   <Box 
@@ -21,14 +21,17 @@ export const Headline = styled.h1`
 
 export const SubHeadline = ({ children }) => {
   return (
-    <Text
-      fontSize={24}
-      lineHeight={1.46}
-      fontWeight={700}
-      mt={32}
-    >
-      {children}
-    </Text>
+    <Box maxWidth={600}>
+      <Text
+        fontSize={24}
+        lineHeight={1.46}
+        fontWeight={700}
+        mt={32}
+        mb={80}
+      >
+        {children}
+      </Text>
+    </Box>
   )
 }
 
