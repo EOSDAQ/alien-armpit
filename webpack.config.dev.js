@@ -42,6 +42,7 @@ module.exports = {
   resolve,  
   plugins,
   serve: {
+    content: 'public',
     hot: true,
     port: 3001,
   },

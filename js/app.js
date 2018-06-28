@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'emotion-theming';
 import './common/css/global.styled';
 import theme from './common/css/theme';
+import Main from './main/Main';
 
 function render() {
-  const Main = require('./main/Main').default;
   ReactDOM.render(
     <ThemeProvider theme={theme} >
       <Main />
