@@ -16,7 +16,13 @@ const Box = styled.div`
   ${left}
   ${right}
   ${props => props.overflow && css`
-    overflow: ${props.overflow}
+    overflow: ${props.overflow};
+  `}
+  ${props => props.userSelect && css`
+    user-select: ${props.userSelect};
+  `}
+  ${props => props.pointerEvents && css`
+    pointer-events: ${props.pointerEvents};
   `}
 `
 

@@ -5,6 +5,7 @@ import Box from '../common/components/atom/Box';
 import { Text } from '../common/components/atom/Text';
 import { Flex } from '../common/components/atom/Flex';
 import Footer from '../common/components/organisms/Footer';
+import Dashboard from './dashboard/Dashboard';
 
 class Decentralized extends Component {
   render() {
@@ -156,6 +157,7 @@ class Main extends Component {
   render() {
     return (
       <div>
+        <Dashboard />
         <Box height="90vh">
           <Text
             fontWeight={600}
@@ -179,7 +181,7 @@ class Main extends Component {
           </Box>
           <img src="/images/airdrop-bg.png" width="100%" />
         </Box>
-        <Box maxWidth={1366} mx="auto">
+        <Box mx="auto">
           <Holder />
           <Transaction />
           <Wallet />
