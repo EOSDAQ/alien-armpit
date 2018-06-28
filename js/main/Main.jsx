@@ -6,6 +6,7 @@ import { Text } from '../common/components/atom/Text';
 import { Flex } from '../common/components/atom/Flex';
 import Footer from '../common/components/organisms/Footer';
 import Dashboard from './dashboard/Dashboard';
+import Coming from './coming/Coming';
 
 class Decentralized extends Component {
   render() {
@@ -157,6 +158,7 @@ class Main extends Component {
   render() {
     return (
       <div>
+        <Coming />
         <Dashboard />
         <Box height="90vh">
           <Text

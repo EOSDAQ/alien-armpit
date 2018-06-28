@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
       if (!this.animate) return;
 
       let x = this.getX();
-      this.setX(x - 1.5);
+      this.setX(x - 1.4);
       
       requestAnimationFrame(() => animate());
     };
