@@ -3,8 +3,27 @@ import styled from 'react-emotion';
 import { Text } from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
 
+export const Blur = (props) => {
+  return (
+    <Box 
+      {...props}
+      position="absolute"
+      bottom={0}
+      right={0}
+    >
+      <img src={`/images/blur-${props.type}.png`} />
+    </Box>
+  )
+}
+
 export const Section = (props) =>
-  <Box pt={120} pb={110} {...props} />
+  <Box 
+    pt={120} 
+    pb={110}
+    overflow="hidden"
+    position="relative"
+    {...props}
+  />;
 
 export const Container = (props) =>
   <Box 
@@ -37,13 +56,21 @@ export const SubHeadline = ({ children }) => {
 
 export const ContentWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin-top: 32px;
 `
 
-export const Content = styled.div`
-  width: 50%;
-  padding-right: 80px;
-`
+export const Content = (props) => {
+  return (
+    <Box
+      width={["100%", 1/2]}
+      pr={[40, 80]}
+      mb={[80, 0]}
+      flex="0 0 auto"
+      {...props}
+    />
+  );
+}
 
 export const ContentTitle = (props) => {
   return (
@@ -59,7 +86,7 @@ export const ContentTitle = (props) => {
 export const Description = (props) => {
   return (
     <Text 
-      fontSize={17}
+      fontSize={18}
       lineHeight={1.52947}
       color="rgb(51, 51, 51)"
       mt={12}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container } from './main.styled';
+import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container, Blur } from './main.styled';
 import Box from '../common/components/atom/Box';
 import { Text } from '../common/components/atom/Text';
 import { Flex } from '../common/components/atom/Flex';
@@ -24,10 +24,11 @@ class Decentralized extends Component {
 class Holder extends Component {
   render() {
     return (
-      <Section bg="rgb(240, 248, 251)">
+      <Section bg="#fafafa" pb={300}>
         <Container>
           <Headline>
-            EOS 홀더를 위한 특권
+            EOS에 특화된 거래소.<br/>
+            신속한 토큰 상장과 투표.
           </Headline>
           <SubHeadline>
             EOS 홀더들은 EOS로부터 직접 Airdrop 토큰을 제공받습니다.
@@ -43,7 +44,11 @@ class Holder extends Component {
             </Content>
           </ContentWrapper>
         </Container>
-        <img src="/images/blur.png"/>
+        <Blur
+          type="blue"
+          width={1000}
+          height={500}
+        />
       </Section>
     );
   }
@@ -71,15 +76,17 @@ class Transaction extends Component {
   // }
 
   // animateY(offset) {
-  //   this.el.style.transform = `translateY(${offset * .3}px)`
+  //   this.el.style.transform = `translateY(${offset * .3}px)`;
+  //   // this.imageEl.style.transform = `translateY(${offset * .3}px)`;
   // }
 
   render() {
     return (
       <Section
         innerRef={e => this.el = e}
-        bg="black" 
+        bg="black"
         color="white"
+        pb={300}
       >
         <Container>
           <Headline>
@@ -103,9 +110,11 @@ class Transaction extends Component {
             </Content>
           </ContentWrapper>
         </Container>
-        <img 
-          src="/images/blur-transaction.png" 
-          ref={e => this.imageEl = e}
+        <Blur
+          type="transaction"
+          innerRef={e => this.imageEl = e}
+          width={1000}
+          height={400}
         />
       </Section>
     )
@@ -149,7 +158,7 @@ class Main extends Component {
       <div>
         <Box height="90vh">
           <Text
-            fontWeight={700}
+            fontWeight={600}
             fontSize={72}
             lineHeight={1.1}
             textAlign="center"
@@ -158,7 +167,7 @@ class Main extends Component {
           </Text>
           <Box mt={24}>
             <Text
-              fontWeight={500}
+              fontWeight={600}
               fontSize={24}
               lineHeight={1.46}
               textAlign="center"
