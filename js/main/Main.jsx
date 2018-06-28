@@ -45,9 +45,33 @@ class Holder extends Component {
 }
 
 class Transaction extends Component {
+  componentDidMount() {
+    window.addEventListener('scroll', () => this.onScroll());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', () => this.onScroll());
+  }
+
+  onScroll() {
+    let { top } = this.el.getBoundingClientRect();
+    if (top < window.innerHeight) {
+      let offset = top - window.innerHeight;
+      window.requestAnimationFrame(() => this.animateY(offset));
+    }
+  }
+
+  animateY(offset) {
+    this.el.style.transform = `translateY(${offset * .3}px)`
+  }
+
   render() {
     return (
-      <Section bg="black" color="white" >
+      <Section
+        innerRef={e => this.el = e}
+        bg="black" 
+        color="white"
+      >
         <Container>
           <Headline>
             빠른 거래
