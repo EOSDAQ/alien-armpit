@@ -128,6 +128,7 @@ class Dashboard extends React.Component {
           overflow="hidden"
           userSelect="none"
           pointerEvents="none"
+          py={2}
         >
           <Flex innerRef={e => this.item = e}>
             {coins.map((coin, i) => {
@@ -136,9 +137,6 @@ class Dashboard extends React.Component {
               return (
                 <Flex
                   key={coin.name + '-' + i}
-                  pr={40}
-                  pl={2}
-                  py={2}
                   alignItems="center"
                 >
                   <img 
@@ -160,6 +158,7 @@ class Dashboard extends React.Component {
                   <Text
                     color="rgba(255, 255, 255, .8)"
                     fontSize={12}
+                    mr={40}
                     fontFamily="menlo, consolas, monospace"
                   >
                     (0%)
