@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container } from './main.styled';
 import Box from '../common/components/atom/Box';
 import { Text } from '../common/components/atom/Text';
+import Footer from '../common/components/organisms/Footer';
 
 class Decentralized extends Component {
   render() {
@@ -45,12 +46,16 @@ class Holder extends Component {
 }
 
 class Transaction extends Component {
+  constructor(props) {
+    super(props);
+    this.onScroll = this.onScroll.bind(this)
+  }
   componentDidMount() {
-    window.addEventListener('scroll', () => this.onScroll());
+    window.addEventListener('scroll', this.onScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', () => this.onScroll());
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   onScroll() {
@@ -154,6 +159,7 @@ class Main extends Component {
           <Transaction />
           <Wallet />
         </Box>
+        <Footer />
       </div>
     );
   }
