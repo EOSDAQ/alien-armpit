@@ -45,6 +45,7 @@ module.exports = {
     content: 'public',
     hot: true,
     port: 3001,
+    contentPath: __dirname,
   },
   module: {
     rules,
