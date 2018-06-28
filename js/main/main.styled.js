@@ -4,7 +4,7 @@ import { Text } from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
 
 export const Section = (props) =>
-  <Box pt={120} pb={80} {...props} />
+  <Box pt={120} pb={110} {...props} />
 
 export const Container = (props) =>
   <Box 
@@ -23,7 +23,7 @@ export const SubHeadline = ({ children }) => {
   return (
     <Box maxWidth={600}>
       <Text
-        fontSize={24}
+        fontSize={28}
         lineHeight={1.46}
         fontWeight={700}
         mt={32}
@@ -42,18 +42,28 @@ export const ContentWrapper = styled.div`
 
 export const Content = styled.div`
   width: 50%;
-  padding-right: 32px;
+  padding-right: 80px;
 `
 
-export const ContentTitle = styled(Text)({
-  fontSize: 20,
-  fontWeight: 700,
-  color: "#222",
-});
+export const ContentTitle = (props) => {
+  return (
+    <Text 
+      fontSize={20}
+      fontWeight={500}
+      color="#rgb(51, 51, 51)"
+      {...props}
+    />
+  );
+}
 
-export const Description = styled(Text)({
-  fontSize: 20,
-  lineHeight: 1.46,
-  color: `#000c`,
-  marginTop: 16,
-});
+export const Description = (props) => {
+  return (
+    <Text 
+      fontSize={17}
+      lineHeight={1.52947}
+      color="rgb(51, 51, 51)"
+      mt={12}
+      {...props}
+    />
+  );
+}

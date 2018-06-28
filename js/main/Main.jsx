@@ -3,16 +3,20 @@ import { translate } from 'react-i18next';
 import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container } from './main.styled';
 import Box from '../common/components/atom/Box';
 import { Text } from '../common/components/atom/Text';
+import { Flex } from '../common/components/atom/Flex';
 import Footer from '../common/components/organisms/Footer';
 
 class Decentralized extends Component {
   render() {
     return (
-      <div>
-        <Section>
-          
-        </Section>
-      </div>
+      <Section>
+        <Container>
+          <Flex>
+            <Box width={1/4}></Box>
+            <Box></Box>
+          </Flex>
+        </Container>
+      </Section>
     )
   }
 }
@@ -20,7 +24,7 @@ class Decentralized extends Component {
 class Holder extends Component {
   render() {
     return (
-      <Section bg="#fafafa">
+      <Section bg="rgb(240, 248, 251)">
         <Container>
           <Headline>
             EOS 홀더를 위한 특권
@@ -38,37 +42,37 @@ class Holder extends Component {
               <Description>건강한 EOS 생태계를 책임지는 Block Producer의 선출을 위한 투표를 지원합니다. Worker Proposal System을 통해 EOS 커뮤니티의 이익이 되는 애플리케이션을 투표할 수 있습니다.</Description>
             </Content>
           </ContentWrapper>
-          <img src="/images/blur.png" />
         </Container>
+        <img src="/images/blur.png"/>
       </Section>
-    )
+    );
   }
 }
 
 class Transaction extends Component {
-  constructor(props) {
-    super(props);
-    this.onScroll = this.onScroll.bind(this)
-  }
-  componentDidMount() {
-    window.addEventListener('scroll', this.onScroll);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.onScroll = this.onScroll.bind(this);
+  // }
+  // componentDidMount() {
+  //   window.addEventListener('scroll', this.onScroll);
+  // }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('scroll', this.onScroll);
+  // }
 
-  onScroll() {
-    let { top } = this.el.getBoundingClientRect();
-    if (top < window.innerHeight) {
-      let offset = top - window.innerHeight;
-      window.requestAnimationFrame(() => this.animateY(offset));
-    }
-  }
+  // onScroll() {
+  //   let { top } = this.el.getBoundingClientRect();
+  //   if (top < window.innerHeight) {
+  //     let offset = top - window.innerHeight;
+  //     window.requestAnimationFrame(() => this.animateY(offset));
+  //   }
+  // }
 
-  animateY(offset) {
-    this.el.style.transform = `translateY(${offset * .3}px)`
-  }
+  // animateY(offset) {
+  //   this.el.style.transform = `translateY(${offset * .3}px)`
+  // }
 
   render() {
     return (
@@ -86,15 +90,23 @@ class Transaction extends Component {
           </SubHeadline>
           <ContentWrapper>
             <Content>
-              <ContentTitle>안정적인 EOS 플랫폼</ContentTitle>
-              <Description>EOS는 0.5초마다 블록이 생성되며 초당 10000건의 트랜잭션을 처리합니다. 거래소의 거래 속도와 안정성을 위해 EOS Network로부터 충분한 NET, CPU, RAM을 확보합니다.</Description>
+              <ContentTitle color="white">안정적인 EOS 플랫폼</ContentTitle>
+              <Description color="rgba(255, 255, 255, 0.7)">
+                EOS는 0.5초마다 블록이 생성되며 초당 10000건의 트랜잭션을 처리합니다. 거래소의 거래 속도와 안정성을 위해 EOS Network로부터 충분한 NET, CPU, RAM을 확보합니다.
+              </Description>
             </Content>
             <Content>
-              <ContentTitle>스마트 컨트랙트를 통한 주문</ContentTitle>
-              <Description>모든 주문 행위는 EOSDAQ 스마트 컨트랙트를 통해 EOS Blockchain에 기록됩니다. EOSDAQ은 주문을 조작하지도 않고 시장을 기만하지도 않습니다.</Description>
+              <ContentTitle color="white">스마트 컨트랙트를 통한 주문</ContentTitle>
+              <Description color="rgba(255, 255, 255, 0.7)">
+                모든 주문 행위는 EOSDAQ 스마트 컨트랙트를 통해 EOS Blockchain에 기록됩니다. EOSDAQ은 주문을 조작하지도 않고 시장을 기만하지도 않습니다.
+              </Description>
             </Content>
           </ContentWrapper>
         </Container>
+        <img 
+          src="/images/blur-transaction.png" 
+          ref={e => this.imageEl = e}
+        />
       </Section>
     )
   }
@@ -103,7 +115,7 @@ class Transaction extends Component {
 class Wallet extends Component {
   render() {
     return (
-      <Section>
+      <Section bg="rgb(250, 250, 250)">
         <Container>
           <Headline>
             강력한 개인 지갑
@@ -122,6 +134,10 @@ class Wallet extends Component {
             </Content>
           </ContentWrapper>
         </Container>
+        <img 
+          src="/images/blur-pink.png" 
+          // ref={e => this.imageEl = e}
+        />
       </Section>
     )
   }
