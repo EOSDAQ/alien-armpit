@@ -34,18 +34,20 @@ export const Container = (props) =>
   />;
 
 export const Headline = styled.h1`
-  font-size: 48px;
-  font-weight: bold;
+  font-size: 40px;
+  line-height: 1.3;
+  // font-weight: bold;
 `
 
 export const SubHeadline = ({ children }) => {
   return (
     <Box maxWidth={600}>
       <Text
-        fontSize={28}
+        fontSize={20}
         lineHeight={1.46}
-        fontWeight={700}
-        mt={32}
+        // fontWeight={700}
+        color="grey"
+        mt={16}
         mb={80}
       >
         {children}
@@ -74,12 +76,19 @@ export const Content = (props) => {
 
 export const ContentTitle = (props) => {
   return (
-    <Text 
-      fontSize={20}
-      fontWeight={500}
-      color="#rgb(51, 51, 51)"
-      {...props}
-    />
+    <div
+      style={{
+        borderBottom: `1px solid rgba(180, 180, 180, .5)`,
+        paddingBottom: 8,
+      }}
+    >
+      <Text 
+        fontSize={17}
+        fontWeight={600}
+        color="#rgb(51, 51, 51)"
+        {...props}
+      />
+    </div>
   );
 }
 

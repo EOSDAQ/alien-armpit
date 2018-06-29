@@ -27,7 +27,7 @@ class Decentralized extends Component {
 class Holder extends Component {
   render() {
     return (
-      <Section bg="#fafafa" pb={300}>
+      <Section pb={300}>
         <Container>
           <Headline>
             EOS에 특화된 거래소.<br/>
@@ -164,19 +164,25 @@ class Main extends Component {
         <Dashboard />
         <Box 
           py={120}
+          px={48}
+          m={24}
+          style={{
+            background: `url(/images/hero.png) 50% 50%/cover no-repeat`
+          }}
         >
           <Text
-            fontWeight={500}
-            fontSize={80}
+            fontWeight={700}
+            fontSize={72}
             lineHeight={1.1}
             textAlign="center"
           >
-            Airdrop 토큰.<br/> 신속한 상장
+            Airdrop 토큰<br/> 
+            신속한 상장
           </Text>
           <Box mt={24}>
             <Text
-              fontWeight={600}
-              fontSize={24}
+              fontSize={20}
+              color="primaryDark"
               lineHeight={1.46}
               textAlign="center"
             >
@@ -185,7 +191,6 @@ class Main extends Component {
               모든 거래내역은 투명하게 블록체인에 기록됩니다.
             </Text>
           </Box>
-          <img src="/images/airdrop-bg.png" width="100%" />
         </Box>
         <Box maxWidth={1366} mx="auto">
           <Holder />
