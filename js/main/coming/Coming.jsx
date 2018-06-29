@@ -25,9 +25,9 @@ class Coming extends React.Component {
     return (
       <Box
         width={1}
-        bg="#202525"
-        color="#ccc"
-        py={3}
+        bg="primaryDark"
+        color="#eee"
+        py={24}
       >
         <Container>
           <Flex justifyContent="space-between">

@@ -16,12 +16,18 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav>
+      <nav
+        css={`
+          position: sticky;
+          z-index: 1;
+          top: 0;
+        `}
+      >
         <Box
           bg="primaryDark"
           color="whiteA7"
         >
-          <Container pb="4px">
+          <Container py={8}>
             <Flex alignItems="center">
               <div>
                 <img 

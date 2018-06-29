@@ -22,6 +22,13 @@ export const Section = (props) =>
     pb={110}
     overflow="hidden"
     position="relative"
+    css={`
+      // border: 1px solid rgba(0, 0, 0, 0.07);
+      // box-shadow: 0px 5px 5px rgba(0, 0, 0, .1);
+      // border-radius: 4px;
+      // background: rgba(255, 255, 255, .5);
+      // margin-bottom: 48px;
+    `}
     {...props}
   />;
 
@@ -95,9 +102,9 @@ export const ContentTitle = (props) => {
 export const Description = (props) => {
   return (
     <Text 
-      fontSize={18}
+      fontSize={16}
       lineHeight={1.52947}
-      color="rgb(51, 51, 51)"
+      color="rgba(51, 51, 51, .78)"
       mt={12}
       {...props}
     />

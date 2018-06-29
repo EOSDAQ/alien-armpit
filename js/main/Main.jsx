@@ -8,6 +8,7 @@ import Footer from '../common/components/organisms/Footer';
 import Dashboard from './dashboard/Dashboard';
 import Coming from './coming/Coming';
 import Header from '../common/components/organisms/Header';
+import Hero from './hero/Hero';
 
 class Decentralized extends Component {
   render() {
@@ -87,8 +88,6 @@ class Transaction extends Component {
     return (
       <Section
         innerRef={e => this.el = e}
-        bg="primaryDark"
-        color="white"
         pb={300}
       >
         <Container>
@@ -100,14 +99,14 @@ class Transaction extends Component {
           </SubHeadline>
           <ContentWrapper>
             <Content>
-              <ContentTitle color="white">안정적인 EOS 플랫폼</ContentTitle>
-              <Description color="rgba(255, 255, 255, 0.7)">
+              <ContentTitle>안정적인 EOS 플랫폼</ContentTitle>
+              <Description>
                 EOS는 0.5초마다 블록이 생성되며 초당 10000건의 트랜잭션을 처리합니다. 거래소의 거래 속도와 안정성을 위해 EOS Network로부터 충분한 NET, CPU, RAM을 확보합니다.
               </Description>
             </Content>
             <Content>
-              <ContentTitle color="white">스마트 컨트랙트를 통한 주문</ContentTitle>
-              <Description color="rgba(255, 255, 255, 0.7)">
+              <ContentTitle>스마트 컨트랙트를 통한 주문</ContentTitle>
+              <Description>
                 모든 주문 행위는 EOSDAQ 스마트 컨트랙트를 통해 EOS Blockchain에 기록됩니다. EOSDAQ은 주문을 조작하지도 않고 시장을 기만하지도 않습니다.
               </Description>
             </Content>
@@ -159,43 +158,16 @@ class Main extends Component {
   render() {
     return (
       <div>
+        <Dashboard />
         <Coming />
         <Header />
-        <Dashboard />
-        <Box 
-          py={120}
-          px={48}
-          m={24}
-          style={{
-            background: `url(/images/hero.png) 50% 50%/cover no-repeat`
-          }}
-        >
-          <Text
-            fontWeight={700}
-            fontSize={72}
-            lineHeight={1.1}
-            textAlign="center"
-          >
-            Airdrop 토큰<br/> 
-            신속한 상장
-          </Text>
-          <Box mt={24}>
-            <Text
-              fontSize={20}
-              color="primaryDark"
-              lineHeight={1.46}
-              textAlign="center"
-            >
-              EOS 기반 탈중앙화 거래소입니다.<br/>
-              개인 지갑에 안전하게 자산을 관리하세요.<br/>
-              모든 거래내역은 투명하게 블록체인에 기록됩니다.
-            </Text>
+        <Box>
+          <Hero />
+          <Box maxWidth={1040} mx="auto">
+            <Holder />
+            <Transaction />
+            <Wallet />
           </Box>
-        </Box>
-        <Box maxWidth={1366} mx="auto">
-          <Holder />
-          <Transaction />
-          <Wallet />
         </Box>
         <Footer />
       </div>

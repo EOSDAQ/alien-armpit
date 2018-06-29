@@ -6,7 +6,7 @@ export class Icon extends React.PureComponent {
     let { default: Comp } = require(`./icons/ic-${type}.svg`);
 
     return (
-      <Comp 
+      <Comp
         {...iconProps} 
       />
     );
