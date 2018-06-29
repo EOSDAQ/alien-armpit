@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { flex, flexDirection, flexWrap, justifySelf, alignItems } from 'styled-system';
+import { flex, flexDirection, flexWrap, alignItems, justifyContent } from 'styled-system';
 import Box from './Box';
 
 export const Flex = styled(Box)`
@@ -8,7 +8,7 @@ export const Flex = styled(Box)`
   ${flex}
   ${flexDirection}
   ${alignItems}
-  ${justifySelf}
+  ${justifyContent}
   ${flexWrap}
 `
 

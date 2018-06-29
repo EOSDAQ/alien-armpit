@@ -4,6 +4,12 @@ import Box from '../../common/components/atom/Box';
 import { Flex } from '../../common/components/atom/Flex';
 import { Text } from '../../common/components/atom/Text';
 
+const timer = new Worker('/workers/timer.js');
+
+timer.onmessage = (e) => {
+  console.log(e);
+}
+
 const coins = [
   { name: 'CARMEL', src: 'ic-carmel.png' },
   { name: 'CET', src: 'ic-chaince.png' },
@@ -32,6 +38,11 @@ class Dashboard extends React.Component {
   componentDidMount() {
     setTimeout(() => this.animateBelt(), 500)
     this.appendItemToBelt();
+    timer.onmessage = () => this.appendItemToBelt();
+  }
+
+  componentWillUnmount() {
+    timer.terminate(); // todo. restart on timer when user re-visits main page.
   }
 
   getX() {
@@ -74,13 +85,18 @@ class Dashboard extends React.Component {
     let shouldRemove = [];
 
     let shouldUpdateCoins = false;
+    let appendCoin = true;
 
     for (let child of children) {
-      let rect = child.getBoundingClientRect();
-      let hidden = (rect.left + rect.width) < 0;
+      let childRect = child.getBoundingClientRect();
+      if (childRect.right > rect.right + 200) {
+        appendCoin = false;
+      }
+
+      let hidden = (childRect.left + childRect.width) < 0;
       if (hidden) {
-        shouldRemove.push(child.id);
-        paddingLeft += rect.width;
+        shouldRemove.push(child);
+        paddingLeft += childRect.width;
       }
     }
 
@@ -94,18 +110,13 @@ class Dashboard extends React.Component {
       shouldUpdateCoins = true;
     }
 
-    if (this.belt.clientWidth > rect.right) {
-      // belt is larger than the list of animating dashboard -[  ]--[  ]-------
+    if (appendCoin) {
       let lastCoin = newCoins[newCoins.length - 1];
       let lastCoinIndex = coins.findIndex(c => c.name === lastCoin.name);
       newCoins.push(coins[(lastCoinIndex + 1) % coins.length]);
 
       shouldUpdateCoins = true;
     }
-
-    setTimeout(() => {
-      this.appendItemToBelt();
-    }, 300)
 
     if (shouldUpdateCoins) {
       this.setState({
@@ -130,7 +141,9 @@ class Dashboard extends React.Component {
           pointerEvents="none"
           py={2}
         >
-          <Flex innerRef={e => this.item = e}>
+          <Flex 
+            innerRef={e => this.item = e}
+          >
             {coins.map((coin, i) => {
               if (!coin) return null;
 
@@ -138,6 +151,7 @@ class Dashboard extends React.Component {
                 <Flex
                   key={coin.name + '-' + i}
                   alignItems="center"
+                  flex="0 0 auto"
                 >
                   <img 
                     src={`./images/${coin.src}`}
