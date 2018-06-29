@@ -47,10 +47,10 @@ class Dashboard extends React.Component {
 
   getX() {
     let { transform } = this.item.style;
-    let x = /translateX\((.+)\).+/.exec(transform);
+    let x = /translateX\((.+)px\).+/.exec(transform);
 
     if (Array.isArray(x)) {
-      x = parseFloat(x[1]);
+      x =  Math.round(x[1] * 100) / 100;
       return x;
     }
 
@@ -113,7 +113,9 @@ class Dashboard extends React.Component {
     if (appendCoin) {
       let lastCoin = newCoins[newCoins.length - 1];
       let lastCoinIndex = coins.findIndex(c => c.name === lastCoin.name);
-      newCoins.push(coins[(lastCoinIndex + 1) % coins.length]);
+      let inserted = Object.assign({}, coins[(lastCoinIndex + 1) % coins.length]);
+      inserted.hash = performance.now();
+      newCoins.push(inserted);
 
       shouldUpdateCoins = true;
     }
@@ -146,10 +148,9 @@ class Dashboard extends React.Component {
           >
             {coins.map((coin, i) => {
               if (!coin) return null;
-
               return (
                 <Flex
-                  key={coin.name + '-' + i}
+                  key={coin.hash || coin.name}
                   alignItems="center"
                   flex="0 0 auto"
                 >

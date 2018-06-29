@@ -2,4 +2,4 @@
 // }
 setInterval(() => {
   postMessage('tick');
-}, 300);
+}, 140);
