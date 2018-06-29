@@ -87,7 +87,7 @@ class Transaction extends Component {
     return (
       <Section
         innerRef={e => this.el = e}
-        bg="black"
+        bg="primaryDark"
         color="white"
         pb={300}
       >
@@ -162,10 +162,12 @@ class Main extends Component {
         <Coming />
         <Header />
         <Dashboard />
-        <Box height="90vh">
+        <Box 
+          py={120}
+        >
           <Text
-            fontWeight={600}
-            fontSize={72}
+            fontWeight={500}
+            fontSize={80}
             lineHeight={1.1}
             textAlign="center"
           >
@@ -185,7 +187,7 @@ class Main extends Component {
           </Box>
           <img src="/images/airdrop-bg.png" width="100%" />
         </Box>
-        <Box mx="auto">
+        <Box maxWidth={1366} mx="auto">
           <Holder />
           <Transaction />
           <Wallet />
