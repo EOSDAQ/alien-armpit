@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class Icon extends React.PureComponent {
+class Icon extends React.PureComponent {
   render() {
     let { type, ...iconProps } = this.props;
     let { default: Comp } = require(`./icons/ic-${type}.svg`);
@@ -12,3 +12,5 @@ export class Icon extends React.PureComponent {
     );
   }
 }
+
+export default Icon;

@@ -3,6 +3,7 @@ const theme = {
   colors: {
     primary: '#74DBE7',
     primaryDark: '#2a363d',
+    // primaryDark: '#3c3d3d',
     whiteA7: 'rgba(255, 255, 255, .7)',
   },
   space: [0, 4, 8, 12], 

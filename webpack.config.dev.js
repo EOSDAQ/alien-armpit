@@ -19,11 +19,15 @@ const rules = [
   {
     test: /\.(js|jsx)$/,
     loader: 'babel-loader',
-    options: {
-      presets: ['react'],
-      plugins: ['emotion'],
-    }
-  },    
+    exclude: [path.resolve(__dirname, 'node_modules')]
+  },
+  {
+    test: /\.svg$/,
+    use: [
+      { loader: 'babel-loader' },
+      { loader: 'react-svg-loader' }
+    ]
+  }
 ];
 
 

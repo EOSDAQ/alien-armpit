@@ -28,11 +28,15 @@ class Decentralized extends Component {
 class Holder extends Component {
   render() {
     return (
-      <Section pb={300}>
+      <Section
+        style={{
+          background: `url(/images/blur.png) 50% 50%/cover no-repeat`
+        }}
+      >
         <Container>
           <Headline>
             EOS에 특화된 거래소.<br/>
-            신속한 토큰 상장과 투표.
+            <b>신속한 토큰 상장</b>과 <strong>투표</strong>.
           </Headline>
           <SubHeadline>
             EOS 홀더들은 EOS로부터 직접 Airdrop 토큰을 제공받습니다.
@@ -48,11 +52,6 @@ class Holder extends Component {
             </Content>
           </ContentWrapper>
         </Container>
-        <Blur
-          type="blue"
-          width={1000}
-          height={500}
-        />
       </Section>
     );
   }
@@ -163,7 +162,7 @@ class Main extends Component {
         <Header />
         <Box>
           <Hero />
-          <Box maxWidth={1040} mx="auto">
+          <Box mx="auto">
             <Holder />
             <Transaction />
             <Wallet />

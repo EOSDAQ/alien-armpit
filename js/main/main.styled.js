@@ -18,8 +18,8 @@ export const Blur = (props) => {
 
 export const Section = (props) =>
   <Box 
-    pt={120} 
-    pb={110}
+    py={80}
+    m={16}
     overflow="hidden"
     position="relative"
     css={`

@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '../atom/Box';
 import { Container } from '../../../main/main.styled';
 import { Flex } from '../atom/Flex';
+import { Text } from '../atom/Text';
 
 class Header extends React.Component {
   constructor(props) {
@@ -40,12 +41,13 @@ class Header extends React.Component {
               </div>
               {this.navs.map((nav) => {
                 return (
-                  <Box 
+                  <Text 
                     key={nav}
                     ml={48}
+                    fontSize={14}
                   >
                     {nav}
-                  </Box>
+                  </Text>
                 )
               })}
             </Flex>

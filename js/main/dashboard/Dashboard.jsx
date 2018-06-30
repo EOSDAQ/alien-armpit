@@ -134,7 +134,7 @@ class Dashboard extends React.Component {
       <Box
         width={1}
         color="white"
-        bg="#222"
+        bg="rgba(52, 62, 70, 1)"
       >
         <Box 
           innerRef={e => this.belt = e}
