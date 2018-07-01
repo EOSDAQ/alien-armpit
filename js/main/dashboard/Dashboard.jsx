@@ -37,6 +37,7 @@ class Dashboard extends React.Component {
   }
 
   componentWillUnmount() {
+    this.animate = false;
     timer.terminate(); // todo. restart on timer when user re-visits main page.
   }
 
