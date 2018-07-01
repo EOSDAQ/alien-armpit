@@ -11,21 +11,6 @@ import Header from '../common/components/organisms/Header';
 import Hero from './hero/Hero';
 import Waypoint from '../common/components/molecules/Waypoint';
 
-class Decentralized extends Component {
-  render() {
-    return (
-      <Section>
-        <Container>
-          <Flex>
-            <Box width={1/4}></Box>
-            <Box></Box>
-          </Flex>
-        </Container>
-      </Section>
-    )
-  }
-}
-
 class Holder extends Component {
   render() {
     return (
@@ -47,7 +32,7 @@ class Holder extends Component {
                 <SubHeadline pose={animate}>
                   EOS 홀더들은 EOS로부터 직접 Airdrop 토큰을 제공받습니다.
                 </SubHeadline>
-                <ContentWrapper>
+                <ContentWrapper pose={animate}>
                   <Content>
                     <ContentTitle>EOS Airdrop 토큰을 신속히 상장</ContentTitle>
                     <Description>Airdrop 토큰이 EOSDAQ 개인 지갑에 할당되면 즉시 거래가 가능합니다. Airdrop 받은 본인의 토큰내역이 매주 업데이트 됩니다.</Description>
@@ -94,33 +79,44 @@ class Transaction extends Component {
 
   render() {
     return (
-      <Section
-        innerRef={e => this.el = e}
-        pb={300}
+      <Waypoint
+        options={{
+          threshold: [0, .3, 1.0],
+        }}
       >
-        <Container>
-          <Headline>
-            빠른 거래
-          </Headline>
-          <SubHeadline>
-            순간적인 대량 거래를 안정적으로 처리하려 노력합니다.
-          </SubHeadline>
-          <ContentWrapper>
-            <Content>
-              <ContentTitle>안정적인 EOS 플랫폼</ContentTitle>
-              <Description>
-                EOS는 0.5초마다 블록이 생성되며 초당 10000건의 트랜잭션을 처리합니다. 거래소의 거래 속도와 안정성을 위해 EOS Network로부터 충분한 NET, CPU, RAM을 확보합니다.
-              </Description>
-            </Content>
-            <Content>
-              <ContentTitle>스마트 컨트랙트를 통한 주문</ContentTitle>
-              <Description>
-                모든 주문 행위는 EOSDAQ 스마트 컨트랙트를 통해 EOS Blockchain에 기록됩니다. EOSDAQ은 주문을 조작하지도 않고 시장을 기만하지도 않습니다.
-              </Description>
-            </Content>
-          </ContentWrapper>
-        </Container>
-      </Section>
+        {({ intersectionRatio }) => {
+          const animate = intersectionRatio > 0.3;
+          return (
+            <Section
+              innerRef={e => this.el = e}
+              pb={300}
+            >
+              <Container>
+                <Headline pose={animate}>
+                  빠른 거래
+                </Headline>
+                <SubHeadline pose={animate}>
+                  순간적인 대량 거래를 안정적으로 처리하려 노력합니다.
+                </SubHeadline>
+                <ContentWrapper pose={animate}>
+                  <Content>
+                    <ContentTitle>안정적인 EOS 플랫폼</ContentTitle>
+                    <Description>
+                      EOS는 0.5초마다 블록이 생성되며 초당 10000건의 트랜잭션을 처리합니다. 거래소의 거래 속도와 안정성을 위해 EOS Network로부터 충분한 NET, CPU, RAM을 확보합니다.
+                    </Description>
+                  </Content>
+                  <Content>
+                    <ContentTitle>스마트 컨트랙트를 통한 주문</ContentTitle>
+                    <Description>
+                      모든 주문 행위는 EOSDAQ 스마트 컨트랙트를 통해 EOS Blockchain에 기록됩니다. EOSDAQ은 주문을 조작하지도 않고 시장을 기만하지도 않습니다.
+                    </Description>
+                  </Content>
+                </ContentWrapper>
+              </Container>
+            </Section>
+          )
+        }}
+      </Waypoint>
     )
   }
 }
@@ -128,28 +124,39 @@ class Transaction extends Component {
 class Wallet extends Component {
   render() {
     return (
-      <Section 
-        bg="rgb(250, 250, 250)"
+      <Waypoint
+        options={{
+          threshold: [0, .3, 1.0],
+        }}
       >
-        <Container>
-          <Headline>
-            강력한 개인 지갑
-          </Headline>
-          <SubHeadline>
-            개인이 자산을 직접 보관하는 탈중앙화 방식의 지갑을 제공합니다. 이 방식은 기존 거래소들이 사용하는 중앙집중화된 자산보관 방식과 차별화되며, 해킹 위험이 현저히 낮습니다.
-          </SubHeadline>
-          <ContentWrapper>
-            <Content>
-              <ContentTitle>안전한 자산</ContentTitle>
-              <Description>개인 지갑의 Private key 정보와 거래하지 않는 자산은 거래소에서 보관하지 않습니다. 해킹으로부터 안전하게 내 자산을 지킬 수 있습니다.</Description>
-            </Content>
-            <Content>
-              <ContentTitle>다중 권한 지갑</ContentTitle>
-              <Description>다중 권한 지갑을 통해 트레이딩 전문가에게 거래를 맡겨 내 자산을 운용할 수 있습니다.</Description>
-            </Content>
-          </ContentWrapper>
-        </Container>
-      </Section>
+        {({ intersectionRatio }) => {
+          const animate = intersectionRatio > 0.3;
+          return (
+            <Section 
+              bg="rgb(250, 250, 250)"
+            >
+              <Container>
+                <Headline pose={animate}>
+                  강력한 개인 지갑
+                </Headline>
+                <SubHeadline pose={animate}>
+                  개인이 자산을 직접 보관하는 탈중앙화 방식의 지갑을 제공합니다. 이 방식은 기존 거래소들이 사용하는 중앙집중화된 자산보관 방식과 차별화되며, 해킹 위험이 현저히 낮습니다.
+                </SubHeadline>
+                <ContentWrapper pose={animate}>
+                  <Content>
+                    <ContentTitle>안전한 자산</ContentTitle>
+                    <Description>개인 지갑의 Private key 정보와 거래하지 않는 자산은 거래소에서 보관하지 않습니다. 해킹으로부터 안전하게 내 자산을 지킬 수 있습니다.</Description>
+                  </Content>
+                  <Content>
+                    <ContentTitle>다중 권한 지갑</ContentTitle>
+                    <Description>다중 권한 지갑을 통해 트레이딩 전문가에게 거래를 맡겨 내 자산을 운용할 수 있습니다.</Description>
+                  </Content>
+                </ContentWrapper>
+              </Container>
+            </Section>
+          )
+        }}
+      </Waypoint>
     )
   }
 }
@@ -161,14 +168,10 @@ class Main extends Component {
         <Dashboard />
         <Coming />
         <Header />
-        <Box>
-          <Hero />
-          <Box mx="auto">
-            <Holder />
-            <Transaction />
-            <Wallet />
-          </Box>
-        </Box>
+        <Hero />
+        <Holder />
+        <Transaction />
+        <Wallet />
         <Footer />
       </div>
     );

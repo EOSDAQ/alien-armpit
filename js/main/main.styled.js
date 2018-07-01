@@ -3,6 +3,7 @@ import styled from 'react-emotion';
 import { Text } from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
 import posed from 'react-pose';
+import { Flex } from '../common/components/atom/Flex';
 
 const poseConfig = (delay = 0) => ({
   appear: {
@@ -18,6 +19,7 @@ const poseConfig = (delay = 0) => ({
 
 const PosedHeadline = posed.div(poseConfig(300));
 const PosedSubHeadline = posed.div(poseConfig(500));
+const PosedContent = posed.div(poseConfig(800));
 
 export const Section = (props) =>
   <Box 
@@ -70,11 +72,15 @@ export const SubHeadline = ({ children, pose, ...props }) => {
   )
 }
 
-export const ContentWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 32px;
-`
+export const ContentWrapper = (props) => {
+  return (
+    <PosedContent pose={props.pose ? "appear" : "hide"}>
+      <Flex flexWrap="wrap" mt={32}>
+        {props.children}
+      </Flex>
+    </PosedContent>
+  );
+}
 
 export const Content = (props) => {
   return (
