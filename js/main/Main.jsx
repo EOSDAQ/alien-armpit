@@ -15,9 +15,7 @@ class Holder extends Component {
   render() {
     return (
       <Waypoint
-        options={{
-          threshold: [0, .3, 1.0],
-        }}
+        steps={3}
       >
         {({ intersectionRatio }) => {
           const animate = intersectionRatio > 0.3;
@@ -80,9 +78,7 @@ class Transaction extends Component {
   render() {
     return (
       <Waypoint
-        options={{
-          threshold: [0, .3, 1.0],
-        }}
+        steps={3}
       >
         {({ intersectionRatio }) => {
           const animate = intersectionRatio > 0.3;
@@ -125,9 +121,7 @@ class Wallet extends Component {
   render() {
     return (
       <Waypoint
-        options={{
-          threshold: [0, .3, 1.0],
-        }}
+        steps={3}
       >
         {({ intersectionRatio }) => {
           const animate = intersectionRatio > 0.3;

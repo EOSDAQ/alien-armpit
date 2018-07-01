@@ -16,7 +16,9 @@ class Waypoint extends React.Component {
   componentDidMount() {
     this.observer = new IntersectionObserver(
       (...args) => this.onObserve(...args),
-      this.props.options,
+      {
+        threshold: this.buildThresholds(this.props.steps || 1)
+      },
     );
 
     this.observer.observe(this.el)
@@ -35,6 +37,18 @@ class Waypoint extends React.Component {
         intersectionRatio: entry.intersectionRatio,
       })
     })
+  }
+
+  buildThresholds(steps) {
+    let thresholds = [];
+    let i = 1.0;
+    for (i; i <= steps; i++) {
+      let ratio = i / steps;
+      thresholds.push(ratio);
+    }
+
+    thresholds.push(0);
+    return thresholds;
   }
 
   render() {

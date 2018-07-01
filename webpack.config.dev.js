@@ -49,6 +49,7 @@ module.exports = {
     content: 'public',
     hot: true,
     port: 3001,
+    host: '0.0.0.0',
     contentPath: __dirname,
   },
   module: {
