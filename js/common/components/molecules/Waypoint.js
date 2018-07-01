@@ -4,6 +4,9 @@ import 'intersection-observer'; // polyfill intersection observer for non-suppor
 class Waypoint extends React.Component {
   constructor(props) {
     super(props);
+
+    this.observer = null;
+
     this.state = {
       isIntersecting: false,
       intersectionRatio: 0,
@@ -11,12 +14,18 @@ class Waypoint extends React.Component {
   }
 
   componentDidMount() {
-    const observer = new IntersectionObserver(
+    this.observer = new IntersectionObserver(
       (...args) => this.onObserve(...args),
       this.props.options,
     );
 
-    observer.observe(this.el)
+    this.observer.observe(this.el)
+  }
+
+  componentWillUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 
   onObserve(entries, observer) {
