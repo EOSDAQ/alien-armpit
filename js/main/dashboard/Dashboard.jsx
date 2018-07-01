@@ -41,6 +41,7 @@ class Dashboard extends React.Component {
   }
 
   getX() {
+    if (!this.item) return 0;
     let { transform } = this.item.style;
     let x = /translateX\((.+)px\).+/.exec(transform);
 
@@ -53,6 +54,8 @@ class Dashboard extends React.Component {
   }
 
   setX(x) {
+    if (!this.item) return;
+
     this.item.style.transform = `translateX(${x}px) translateZ(0px)`;
   }
 
