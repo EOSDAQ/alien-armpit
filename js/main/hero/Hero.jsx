@@ -43,22 +43,26 @@ class Hero extends React.Component {
         <Box 
           py={120}
           px={48}
-          m={16}
-          style={{
-            background: `url(/images/hero.png) 50% 50%/cover no-repeat`
-          }}
         >
           <AnimatedTitle
             pose={visible ? "visible" : "hidden"}
           >
+            <Text css={`
+              text-align: center;
+              font-size: 24px;
+              margin-bottom: 8px;
+              color: rgb(0, 181, 203);
+            `}>
+              EOS 기반 탈중앙화 거래소.
+            </Text>
             <Text
               fontWeight={300}
-              fontSize={60}
+              fontSize={56}
               color="primaryDark"
               lineHeight={1.1}
               textAlign="center"
             >
-              Airdrop 토큰. 신속한 상장.
+              Airdrop 토큰의 신속한 상장.
             </Text>
           </AnimatedTitle>
           <Box my={24}>
@@ -71,7 +75,6 @@ class Hero extends React.Component {
                 lineHeight={1.46}
                 textAlign="center"
               >
-                EOS 기반 탈중앙화 거래소입니다.<br/>
                 개인 지갑에 안전하게 자산을 관리하세요.<br/>
                 모든 거래내역은 투명하게 블록체인에 기록됩니다.
               </Text>

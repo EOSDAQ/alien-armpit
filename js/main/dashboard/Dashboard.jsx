@@ -3,12 +3,7 @@ import { css } from 'emotion';
 import Box from '../../common/components/atom/Box';
 import { Flex } from '../../common/components/atom/Flex';
 import { Text } from '../../common/components/atom/Text';
-
 const timer = new Worker('/workers/timer.js');
-
-timer.onmessage = (e) => {
-  console.log(e);
-}
 
 const coins = [
   { name: 'CARMEL', src: 'ic-carmel.png' },

@@ -3,7 +3,6 @@ import Box from '../../common/components/atom/Box';
 import { Text } from '../../common/components/atom/Text';
 import { Container } from '../main.styled';
 import { Flex } from '../../common/components/atom/Flex';
-
 class Coming extends React.Component {
   constructor(props) {
     super(props);

@@ -22,7 +22,11 @@ const socialLinks = [
   {
     type: 'linkedIn',
     href: 'https://www.linkedin.com/company/eosdaq/',
-  }
+  },
+  {
+    type: 'mail',
+    href: 'mailto:contact@eosdaq.com',
+  },
 ]
 
 class Footer extends React.Component {
@@ -38,9 +42,9 @@ class Footer extends React.Component {
             <Flex
               pb={24}
             >
-              {socialLinks.map((social) => {
+              {socialLinks.map((social, i) => {
                 return (
-                  <Box px={16}>
+                  <Box key={i} px={16}>
                     <a 
                       href={social.href} 
                       target="_blank"

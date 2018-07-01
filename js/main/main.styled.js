@@ -2,33 +2,27 @@ import React from 'react';
 import styled from 'react-emotion';
 import { Text } from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
+import posed from 'react-pose';
 
-export const Blur = (props) => {
-  return (
-    <Box 
-      {...props}
-      position="absolute"
-      bottom={0}
-      right={0}
-    >
-      <img src={`/images/blur-${props.type}.png`} />
-    </Box>
-  )
-}
+const poseConfig = (delay = 0) => ({
+  appear: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay,
+      duration: 800,
+    }
+  },
+  hide: { opacity: 0, y: 30 },
+});
+
+const PosedHeadline = posed.div(poseConfig(300));
+const PosedSubHeadline = posed.div(poseConfig(500));
 
 export const Section = (props) =>
   <Box 
     py={80}
-    m={16}
-    overflow="hidden"
     position="relative"
-    css={`
-      // border: 1px solid rgba(0, 0, 0, 0.07);
-      // box-shadow: 0px 5px 5px rgba(0, 0, 0, .1);
-      // border-radius: 4px;
-      // background: rgba(255, 255, 255, .5);
-      // margin-bottom: 48px;
-    `}
     {...props}
   />;
 
@@ -40,26 +34,39 @@ export const Container = (props) =>
     {...props} 
   />;
 
-export const Headline = styled.h1`
-  font-size: 40px;
-  line-height: 1.3;
-  // font-weight: bold;
-`
-
-export const SubHeadline = ({ children }) => {
+export const Headline = (props) => {
   return (
-    <Box maxWidth={600}>
+    <PosedHeadline pose={props.pose ? "appear" : "hide"}>
       <Text
-        fontSize={20}
-        lineHeight={1.46}
-        // fontWeight={700}
-        color="grey"
-        mt={16}
-        mb={80}
+        {...props}
+        fontSize={32}
+        lineHeight={1.3}
+        fontWeight={700}
       >
-        {children}
+        {props.children}
       </Text>
-    </Box>
+    </PosedHeadline>
+  );
+}
+
+export const SubHeadline = ({ children, pose, ...props }) => {
+  return (
+    <PosedSubHeadline 
+      pose={pose ? "appear" : "hide"}
+    >
+      <Box maxWidth={600}>
+        <Text
+          fontSize={20}
+          lineHeight={1.46}
+          // fontWeight={700}
+          color="grey"
+          mt={16}
+          mb={80}
+        >
+          {children}
+        </Text>
+      </Box>
+    </PosedSubHeadline>
   )
 }
 
@@ -103,7 +110,7 @@ export const Description = (props) => {
   return (
     <Text 
       fontSize={16}
-      lineHeight={1.52947}
+      lineHeight={1.75}
       color="rgba(51, 51, 51, .78)"
       mt={12}
       {...props}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container, Blur } from './main.styled';
+import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container } from './main.styled';
 import Box from '../common/components/atom/Box';
 import { Text } from '../common/components/atom/Text';
 import { Flex } from '../common/components/atom/Flex';
@@ -9,6 +9,7 @@ import Dashboard from './dashboard/Dashboard';
 import Coming from './coming/Coming';
 import Header from '../common/components/organisms/Header';
 import Hero from './hero/Hero';
+import Waypoint from '../common/components/molecules/Waypoint';
 
 class Decentralized extends Component {
   render() {
@@ -28,31 +29,39 @@ class Decentralized extends Component {
 class Holder extends Component {
   render() {
     return (
-      <Section
-        style={{
-          background: `url(/images/blur.png) 50% 50%/cover no-repeat`
+      <Waypoint
+        options={{
+          threshold: [0, .3, 1.0],
         }}
       >
-        <Container>
-          <Headline>
-            EOS에 특화된 거래소.<br/>
-            <b>신속한 토큰 상장</b>과 <strong>투표</strong>.
-          </Headline>
-          <SubHeadline>
-            EOS 홀더들은 EOS로부터 직접 Airdrop 토큰을 제공받습니다.
-          </SubHeadline>
-          <ContentWrapper>
-            <Content>
-              <ContentTitle>EOS Airdrop 토큰을 신속히 상장</ContentTitle>
-              <Description>Airdrop 토큰이 EOSDAQ 개인 지갑에 할당되면 즉시 거래가 가능합니다. Airdrop 받은 본인의 토큰내역이 매주 업데이트 됩니다.</Description>
-            </Content>
-            <Content>
-              <ContentTitle>편리한 투표</ContentTitle>
-              <Description>건강한 EOS 생태계를 책임지는 Block Producer의 선출을 위한 투표를 지원합니다. Worker Proposal System을 통해 EOS 커뮤니티의 이익이 되는 애플리케이션을 투표할 수 있습니다.</Description>
-            </Content>
-          </ContentWrapper>
-        </Container>
-      </Section>
+        {({ intersectionRatio }) => {
+          const animate = intersectionRatio > 0.3;
+
+          return (
+            <Section bg="aliceblue">
+              <Container>
+                <Headline pose={animate}>
+                  EOS에 특화된 거래소.<br/>
+                  <b>신속한 토큰 상장</b>과 <strong>투표</strong>.
+                </Headline>
+                <SubHeadline pose={animate}>
+                  EOS 홀더들은 EOS로부터 직접 Airdrop 토큰을 제공받습니다.
+                </SubHeadline>
+                <ContentWrapper>
+                  <Content>
+                    <ContentTitle>EOS Airdrop 토큰을 신속히 상장</ContentTitle>
+                    <Description>Airdrop 토큰이 EOSDAQ 개인 지갑에 할당되면 즉시 거래가 가능합니다. Airdrop 받은 본인의 토큰내역이 매주 업데이트 됩니다.</Description>
+                  </Content>
+                  <Content>
+                    <ContentTitle>편리한 투표</ContentTitle>
+                    <Description>건강한 EOS 생태계를 책임지는 Block Producer의 선출을 위한 투표를 지원합니다. Worker Proposal System을 통해 EOS 커뮤니티의 이익이 되는 애플리케이션을 투표할 수 있습니다.</Description>
+                  </Content>
+                </ContentWrapper>
+              </Container>
+            </Section>
+          )
+        }}
+      </Waypoint>
     );
   }
 }
@@ -111,12 +120,6 @@ class Transaction extends Component {
             </Content>
           </ContentWrapper>
         </Container>
-        <Blur
-          type="transaction"
-          innerRef={e => this.imageEl = e}
-          width={1000}
-          height={400}
-        />
       </Section>
     )
   }
@@ -125,7 +128,9 @@ class Transaction extends Component {
 class Wallet extends Component {
   render() {
     return (
-      <Section bg="rgb(250, 250, 250)">
+      <Section 
+        bg="rgb(250, 250, 250)"
+      >
         <Container>
           <Headline>
             강력한 개인 지갑
@@ -144,10 +149,6 @@ class Wallet extends Component {
             </Content>
           </ContentWrapper>
         </Container>
-        <img 
-          src="/images/blur-pink.png" 
-          // ref={e => this.imageEl = e}
-        />
       </Section>
     )
   }
