@@ -30,7 +30,7 @@ class Hero extends React.Component {
         {({ isIntersecting }) => {
           return (
             <Box 
-              py={120}
+              pt={100}
               px={48}
             >
               <AnimatedTitle
@@ -45,8 +45,8 @@ class Hero extends React.Component {
                   EOS 기반 탈중앙화 거래소.
                 </Text>
                 <Text
-                  fontWeight={300}
-                  fontSize={56}
+                  fontWeight={700}
+                  fontSize={48}
                   color="primaryDark"
                   lineHeight={1.1}
                   textAlign="center"
@@ -69,7 +69,13 @@ class Hero extends React.Component {
                   </Text>
                 </AnimatedSubTitle>
               </Box>
-              <img src="/images/airdrop-bg.png" width="100%" />
+              <Box
+                width={1}
+                height={[160, 180, 240, 300]}
+                style={{
+                  background: `url(/images/airdrop-bg.png) 50% 50%/cover no-repeat`
+                }}
+              />
             </Box>
           )
         }}
