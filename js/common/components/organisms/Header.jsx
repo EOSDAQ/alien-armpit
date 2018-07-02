@@ -42,7 +42,7 @@ class Header extends React.Component {
                 <Text
                   key={nav}
                   ml={48}
-                  fontSize={14}
+                  fontSize="sm"
                 >
                   {nav}
                 </Text>
