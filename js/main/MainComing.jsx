@@ -1,14 +1,15 @@
 import React from 'react';
-import Box from '../../common/components/atom/Box';
-import { Text } from '../../common/components/atom/Text';
-import { Container } from '../main.styled';
-import Flex from '../../common/components/atom/Flex';
-class Coming extends React.Component {
+import Box from '../common/components/atom/Box';
+import Text from '../common/components/atom/Text';
+import { Container } from './Main.styled';
+import Flex from '../common/components/atom/Flex';
+
+class MainComing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       close: false,
-    }
+    };
   }
 
   onClose() {
@@ -18,7 +19,7 @@ class Coming extends React.Component {
   }
 
   render() {
-    let { close } = this.state;
+    const { close } = this.state;
     if (close) return null;
 
     return (
@@ -41,8 +42,8 @@ class Coming extends React.Component {
           </Flex>
         </Container>
       </Box>
-    )
+    );
   }
 }
 
-export default Coming;
+export default MainComing;

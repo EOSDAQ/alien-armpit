@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '../atom/Box';
-import { Container } from '../../../main/main.styled';
+import { Container } from '../../../main/Main.styled';
 import Flex from '../atom/Flex';
-import { Text } from '../atom/Text';
+import Text from '../atom/Text';
 
 class Header extends React.Component {
   constructor(props) {
@@ -18,11 +18,9 @@ class Header extends React.Component {
   render() {
     return (
       <nav
-        css={`
-          position: sticky;
-          z-index: 1;
-          top: 0;
-        `}
+        css="position: sticky;
+        z-index: 1;
+        top: 0;"
       >
         <Box
           bg="primaryDark"
@@ -31,25 +29,24 @@ class Header extends React.Component {
           <Container py={8}>
             <Flex alignItems="center">
               <div>
-                <img 
+                <img
                   src="/images/ic-logo.png"
+                  alt=""
                   style={{
                     height: 25,
                     marginTop: 4,
                   }}
                 />
               </div>
-              {this.navs.map((nav) => {
-                return (
-                  <Text 
-                    key={nav}
-                    ml={48}
-                    fontSize={14}
-                  >
-                    {nav}
-                  </Text>
-                )
-              })}
+              {this.navs.map(nav => (
+                <Text
+                  key={nav}
+                  ml={48}
+                  fontSize={14}
+                >
+                  {nav}
+                </Text>
+              ))}
             </Flex>
           </Container>
         </Box>

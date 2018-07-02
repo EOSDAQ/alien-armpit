@@ -6,7 +6,7 @@ const theme = {
     // primaryDark: '#3c3d3d',
     whiteA7: 'rgba(255, 255, 255, .7)',
   },
-  space: [0, 4, 8, 12], 
-}
+  space: [0, 4, 8, 12],
+};
 
 export default theme;

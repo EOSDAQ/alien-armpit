@@ -2,6 +2,18 @@ import React from 'react';
 import 'intersection-observer'; // polyfill intersection observer for non-supporting browsers
 
 class Waypoint extends React.Component {
+  static buildThresholds(steps) {
+    const thresholds = [];
+    let i = 1.0;
+    for (i; i <= steps; i += 1) {
+      const ratio = i / steps;
+      thresholds.push(ratio);
+    }
+
+    thresholds.push(0);
+    return thresholds;
+  }
+
   constructor(props) {
     super(props);
 
@@ -10,18 +22,20 @@ class Waypoint extends React.Component {
     this.state = {
       isIntersecting: false,
       intersectionRatio: 0,
-    }
+    };
   }
 
   componentDidMount() {
+    const { steps } = this.props;
+
     this.observer = new IntersectionObserver(
       (...args) => this.onObserve(...args),
       {
-        threshold: this.buildThresholds(this.props.steps || 1)
+        threshold: this.buildThresholds(steps || 1),
       },
     );
 
-    this.observer.observe(this.el)
+    this.observer.observe(this.el);
   }
 
   componentWillUnmount() {
@@ -30,37 +44,31 @@ class Waypoint extends React.Component {
     }
   }
 
-  onObserve(entries, observer) {
+  onObserve(entries) {
     entries.forEach((entry) => {
       this.setState({
         isIntersecting: entry.isIntersecting,
         intersectionRatio: entry.intersectionRatio,
-      })
-    })
-  }
-
-  buildThresholds(steps) {
-    let thresholds = [];
-    let i = 1.0;
-    for (i; i <= steps; i++) {
-      let ratio = i / steps;
-      thresholds.push(ratio);
-    }
-
-    thresholds.push(0);
-    return thresholds;
+      });
+    });
   }
 
   render() {
     const { intersectionRatio, isIntersecting } = this.state;
+    const { children } = this.props;
+
     return (
-      <div ref={e => this.el = e}>
-        {this.props.children({
+      <div
+        ref={(e) => {
+          this.el = e;
+        }}
+      >
+        {children({
           intersectionRatio,
           isIntersecting,
         })}
       </div>
-    )
+    );
   }
 }
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import { css } from 'emotion';
-import Box from '../../common/components/atom/Box';
-import Flex from '../../common/components/atom/Flex';
-import { Text } from '../../common/components/atom/Text';
+import Box from '../common/components/atom/Box';
+import Flex from '../common/components/atom/Flex';
+import Text from '../common/components/atom/Text';
+
 const timer = new Worker('/workers/timer.js');
 
-const coins = [
+const coinList = [
   { name: 'CARMEL', src: 'ic-carmel.png' },
   { name: 'CET', src: 'ic-chaince.png' },
   { name: 'chintai', src: 'ic-chintai.png' },
@@ -15,23 +16,18 @@ const coins = [
   { name: 'PLT', src: 'ic-plactal.svg' },
 ];
 
-class Dashboard extends React.Component {
+class MainDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.animate = true; // flag for animateBelt render loop to stop.
 
     this.state = {
-      coins,
-      animate: true,
-      paddingLeft: 0,
-      originalLength: coins.length,
-      x: 0,
-    }
+      coins: coinList,
+    };
   }
-  
 
   componentDidMount() {
-    setTimeout(() => this.animateBelt(), 500)
+    setTimeout(() => this.animateBelt(), 500);
     this.appendItemToBelt();
     timer.onmessage = () => this.appendItemToBelt();
   }
@@ -43,11 +39,11 @@ class Dashboard extends React.Component {
 
   getX() {
     if (!this.item) return 0;
-    let { transform } = this.item.style;
+    const { transform } = this.item.style;
     let x = /translateX\((.+)px\).+/.exec(transform);
 
     if (Array.isArray(x)) {
-      x =  Math.round(x[1] * 100) / 100;
+      x = Math.round(x[1] * 100) / 100;
       return x;
     }
 
@@ -67,52 +63,55 @@ class Dashboard extends React.Component {
     const animate = () => {
       if (!this.animate) return;
 
-      let x = this.getX();
+      const x = this.getX();
       this.setX(x - 1.4);
-      
+
       requestAnimationFrame(() => animate());
     };
-    
+
     animate();
   }
 
   appendItemToBelt() {
     if (!this.item) return;
-    let rect = this.item.getBoundingClientRect();
+    const rect = this.item.getBoundingClientRect();
+    const { children } = this.item;
+
     let paddingLeft = 0;
-    let children = this.item.children;
-    let shouldRemove = [];
+    const shouldRemove = [];
 
     let shouldUpdateCoins = false;
     let appendCoin = true;
 
-    for (let child of children) {
-      let childRect = child.getBoundingClientRect();
+    children.forEach((child) => {
+      const childRect = child.getBoundingClientRect();
       if (childRect.right > rect.right + 200) {
         appendCoin = false;
       }
 
-      let hidden = (childRect.left + childRect.width) < 0;
+      const hidden = (childRect.left + childRect.width) < 0;
+
       if (hidden) {
         shouldRemove.push(child);
         paddingLeft += childRect.width;
       }
-    }
+    });
 
-    let newCoins = [...this.state.coins];
+    const { coins: prevCoins } = this.state;
+    let newCoins = [...prevCoins];
 
     if (shouldRemove.length > 0) {
       newCoins = newCoins.slice(shouldRemove.length);
       this.animate = false; // stop the animate function on this.animateBelt.
       this.setX(this.getX() + paddingLeft);
-      requestAnimationFrame(() => this.animateBelt())
+      requestAnimationFrame(() => this.animateBelt());
       shouldUpdateCoins = true;
     }
 
     if (appendCoin) {
-      let lastCoin = newCoins[newCoins.length - 1];
-      let lastCoinIndex = coins.findIndex(c => c.name === lastCoin.name);
-      let inserted = Object.assign({}, coins[(lastCoinIndex + 1) % coins.length]);
+      const lastCoin = newCoins[newCoins.length - 1];
+      const lastCoinIndex = coinList.findIndex(c => c.name === lastCoin.name);
+      const inserted = Object.assign({}, coinList[(lastCoinIndex + 1) % coinList.length]);
       inserted.hash = performance.now();
       newCoins.push(inserted);
 
@@ -127,7 +126,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    let { coins } = this.state;
+    const { coins } = this.state;
 
     return (
       <Box
@@ -135,17 +134,21 @@ class Dashboard extends React.Component {
         color="white"
         bg="rgba(52, 62, 70, 1)"
       >
-        <Box 
-          innerRef={e => this.belt = e}
+        <Box
+          innerRef={(e) => {
+            this.belt = e;
+          }}
           overflow="hidden"
           userSelect="none"
           pointerEvents="none"
           py={2}
         >
-          <Flex 
-            innerRef={e => this.item = e}
+          <Flex
+            innerRef={(e) => {
+              this.item = e;
+            }}
           >
-            {coins.map((coin, i) => {
+            {coins.map((coin) => {
               if (!coin) return null;
               return (
                 <Flex
@@ -153,8 +156,9 @@ class Dashboard extends React.Component {
                   alignItems="center"
                   flex="0 0 auto"
                 >
-                  <img 
+                  <img
                     src={`./images/${coin.src}`}
+                    alt={coin.src}
                     className={css`
                       width: 20px;
                       height: 20px;
@@ -178,13 +182,13 @@ class Dashboard extends React.Component {
                     (0%)
                   </Text>
                 </Flex>
-              )
+              );
             })}
           </Flex>
         </Box>
       </Box>
-    )
+    );
   }
 }
 
-export default Dashboard;
+export default MainDashboard;
