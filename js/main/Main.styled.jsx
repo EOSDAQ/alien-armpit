@@ -23,7 +23,7 @@ const PosedContent = posed.div(poseConfig(800));
 
 export const Section = (props) =>
   <Box 
-    py={80}
+    py={120}
     position="relative"
     {...props}
   />;
@@ -63,7 +63,7 @@ export const SubHeadline = ({ children, pose, ...props }) => {
           // fontWeight={700}
           color="grey"
           mt={16}
-          mb={80}
+          mb={40}
         >
           {children}
         </Text>
