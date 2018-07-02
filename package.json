@@ -17,6 +17,7 @@
   "homepage": "https://bitbucket.org/indegser/eosdaq#readme",
   "devDependencies": {
     "eslint": "^5.0.1",
+    "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.10.0"

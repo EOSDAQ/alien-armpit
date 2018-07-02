@@ -7,6 +7,6 @@
     "jsx-a11y/href-no-hash": "off"
   },
   "env": {
-    "browser": true,
+    "browser": true
   }
 }
