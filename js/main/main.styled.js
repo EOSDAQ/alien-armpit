@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 import { Text } from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
 import posed from 'react-pose';
-import { Flex } from '../common/components/atom/Flex';
+import Flex from '../common/components/atom/Flex';
 
 const poseConfig = (delay = 0) => ({
   appear: {

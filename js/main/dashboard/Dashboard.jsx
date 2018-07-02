@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 import Box from '../../common/components/atom/Box';
-import { Flex } from '../../common/components/atom/Flex';
+import Flex from '../../common/components/atom/Flex';
 import { Text } from '../../common/components/atom/Text';
 const timer = new Worker('/workers/timer.js');
 

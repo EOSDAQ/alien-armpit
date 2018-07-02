@@ -30,6 +30,7 @@ const rules = [
   }
 ];
 
+const devtool = 'cheap-module-eval-source-map';
 
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
@@ -49,9 +50,9 @@ module.exports = {
     content: 'public',
     hot: true,
     port: 3001,
-    host: '0.0.0.0',
     contentPath: __dirname,
   },
+  devtool,
   module: {
     rules,
   },

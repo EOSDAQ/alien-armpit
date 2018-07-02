@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { Section, Headline, SubHeadline, ContentWrapper, Content, ContentTitle, Description, Container } from './main.styled';
 import Box from '../common/components/atom/Box';
 import { Text } from '../common/components/atom/Text';
-import { Flex } from '../common/components/atom/Flex';
+import Flex from '../common/components/atom/Flex';
 import Footer from '../common/components/organisms/Footer';
 import Dashboard from './dashboard/Dashboard';
 import Coming from './coming/Coming';

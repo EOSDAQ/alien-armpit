@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 import { Container } from '../../../main/main.styled';
-import { Flex } from '../atom/Flex';
+import Flex from '../atom/Flex';
 import Box from '../atom/Box';
 import { Text } from '../atom/Text';
 import Icon from '../atom/Icon';

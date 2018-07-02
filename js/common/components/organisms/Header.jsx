@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '../atom/Box';
 import { Container } from '../../../main/main.styled';
-import { Flex } from '../atom/Flex';
+import Flex from '../atom/Flex';
 import { Text } from '../atom/Text';
 
 class Header extends React.Component {
