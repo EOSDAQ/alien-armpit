@@ -83,7 +83,7 @@ class MainDashboard extends React.Component {
     let shouldUpdateCoins = false;
     let appendCoin = true;
 
-    children.forEach((child) => {
+    [...children].forEach((child) => {
       const childRect = child.getBoundingClientRect();
       if (childRect.right > rect.right + 200) {
         appendCoin = false;
