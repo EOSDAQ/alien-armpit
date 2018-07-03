@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const connect = require('koa-connect');
+const history = require('connect-history-api-fallback');
 
 const entry = [
   './js/app.jsx',
@@ -72,7 +74,9 @@ module.exports = {
     hot: true,
     port: 3001,
     contentPath: __dirname,
-    historyApiFallback: true,
+    add: (app) => {
+      app.use(connect(history()));
+    },
   },
   optimization,
   devtool,
