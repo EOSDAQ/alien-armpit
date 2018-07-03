@@ -34,6 +34,7 @@
     "connect-history-api-fallback": "^1.5.0",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
+    "connect-history-api-fallback": "^1.5.0",
     "emotion": "^9.0.0",
     "emotion-theming": "^9.2.4",
     "history": "^4.7.2",

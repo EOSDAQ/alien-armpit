@@ -14,7 +14,6 @@ import theme from './common/css/theme';
 import i18n from './i18n';
 import pages from './pages';
 
-
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
