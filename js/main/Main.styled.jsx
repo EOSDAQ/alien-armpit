@@ -1,24 +1,20 @@
 import React from 'react';
-import posed from 'react-pose';
+import { keyframes } from 'react-emotion';
 import Text from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
 import Flex from '../common/components/atom/Flex';
+import animations from '../common/css/animations';
 
-const poseConfig = (delay = 0) => ({
-  appear: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay,
-      duration: 800,
-    },
-  },
-  hide: { opacity: 0, y: 30 },
-});
-
-const PosedHeadline = posed.div(poseConfig(300));
-const PosedSubHeadline = posed.div(poseConfig(500));
-const PosedContent = posed.div(poseConfig(800));
+const appear = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+`;
 
 export const Section = props => (
   <Box
@@ -38,43 +34,43 @@ export const Container = props => (
 );
 
 export const Headline = ({ pose, children, ...props }) => (
-  <PosedHeadline pose={pose ? 'appear' : 'hide'}>
-    <Text
-      {...props}
-      color="grey900"
-      fontSize={32}
-      lineHeight={1.3}
-      fontWeight={700}
-    >
-      {children}
-    </Text>
-  </PosedHeadline>
+  <Text
+    {...props}
+    color="grey900"
+    fontSize={32}
+    lineHeight={1.3}
+    fontWeight={700}
+    css={animations.appearY(pose, { delay: '300ms' })}
+  >
+    {children}
+  </Text>
 );
 
 export const SubHeadline = ({ children, pose }) => (
-  <PosedSubHeadline
-    pose={pose ? 'appear' : 'hide'}
+  <Box
+    maxWidth={600}
+    css={animations.appearY(pose, { delay: '600ms' })}
   >
-    <Box maxWidth={600}>
-      <Text
-        fontSize={20}
-        lineHeight={1.46}
-        color="grey"
-        mt={16}
-        mb={40}
-      >
-        {children}
-      </Text>
-    </Box>
-  </PosedSubHeadline>
+    <Text
+      fontSize={20}
+      lineHeight={1.46}
+      color="grey"
+      mt={16}
+      mb={40}
+    >
+      {children}
+    </Text>
+  </Box>
 );
 
 export const ContentWrapper = ({ pose, children }) => (
-  <PosedContent pose={pose ? 'appear' : 'hide'}>
-    <Flex flexWrap="wrap" mt={32}>
-      {children}
-    </Flex>
-  </PosedContent>
+  <Flex
+    flexWrap="wrap"
+    mt={32}
+    css={animations.appearY(pose, { delay: '900ms' })}
+  >
+    {children}
+  </Flex>
 );
 
 export const Content = props => (
