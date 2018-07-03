@@ -11,7 +11,8 @@ class Waypoint extends React.Component {
       thresholds.push(ratio);
     }
 
-    thresholds.push(0);
+    thresholds.unshift(0); // for scroll direction detecting.
+    thresholds.push(0.9);
     return thresholds;
   }
 
@@ -19,8 +20,10 @@ class Waypoint extends React.Component {
     super(props);
 
     this.observer = null;
+    this.prevY = 0;
 
     this.state = {
+      direction: undefined,
       isIntersecting: false,
       intersectionRatio: 0,
     };
@@ -45,8 +48,18 @@ class Waypoint extends React.Component {
 
   onObserve(entries) {
     entries.forEach((entry) => {
-      
+      const yDiff = entry.boundingClientRect.y - this.prevY;
+      this.prevY = entry.boundingClientRect.y;
+          
+      let direction;
+      if (yDiff > 0) {
+        direction = 'up';
+      } else {
+        direction = 'down';
+      }
+
       this.setState({
+        direction,
         isIntersecting: entry.isIntersecting,
         intersectionRatio: entry.intersectionRatio,
       }, () => {
@@ -67,7 +80,7 @@ class Waypoint extends React.Component {
   }
 
   render() {
-    const { intersectionRatio, isIntersecting } = this.state;
+    const { intersectionRatio, isIntersecting, direction } = this.state;
     const { children } = this.props;
 
     return (
@@ -79,6 +92,7 @@ class Waypoint extends React.Component {
         {children({
           intersectionRatio,
           isIntersecting,
+          direction,
         })}
       </div>
     );

@@ -28,7 +28,7 @@ const MainTransaction = () => (
   <Waypoint
     steps={3}
   >
-    {({ intersectionRatio }) => {
+    {({ intersectionRatio, direction }) => {
       const animate = intersectionRatio > 0.3;
       return (
         <Section pb={300}>
