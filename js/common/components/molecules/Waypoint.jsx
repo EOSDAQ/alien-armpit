@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import 'intersection-observer'; // polyfill intersection observer for non-supporting browsers
 
 class Waypoint extends React.Component {
@@ -31,7 +32,7 @@ class Waypoint extends React.Component {
     this.observer = new IntersectionObserver(
       (...args) => this.onObserve(...args),
       {
-        threshold: Waypoint.buildThresholds(steps || 1),
+        threshold: Waypoint.buildThresholds(steps),
       },
     );
 
@@ -39,18 +40,30 @@ class Waypoint extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.observer) {
-      this.observer.disconnect();
-    }
+    this.releaseObserver();
   }
 
   onObserve(entries) {
     entries.forEach((entry) => {
+      
       this.setState({
         isIntersecting: entry.isIntersecting,
         intersectionRatio: entry.intersectionRatio,
+      }, () => {
+        const { isIntersecting } = this.state;
+        const { runOnce } = this.props;
+        if (isIntersecting && runOnce) {
+          this.releaseObserver();
+        }
       });
     });
+  }
+
+  releaseObserver() {
+    if (this.observer) {
+      this.observer.disconnect();
+      this.observer = null;
+    }
   }
 
   render() {
@@ -71,5 +84,15 @@ class Waypoint extends React.Component {
     );
   }
 }
+
+Waypoint.defaultProps = {
+  steps: 1,
+  runOnce: false,
+};
+
+Waypoint.propTypes = {
+  steps: PropTypes.number,
+  runOnce: PropTypes.bool,
+};
 
 export default Waypoint;

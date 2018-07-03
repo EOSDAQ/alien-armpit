@@ -20,11 +20,7 @@ const AnimatedTitle = posed.div(config(1000));
 const AnimatedSubTitle = posed.div(config(1500));
 
 const MainHero = () => (
-  <Waypoint
-    options={{
-      threshold: [0, 1],
-    }}
-  >
+  <Waypoint runOnce>
     {({ isIntersecting }) => {
       const animate = isIntersecting;
 
