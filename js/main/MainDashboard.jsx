@@ -132,7 +132,7 @@ class MainDashboard extends React.Component {
       <Box
         width={1}
         color="white"
-        bg="rgba(52, 62, 70, 1)"
+        bg="grey900"
       >
         <Box
           innerRef={(e) => {

@@ -1,5 +1,7 @@
 import { injectGlobal } from 'emotion';
+import theme from './theme';
 
+/* eslint-disable-next-line */
 injectGlobal`
   // reset css. 
   html, body, div, span, applet, object, iframe,
@@ -50,7 +52,7 @@ injectGlobal`
 
   html {
     font-size: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Dotum', sans-serif;
+    font-family: ${theme.fontFamily.sans};
   }
 
   * {

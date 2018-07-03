@@ -37,7 +37,6 @@ const Text = styled(Box)`
   ${getFontSize}
   ${fontWeight}
   ${fontFamily}
-  ${color}
   ${lineHeight}
   ${textAlign}
 `;

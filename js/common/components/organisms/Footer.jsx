@@ -31,8 +31,8 @@ const socialLinks = [
 const Footer = () => (
   <footer>
     <Box
-      bg="primaryDark"
-      color="whiteA7"
+      bg="grey900"
+      color="grey400"
       py={8}
     >
       <Container py={16}>
@@ -64,7 +64,7 @@ const Footer = () => (
           ))}
         </Flex>
         <Flex justifyContent="flex-end">
-          <Text color="whiteA7" fontSize={12}>
+          <Text fontSize={12}>
             Copyright 2018 EOSDAQ.com (Inc) All rights reserved.
           </Text>
         </Flex>

@@ -40,14 +40,14 @@ const MainHero = () => (
               textAlign="center"
               fontSize={24}
               mb={8}
-              color="rgb(0, 181, 203)"
+              color="primary"
             >
               EOS 기반 탈중앙화 거래소.
             </Text>
             <Text
               fontWeight={700}
               fontSize={48}
-              color="primaryDark"
+              color="grey900"
               lineHeight={1.1}
               textAlign="center"
             >
@@ -60,7 +60,7 @@ const MainHero = () => (
             >
               <Text
                 fontSize={16}
-                color="primaryDark"
+                color="grey900"
                 lineHeight={1.46}
                 textAlign="center"
               >

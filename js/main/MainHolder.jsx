@@ -19,7 +19,7 @@ const MainHolder = () => (
       const animate = intersectionRatio > 0.3;
 
       return (
-        <Section bg="aliceblue">
+        <Section bg="primary100">
           <Container>
             <Headline pose={animate}>
               EOS에 특화된 거래소.

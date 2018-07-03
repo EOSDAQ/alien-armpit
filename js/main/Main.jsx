@@ -7,10 +7,12 @@ import MainWallet from './MainWallet';
 import MainTransaction from './MainTransaction';
 import MainHero from './MainHero';
 import MainDashboard from './MainDashboard';
+import MainComing from './MainComing';
 
 const Main = () => (
   <div>
     <MainDashboard />
+    <MainComing />
     <Header />
     <MainHero />
     <MainHolder />

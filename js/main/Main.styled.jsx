@@ -41,6 +41,7 @@ export const Headline = ({ pose, children, ...props }) => (
   <PosedHeadline pose={pose ? 'appear' : 'hide'}>
     <Text
       {...props}
+      color="grey900"
       fontSize={32}
       lineHeight={1.3}
       fontWeight={700}
@@ -70,7 +71,7 @@ export const SubHeadline = ({ children, pose }) => (
 
 export const ContentWrapper = ({ pose, children }) => (
   <PosedContent pose={pose ? 'appear' : 'hide'}>
-    <Flex flexWrap='wrap' mt={32}>
+    <Flex flexWrap="wrap" mt={32}>
       {children}
     </Flex>
   </PosedContent>
@@ -96,7 +97,7 @@ export const ContentTitle = props => (
     <Text
       fontSize={17}
       fontWeight={600}
-      color="#rgb(51, 51, 51)"
+      color="grey800"
       {...props}
     />
   </div>
@@ -106,7 +107,7 @@ export const Description = props => (
   <Text
     fontSize={16}
     lineHeight={1.75}
-    color="rgba(51, 51, 51, .78)"
+    color="grey600"
     mt={12}
     {...props}
   />
