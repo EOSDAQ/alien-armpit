@@ -19,6 +19,7 @@ const Box = styled.div`
   ${fontSize}
   ${display}
   ${borderRadius}
+  ${fontSize}
   ${props => props.overflow && css`
     overflow: ${props.overflow};
   `}
