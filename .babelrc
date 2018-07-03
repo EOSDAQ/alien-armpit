@@ -2,6 +2,7 @@
   "presets": ["react"],
   "plugins": [
     "emotion",
+    "syntax-dynamic-import",
     "transform-object-rest-spread"
   ]
 }

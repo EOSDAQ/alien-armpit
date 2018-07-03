@@ -12,8 +12,7 @@ import './common/css/global.styled';
 import reducer from './reducer/reducer';
 import theme from './common/css/theme';
 import i18n from './i18n';
-import Main from './main/Main';
-import Exchange from './exchange/Exchange';
+import pages from './pages';
 
 
 const history = createHistory();
@@ -31,8 +30,12 @@ const render = () => {
         <ThemeProvider theme={theme}>
           <ConnectedRouter history={history}>
             <Switch>
-              <Route exact path="/" component={Main} />
-              <Route path="/exchange" component={Exchange} />
+              {pages.map(pageProps => (
+                <Route
+                  key={pageProps.path.slice(1)}
+                  {...pageProps}
+                />
+              ))}
             </Switch>
           </ConnectedRouter>
         </ThemeProvider>

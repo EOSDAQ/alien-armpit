@@ -9,6 +9,7 @@ const entry = [
 const output = {
   path: path.join(__dirname, '/dist'),
   filename: '[name].bundle.js',
+  chunkFilename: '[name].[chunkhash].js',
 };
 
 const resolve = {
@@ -40,6 +41,26 @@ const plugins = [
   }),
 ];
 
+const optimization = {
+  splitChunks: {
+    chunks: 'async',
+    minSize: 30000,
+    minChunks: 1,
+    name: true,
+    cacheGroups: {
+      vendors: {
+        test: /[\\/]node_modules[\\/]/,
+        priority: -10,
+      },
+      default: {
+        minChunks: 2,
+        priority: -20,
+        reuseExistingChunk: true,
+      },
+    },
+  },
+};
+
 module.exports = {
   mode: 'development',
   entry,
@@ -53,6 +74,7 @@ module.exports = {
     contentPath: __dirname,
     historyApiFallback: true,
   },
+  optimization,
   devtool,
   module: {
     rules,
