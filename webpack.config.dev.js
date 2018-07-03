@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
-  './js/app.js',
+  './js/app.jsx',
 ];
 
 const output = {
@@ -44,13 +44,14 @@ module.exports = {
   mode: 'development',
   entry,
   output,
-  resolve,  
+  resolve,
   plugins,
   serve: {
     content: 'public',
     hot: true,
     port: 3001,
     contentPath: __dirname,
+    historyApiFallback: true,
   },
   devtool,
   module: {

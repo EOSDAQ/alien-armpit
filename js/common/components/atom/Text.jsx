@@ -13,7 +13,7 @@ import Box from './Box';
 
 function getFontSize({ fontSize }) {
   function buildCss(size) {
-    return `font-size: ${size};`;
+    return `font-size: ${size}px;`;
   }
   switch (fontSize) {
     case 'xs':

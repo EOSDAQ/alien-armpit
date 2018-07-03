@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Box from '../atom/Box';
 import { Container } from '../../../main/Main.styled';
 import Flex from '../atom/Flex';
@@ -9,9 +10,9 @@ class Header extends React.Component {
     super(props);
 
     this.navs = [
-      'Exchange',
-      'Wallet',
-      'Support',
+      { title: 'Exchange', link: '/exchange' },
+      { title: 'Wallet', link: '/wallet' },
+      { title: 'Support', link: '/support' },
     ];
   }
 
@@ -25,23 +26,29 @@ class Header extends React.Component {
           <Container py={8}>
             <Flex alignItems="center">
               <div>
-                <img
-                  src="/images/ic-logo.png"
-                  alt=""
-                  style={{
-                    height: 25,
-                    marginTop: 4,
-                  }}
-                />
+                <Link to="/">
+                  <img
+                    src="/images/ic-logo.png"
+                    alt=""
+                    style={{
+                      height: 25,
+                      marginTop: 4,
+                    }}
+                  />
+                </Link>
               </div>
               {this.navs.map(nav => (
-                <Text
-                  key={nav}
-                  ml={48}
-                  fontSize="sm"
+                <Link
+                  to={nav.link}
+                  key={nav.title}
                 >
-                  {nav}
-                </Text>
+                  <Text                    
+                    ml={48}
+                    fontSize="sm"
+                  >
+                    {nav.title}
+                  </Text>
+                </Link>
               ))}
             </Flex>
           </Container>

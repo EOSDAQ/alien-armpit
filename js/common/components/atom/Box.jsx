@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
-import { space, width, color, borders, maxWidth, minWidth, position, height, right, left, bottom, top } from 'styled-system';
+import { space, width, color, borders, maxWidth, minWidth, position, height, right, left, bottom, top, fontSize } from 'styled-system';
 
 const Box = styled.div`
   ${space}
@@ -15,6 +15,7 @@ const Box = styled.div`
   ${bottom}
   ${left}
   ${right}
+  ${fontSize}
   ${props => props.overflow && css`
     overflow: ${props.overflow};
   `}
