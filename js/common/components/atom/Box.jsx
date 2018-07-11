@@ -1,6 +1,28 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
-import { space, width, color, borders, maxWidth, minWidth, position, height, right, left, bottom, top, display, borderRadius, maxHeight } from 'styled-system';
+import {
+  space,
+  width,
+  color,
+  borders,
+  maxWidth,
+  minWidth,
+  position,
+  height,
+  left,
+  right,
+  top,
+  bottom,
+  display,
+  borderRadius,
+  maxHeight,
+  fontWeight,
+  lineHeight,
+  textAlign,
+  fontFamily,
+  boxShadow,
+} from 'styled-system';
+import { getFontSize } from './utils/utils';
 
 const Box = styled.div`
   ${space}
@@ -18,8 +40,13 @@ const Box = styled.div`
   ${right}
   ${fontSize}
   ${display}
-  ${borderRadius}
-  ${fontSize}
+  ${borderRadius}  
+  ${getFontSize}
+  ${fontWeight}
+  ${fontFamily}
+  ${lineHeight}
+  ${textAlign}
+  ${boxShadow}
   ${props => props.overflow && css`
     overflow: ${props.overflow};
   `}

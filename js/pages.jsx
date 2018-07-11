@@ -16,7 +16,6 @@ function asyncRoute(dynamicImport) {
 
     async setComponent() {
       const { default: component } = await dynamicImport();
-      console.log(component);
       this.setState({ component });
     }
 

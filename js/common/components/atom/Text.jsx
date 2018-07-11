@@ -10,6 +10,7 @@ import {
 } from 'styled-system';
 
 import Box from './Box';
+import { getFontSize } from './utils/utils';
 
 const Text = styled(Box)`
   ${fontSize}
