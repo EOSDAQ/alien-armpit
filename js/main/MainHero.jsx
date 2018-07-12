@@ -13,6 +13,7 @@ const MainHero = () => (
         <Box
           pt={100}
           px={48}
+          overflow="hidden"
           position="relative"
         >
           <Text
@@ -22,7 +23,7 @@ const MainHero = () => (
             mb={20}
             css={animations.appearY(animate)}
           >
-            이오스 기반 탈중앙화 거래소.
+            이오스 기반 탈중앙화 거래소 - 2018년 하반기 런칭
           </Text>
           <Text
             fontSize={52}
@@ -32,7 +33,11 @@ const MainHero = () => (
             textAlign="center"
             css={animations.appearY(animate, { delay: '200ms' })}
           >
-            에어드랍 토큰의 <i>신속한</i> 상장
+            {'에어드랍 토큰의 '}
+            <i>
+              신속한
+            </i>
+            {' 상장'}
           </Text>
           <Box mt={32}>
             <Text

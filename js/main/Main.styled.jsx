@@ -9,6 +9,7 @@ export const Section = props => (
     pt={[50, 80]}
     pb={[0, 80]}
     position="relative"
+    overflow="hidden"
     {...props}
   />
 );
@@ -47,7 +48,6 @@ export const Headline = ({ pose, children, ...props }) => (
     fontSize={[32, 48]}
     lineHeight={1.14}
     fontWeight="bold"
-    // textAlign="center"
     css={animations.appearY(pose, { delay: '300ms' })}
     {...props}
   >
@@ -63,7 +63,6 @@ export const SubHeadline = ({ children, pose, ...props }) => (
       fontSize={18}
       lineHeight={1.46}
       color="grey800"
-      // textAlign="center"
       mt={32}
       mb={60}
       {...props}
