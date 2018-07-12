@@ -11,13 +11,13 @@ import MainComing from './MainComing';
 
 const Main = () => (
   <div>
-    <MainDashboard />
     <MainComing />
     <Header />
+    <MainDashboard />
     <MainHero />
-    <MainHolder />
-    <MainTransaction />
     <MainWallet />
+    <MainTransaction />
+    <MainHolder />
     <Footer />
   </div>
 );

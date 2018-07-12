@@ -6,10 +6,41 @@ import {
   Headline,
   SubHeadline,
   ContentWrapper,
-  Content,
-  ContentTitle,
-  Description,
 } from './Main.styled';
+import { EOSFeature, Badge, BadgeLabel } from './MainHolder.styled';
+
+const eosFeatures = [
+  {
+    type: 'createAccount',
+    label: '이오스 계좌생성',
+    color: '#0943c8',
+    primary: 'white',
+  },
+  {
+    type: 'airdrop',
+    label: '에어드랍',
+    color: '#fff',
+    primary: '#08f',
+  },
+  {
+    type: 'ram',
+    label: 'RAM 거래',
+    color: '#454645',
+    primary: 'white',
+  },
+  {
+    type: 'staking',
+    label: '스테이킹',
+    color: '#082D66',
+    primary: 'white',
+  },
+  {
+    type: 'vote',
+    label: '투표',
+    color: '#e21c1c',
+    primary: 'white',
+  },
+];
 
 const MainHolder = () => (
   <Waypoint
@@ -17,41 +48,40 @@ const MainHolder = () => (
   >
     {({ intersectionRatio }) => {
       const animate = intersectionRatio > 0.3;
-
       return (
-        <Section bg="primary100">
+        <Section
+          bg="#f7fafa"
+          pb={200}
+        >
           <Container>
-            <Headline pose={animate}>
-              EOS에 특화된 거래소.
-              <br />
-              <b>
-                신속한 토큰 상장
-              </b>
-              과
-              <strong>
-                투표
-              </strong>
+            <Headline
+              pose={animate}
+            >
+              편리한 이오스 활용
             </Headline>
-            <SubHeadline pose={animate}>
-              EOS 홀더들은 EOS로부터 직접 Airdrop 토큰을 제공받습니다.
+            <SubHeadline
+              pose={animate}
+            >
+              이오스에 특화된 다양한 기능을 통해 이오스 생태계 구축에 기여할 수 있습니다.
             </SubHeadline>
-            <ContentWrapper pose={animate}>
-              <Content>
-                <ContentTitle>
-                  EOS Airdrop 토큰을 신속히 상장
-                </ContentTitle>
-                <Description>
-                  Airdrop 토큰이 EOSDAQ 개인 지갑에 할당되면 즉시 거래가 가능합니다. Airdrop 받은 본인의 토큰내역이 매주 업데이트 됩니다.
-                </Description>
-              </Content>
-              <Content>
-                <ContentTitle>
-                  편리한 투표
-                </ContentTitle>
-                <Description>
-                  건강한 EOS 생태계를 책임지는 Block Producer의 선출을 위한 투표를 지원합니다. Worker Proposal System을 통해 EOS 커뮤니티의 이익이 되는 애플리케이션을 투표할 수 있습니다.
-                </Description>
-              </Content>
+            <ContentWrapper
+              pose={animate}
+            >
+              {eosFeatures.map((feature, i) => (
+                <EOSFeature
+                  key={feature.type}
+                  animate={animate}
+                  delay={i * 100 + 1000}
+                  color={feature.color}
+                >
+                  <Badge
+                    type={feature.type}
+                  />
+                  <BadgeLabel color={feature.primary}>
+                    {feature.label}
+                  </BadgeLabel>
+                </EOSFeature>
+              ))}
             </ContentWrapper>
           </Container>
         </Section>

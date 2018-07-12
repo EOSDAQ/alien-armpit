@@ -55,6 +55,12 @@ injectGlobal`
     font-family: ${theme.fontFamily.sans};
   }
 
+  i {
+    font-style: italic;
+    font-weight: bold;
+    border-bottom: 2px dashed #00cee4;
+  }
+
   * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -132,7 +132,7 @@ class MainDashboard extends React.Component {
       <Box
         width={1}
         color="white"
-        bg="grey900"
+        bg="#141A2A"
       >
         <Box
           innerRef={(e) => {
@@ -168,7 +168,7 @@ class MainDashboard extends React.Component {
                     color="white"
                     fontFamily="menlo, consolas, monospace"
                     fontWeight="bold"
-                    fontSize={14}
+                    fontSize={12}
                     mx={2}
                   >
                     {coin.name}

@@ -18,9 +18,20 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav>
+      <nav
+        css={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 10,
+        }}
+        // style={{
+        //   position: 'sticky',
+        //   top: '0px',
+        //   zIndex: 10,
+        // }}
+      >
         <Box
-          bg="grey900"
+          bg="#141A2A"
           color="grey100"
         >
           <Container py={8}>
@@ -42,7 +53,7 @@ class Header extends React.Component {
                   to={nav.link}
                   key={nav.title}
                 >
-                  <Text                    
+                  <Text      
                     ml={48}
                     fontSize="sm"
                   >

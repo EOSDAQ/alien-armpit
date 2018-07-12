@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const htmlWebpackPlugin = require('html-webpack-plugin');
 const connect = require('koa-connect');
 const history = require('connect-history-api-fallback');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
   './js/app.jsx',
@@ -37,7 +37,7 @@ const devtool = 'cheap-module-eval-source-map';
 
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
-  new htmlWebpackPlugin({
+  new HtmlWebpackPlugin({
     template: 'static/index.html',
     inject: true,
   }),
@@ -71,7 +71,6 @@ module.exports = {
   plugins,
   serve: {
     content: 'public',
-    hot: true,
     port: 3001,
     contentPath: __dirname,
     add: (app) => {

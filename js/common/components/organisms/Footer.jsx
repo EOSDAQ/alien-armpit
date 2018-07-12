@@ -31,7 +31,7 @@ const socialLinks = [
 const Footer = () => (
   <footer>
     <Box
-      bg="grey900"
+      bg="#141A2A"
       color="grey400"
       py={8}
     >

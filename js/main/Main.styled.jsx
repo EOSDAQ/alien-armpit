@@ -1,24 +1,13 @@
 import React from 'react';
-import { keyframes } from 'react-emotion';
 import Text from '../common/components/atom/Text';
 import Box from '../common/components/atom/Box';
 import Flex from '../common/components/atom/Flex';
 import animations from '../common/css/animations';
 
-const appear = keyframes`
-  from {
-    opacity: 0;
-    transform: translate3d(0, 30px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-`;
-
 export const Section = props => (
   <Box
-    py={120}
+    pt={[50, 80]}
+    pb={[0, 80]}
     position="relative"
     {...props}
   />
@@ -33,40 +22,62 @@ export const Container = props => (
   />
 );
 
-export const Headline = ({ pose, children, ...props }) => (
-  <Text
-    {...props}
-    color="grey900"
-    fontSize={32}
-    lineHeight={1.3}
-    fontWeight={700}
-    css={animations.appearY(pose, { delay: '300ms' })}
-  >
-    {children}
-  </Text>
-);
-
-export const SubHeadline = ({ children, pose }) => (
+export const SectionLabel = ({ children, ...props }) => (
   <Box
-    maxWidth={600}
-    css={animations.appearY(pose, { delay: '600ms' })}
+    bg="#fafafa"
+    borderRadius={3}
+    display="inline-block"
+    px={8}
+    py={4}
+    mb={24}
   >
     <Text
-      fontSize={20}
-      lineHeight={1.46}
-      color="grey"
-      mt={16}
-      mb={40}
+      fontSize={14}
+      color="grey400"
+      {...props}
     >
       {children}
     </Text>
   </Box>
 );
 
-export const ContentWrapper = ({ pose, children }) => (
+export const Headline = ({ pose, children, ...props }) => (
+  <Text
+    color="grey800"
+    fontSize={[32, 48]}
+    lineHeight={1.14}
+    fontWeight="bold"
+    // textAlign="center"
+    css={animations.appearY(pose, { delay: '300ms' })}
+    {...props}
+  >
+    {children}
+  </Text>
+);
+
+export const SubHeadline = ({ children, pose, ...props }) => (
+  <Box
+    css={animations.appearY(pose, { delay: '600ms' })}
+  >
+    <Text
+      fontSize={18}
+      lineHeight={1.46}
+      color="grey800"
+      // textAlign="center"
+      mt={32}
+      mb={60}
+      {...props}
+    >
+      {children}
+    </Text>
+  </Box>
+);
+
+export const ContentWrapper = ({ pose, children, ...props }) => (
   <Flex
     flexWrap="wrap"
     mt={32}
+    {...props}
     css={animations.appearY(pose, { delay: '900ms' })}
   >
     {children}
@@ -76,7 +87,7 @@ export const ContentWrapper = ({ pose, children }) => (
 export const Content = props => (
   <Box
     width={['100%', 1 / 2]}
-    pr={[40, 80]}
+    pr={[0, 40]}
     mb={[80, 0]}
     flex="0 0 auto"
     {...props}
@@ -91,7 +102,7 @@ export const ContentTitle = props => (
     }}
   >
     <Text
-      fontSize={17}
+      fontSize={[18, 17]}
       fontWeight={600}
       color="grey800"
       {...props}
@@ -101,10 +112,10 @@ export const ContentTitle = props => (
 
 export const Description = props => (
   <Text
-    fontSize={16}
+    fontSize={[16, 14]}
     lineHeight={1.75}
-    color="grey600"
-    mt={12}
+    color="grey700"
+    mt={8}
     {...props}
   />
 );

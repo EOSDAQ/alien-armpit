@@ -3,6 +3,7 @@ import Box from '../common/components/atom/Box';
 import Text from '../common/components/atom/Text';
 import { Container } from './Main.styled';
 import Flex from '../common/components/atom/Flex';
+import Icon from '../common/components/atom/Icon';
 
 class MainComing extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class MainComing extends React.Component {
     return (
       <Box
         width={1}
-        bg="grey900"
+        bg="#141A2A"
         py={24}
       >
         <Container>
@@ -36,9 +37,14 @@ class MainComing extends React.Component {
             >
               2018년 하반기. 세계 최초 EOS 기반 탈중앙화 거래소가 런칭합니다.
             </Text>
-            <div onClick={() => this.onClose()}>
-              X
-            </div>
+            <Box onClick={() => this.onClose()}>
+              <Icon
+                type="close"
+                fill="white"
+                width={12}
+                height={12}
+              />
+            </Box>
           </Flex>
         </Container>
       </Box>
