@@ -1,8 +1,5 @@
 import styled from 'react-emotion';
-import {
-  SheetWrapper,
-} from '../common/components/molecules/Sheet';
-import { mixin } from '../common/css/typography';
+import { SheetWrapper } from '../../common/components/molecules/Sheet';
 
 export const ExchangeChartWrap = styled(SheetWrapper)`  
   height: 480px;

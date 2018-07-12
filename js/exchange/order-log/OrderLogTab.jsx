@@ -1,7 +1,7 @@
 import React from 'react';
-import { Tab } from './TickersBox.styled';
+import { OrderLogTabWrapper } from './OrderLogTab.styled';
 
-const TickersTab = (props) => {
+const OrderLogTab = (props) => {
   const {
     handleClickTab,
     isSelected,
@@ -9,7 +9,7 @@ const TickersTab = (props) => {
   } = props;
 
   return (
-    <Tab
+    <OrderLogTabWrapper
       href="#"
       onClick={(e) => {
         e.preventDefault();
@@ -22,8 +22,8 @@ const TickersTab = (props) => {
           {tabId}
         </span>
       </div>
-    </Tab>
+    </OrderLogTabWrapper>
   );
 };
 
-export default TickersTab;
+export default OrderLogTab;

@@ -19,7 +19,7 @@ const OrderTradeLog = (props) => {
         </OrderBookTradeLogHeader>
       </OrderBookTradeLogRow>
       { tradeLogList.map(log => (
-        <OrderBookTradeLogRow>
+        <OrderBookTradeLogRow key={log.price + log.amount}>
           <OrderBookTradeLogCell>
             {log.price}
           </OrderBookTradeLogCell>

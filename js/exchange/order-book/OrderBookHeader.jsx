@@ -10,7 +10,7 @@ const OrderBookHeader = () => (
   <SheetHeader>
     {
       mockHeadings.map(heading => (
-        <SheetHeading>
+        <SheetHeading key={heading}>
           <span>
             {heading}
           </span>

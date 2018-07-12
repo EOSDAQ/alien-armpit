@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from 'react-emotion';
 import Box from '../atom/Box';
-import Flex from '../atom/Flex';
-import Text from '../atom/Text';
 import { Input } from './Form';
 import { colors } from '../../css/theme';
 import {
   sheetRowHeight,
   sheetHeaderHeight,
-} from './SheetConstants';
-
+} from '../../constants/styleConstants';
 
 export const SheetWrapper = styled('div')`
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -49,14 +46,6 @@ export const SheetTab = styled('a')`
   }
 `;
 
-export const SheetSingleHeading = ({ text }) => (
-  <Text
-    fontSize="sm"
-  >
-    {text}
-  </Text>
-);
-
 export const SheetSearch = () => {
   const height = 29;
   return (
@@ -81,11 +70,10 @@ export const SheetHeader = styled('div')`
   background-color: #fff;
 `;
 
-export const SheetRow = props => (
-  <Flex height={sheetRowHeight} {...props}>
-    {props.children}
-  </Flex>
-);
+export const SheetRow = styled('div')`
+  display: flex;
+  height: ${sheetRowHeight}px;
+`;
 
 export const SheetCell = styled('div')`
   height: ${sheetRowHeight}px;

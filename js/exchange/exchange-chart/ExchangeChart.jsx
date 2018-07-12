@@ -5,7 +5,7 @@ import {
   ExchangeChartHeaderCoinName,
   ExchangeChartHeaderInfoMid,
   ExchangeChartHeaderInfo,
-} from './ExchangeChartBox.styled';
+} from './ExchangeChart.styled';
 
 const ExchangeChartBox = () => (
   <ExchangeChartWrap>

@@ -49,8 +49,6 @@ colors.red120 = '#fff7f7';
 colors.red130 = '#fff2f2';
 colors.red150 = '#f73627';
 
-console.log(colors);
-
 const theme = {
   // todo. add fontSizes and colors.
   colors,

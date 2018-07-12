@@ -1,22 +1,19 @@
 import React from 'react';
 import { Sticky, StickyContainer } from 'react-sticky';
 import { translate } from 'react-i18next';
-import Box from '../common/components/atom/Box';
-import Flex from '../common/components/atom/Flex';
 import Header from '../common/components/organisms/Header';
 import Footer from '../common/components/organisms/Footer';
-import TickersBox from '../common/components/organisms/TickersBox';
+import Tickers from '../common/components/organisms/tickers/Tickers';
 import OrderBook from './order-book/OrderBook';
-import ExchangeChartBox from './ExchangeChartBox';
-import ExchangeTradeBox from './ExchangeTradeBox';
-import ExchangeTradeLog from './ExchangeTradeLog';
+import ExchangeChart from './exchange-chart/ExchangeChart';
+import OrderForm from './order-form/OrderForm';
+import OrderLog from './order-log/OrderLog';
 import {
   ExchangeBody,
   ExchangeContainer,
   ExchangeLeftSide,
   ExchangeRightSide,
   ExchangeRightBottom,
-  ExchangeTradeBoxWrapper,
 } from './Exchange.styled';
 
 const Exchange = () => (
@@ -25,20 +22,17 @@ const Exchange = () => (
     <StickyContainer>
       <ExchangeContainer>
         <ExchangeLeftSide>
-          <TickersBox />
+          <Tickers />
           <OrderBook />
         </ExchangeLeftSide>
         <ExchangeRightSide>
           <Sticky>
             {({ style }) => (
               <div style={style}>
-                <ExchangeChartBox />
+                <ExchangeChart />
                 <ExchangeRightBottom>
-                  <ExchangeTradeBoxWrapper>
-                    <ExchangeTradeBox isBuy={true} />
-                    <ExchangeTradeBox />
-                  </ExchangeTradeBoxWrapper>
-                  <ExchangeTradeLog />
+                  <OrderForm />
+                  <OrderLog />
                 </ExchangeRightBottom>
               </div>
             )}

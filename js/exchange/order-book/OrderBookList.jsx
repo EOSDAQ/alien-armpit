@@ -14,8 +14,9 @@ const OrderBookList = (props) => {
   return (
     <OrderBookListWrapper>
       {
-        orderList.map(orderBunch => (
+        orderList.map((orderBunch, index) => (
           <OrderBookRow
+            key={maxAmount + index}
             orderBunch={orderBunch}
             maxAmount={maxAmount}
             isUpside={isUpside}

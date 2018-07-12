@@ -1,7 +1,7 @@
 import React from 'react';
-import { TradeLogTab } from './Exchange.styled';
+import { Tab } from './TickersTab.styled';
 
-const ExchangeTradeLogTab = (props) => {
+const TickersTab = (props) => {
   const {
     handleClickTab,
     isSelected,
@@ -9,7 +9,7 @@ const ExchangeTradeLogTab = (props) => {
   } = props;
 
   return (
-    <TradeLogTab
+    <Tab
       href="#"
       onClick={(e) => {
         e.preventDefault();
@@ -22,8 +22,8 @@ const ExchangeTradeLogTab = (props) => {
           {tabId}
         </span>
       </div>
-    </TradeLogTab>
+    </Tab>
   );
 };
 
-export default ExchangeTradeLogTab;
+export default TickersTab;
