@@ -11,12 +11,12 @@ import {
 import Box from './Box';
 
 const Flex = styled(Box)`
-  display: flex;
   ${flex}
   ${flexDirection}
   ${alignItems}
   ${justifyContent}
   ${flexWrap}
+  ${({ display }) => !display && 'display: flex;'}
 `;
 
 export const FlewRow = Flex;

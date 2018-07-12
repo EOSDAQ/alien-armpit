@@ -28,6 +28,9 @@ const Box = styled.div`
   ${props => props.pointerEvents && css`
     pointer-events: ${props.pointerEvents};
   `}
+  ${props => props.cursor && css`
+    cursor: ${props.cursor};
+  `}
 `
 
 export default Box;

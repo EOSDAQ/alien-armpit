@@ -24,11 +24,6 @@ class Header extends React.Component {
           top: 0,
           zIndex: 10,
         }}
-        // style={{
-        //   position: 'sticky',
-        //   top: '0px',
-        //   zIndex: 10,
-        // }}
       >
         <Box
           bg="#141A2A"
