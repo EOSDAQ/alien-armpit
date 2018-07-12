@@ -1,6 +1,7 @@
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const devConfig = require('./webpack.config.dev');
 
 const prodConfig = {
@@ -16,6 +17,10 @@ const prodConfig = {
         to: '.',
       },
     ]),
+    new CompressionWebpackPlugin({
+      test: /\.js/,
+      exclude: /\.js.map/,
+    }),
   ],
 };
 
