@@ -22,7 +22,7 @@ const rules = [
   {
     test: /\.(js|jsx)$/,
     loader: 'babel-loader',
-    exclude: [path.resolve(__dirname, 'node_modules')]
+    exclude: [path.resolve(__dirname, 'node_modules')],
   },
   {
     test: /\.svg$/,
