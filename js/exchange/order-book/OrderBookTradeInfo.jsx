@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  ExchangeOrderBookTradeInfoWrapper,
+  OrderBookTradeInfoWrapper,
   OrderBookTradeInfoAmountRow,
   OrderBookTradeInfoAmount,
   OrderBookTradeInfoUnit,
   OrderBookTradeInfoPriceRow,
   OrderBookTradeInfoPrice,
-} from './Exchange.styled';
+} from './OrderBookTradeInfo.styled';
 
-const ExchangeOrderBookTradeInfo = () => {
+const OrderBookTradeInfo = () => {
   return (
-    <ExchangeOrderBookTradeInfoWrapper>
+    <OrderBookTradeInfoWrapper>
       <OrderBookTradeInfoAmountRow>
         <dt>
           거래량(최근 24시간)
@@ -46,8 +46,8 @@ const ExchangeOrderBookTradeInfo = () => {
           { Number(192000).toLocaleString() }
         </OrderBookTradeInfoPrice>
       </OrderBookTradeInfoPriceRow>
-    </ExchangeOrderBookTradeInfoWrapper>
+    </OrderBookTradeInfoWrapper>
   );
 };
 
-export default ExchangeOrderBookTradeInfo;
+export default OrderBookTradeInfo;

@@ -2,6 +2,7 @@ import styled from 'react-emotion';
 import {
   SheetWrapper,
 } from '../common/components/molecules/Sheet';
+import { mixin } from '../common/css/typography';
 
 export const ExchangeChartWrap = styled(SheetWrapper)`  
   height: 480px;

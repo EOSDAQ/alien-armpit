@@ -6,51 +6,45 @@ import Flex from '../common/components/atom/Flex';
 import Header from '../common/components/organisms/Header';
 import Footer from '../common/components/organisms/Footer';
 import TickersBox from '../common/components/organisms/TickersBox';
-import ExchangeOrderBook from './ExchangeOrderBook';
+import OrderBook from './order-book/OrderBook';
 import ExchangeChartBox from './ExchangeChartBox';
 import ExchangeTradeBox from './ExchangeTradeBox';
 import ExchangeTradeLog from './ExchangeTradeLog';
 import {
   ExchangeBody,
-  ExchangeLeftSideWrap,
+  ExchangeContainer,
+  ExchangeLeftSide,
+  ExchangeRightSide,
+  ExchangeRightBottom,
   ExchangeTradeBoxWrapper,
 } from './Exchange.styled';
-import {
-  bottomBlanks,
-} from './Exchange.styled.constants';
 
 const Exchange = () => (
   <ExchangeBody>
     <Header />
     <StickyContainer>
-      <Flex
-        width={1280}
-        ml="auto"
-        mr="auto"
-        pt={24}
-        pb={bottomBlanks}
-      >
-        <ExchangeLeftSideWrap>
+      <ExchangeContainer>
+        <ExchangeLeftSide>
           <TickersBox />
-          <ExchangeOrderBook />
-        </ExchangeLeftSideWrap>
-        <Flex width={740}>
+          <OrderBook />
+        </ExchangeLeftSide>
+        <ExchangeRightSide>
           <Sticky>
             {({ style }) => (
               <div style={style}>
                 <ExchangeChartBox />
-                <Flex width={740} mt={12} >
+                <ExchangeRightBottom>
                   <ExchangeTradeBoxWrapper>
                     <ExchangeTradeBox isBuy={true} />
                     <ExchangeTradeBox />
                   </ExchangeTradeBoxWrapper>
                   <ExchangeTradeLog />
-                </Flex>
+                </ExchangeRightBottom>
               </div>
             )}
           </Sticky>
-        </Flex>
-      </Flex>
+        </ExchangeRightSide>
+      </ExchangeContainer>
     </StickyContainer>
     <Footer />
   </ExchangeBody>

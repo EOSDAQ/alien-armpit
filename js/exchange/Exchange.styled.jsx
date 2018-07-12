@@ -2,133 +2,48 @@ import styled from 'react-emotion';
 import { colors } from '../common/css/theme';
 import {
   SheetWrapper,
-  SheetRow,
   SheetTab,
   SheetCell,
 } from '../common/components/molecules/Sheet';
+import {
+  bottomBlanks,
+} from './Exchange.styled.constants';
+import { mixin } from '../common/css/typography';
 
 const exchangeLeftWidth = 530;
 const exchangeRightWidth = 740;
 const tradeToatalUnitWidth = 20;
 const tradeBoxWidth = 229;
 
-export const tradeLabelStyle = `
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(120, 122, 126, 0.82);
-  display: block;
-`;
-
-export const tradeNumStyle = `
-  font-size: 13px;
-  font-weight: 500;
-  colors: ${colors.black720};  
-`;
-
-export const tradeTradeUnitStyle = `
-  font-size: 13px;
-  color: ${colors.grey390};
-`;
-
 export const ExchangeBody = styled('div')`
   background-color: ${colors.grey130};  
 `;
 
-export const ExchangeLeftSideWrap = styled('div')`
+export const ExchangeContainer = styled('div')`
+  display: flex;
+  margin: 0 auto;
+  width: 1280px;
+  padding: 24px 0 ${bottomBlanks};
+`;
+
+export const ExchangeLeftSide = styled('div')`
   display: flex;
   width: ${exchangeLeftWidth}px;
   flex-direction: column;  
   margin-right: 12px;
 `;
 
-export const ExchangeOrderBookWrapper = styled(SheetWrapper)`
+export const ExchangeRightSide = styled('div')`
+  display: flex;
+  width: ${exchangeRightWidth}px;
+`;
+
+export const ExchangeRightBottom = styled('div')`
+  display: flex;
+  width: ${exchangeRightWidth}px;
   margin-top: 12px;
 `;
 
-export const ExchangeOrderBookAmount = styled(SheetRow)`
-  position: relative;
-  justify-content: ${({ isUpside }) => (isUpside ? 'flex-end' : '')};
-  flex: 1;
-`;
-
-export const ExchangeOrderBookAmountNum = styled('div')`
-  position: absolute;
-  top: 0;
-  font-size: 12px;
-  padding: ${({ isUpside }) => (isUpside ? '0 10px 0 0' : '0 0 0 10px')}
-`;
-
-export const ExchangeOrderBookAmountBar = styled('div')`
-  display: flex;
-  height: 20px;
-  width: calc(${({ width }) => (width)}% - 10px);
-  background-color: ${({ isUpside }) => (isUpside ? colors.blue190 : colors.red130)};
-  margin-top: 7px;
-`;
-
-export const ExchangeOrderBookPrice = styled(SheetRow)`
-  flex: 1;  
-  background-color: ${({ isUpside }) => (isUpside ? colors.blue120 : colors.red120)};  
-  font-size: 12px;  
-`;
-
-export const ExchangeOrderBookAskingPrice = styled('span')`
-  display: flex;
-  width: 70%;
-  justify-content: flex-end;
-  padding: 0 10px;
-  font-weight: 700;
-`;
-
-export const ExchangeOrderBookChange = styled('span')`
-  display: flex;
-  width: 30%;
-  padding-right: 10px;
-  justify-content: flex-end;
-`;
-
-export const ExchangeOrderBookTradeInfoWrapper = styled('div')`
-  display: flex;  
-  flex-direction: column; 
-  flex-basis: 33.33%; 
-  padding: 0 12px;
-`;
-
-export const OrderBookTradeInfoAmountRow = styled('div')`
-  margin-top: 30px;
-  dt {
-    ${tradeLabelStyle}
-  }
-`;
-
-export const OrderBookTradeInfoAmount = styled('div')`
-  ${tradeNumStyle}
-  text-align: right;
-  margin-top: 6px;
-`;
-
-export const OrderBookTradeInfoUnit = styled('span')`
-  ${tradeTradeUnitStyle}
-  padding-left: 4px;
-`;
-
-export const OrderBookTradeInfoPriceRow = styled('div')`
-  margin-top: 20px;
-  dt {
-    ${tradeLabelStyle}
-  }
-`;
-
-export const OrderBookTradeInfoPrice = styled('div')`
-  ${tradeNumStyle}
-  display: inline-block;
-  padding-left: 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  float: right;
-  text-align: right;
-  vertical-align: top;
-  height: 20px;
-`;
 
 export const ExchangeTradeBoxWrapper = styled(SheetWrapper)`
   display: flex;
@@ -168,7 +83,7 @@ export const TradeInput = styled('div')`
   }
 
   label {
-    ${tradeLabelStyle}
+    ${mixin.tradeLabel}
   }
 
   div {
@@ -195,7 +110,7 @@ export const TradeBoxBottom = styled('div')`
 
 export const TradeTotal = styled('div')`
   label {
-    ${tradeLabelStyle}
+    ${mixin.tradeLabel}
   }
 `;
 
@@ -261,88 +176,4 @@ export const TradeLogAmount = styled(SheetCell)`
 
 export const TradeLogTime = styled(SheetCell)`
   ${TradeLogCellStyle}
-`;
-
-export const OrderBookTradeLog = styled('div')`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-`;
-
-export const OrderBookTradeLogHeader = styled('div')`
-  display: flex;
-  height: 27px;
-  flex: 1;
-  flex-basis: 50%;
-  text-align: center;
-  font-size: 13px;
-  color: ${colors.black650};
-  background-color: ${colors.grey140};
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-right: 0;
-
-  &:first-child {
-    border-left: 0;
-  }
-`;
-
-export const OrderBookTradeLogRow = styled('div')`
-  display: flex;
-`;
-
-export const OrderBookTradeLogCell = styled('div')`
-  display: flex;
-  flex: 1;
-  flex-basis: 50%;
-  height: 30px;
-  text-align: right;
-  font-size: 12px;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 10px;
-  border-left: 1px solid rgba(0, 0, 0, 0.12);
-
-  &:first-child {
-    border-left: 0;
-  }
-`;
-
-const orderBookFooterHeight = 42;
-const orderBookFooterContentsHeight = 23;
-const orderBookFooterVerticalPadding = (orderBookFooterHeight - orderBookFooterContentsHeight) / 2;
-export const OrderBookFooterCell = styled('div')`
-  flex: 1;  
-  background-color: ${colors.grey140};
-  height: ${orderBookFooterHeight}px;
-  padding: ${orderBookFooterVerticalPadding}px 0;
-  text-align: center;
-  font-size: 14px;
-  color: ${colors.black650};
-  font-weight: 500;
-  align-items: center;
-  flex-basis: 33.33%;
-
-  div {
-    width: 100%;
-    height: ${orderBookFooterContentsHeight}px;
-    line-height: ${orderBookFooterContentsHeight}px;
-    border-left: 1px solid ${colors.black220};
-    border-right: 1px solid ${colors.black220}; 
-    padding: 0 12px;
-
-  }
-`;
-
-export const OrderBookFooterCellLeft = styled(OrderBookFooterCell)`
-  text-align: right;
-
-  div {
-    border: 0;  
-  }
-`;
-
-export const OrderBookFooterCellRight = styled(OrderBookFooterCellLeft)`
-  text-align: left;
 `;
