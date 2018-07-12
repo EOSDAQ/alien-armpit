@@ -28,9 +28,9 @@ const rules = [
     test: /\.svg$/,
     use: [
       { loader: 'babel-loader' },
-      { loader: 'react-svg-loader' }
-    ]
-  }
+      { loader: 'react-svg-loader' },
+    ],
+  },
 ];
 
 const devtool = 'cheap-module-eval-source-map';

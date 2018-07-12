@@ -74,6 +74,7 @@ class MainDashboard extends React.Component {
 
   appendItemToBelt() {
     if (!this.item) return;
+
     const rect = this.item.getBoundingClientRect();
     const { children } = this.item;
 
@@ -83,7 +84,7 @@ class MainDashboard extends React.Component {
     let shouldUpdateCoins = false;
     let appendCoin = true;
 
-    [...children].forEach((child) => {
+    Array.from(children).forEach((child) => {
       const childRect = child.getBoundingClientRect();
       if (childRect.right > rect.right + 200) {
         appendCoin = false;
