@@ -65,6 +65,7 @@ injectGlobal`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     box-sizing: border-box;
+    word-break: keep-all;
   }
 
   // eosdaq custom.
