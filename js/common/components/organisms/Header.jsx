@@ -10,12 +10,9 @@ class Header extends React.Component {
     super(props);
 
     this.navs = [
-      // { title: 'Exchange', link: '/exchange' },
-      // { title: 'Wallet', link: '/wallet' },
-      // { title: 'Support', link: '/support' },
-      { title: 'Exchange', link: '' },
-      { title: 'Wallet', link: '' },
-      { title: 'Support', link: '' },
+      { title: 'Exchange', link: '/exchange' },
+      { title: 'Wallet', link: '/wallet' },
+      { title: 'Support', link: '/support' },
     ];
   }
 
