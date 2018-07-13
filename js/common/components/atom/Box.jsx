@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { css } from 'react-emotion';
 import {
   space,
@@ -16,13 +15,13 @@ import {
   display,
   borderRadius,
   maxHeight,
+  fontSize,
   fontWeight,
   lineHeight,
   textAlign,
   fontFamily,
   boxShadow,
 } from 'styled-system';
-import { getFontSize } from './utils/utils';
 
 const Box = styled.div`
   ${space}
@@ -38,10 +37,9 @@ const Box = styled.div`
   ${bottom}
   ${left}
   ${right}
-  ${fontSize}
   ${display}
   ${borderRadius}  
-  ${getFontSize}
+  ${fontSize}
   ${fontWeight}
   ${fontFamily}
   ${lineHeight}

@@ -3,8 +3,6 @@ const webpack = require('webpack');
 const connect = require('koa-connect');
 const history = require('connect-history-api-fallback');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const connect = require('koa-connect');
-const history = require('connect-history-api-fallback');
 
 const entry = [
   './js/app.jsx',

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 import {
@@ -10,7 +9,6 @@ import {
 } from 'styled-system';
 
 import Box from './Box';
-import { getFontSize } from './utils/utils';
 
 const Text = styled(Box)`
   ${fontSize}
