@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import Waypoint from '../common/components/molecules/Waypoint';
 import {
   Section,
@@ -42,52 +43,56 @@ const eosFeatures = [
   },
 ];
 
-const MainHolder = () => (
-  <Waypoint
-    steps={3}
-  >
-    {({ intersectionRatio }) => {
-      const animate = intersectionRatio > 0.3;
-      return (
-        <Section
-          bg="#f7fafa"
-          pb={200}
-        >
-          <Container>
-            <Headline
-              pose={animate}
-            >
-              편리한 이오스 활용
-            </Headline>
-            <SubHeadline
-              pose={animate}
-            >
-              이오스에 특화된 다양한 기능을 통해 이오스 생태계 구축에 기여할 수 있습니다.
-            </SubHeadline>
-            <ContentWrapper
-              pose={animate}
-            >
-              {eosFeatures.map((feature, i) => (
-                <EOSFeature
-                  key={feature.type}
-                  animate={animate}
-                  delay={i * 100 + 1000}
-                  color={feature.color}
-                >
-                  <Badge
-                    type={feature.type}
-                  />
-                  <BadgeLabel color={feature.primary}>
-                    {feature.label}
-                  </BadgeLabel>
-                </EOSFeature>
-              ))}
-            </ContentWrapper>
-          </Container>
-        </Section>
-      );
-    }}
-  </Waypoint>
-);
+const MainHolder = (props) => {
+  const { t } = props;
 
-export default MainHolder;
+  return (
+    <Waypoint
+      steps={3}
+    >
+      {({ intersectionRatio }) => {
+        const animate = intersectionRatio > 0.3;
+        return (
+          <Section
+            bg="#f7fafa"
+            pb={200}
+          >
+            <Container>
+              <Headline
+                pose={animate}
+              >
+                {t('utility.title')}
+              </Headline>
+              <SubHeadline
+                pose={animate}
+              >
+                {t('utility.desc')}
+              </SubHeadline>
+              <ContentWrapper
+                pose={animate}
+              >
+                {eosFeatures.map((feature, i) => (
+                  <EOSFeature
+                    key={feature.type}
+                    animate={animate}
+                    delay={i * 100 + 1000}
+                    color={feature.color}
+                  >
+                    <Badge
+                      type={feature.type}
+                    />
+                    <BadgeLabel color={feature.primary}>
+                      {t(`utility.${feature.type}`)}
+                    </BadgeLabel>
+                  </EOSFeature>
+                ))}
+              </ContentWrapper>
+            </Container>
+          </Section>
+        );
+      }}
+    </Waypoint>
+  );
+};
+
+export default translate('main')(MainHolder);

@@ -1,9 +1,11 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Box from '../atom/Box';
 import { Container } from '../../../main/Main.styled';
 import Flex from '../atom/Flex';
 import Text from '../atom/Text';
+import Language from './language/Language';
 
 class Header extends React.Component {
   constructor(props) {
@@ -13,13 +15,15 @@ class Header extends React.Component {
       // { title: 'Exchange', link: '/exchange' },
       // { title: 'Wallet', link: '/wallet' },
       // { title: 'Support', link: '/support' },
-      { title: 'Exchange', link: '' },
-      { title: 'Wallet', link: '' },
-      { title: 'Support', link: '' },
+      { title: 'exchange', link: '' },
+      { title: 'wallet', link: '' },
+      { title: 'support', link: '' },
     ];
   }
 
   render() {
+    const { t } = this.props;
+
     return (
       <nav
         css={{
@@ -56,10 +60,11 @@ class Header extends React.Component {
                     ml={48}
                     fontSize="sm"
                   >
-                    {nav.title}
+                    {t(`header.${nav.title}`)}
                   </Text>
                 </Link>
               ))}
+              <Language />
             </Flex>
           </Container>
         </Box>
@@ -68,4 +73,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default translate('common')(Header);
