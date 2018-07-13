@@ -40,6 +40,11 @@ const plugins = [
   new HtmlWebpackPlugin({
     template: 'static/index.html',
     inject: true,
+    minify: {
+      removeComments: true,
+      collapseWhitespace: true,
+    },
+    production: process.argv.indexOf('-p') >= 0,
   }),
 ];
 
@@ -63,6 +68,11 @@ const optimization = {
   },
 };
 
+const externals = {
+  react: 'React',
+  'react-dom': 'ReactDOM',
+};
+
 module.exports = {
   mode: 'development',
   entry,
@@ -77,6 +87,7 @@ module.exports = {
       app.use(connect(history()));
     },
   },
+  externals,
   optimization,
   devtool,
   module: {
