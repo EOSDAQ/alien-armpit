@@ -27,15 +27,18 @@ const Exchange = () => (
         </ExchangeLeftSide>
         <ExchangeRightSide>
           <Sticky>
-            {({ style }) => (
-              <div style={style}>
-                <ExchangeChart />
-                <ExchangeRightBottom>
-                  <OrderForm />
-                  <OrderLog />
-                </ExchangeRightBottom>
-              </div>
-            )}
+            {({ style }) => {
+              console.log(style);
+              return (
+                <div style={style}>
+                  <ExchangeChart />
+                  <ExchangeRightBottom>
+                    <OrderForm />
+                    <OrderLog />
+                  </ExchangeRightBottom>
+                </div>
+              )
+            }}
           </Sticky>
         </ExchangeRightSide>
       </ExchangeContainer>

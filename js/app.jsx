@@ -46,7 +46,7 @@ const render = () => {
 
 if (module.hot) {
   module.hot.accept(
-    ['./main/Main.jsx'],
+    ['./pages.jsx'],
     render,
   );
 }
