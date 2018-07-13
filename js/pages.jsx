@@ -31,10 +31,10 @@ function asyncRoute(dynamicImport) {
 }
 
 const pages = [
-  {
-    path: '/exchange',
-    component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
-  },
+  // {
+    // path: '/exchange',
+    // component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
+  // },
   {
     path: '/',
     component: asyncRoute(() => import(/* webpackChunkName: "landing" */ './main/Main')),
