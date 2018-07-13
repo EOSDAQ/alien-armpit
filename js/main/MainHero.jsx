@@ -11,12 +11,12 @@ const MainHero = () => (
       const animate = isIntersecting;
 
       return (
-        <Box>
+        <Box
+          overflow="hidden"
+        >
           <Box
             pt={[40, 100]}
             px={48}
-            overflow="hidden"
-            position="relative"
           >
             <Text
               textAlign="center"
@@ -29,7 +29,7 @@ const MainHero = () => (
               이오스 기반 탈중앙화 거래소 - 2018년 하반기 런칭
             </Text>
             <Text
-              fontSize={[44, 52]}
+              fontSize={[48, 60]}
               color="grey900"
               fontWeight={400}
               lineHeight={1.3}
@@ -60,6 +60,7 @@ const MainHero = () => (
           <Box
             position="relative"
             overflow="hidden"
+            mx={[-100, 0]}
           >
             <Box
               position="absolute"
@@ -88,10 +89,10 @@ const MainHero = () => (
             />
             <Image
               src="/images/eosdaq-mac.png"
-              width={[800, 1000]}
+              width={['100%', '100%', '100%', 1000]}
               mt={[40, 80]}
               mb={-80}
-              mx={[-40, 'auto']}
+              mx="auto"
               display="block"
             />
           </Box>
