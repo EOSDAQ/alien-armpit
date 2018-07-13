@@ -1,4 +1,6 @@
-import styled, { css } from 'react-emotion';
+import React from 'react';
+import styled,
+{ css } from 'react-emotion';
 import {
   space,
   width,
@@ -8,19 +10,13 @@ import {
   minWidth,
   position,
   height,
-  left,
   right,
-  top,
+  left,
   bottom,
+  top,
   display,
   borderRadius,
   maxHeight,
-  fontSize,
-  fontWeight,
-  lineHeight,
-  textAlign,
-  fontFamily,
-  boxShadow,
 } from 'styled-system';
 
 const Box = styled.div`
@@ -38,25 +34,19 @@ const Box = styled.div`
   ${left}
   ${right}
   ${display}
-  ${borderRadius}  
-  ${fontSize}
-  ${fontWeight}
-  ${fontFamily}
-  ${lineHeight}
-  ${textAlign}
-  ${boxShadow}
-  ${props => props.overflow && css`
-    overflow: ${props.overflow};
+  ${borderRadius}
+  ${({ overflow }) => overflow && css`
+    overflow: ${overflow};
   `}
-  ${props => props.userSelect && css`
-    user-select: ${props.userSelect};
+  ${({ userSelect }) => userSelect && css`
+    user-select: ${userSelect};
   `}
-  ${props => props.pointerEvents && css`
-    pointer-events: ${props.pointerEvents};
+  ${({ pointerEvents }) => pointerEvents && css`
+    pointer-events: ${pointerEvents};
   `}
-  ${props => props.cursor && css`
-    cursor: ${props.cursor};
+  ${({ cursor }) => cursor && css`
+    cursor: ${cursor};
   `}
-`
+`;
 
 export default Box;
