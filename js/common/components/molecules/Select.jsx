@@ -43,9 +43,12 @@ class Select extends React.PureComponent {
   }
 
   onDocumentClick(e) {
+    const { showDropdown } = this.state;
     const contains = this.ref.contains(e.target);
+    const insideSelected = this.selectedRef.contains(e.target);
+
     this.setState({
-      showDropdown: contains,
+      showDropdown: (showDropdown && insideSelected) ? !contains : contains,
     });
   }
 
@@ -55,10 +58,12 @@ class Select extends React.PureComponent {
 
     return (
       <div
-        ref={(e) => { this.ref = e }}
+        ref={(e) => { this.ref = e; }}
         style={{ position: 'relative' }}
       >
-        {children}
+        <div ref={(e) => { this.selectedRef = e; }}>
+          {children}
+        </div>
         {showDropdown && (
           <SelectOptions>
             {options.map(option => option)}
