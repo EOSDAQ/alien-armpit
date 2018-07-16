@@ -12,10 +12,6 @@ const SelectOptions = styled.div`
   box-shadow: 0px 2px 6px rgba(0, 0, 0, .1);
 `;
 
-const SelectOption = styled.div`
-  padding: 8px 4px;
-`
-
 class Select extends React.PureComponent {
   constructor(props) {
     super(props);
