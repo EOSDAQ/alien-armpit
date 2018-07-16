@@ -1,9 +1,11 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Box from '../atom/Box';
 import { Container } from '../../../main/Main.styled';
 import Flex from '../atom/Flex';
 import Text from '../atom/Text';
+import Language from './language/Language';
 
 class Header extends React.Component {
   constructor(props) {
@@ -13,13 +15,15 @@ class Header extends React.Component {
       // { title: 'Exchange', link: '/exchange' },
       // { title: 'Wallet', link: '/wallet' },
       // { title: 'Support', link: '/support' },
-      { title: 'Exchange', link: '' },
-      { title: 'Wallet', link: '' },
-      { title: 'Support', link: '' },
+      { title: 'exchange', link: '' },
+      { title: 'wallet', link: '' },
+      { title: 'support', link: '' },
     ];
   }
 
   render() {
+    const { t } = this.props;
+
     return (
       <nav
         css={{
@@ -33,8 +37,13 @@ class Header extends React.Component {
           color="grey100"
         >
           <Container py={8}>
-            <Flex alignItems="center">
-              <div>
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Flex
+                alignItems="center"
+              >
                 <Link to="/">
                   <img
                     src="/images/ic-logo.png"
@@ -45,21 +54,23 @@ class Header extends React.Component {
                     }}
                   />
                 </Link>
-              </div>
-              {this.navs.map(nav => (
-                <Link
-                  to={nav.link}
-                  key={nav.title}
-                  style={{ cursor: nav.link ? '' : 'not-allowed' }}
-                >
+                {this.navs.map(nav => (
                   <Text
                     ml={48}
-                    fontSize="sm"
+                    fontSize={14}
+                    display={['none', 'block']}
                   >
-                    {nav.title}
+                    <Link
+                      to={nav.link}
+                      key={nav.title}
+                      style={{ cursor: nav.link ? '' : 'not-allowed' }}
+                    >
+                      {t(`header.${nav.title}`)}
+                    </Link>
                   </Text>
-                </Link>
-              ))}
+                ))}
+              </Flex>
+              <Language />
             </Flex>
           </Container>
         </Box>
@@ -68,4 +79,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default translate('common')(Header);

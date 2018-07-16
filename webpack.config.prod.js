@@ -6,6 +6,7 @@ const devConfig = require('./webpack.config.dev');
 const prodConfig = {
   mode: 'production',
   devtool: 'source-map',
+  externals: '',
   plugins: [
     new CleanWebpackPlugin([
       'dist',
@@ -19,4 +20,6 @@ const prodConfig = {
   ],
 };
 
-module.exports = merge(devConfig, prodConfig);
+const merged = merge(devConfig, prodConfig);
+console.log(merged.externals);
+module.exports = merged;

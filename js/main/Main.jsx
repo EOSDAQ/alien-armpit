@@ -1,5 +1,4 @@
 import React from 'react';
-import { translate } from 'react-i18next';
 import Footer from '../common/components/organisms/Footer';
 import Header from '../common/components/organisms/Header';
 import MainHolder from './MainHolder';
@@ -22,4 +21,4 @@ const Main = () => (
   </div>
 );
 
-export default translate(['main'])(Main);
+export default Main;
