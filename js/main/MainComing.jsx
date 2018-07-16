@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import Box from '../common/components/atom/Box';
 import Text from '../common/components/atom/Text';
 import { Container } from './Main.styled';
@@ -20,6 +21,7 @@ class MainComing extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     const { close } = this.state;
     if (close) return null;
 
@@ -35,7 +37,7 @@ class MainComing extends React.Component {
               fontSize={14}
               color="grey200"
             >
-              2018년 하반기. 세계 최초 EOS 기반 탈중앙화 거래소가 런칭합니다.
+              {t('coming.title')}
             </Text>
             <Box onClick={() => this.onClose()}>
               <Icon
@@ -52,4 +54,4 @@ class MainComing extends React.Component {
   }
 }
 
-export default MainComing;
+export default translate('main')(MainComing);
