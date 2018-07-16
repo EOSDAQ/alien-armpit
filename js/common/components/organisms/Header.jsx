@@ -37,8 +37,13 @@ class Header extends React.Component {
           color="grey100"
         >
           <Container py={8}>
-            <Flex alignItems="center">
-              <div>
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Flex
+                alignItems="center"
+              >
                 <Link to="/">
                   <img
                     src="/images/ic-logo.png"
@@ -49,21 +54,21 @@ class Header extends React.Component {
                     }}
                   />
                 </Link>
-              </div>
-              {this.navs.map(nav => (
-                <Link
-                  to={nav.link}
-                  key={nav.title}
-                  style={{ cursor: nav.link ? '' : 'not-allowed' }}
-                >
+                {this.navs.map(nav => (
                   <Text
                     ml={48}
-                    fontSize="sm"
+                    fontSize={14}
                   >
-                    {t(`header.${nav.title}`)}
+                    <Link
+                      to={nav.link}
+                      key={nav.title}
+                      style={{ cursor: nav.link ? '' : 'not-allowed' }}
+                    >
+                      {t(`header.${nav.title}`)}
+                    </Link>
                   </Text>
-                </Link>
-              ))}
+                ))}
+              </Flex>
               <Language />
             </Flex>
           </Container>

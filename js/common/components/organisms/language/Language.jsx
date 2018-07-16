@@ -3,6 +3,8 @@ import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions } from '../../../../reducer/language/languageReducer';
 import LanguageDropbox from './LanguageDropbox';
+import Icon from '../../atom/Icon';
+import Button from '../../atom/Button';
 
 class Language extends Component {
   constructor(props) {
@@ -29,21 +31,32 @@ class Language extends Component {
       closeDropbox,
       dropboxLanguageList,
     } = this.props;
+
     const { language } = i18n;
 
     return (
       <div>
-        <button
+        <Button
           type="button"
           onClick={() => { openDropbox(); }}
         >
-          {language}
-        </button>
-        { isDropboxOpen ? <LanguageDropbox
-            closeDropbox={closeDropbox}
-            dropboxLanguageList={dropboxLanguageList}
-            changeLanguage={(lang) => { this.changeLanguage(lang); }}
-          /> : null
+          <Icon
+            width={16}
+            height={16}
+            fill="#aaa"
+            type="language"
+          />
+          {language === 'ko' ? '한국어' : 'English'}
+        </Button>
+        { isDropboxOpen
+          ? (
+            <LanguageDropbox
+              closeDropbox={closeDropbox}
+              dropboxLanguageList={dropboxLanguageList}
+              changeLanguage={(lang) => { this.changeLanguage(lang); }}
+            />
+          )
+          : null
         }
       </div>
     );

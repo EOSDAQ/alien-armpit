@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import enhanceWithClickOutside from 'react-click-outside';
+import Button from '../../atom/Button';
 
 class LanguageDropbox extends Component {
   handleClickOutside() {
@@ -16,13 +17,13 @@ class LanguageDropbox extends Component {
       <div>
         {
           dropboxLanguageList.map(lang => (
-            <button
+            <Button
               key={lang}
               type="button"
               onClick={() => { changeLanguage(lang); }}
             >
               {lang}
-            </button>
+            </Button>
           ))
         }
       </div>
