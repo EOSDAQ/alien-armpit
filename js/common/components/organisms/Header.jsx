@@ -58,6 +58,7 @@ class Header extends React.Component {
                   <Text
                     ml={48}
                     fontSize={14}
+                    display={['none', 'block']}
                   >
                     <Link
                       to={nav.link}
