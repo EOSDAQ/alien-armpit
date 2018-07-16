@@ -22,7 +22,7 @@ class Select extends React.PureComponent {
     this.onDocumentClick = this.onDocumentClick.bind(this);
 
     this.state = {
-      showDropdown: true,
+      showDropdown: false,
     };
   }
 
