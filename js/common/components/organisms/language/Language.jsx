@@ -2,33 +2,22 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions } from '../../../../reducer/language/languageReducer';
-import LanguageDropbox from './LanguageDropbox';
-import Icon from '../../atom/Icon';
-import Button from '../../atom/Button';
+import LanguageSelectedItem from './LangaugeSelectedItem';
+import LanguageOption from './LanguageOption';
+import Select from '../../molecules/Select';
 
 class Language extends Component {
-  constructor(props) {
-    super();
-    const { i18n } = props;
-  }
-
   changeLanguage(lang) {
-    const {
-      i18n,
-      updateDropboxLanguageList,
-      closeDropbox,
-    } = this.props;
+    const { i18n } = this.props;
     i18n.changeLanguage(lang);
-    closeDropbox();
-    updateDropboxLanguageList(lang);
   }
 
   render() {
     const {
       i18n,
-      isDropboxOpen,
-      openDropbox,
-      closeDropbox,
+      // isDropboxOpen,
+      // openDropbox,
+      // closeDropbox,
       dropboxLanguageList,
     } = this.props;
 
@@ -36,28 +25,21 @@ class Language extends Component {
 
     return (
       <div>
-        <Button
-          type="button"
-          onClick={() => { openDropbox(); }}
-        >
-          <Icon
-            width={16}
-            height={16}
-            fill="#aaa"
-            type="language"
-          />
-          {language === 'ko' ? '한국어' : 'English'}
-        </Button>
-        { isDropboxOpen
-          ? (
-            <LanguageDropbox
-              closeDropbox={closeDropbox}
-              dropboxLanguageList={dropboxLanguageList}
-              changeLanguage={(lang) => { this.changeLanguage(lang); }}
+        <Select
+          value={language}
+          options={dropboxLanguageList.map(option => (
+            <LanguageOption
+              key={option}
+              option={option}
+              language={language}
+              onClick={() => this.changeLanguage(option)} 
             />
-          )
-          : null
-        }
+          ))}
+        >
+          <LanguageSelectedItem
+            language={language}
+          />
+        </Select>
       </div>
     );
   }
@@ -67,9 +49,10 @@ const mapStateToProps = state => ({
   ...state.language,
 });
 
+// dropdown을 redux state로 관리해야할까? 채동님과 논의해보기
 const mapDispatchToProps = dispatch => ({
-  openDropbox: () => { dispatch(actions.openDropbox()); },
-  closeDropbox: () => { dispatch(actions.closeDropbox()); },
+  // openDropbox: () => { dispatch(actions.openDropbox()); },
+  // closeDropbox: () => { dispatch(actions.closeDropbox()); },
   updateDropboxLanguageList: (lang) => { dispatch(actions.updateDropboxLanguageList(lang)); },
 });
 
