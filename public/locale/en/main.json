@@ -1,3 +1,37 @@
 {
-  "test": "test"
+  "hero": {
+    "dexLaunch": "EOS Native Decentralized Exchange.",
+    "quickListing": "Expedited Listing of Airdropped Tokens!",
+    "storeInWallet": "Safely store your assets in privately-owned wallets.",
+    "transparentOrder": "All transactions are recorded on the blockchain in a transparent manner."
+  },
+  "security": {
+    "subject": "Security",
+    "title": "Powerful Private Wallet",
+    "descFirst": "Users privately store assets in their own wallets issued by EOSDAQ,",
+    "descSecond": "significantly lowering the risk or hacking and theft.",
+    "descThird": "",
+    "subTitleFirst": "Safe Storage",
+    "subDescFirst": "Only the owner of asset can access and store his or her Private Key. Users can safely protect their assets from theft.",
+    "subTitleSecond": "Transparent Transaction Record",
+    "subDescSecond": "All transactions are recorded on the EOS blockchain via EOSDAQ’s smart contract. Users can check their transaction records at any moment."
+  },
+  "speed": {
+    "subject": "Speed",
+    "title": "World’s Fastest <br />Decentralized Exchange",
+    "desc": "The EOS blockchain enables users to experience fast transaction, <br />even when there is a high traffic volume.",
+    "subTitleFirst": "Fast Transaction",
+    "subDescFirst": "EOS creates a block every 0.5 seconds and processes 10,000 transactions every second. By far, EOSDAQ is the fastest decentralized exchange in the world.",
+    "subTitleSecond": "Stability of Transaction Speed",
+    "subDescSecond": "EOSDAQ maintains transaction speed in a stable manner by staking sufficient EOS resources, including RAM, CPU and Bandwidth."
+  },
+  "utility": {
+    "title": "Convenient EOS Usage",
+    "desc": "Users can contribute to forming a healthy EOS ecosystem by utilizing the following functions.",
+    "createAccount": "EOS Account Creation",
+    "airdrop": "Airdrop",
+    "staking": "Staking",
+    "vote": "Voting",
+    "ram": "RAM trading"
+  }
 }
