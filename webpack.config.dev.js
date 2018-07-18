@@ -44,7 +44,7 @@ const plugins = [
       removeComments: true,
       collapseWhitespace: true,
     },
-    production: process.argv.indexOf('-p') >= 0,
+    production: process.env.NODE_ENV === 'production',
   }),
 ];
 

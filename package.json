@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "webpack-serve --config webpack.config.dev.js",
-    "build": "webpack --config webpack.config.prod.js -p",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "deploy": "scp -i ~/.ssh/eosdaq.pem  -r dist/* ubuntu@ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com:/var/www/html"
   },
   "repository": {
@@ -17,6 +17,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/indegser/eosdaq#readme",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "eslint": "^5.0.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
