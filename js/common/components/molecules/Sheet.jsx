@@ -73,6 +73,7 @@ export const SheetHeader = styled('div')`
 
 export const SheetRow = styled('div')`
   display: flex;
+  align-items: center;
   height: ${sheetRowHeight}px;
 `;
 
