@@ -56,6 +56,7 @@ class Header extends React.Component {
                 </Link>
                 {this.navs.map(nav => (
                   <Text
+                    key={nav.title}
                     ml={48}
                     fontSize={14}
                     display={['none', 'block']}

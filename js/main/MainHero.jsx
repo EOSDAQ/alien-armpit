@@ -24,7 +24,7 @@ class MainHero extends React.Component {
               >
                 <Text
                   textAlign="center"
-                  fontSize={[16, 18]}
+                  // fontSize={[16, 18]}
                   fontWeight="bold"
                   lineHeight={1.3}
                   mb={20}
