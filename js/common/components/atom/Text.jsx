@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'react-emotion';
 import {
   fontWeight,
@@ -17,12 +17,5 @@ const Text = styled(Box)`
   ${lineHeight}
   ${textAlign}
 `;
-
-Text.propTypes = {
-  fontSize: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
-  ]),
-};
 
 export default Text;

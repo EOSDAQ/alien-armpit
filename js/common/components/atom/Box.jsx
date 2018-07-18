@@ -1,6 +1,7 @@
 import React from 'react';
-import styled,
-{ css } from 'react-emotion';
+import styled, { css } from 'react-emotion';
+import tag from 'clean-tag';
+
 import {
   space,
   width,
@@ -19,7 +20,7 @@ import {
   maxHeight,
 } from 'styled-system';
 
-const Box = styled.div`
+const Box = styled(tag)`
   ${space}
   ${width}
   ${height}
