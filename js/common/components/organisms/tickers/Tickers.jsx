@@ -9,111 +9,48 @@ import {
 import TickersHeader from './TickersHeader';
 import TickersSubHeader from './TickersSubHeader';
 import TickersBody from './TickersBody';
+import TickersSearch from './TickersSearch';
 
 const mockCoinList = [
   {
     favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
+    coinName: 'Everipedia',
+    coinCode: 'IQ/EOS',
+    currentPrice: 0.0039,
+    dayChange: 0.005,
+    dayVolume: 73858000000,
   },
   {
     favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
+    coinName: 'EOX',
+    coinCode: 'EOX/EOS',
+    currentPrice: 0.0152,
+    dayChange: 1.21,
+    dayVolume: 36407000000,
+  },
+  {
+    favoriate: false,
+    coinName: 'eosDAC',
+    coinCode: 'eosDAC/EOS',
+    currentPrice: 0.0034,
+    dayChange: -2.84,
+    dayVolume: 35292000000,
   },
   {
     favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
+    coinName: 'EON',
+    coinCode: 'EON/EOS',
+    currentPrice: 0.2210,
+    dayChange: 0.15,
+    dayVolume: 12904000000,
   },
   {
     favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
+    coinName: 'CETOS',
+    coinCode: 'CETI/EOS',
+    currentPrice: 0.4480,
+    dayChange: 0.22,
+    dayVolume: 11900000000,
   },
 ];
 
@@ -125,6 +62,7 @@ const Tickers = (props) => {
 
   return (
     <SheetWrapper>
+      <TickersSearch />
       <TickersHeader
         tab={tab}
         updateTab={updateTab}

@@ -10,7 +10,7 @@ import {
 
 export const SheetWrapper = styled('div')`
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
   background-color: #fff;
 `;
 
@@ -66,8 +66,9 @@ export const SheetSearch = () => {
 export const SheetHeader = styled('div')`
   display: flex;
   width: 100%;  
-  alignItems: center;
+  align-items: center;
   background-color: #fff;
+  height: 32px;
 `;
 
 export const SheetRow = styled('div')`

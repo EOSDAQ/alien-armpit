@@ -43,12 +43,12 @@ export const CurrentPriceCell = styled(TickersCell)`
 
 export const DayChangeCell = styled(TickersCell)`
   width: ${tickersDayChangeWidth}px;
-  font-size: 13px;
+  font-size: 14px;
 `;
 
 export const DayVolumeCell = styled(TickersCell)`
   width: ${tickersDayVolumeWidth}px;
-  font-size: 13px;
+  font-size: 14px;
 `;
 
 export const DayVolumeUnitText = styled('span')`
