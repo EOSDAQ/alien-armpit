@@ -16,6 +16,7 @@ import {
 import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
 import { actions } from '../../../../reducer/tickers/tickersReducer';
+import { TickersRow } from './TickersTable';
 
 const TickersBody = (props) => {
   const {
@@ -29,9 +30,9 @@ const TickersBody = (props) => {
     <Scrollbars {...scrollOptions}>
       {coinList.map((coin) => {
         const buy = coin.dayChange > 0;
-
+        
         return (
-          <SheetRow key={coin.coinCode}>
+          <TickersRow key={coin.coinCode}>
             <FavoriteCell>
               <IconButton onClick={() => { toggleFavorite(coin.coinCode); }}>
                 <Icon type={coin.favorite ? 'starred' : 'star'} />
@@ -58,16 +59,12 @@ const TickersBody = (props) => {
                 백만
               </DayVolumeUnitText>
             </DayVolumeCell>
-          </SheetRow>
+          </TickersRow>
         );
       })}
     </Scrollbars>
   );
 };
-
-const mapStateToProps = (state, props) => ({
-  coins: props.coins,
-});
 
 const mapDispatchToProps = dispatch => ({
   toggleFavorite: (coinCode) => { dispatch(actions.toggleFavorite({ coinCode })); },

@@ -10,6 +10,7 @@ import TickersHeader from './TickersHeader';
 import TickersSubHeader from './TickersSubHeader';
 import TickersBody from './TickersBody';
 import TickersSearch from './TickersSearch';
+import TickersTable from './TickersTable';
 
 class Tickers extends React.Component {
   constructor(props) {

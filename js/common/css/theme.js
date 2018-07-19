@@ -54,7 +54,7 @@ const theme = {
   // todo. add fontSizes and colors.
   colors,
   fontFamily: {
-    sans: '-apple-system, BlinkMacSystemFont, Noto Sans, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Noto Sans KR", "Malgun Gothic", "Dotum", sans-serif',
+    sans: '-apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Noto Sans KR", "Malgun Gothic", "Dotum", sans-serif',
     mono: 'Roboto, menlo, monospace',
     number: 'Nanum Gothic',
   },
