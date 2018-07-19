@@ -24,6 +24,15 @@ export const colors = {
   blue140: '#f3f7ff',
   blue190: '#e1f0ff',
   blue350: '#2c65ce',
+  blue100: '#E9F3FC',
+  blue200: '#BFDCF6',
+  blue300: '#7FBAEE',
+  blue400: '#4098E5',
+  blue500: '#1682E0',
+  blue600: '#1477CC',
+  blue700: '#136BB8',
+  blue800: '#115FA3',
+  blue900: '#0F538F',
   grey130: '#f7f8f8',
   grey140: '#f6f6f6',
   grey170: '#e9e9e9',
@@ -45,8 +54,9 @@ const theme = {
   // todo. add fontSizes and colors.
   colors,
   fontFamily: {
-    sans: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Noto Sans KR", "Malgun Gothic", "Dotum", sans-serif',
-    mono: 'consolas, menlo, monospace',
+    sans: '-apple-system, BlinkMacSystemFont, Noto Sans, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Noto Sans KR", "Malgun Gothic", "Dotum", sans-serif',
+    mono: 'Roboto Mono, consolas, menlo, monospace',
+    number: 'Nanum Gothic',
   },
   space: [0, 4, 8, 12],
 };

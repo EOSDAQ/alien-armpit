@@ -24,39 +24,42 @@ const TickersBody = (props) => {
   } = props;
   const scrollStyle = { style: { height: 306 } };
   const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
-
   return (
     <Scrollbars {...scrollOptions}>
-      {coinList.map(coin => (
-        <SheetRow key={coin.coinCode}>
-          <FavoriteCell>
-            <IconButton onClick={() => { toggleFavorite(coin.coinCode); }}>
-              <Icon type={coin.favorite ? 'starred' : 'star'} />
-            </IconButton>
-          </FavoriteCell>
-          <CoinNameCell>
-            <CoinNameText>
-              {coin.coinName}
-            </CoinNameText>
-            <CoinCodeText>
-              {coin.coinCode}
-            </CoinCodeText>
-          </CoinNameCell>
-          <CurrentPriceCell>
-            {coin.currentPrice}
-          </CurrentPriceCell>
-          <DayChangeCell>
-            {coin.dayChange}
-            %
-          </DayChangeCell>
-          <DayVolumeCell>
-            {coin.dayVolume}
-            <DayVolumeUnitText>
-              백만
-            </DayVolumeUnitText>
-          </DayVolumeCell>
-        </SheetRow>
-      ))}
+      {coinList.map((coin) => {
+        const buy = coin.dayChange > 0;
+
+        return (
+          <SheetRow key={coin.coinCode}>
+            <FavoriteCell>
+              <IconButton onClick={() => { toggleFavorite(coin.coinCode); }}>
+                <Icon type={coin.favorite ? 'starred' : 'star'} />
+              </IconButton>
+            </FavoriteCell>
+            <CoinNameCell>
+              <CoinNameText>
+                {coin.coinName}
+              </CoinNameText>
+              <CoinCodeText>
+                {coin.coinCode}
+              </CoinCodeText>
+            </CoinNameCell>
+            <CurrentPriceCell buy={buy}>
+              {coin.currentPrice}
+            </CurrentPriceCell>
+            <DayChangeCell buy={buy}>
+              {coin.dayChange}
+              %
+            </DayChangeCell>
+            <DayVolumeCell>
+              {coin.dayVolume}
+              <DayVolumeUnitText>
+                백만
+              </DayVolumeUnitText>
+            </DayVolumeCell>
+          </SheetRow>
+        );
+      })}
     </Scrollbars>
   );
 };

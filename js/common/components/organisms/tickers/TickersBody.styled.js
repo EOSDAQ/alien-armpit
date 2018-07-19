@@ -1,5 +1,5 @@
 import styled from 'react-emotion';
-import { colors } from '../../../css/theme';
+import theme, { colors } from '../../../css/theme';
 import { SheetCell } from '../../molecules/Sheet';
 import {
   sheetRowHeight,
@@ -29,29 +29,38 @@ export const CoinNameCell = styled(TickersCell)`
 
 export const CoinNameText = styled('span')`
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   color: ${colors.black500};  
 `;
 
 export const CoinCodeText = styled('span')`
   font-size: 12px;
   color: ${colors.grey390};
+  font-family: ${theme.fontFamily.mono};
   margin-left: 4px;
 `;
 
 export const CurrentPriceCell = styled(TickersCell)`
   width: ${tickersCurrentPriceWidth}px;
+  font-family: ${theme.fontFamily.sans};
+  color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
+  font-weight: bold;
   font-size: 13px;
 `;
 
 export const DayChangeCell = styled(TickersCell)`
   width: ${tickersDayChangeWidth}px;
-  font-size: 14px;
+  font-family: ${theme.fontFamily.mono};
+  color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
+  font-weight: bold;
+  font-size: 13px;
+  text-align: right;
 `;
 
 export const DayVolumeCell = styled(TickersCell)`
   width: ${tickersDayVolumeWidth}px;
-  font-size: 14px;
+  font-family: ${theme.fontFamily.sans};
+  font-size: 12px;
 `;
 
 export const DayVolumeUnitText = styled('span')`
