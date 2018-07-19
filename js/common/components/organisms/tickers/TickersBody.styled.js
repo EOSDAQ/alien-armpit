@@ -64,7 +64,8 @@ export const DayVolumeCell = styled(TickersCell)`
 `;
 
 export const DayVolumeUnitText = styled('span')`
-  font-size: 13px;
-  color: ${colors.grey390};
-  margin-left: 4px;
+  font-size: 12px;
+  font-family: ${theme.fontFamily.sans};
+  color: ${colors.grey400};
+  margin-left: 2px;
 `;

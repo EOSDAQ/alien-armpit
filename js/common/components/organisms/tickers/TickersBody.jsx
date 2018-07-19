@@ -18,6 +18,11 @@ import { IconButton } from '../../atom/Button';
 import { actions } from '../../../../reducer/tickers/tickersReducer';
 import { TickersRow } from './TickersTable';
 
+const toMillion = (number) => {
+  let value = (number / 1.0e+6).toString();
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
 const TickersBody = (props) => {
   const {
     coinList,
@@ -54,7 +59,7 @@ const TickersBody = (props) => {
               %
             </DayChangeCell>
             <DayVolumeCell>
-              {coin.dayVolume}
+              {toMillion(coin.dayVolume)}
               <DayVolumeUnitText>
                 백만
               </DayVolumeUnitText>
