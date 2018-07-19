@@ -16,12 +16,21 @@ class Tickers extends React.PureComponent {
     super(props);
     this.state = {
       searchValue: null,
+      showFavorites: false,
     };
   }
 
   onSearch(value) {
     this.setState({
       searchValue: value,
+    });
+  }
+
+  onToggleFavorite() {
+    const { showFavorites } = this.state;
+
+    this.setState({
+      showFavorites: !showFavorites,
     });
   }
 
@@ -32,7 +41,10 @@ class Tickers extends React.PureComponent {
       coins: _coins,
     } = this.props;
 
-    const { searchValue } = this.state;
+    const {
+      searchValue,
+      showFavorites,
+    } = this.state;
 
     let coins = _coins;
     if (searchValue) {
@@ -42,9 +54,17 @@ class Tickers extends React.PureComponent {
       });
     }
 
+    if (showFavorites) {
+      coins = coins.filter(c => c.favorite);
+    }
+
     return (
       <SheetWrapper>
-        <TickersSearch onSearch={value => this.onSearch(value)} />
+        <TickersSearch
+          onSearch={value => this.onSearch(value)}
+          showFavorites={showFavorites}
+          onToggleFavorite={() => this.onToggleFavorite()}
+        />
         <TickersHeader
           tab={tab}
           updateTab={updateTab}
