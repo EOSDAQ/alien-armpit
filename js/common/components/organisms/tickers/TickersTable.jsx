@@ -6,5 +6,13 @@ export const TickersRow = styled.div`
   display: grid;
   grid-gap: 16px;
   grid-template-columns: 36px minmax(140px, 1fr) 80px 80px 80px;
-  border-bottom: 1px solid ${colors.grey180};
+  grid-template-rows: 40px;
+
+  &:nth-child(even) {
+    background: ${colors.grey50};
+  }
+`;
+
+export const TickersCell = styled.div`
+  align-self: center;
 `;

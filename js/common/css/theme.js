@@ -1,4 +1,5 @@
 export const colors = {
+  grey50: '#f9f9f9',
   grey100: '#EAEBEA',
   grey200: '#D6D7D6',
   grey300: '#C1C3C2',
@@ -28,7 +29,7 @@ export const colors = {
   blue200: '#BFDCF6',
   blue300: '#7FBAEE',
   blue400: '#4098E5',
-  blue500: '#0070ff',
+  blue500: '#034EC6',
   blue600: '#1477CC',
   blue700: '#136BB8',
   blue800: '#115FA3',
@@ -48,6 +49,7 @@ export const colors = {
   black500: '#505455',
   black650: '#323838',
   black720: '#202121',
+  primary500: '#41BBD9',
 };
 
 const theme = {
@@ -55,8 +57,8 @@ const theme = {
   colors,
   fontFamily: {
     sans: '-apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Noto Sans KR", "Malgun Gothic", "Dotum", sans-serif',
-    mono: 'Roboto, menlo, monospace',
-    number: 'Nanum Gothic',
+    mono: 'Roboto Mono, menlo, monospace',
+    number: '-apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Oxygen, Ubuntu, sans-serif',
   },
   space: [0, 4, 8, 12],
 };

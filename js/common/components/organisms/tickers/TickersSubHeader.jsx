@@ -45,7 +45,7 @@ const TickersSubHeader = ({
                   style={{
                     transform: sorted && desc && 'rotate(180deg)',
                   }}
-                  fill={sorted ? theme.colors.blue500 : theme.colors.grey200}
+                  fill={sorted ? theme.colors.primary500 : theme.colors.grey200}
                 />
               </IconButton>
             </React.Fragment>

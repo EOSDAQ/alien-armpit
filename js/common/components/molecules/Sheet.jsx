@@ -78,6 +78,5 @@ export const SheetRow = styled('div')`
 `;
 
 export const SheetCell = styled('div')`
-  height: ${sheetRowHeight}px;
-  background-color: #fff;  
+  align-self: center;
 `;
