@@ -15,6 +15,7 @@ import {
   left,
   bottom,
   top,
+  flex,
   display,
   borderRadius,
   maxHeight,
@@ -34,6 +35,7 @@ const Box = styled(tag)`
   ${bottom}
   ${left}
   ${right}
+  ${flex}
   ${display}
   ${borderRadius}
   ${({ overflow }) => overflow && css`

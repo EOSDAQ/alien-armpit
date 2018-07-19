@@ -1,19 +1,26 @@
 import React from 'react';
-import Box from '../../atom/Box';
+import Flex from '../../atom/Flex';
 import Icon from '../../atom/Icon';
 import { TickersSearchInput } from './TickersSearch.styled';
+import Box from '../../atom/Box';
 
-const TickersSearch = (props) => {
-  return (
+// search onChange 마다 redux store를 업데이트 해야하는가?
+// state로 관리해도 괜찮지 않을까?
+
+const TickersSearch = () => (
+  <Flex
+    height={38}
+    p={4}
+    alignItems="center"
+    borderBottom="1px solid #ededed"
+  >
+    <Icon type="star" width={30} />
     <Box
-      height={38}
-      borderBottom="1px solid #ededed"
+      flex="1 1"
     >
-      <Icon type="star" width={30} />
       <TickersSearchInput />
-      검색
     </Box>
-  );
-}
+  </Flex>
+);
 
 export default TickersSearch;
