@@ -16,7 +16,10 @@ export const TickersCell = styled(SheetCell)`
   line-height: ${sheetRowHeight - tickersCellBorderWidth}px;  
 `;
 
-export const FavoriateCell = styled(TickersCell)`
+export const FavoriteCell = styled(TickersCell)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: ${tickersFavoriateWidth}px;
 `;
 
