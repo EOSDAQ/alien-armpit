@@ -7,7 +7,7 @@ import Box from '../../atom/Box';
 // search onChange 마다 redux store를 업데이트 해야하는가?
 // state로 관리해도 괜찮지 않을까?
 
-const TickersSearch = () => (
+const TickersSearch = ({ onSearch }) => (
   <Flex
     height={38}
     p={4}
@@ -18,7 +18,9 @@ const TickersSearch = () => (
     <Box
       flex="1 1"
     >
-      <TickersSearchInput />
+      <TickersSearchInput
+        onChange={(e) => { onSearch(e.target.value); }}
+      />
     </Box>
   </Flex>
 );

@@ -54,26 +54,51 @@ const mockCoinList = [
   },
 ];
 
-const Tickers = (props) => {
-  const {
-    updateTab,
-    tab,
-  } = props;
+class Tickers extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchValue: null,
+    };
+  }
 
-  return (
-    <SheetWrapper>
-      <TickersSearch />
-      <TickersHeader
-        tab={tab}
-        updateTab={updateTab}
-      />
-      <div>
-        <TickersSubHeader />
-        <TickersBody coinList={mockCoinList} />
-      </div>
-    </SheetWrapper>
-  );
-};
+  onSearch(value) {
+    this.setState({
+      searchValue: value,
+    });
+  }
+
+  render() {
+    const {
+      updateTab,
+      tab,
+    } = this.props;
+
+    const { searchValue } = this.state;
+    let coinList = mockCoinList;
+
+    if (searchValue) {
+      coinList = mockCoinList.filter((c) => {
+        const match = new RegExp(searchValue, 'i').exec(c.coinName + c.coinCode);
+        return match !== null; // use index value to sort.
+      });
+    }
+
+    return (
+      <SheetWrapper>
+        <TickersSearch onSearch={(value) => this.onSearch(value)} />
+        <TickersHeader
+          tab={tab}
+          updateTab={updateTab}
+        />
+        <div>
+          <TickersSubHeader />
+          <TickersBody coinList={coinList} />
+        </div>
+      </SheetWrapper>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   ...state.tickers,
