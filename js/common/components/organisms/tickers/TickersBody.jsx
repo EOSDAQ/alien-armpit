@@ -19,9 +19,10 @@ import { actions } from '../../../../reducer/tickers/tickersReducer';
 
 const TickersBody = (props) => {
   const {
-    coinList = [],
+    coinList,
     toggleFavorite,
   } = props;
+
   const scrollStyle = { style: { height: 306 } };
   const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
   return (
@@ -63,6 +64,10 @@ const TickersBody = (props) => {
     </Scrollbars>
   );
 };
+
+const mapStateToProps = (state, props) => ({
+  coins: props.coins,
+});
 
 const mapDispatchToProps = dispatch => ({
   toggleFavorite: (coinCode) => { dispatch(actions.toggleFavorite({ coinCode })); },

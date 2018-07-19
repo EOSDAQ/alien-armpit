@@ -28,13 +28,13 @@ export const CoinNameCell = styled(TickersCell)`
 `;
 
 export const CoinNameText = styled('span')`
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: ${colors.black500};  
 `;
 
 export const CoinCodeText = styled('span')`
-  font-size: 12px;
+  font-size: 13px;
   color: ${colors.grey390};
   font-family: ${theme.fontFamily.mono};
   margin-left: 4px;
@@ -42,29 +42,32 @@ export const CoinCodeText = styled('span')`
 
 export const CurrentPriceCell = styled(TickersCell)`
   width: ${tickersCurrentPriceWidth}px;
-  font-family: ${theme.fontFamily.sans};
+  font-family: ${theme.fontFamily.mono};
   color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
-  font-weight: bold;
+  font-weight: 500;
   font-size: 13px;
+  padding-right: 60px;
+  text-align: right;
 `;
 
 export const DayChangeCell = styled(TickersCell)`
   width: ${tickersDayChangeWidth}px;
   font-family: ${theme.fontFamily.mono};
   color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
-  font-weight: bold;
+  font-weight: 400;
   font-size: 13px;
   text-align: right;
+  padding-right:40px;
 `;
 
 export const DayVolumeCell = styled(TickersCell)`
   width: ${tickersDayVolumeWidth}px;
-  font-family: ${theme.fontFamily.sans};
-  font-size: 12px;
+  font-family: ${theme.fontFamily.mono};
+  font-size: 13px;
 `;
 
 export const DayVolumeUnitText = styled('span')`
-  font-size; 12px;
+  font-size: 13px;
   color: ${colors.grey390};
   margin-left: 4px;
 `;

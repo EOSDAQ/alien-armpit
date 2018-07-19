@@ -11,7 +11,7 @@ import TickersSubHeader from './TickersSubHeader';
 import TickersBody from './TickersBody';
 import TickersSearch from './TickersSearch';
 
-class Tickers extends React.PureComponent {
+class Tickers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,6 +38,7 @@ class Tickers extends React.PureComponent {
     const {
       updateTab,
       tab,
+      sort,
       coins: _coins,
     } = this.props;
 
@@ -46,7 +47,7 @@ class Tickers extends React.PureComponent {
       showFavorites,
     } = this.state;
 
-    let coins = _coins;
+    let coins = [..._coins];
     if (searchValue) {
       coins = coins.filter((c) => {
         const match = new RegExp(searchValue, 'i').exec(c.coinName + c.coinCode);
@@ -57,6 +58,17 @@ class Tickers extends React.PureComponent {
     if (showFavorites) {
       coins = coins.filter(c => c.favorite);
     }
+
+    coins = coins.sort((a, b) => {
+      const { field, order } = sort;
+      let compare;
+      if (typeof a[field] === 'string') {
+        compare = a[field].toUpperCase() > b[field].toUpperCase();
+      } else {
+        compare = a[field] > b[field];
+      }
+      return compare ? order : -order;
+    });
 
     return (
       <SheetWrapper>

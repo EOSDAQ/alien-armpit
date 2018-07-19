@@ -37,6 +37,10 @@ export const IconButton = styled.button`
   width: 36px;
   height: 36px;
   padding: 4px;
+  ${({ small }) => small && `
+    width: 20px;
+    height: 20px;
+  `}
   box-shadow: 0;
   outline: 0;
   border: 0;
@@ -46,8 +50,7 @@ export const IconButton = styled.button`
   & svg {
     width: 100%;
     height: 100%;
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
   }
 
   &:hover {

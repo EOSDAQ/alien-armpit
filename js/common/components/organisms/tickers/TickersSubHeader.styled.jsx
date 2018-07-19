@@ -19,6 +19,8 @@ export const FavoriateHeader = styled(TickersHeaderCell)`
 
 export const CoinNameHeader = styled(TickersHeaderCell)`
   width: ${tickersCoinNameWidth}px;
+  display: flex;
+  align-items: center;
 `;
 
 export const CurrentPriceHeader = styled(TickersHeaderCell)`

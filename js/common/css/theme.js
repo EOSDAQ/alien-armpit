@@ -28,7 +28,7 @@ export const colors = {
   blue200: '#BFDCF6',
   blue300: '#7FBAEE',
   blue400: '#4098E5',
-  blue500: '#1682E0',
+  blue500: '#0070ff',
   blue600: '#1477CC',
   blue700: '#136BB8',
   blue800: '#115FA3',
@@ -55,7 +55,7 @@ const theme = {
   colors,
   fontFamily: {
     sans: '-apple-system, BlinkMacSystemFont, Noto Sans, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Noto Sans KR", "Malgun Gothic", "Dotum", sans-serif',
-    mono: 'Roboto Mono, consolas, menlo, monospace',
+    mono: 'Roboto, menlo, monospace',
     number: 'Nanum Gothic',
   },
   space: [0, 4, 8, 12],

@@ -3,16 +3,22 @@ import { createAction, handleActions } from 'redux-actions';
 
 export const types = {
   UPDATE_TAB: 'tickers/tab/UPDATE',
+  UPDATE_SORT: 'tickers/SORT',
   TOGGLE_FAVORITE: 'tickers/coin/TOGGLE_FAVORITE',
 };
 
 export const actions = {
   updateTab: createAction(types.UPDATE_TAB),
+  updateSort: createAction(types.UPDATE_SORT),
   toggleFavorite: createAction(types.TOGGLE_FAVORITE),
 };
 
 const defaultState = {
   tab: 'EOS',
+  sort: {
+    field: 'dayVolume',
+    order: -1,
+  },
   coins: [
     {
       favorite: true,
@@ -54,12 +60,27 @@ const defaultState = {
       dayChange: 0.22,
       dayVolume: 11900000000,
     },
+    {
+      favorite: false,
+      coinName: 'Ubuntu',
+      coinCode: 'UBT/EOS',
+      currentPrice: 0.9980,
+      dayChange: -0.12,
+      dayVolume: 11900000000,
+    },
   ],
 };
 
 const tab = handleActions({
   [types.UPDATE_TAB]: (state, { payload }) => (payload),
 }, defaultState.tab);
+
+const sort = handleActions({
+  [types.UPDATE_SORT]: (sortOption, { payload: { field } }) => ({
+    field,
+    order: sortOption.field === field ? -(sortOption.order) : defaultState.sort.order,
+  }),
+}, defaultState.sort);
 
 const coins = handleActions({
   [types.TOGGLE_FAVORITE]: (_coins, { payload: { coinCode } }) => (
@@ -75,4 +96,5 @@ const coins = handleActions({
 export default combineReducers({
   tab,
   coins,
+  sort,
 });

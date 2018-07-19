@@ -36,7 +36,11 @@ class Header extends React.Component {
           bg="#141A2A"
           color="grey100"
         >
-          <Container py={8}>
+          <Box
+            py={8}
+            width={1280}
+            mx="auto"
+          >
             <Flex
               justifyContent="space-between"
               alignItems="center"
@@ -73,7 +77,7 @@ class Header extends React.Component {
               </Flex>
               <Language />
             </Flex>
-          </Container>
+          </Box>
         </Box>
       </nav>
     );
