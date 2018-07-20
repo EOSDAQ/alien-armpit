@@ -13,3 +13,5 @@ export const exchangeRightWidth = 740;
 
 export const orderFormPanelWidth = 229;
 export const orderFormTotalUnitWidth = 20;
+
+export const tickersSheetRowColumns = '36px minmax(140px,1fr) 80px 80px 80px';

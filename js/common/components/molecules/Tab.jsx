@@ -15,6 +15,7 @@ function setBorderStyle(relIdx) {
         border-bottom: none;
         pointer-events: none;
         user-select: none;
+        background: transparent;
         color: black;
       `;
     case 1:
@@ -30,11 +31,12 @@ function setBorderStyle(relIdx) {
 // TODO. set TabItem size prop.
 const TabItem = styled(Box)`
   color: #aaa;
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   display: flex;
   border: 1px solid transparent;
   border-bottom: 1px solid #ddd;
+  background: #f9f9f9;
   ${({ relIdx }) => setBorderStyle(relIdx)}
 `;
 

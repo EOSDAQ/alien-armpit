@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { scrollbarsOptions } from '../../../constants/constants';
 import {
@@ -15,10 +16,11 @@ import {
 import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
 import { actions } from '../../../../reducer/tickers/tickersReducer';
-import { TickersRow } from './TickersTable';
+import { SheetRow } from '../../molecules/Sheet';
+import { tickersSheetRowColumns } from '../../../constants/styleConstants';
 
 const toMillion = (number) => {
-  let value = (number / 1.0e+6).toString();
+  const value = (number / 1.0e+6).toString();
   return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
@@ -36,22 +38,29 @@ const TickersBody = (props) => {
         const buy = coin.dayChange > 0;
         
         return (
-          <TickersRow key={coin.coinCode}>
+          <SheetRow
+            key={coin.coinCode}
+            columns={tickersSheetRowColumns}
+          >
             <FavoriteCell>
               <IconButton onClick={() => { toggleFavorite(coin.coinCode); }}>
                 <Icon type={coin.favorite ? 'starred' : 'star'} />
               </IconButton>
             </FavoriteCell>
             <CoinNameCell>
-              <CoinNameText>
-                {coin.coinName}
-              </CoinNameText>
+              <Link // TODO. prevent history being pushed when it is active.
+                to={`/exchange/${coin.coinCode.replace('/', '_')}`}
+              >
+                <CoinNameText>
+                  {coin.coinName}
+                </CoinNameText>
+              </Link>
               <CoinCodeText>
                 {coin.coinCode}
               </CoinCodeText>
             </CoinNameCell>
             <CurrentPriceCell buy={buy}>
-              {coin.currentPrice}
+              {coin.currentPrice.toFixed(4)}
             </CurrentPriceCell>
             <DayChangeCell buy={buy}>
               {coin.dayChange}
@@ -63,7 +72,7 @@ const TickersBody = (props) => {
                 백만
               </DayVolumeUnitText>
             </DayVolumeCell>
-          </TickersRow>
+          </SheetRow>
         );
       })}
     </Scrollbars>

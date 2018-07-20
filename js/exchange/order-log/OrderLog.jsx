@@ -47,25 +47,26 @@ const OrderLog = (props) => {
         updateTab={updateTab}
       />
       <OrderLogSubHeader />
-      <OrderLogBody>
-        <Scrollbars {...scrollOptions}>
-          {
-            mockRows.map(rows => (
-              <SheetRow key={rows.time}>
-                <OrderLogAmount>
-                  {rows.amount.toLocaleString()}
-                </OrderLogAmount>
-                <OrderLogPrice>
-                  {rows.price.toFixed(2).toLocaleString()}
-                </OrderLogPrice>
-                <OrderLogTime>
-                  {rows.time}
-                </OrderLogTime>
-              </SheetRow>
-            ))
-          }
-        </Scrollbars>
-      </OrderLogBody>
+      <Scrollbars {...scrollOptions}>
+        {
+          mockRows.map(rows => (
+            <SheetRow
+              key={rows.time}
+              columns="1fr 1fr 1fr"
+            >
+              <OrderLogAmount>
+                {rows.amount.toLocaleString()}
+              </OrderLogAmount>
+              <OrderLogPrice>
+                {rows.price.toFixed(2).toLocaleString()}
+              </OrderLogPrice>
+              <OrderLogTime>
+                {rows.time}
+              </OrderLogTime>
+            </SheetRow>
+          ))
+        }
+      </Scrollbars>
     </OrderLogWrapper>
   );
 };

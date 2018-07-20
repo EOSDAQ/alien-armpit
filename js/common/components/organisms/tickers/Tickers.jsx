@@ -80,10 +80,8 @@ class Tickers extends React.Component {
           tab={tab}
           updateTab={updateTab}
         />
-        <div>
-          <TickersSubHeader />
-          <TickersBody coinList={coins} />
-        </div>
+        <TickersSubHeader />
+        <TickersBody coinList={coins} />
       </SheetWrapper>
     );
   }

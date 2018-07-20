@@ -1,16 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  TickersHeaderCell,
-} from './TickersSubHeader.styled';
-
 import { IconButton } from '../../atom/Button';
 import Icon from '../../atom/Icon';
-import theme from '../../../css/theme';
+import { colors } from '../../../css/theme';
 import { actions } from '../../../../reducer/tickers/tickersReducer';
-import { TickersRow } from './TickersTable';
 import Box from '../../atom/Box';
+import { SheetHeadingRow, SheetCell } from '../../molecules/Sheet';
+import { tickersSheetRowColumns } from '../../../constants/styleConstants';
 
 const heads = [
   { label: null, field: 'favorite' },
@@ -24,13 +21,15 @@ const TickersSubHeader = ({
   sort: { field, order },
   updateSort,
 }) => (
-  <TickersRow>
+  <SheetHeadingRow
+    columns={tickersSheetRowColumns}
+  >
     {heads.map((head) => {
       const sorted = head.field === field;
       const desc = order === 1;
 
       return (
-        <TickersHeaderCell key={head.label}>
+        <SheetCell key={head.label}>
           {head.label && (
             <React.Fragment>
               <Box mr={4}>
@@ -45,15 +44,15 @@ const TickersSubHeader = ({
                   style={{
                     transform: sorted && desc && 'rotate(180deg)',
                   }}
-                  fill={sorted ? theme.colors.primary500 : theme.colors.grey200}
+                  fill={sorted ? colors.primary500 : colors.grey200}
                 />
               </IconButton>
             </React.Fragment>
           )}
-        </TickersHeaderCell>
+        </SheetCell>
       );
     })}
-  </TickersRow>
+  </SheetHeadingRow>
 );
 
 const mapStateToProps = state => ({

@@ -14,7 +14,6 @@ import OrderBookFooter from './OrderBookFooter';
 
 
 const mockData = {
-  maxAmount: 6748.713,
   orderUpSideList: [
     { amount: 6748.713, price: 10200, change: 3.03 },
     { amount: 2011.923, price: 10190, change: 2.93 },
@@ -59,7 +58,7 @@ const ExchangeOrderBook = () => {
         <Flex>
           <OrderBookList
             orderList={mockData.orderUpSideList}
-            maxAmount={mockData.maxAmount}
+            maxAmount={6748.713}
             isUpside
           />
           <OrderBookTradeInfo />
@@ -68,7 +67,7 @@ const ExchangeOrderBook = () => {
           <OrderBookTradeLog tradeLogList={mockTradeLog} />
           <OrderBookList
             orderList={mockData.orderDownSideList}
-            maxAmount={mockData.maxAmount}
+            maxAmount={6748.713}
           />
         </Flex>
       </Scrollbars>

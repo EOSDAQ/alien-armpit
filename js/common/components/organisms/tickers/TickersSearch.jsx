@@ -11,7 +11,8 @@ import { IconButton } from '../../atom/Button';
 const TickersSearch = ({ onSearch, onToggleFavorite, showFavorites }) => (
   <Flex
     height={38}
-    p={4}
+    py={4}
+    pr={4}
     alignItems="center"
     borderBottom="1px solid #ededed"
   >

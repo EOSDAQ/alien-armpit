@@ -65,7 +65,6 @@ export const SheetSearch = () => {
 export const SheetHeader = styled('div')`
   width: 100%;
   background-color: #fff;
-  height: ${sheetHeaderHeight}px;
 `;
 
 export const SheetHeading = styled('div')`
@@ -80,12 +79,24 @@ export const SheetHeading = styled('div')`
 
 export const SheetRow = styled('div')`
   display: grid;
-  height: 100%;
   grid-template-columns: ${(({ columns }) => columns)};
-  /* height: ${sheetRowHeight}px; */
+  height: 40px;
+
+  &:nth-child(even) {
+    background: ${colors.grey50};
+  }
+`;
+
+export const SheetHeadingRow = styled(SheetRow)`
+  height: 32px;
+  font-size: 13px;
+  border-bottom: 1px solid #ddd;
 `;
 
 export const SheetCell = styled('div')`
+  font-size: 13px;
+  display: flex;
+  align-items: center;
   align-self: center;
   justify-self: ${({ justifySelf }) => justifySelf || 'start'};
 `;
