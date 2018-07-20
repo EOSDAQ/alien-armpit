@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { scrollbarsOptions } from '../../../constants/constants';
-import { SheetRow } from '../../molecules/Sheet';
 import {
   FavoriteCell,
   CoinNameCell,

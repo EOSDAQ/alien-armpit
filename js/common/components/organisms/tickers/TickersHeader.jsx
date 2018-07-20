@@ -1,6 +1,7 @@
 import React from 'react';
 import { SheetHeader } from '../../molecules/Sheet';
-import TickersTab from './TickersTab';
+import Tab from '../../molecules/Tab';
+import { TickersTab } from './TickersHeader.styled';
 
 const mockTabs = ['EOS', '보유코인'];
 
@@ -9,18 +10,33 @@ const TickersHeader = (props) => {
     updateTab,
     tab,
   } = props;
+
+  const selectedIdx = mockTabs.findIndex(t => tab === t);
+
   return (
     <SheetHeader>
-      {
-        mockTabs.map(tabId => (
-          <TickersTab
-            key={tabId}
-            isSelected={tab === tabId}
-            handleClickTab={(newTabId) => { updateTab(newTabId); }}
-            tabId={tabId}
-          />
-        ))
-      }
+      <Tab selectedIndex={selectedIdx}>
+        {
+          mockTabs.map((tabId, i) => (
+            <TickersTab
+              key={tabId}
+              role={i === selectedIdx ? 'current' : 'tab'}
+              tabIndex={i === selectedIdx ? -1 : 0}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  updateTab(tabId);
+                }
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                updateTab(tabId);
+              }}
+            >
+              {tabId}
+            </TickersTab>
+          ))
+        }
+      </Tab>
     </SheetHeader>
   );
 };

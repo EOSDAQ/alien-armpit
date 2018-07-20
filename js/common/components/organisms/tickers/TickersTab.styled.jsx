@@ -5,6 +5,7 @@ import {
 
 export const Tab = styled(SheetTab)`
   div {
-    width: 100px;
+    /* width: 100px; */
+    padding: 0 20px;
   }
 `;

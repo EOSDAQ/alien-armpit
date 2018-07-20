@@ -1,6 +1,7 @@
 import styled from 'react-emotion';
 import { colors } from '../../common/css/theme';
 import { mixin } from '../../common/css/typography';
+
 import {
   orderFormPanelWidth,
   orderFormTotalUnitWidth,

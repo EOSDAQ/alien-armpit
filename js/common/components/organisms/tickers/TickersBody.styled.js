@@ -2,13 +2,10 @@ import styled from 'react-emotion';
 import theme, { colors } from '../../../css/theme';
 import { SheetCell } from '../../molecules/Sheet';
 import {
-  sheetRowHeight,
-  tickersFavoriateWidth,
   tickersCoinNameWidth,
   tickersCurrentPriceWidth,
   tickersDayChangeWidth,
   tickersDayVolumeWidth,
-  tickersCellBorderWidth,
 } from '../../../constants/styleConstants';
 
 export const TickersCell = styled(SheetCell)`
@@ -18,7 +15,6 @@ export const FavoriteCell = styled(TickersCell)`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: ${tickersFavoriateWidth}px; */
 `;
 
 export const CoinNameCell = styled(TickersCell)`
@@ -44,7 +40,7 @@ export const CurrentPriceCell = styled(TickersCell)`
   letter-spacing: .5px;
   color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   text-align: right;
 `;
 

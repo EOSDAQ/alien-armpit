@@ -14,35 +14,34 @@ export const SheetWrapper = styled('div')`
   background-color: #fff;
 `;
 
-export const SheetHeading = styled('div')`
-  display: flex;
-  width: 100%;
-  text-align: center;
-
-  span {
-    display: block;
-    width: 100%;
-    color: ${colors.grey510};
-    font-size: 13px;
-    font-weight: 500;
-    line-height: ${sheetHeaderHeight}px;
-    border-bottom: 1px solid ${colors.black150};    
+function setBorderStyle(relativePos) {
+  switch (relativePos) {
+    case -1:
+      return `
+        border-right: 1px solid #ddd;
+        border-bottom-right-radius: 4px;
+      `;
+    case 0:
+      return `
+        border-bottom: none;
+        color: ${colors.grey900};
+      `;
+    case 1:
+      return `
+        border-left: 1px solid #ddd;
+        border-bottom-left-radius: 4px;
+      `;
+    default:
+      return '';
   }
-`;
+}
 
 export const SheetTab = styled('a')`
   div {
-    display: flex;
-
-    span {
-      display: block;
-      width: 100%;
-      color: ${({ isSelected }) => (isSelected ? colors.cyan700 : colors.grey590)};
-      font-size: 14px;
-      text-align: center;      
-      line-height: ${sheetHeaderHeight}px;
-      border-bottom: 1px solid ${({ isSelected }) => (isSelected ? colors.cyan700 : colors.grey330)};
-    }
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
   }
 `;
 
@@ -64,19 +63,29 @@ export const SheetSearch = () => {
 };
 
 export const SheetHeader = styled('div')`
-  display: flex;
-  width: 100%;  
-  align-items: center;
+  width: 100%;
   background-color: #fff;
-  height: 32px;
+  height: ${sheetHeaderHeight}px;
+`;
+
+export const SheetHeading = styled('div')`
+  align-self: center;
+  justify-self: center;
+
+  span {
+    color: ${colors.grey600};
+    font-size: 13px;
+  }
 `;
 
 export const SheetRow = styled('div')`
-  display: flex;
-  align-items: center;
-  height: ${sheetRowHeight}px;
+  display: grid;
+  height: 100%;
+  grid-template-columns: ${(({ columns }) => columns)};
+  /* height: ${sheetRowHeight}px; */
 `;
 
 export const SheetCell = styled('div')`
   align-self: center;
+  justify-self: ${({ justifySelf }) => justifySelf || 'start'};
 `;

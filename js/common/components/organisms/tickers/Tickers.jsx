@@ -10,7 +10,6 @@ import TickersHeader from './TickersHeader';
 import TickersSubHeader from './TickersSubHeader';
 import TickersBody from './TickersBody';
 import TickersSearch from './TickersSearch';
-import TickersTable from './TickersTable';
 
 class Tickers extends React.Component {
   constructor(props) {
@@ -26,10 +25,9 @@ class Tickers extends React.Component {
       searchValue: value,
     });
   }
-
+  
   onToggleFavorite() {
     const { showFavorites } = this.state;
-
     this.setState({
       showFavorites: !showFavorites,
     });

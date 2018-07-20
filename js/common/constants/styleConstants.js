@@ -1,4 +1,4 @@
-export const sheetHeaderHeight = 36;
+export const sheetHeaderHeight = 30;
 export const sheetRowHeight = 36;
 
 export const tickersFavoriateWidth = 36;
