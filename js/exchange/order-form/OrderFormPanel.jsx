@@ -10,7 +10,12 @@ import {
   OrderFormTotalAmount,
   OrderFormTotalUnit,
   OrderFormButton,
+  OrderFormInput,
+  OrderFormInputControl,
 } from './OrderFormPanel.styled';
+import Input from '../../common/components/atom/Input';
+import Icon from '../../common/components/atom/Icon';
+import { IconButton } from '../../common/components/atom/Button';
 
 const OrderForm = (props) => {
   const {
@@ -23,25 +28,35 @@ const OrderForm = (props) => {
   return (
     <OrderFormContainer>
       <OrderFormTop>
-        <OrderFormHeader isBuy={isBuy}>
-          {isBuy ? '매수' : '매도'}
-        </OrderFormHeader>
         <OrderFormControl>
           <label htmlFor={priceInputId}>
             가격
-            <div>
-              <input type="text" id={priceInputId} />
-            </div>
+            <OrderFormInput>
+              <Input type="text" id={priceInputId} />
+              <OrderFormInputControl>
+                <IconButton small>
+                  <Icon type="minus" />
+                </IconButton>
+                <IconButton small>
+                  <Icon type="plus" />
+                </IconButton>
+              </OrderFormInputControl>
+            </OrderFormInput>
           </label>
         </OrderFormControl>
         <OrderFormControl>
           <label htmlFor={amountInputId}>
             수량
-            <div>
-              <input type="text" />
-            </div>
           </label>
         </OrderFormControl>
+        <OrderFormInput>
+          <Input type="text" id={amountInputId} />
+          <OrderFormInputControl>
+            <IconButton small>
+              <Icon type="expand" />
+            </IconButton>
+          </OrderFormInputControl>
+        </OrderFormInput>
       </OrderFormTop>
       <OrderFormBottom isBuy={isBuy}>
         <OrderFormTotal>

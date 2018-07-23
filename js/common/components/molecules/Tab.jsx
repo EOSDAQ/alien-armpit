@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'react-emotion';
 import Flex from '../atom/Flex';
 import Box from '../atom/Box';
+import { colors } from '../../css/theme';
 
 function setBorderStyle(relIdx) {
   switch (relIdx) {
@@ -15,6 +16,7 @@ function setBorderStyle(relIdx) {
         border-bottom: none;
         pointer-events: none;
         user-select: none;
+        border-top: 1px solid ${colors.primary500};
         background: transparent;
         color: black;
       `;
@@ -31,8 +33,9 @@ function setBorderStyle(relIdx) {
 // TODO. set TabItem size prop.
 const TabItem = styled(Box)`
   color: #aaa;
-  height: 40px;
-  line-height: 40px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: 500;
   display: flex;
   border: 1px solid transparent;
   border-bottom: 1px solid #ddd;
