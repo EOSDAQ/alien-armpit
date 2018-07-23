@@ -12,6 +12,7 @@ import {
   OrderFormButton,
   OrderFormInput,
   OrderFormInputControl,
+  OrderFormLabel,
 } from './OrderFormPanel.styled';
 import Input from '../../common/components/atom/Input';
 import Icon from '../../common/components/atom/Icon';
@@ -29,7 +30,7 @@ const OrderForm = (props) => {
     <OrderFormContainer>
       <OrderFormTop>
         <OrderFormControl>
-          <label htmlFor={priceInputId}>
+          <OrderFormLabel htmlFor={priceInputId}>
             가격
             <OrderFormInput>
               <Input type="text" id={priceInputId} />
@@ -42,12 +43,12 @@ const OrderForm = (props) => {
                 </IconButton>
               </OrderFormInputControl>
             </OrderFormInput>
-          </label>
+          </OrderFormLabel>
         </OrderFormControl>
         <OrderFormControl>
-          <label htmlFor={amountInputId}>
+          <OrderFormLabel htmlFor={amountInputId}>
             수량
-          </label>
+          </OrderFormLabel>
         </OrderFormControl>
         <OrderFormInput>
           <Input type="text" id={amountInputId} />

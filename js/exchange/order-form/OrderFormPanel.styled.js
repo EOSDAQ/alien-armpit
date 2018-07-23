@@ -37,6 +37,10 @@ export const OrderFormControl = styled('div')`
   }
 `;
 
+export const OrderFormLabel = styled('label')`
+
+`;
+
 export const OrderFormInput = styled('div')`
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -46,13 +50,6 @@ export const OrderFormInput = styled('div')`
 
   & input {
     flex: 1;
-    border: 0;
-
-    &:focus, &:active {
-      outline: 0;
-    }
-
-    background: transparent;
   }
 `;
 
