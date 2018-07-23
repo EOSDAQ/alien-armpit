@@ -10,31 +10,8 @@ import {
 
 export const SheetWrapper = styled('div')`
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
   background-color: #fff;
 `;
-
-function setBorderStyle(relativePos) {
-  switch (relativePos) {
-    case -1:
-      return `
-        border-right: 1px solid #ddd;
-        border-bottom-right-radius: 4px;
-      `;
-    case 0:
-      return `
-        border-bottom: none;
-        color: ${colors.grey900};
-      `;
-    case 1:
-      return `
-        border-left: 1px solid #ddd;
-        border-bottom-left-radius: 4px;
-      `;
-    default:
-      return '';
-  }
-}
 
 export const SheetTab = styled('a')`
   div {
