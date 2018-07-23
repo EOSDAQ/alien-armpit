@@ -4,6 +4,8 @@ import { SheetWrapper } from '../../common/components/molecules/Sheet';
 export const ExchangeChartWrap = styled(SheetWrapper)`  
   height: 480px;
   width: 740px;  
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ExchangeChartHeader = styled('div')`

@@ -6,6 +6,7 @@ import {
   ExchangeChartHeaderInfoMid,
   ExchangeChartHeaderInfo,
 } from './ExchangeChart.styled';
+import TradingView from './TradingView';
 
 const ExchangeChartBox = () => (
   <ExchangeChartWrap>
@@ -39,6 +40,7 @@ const ExchangeChartBox = () => (
         </ExchangeChartHeaderInfo>
       </ExchangeChartHeaderInfoMid>
     </ExchangeChartHeader>
+    <TradingView />
   </ExchangeChartWrap>
 );
 
