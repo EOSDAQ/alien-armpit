@@ -6,7 +6,7 @@ import {
 } from '../common/constants/styleConstants';
 
 export const ExchangeBody = styled('div')`
-  background-color: ${colors.grey130};  
+  background-color: #fafafa;  
 `;
 
 export const ExchangeContainer = styled('div')`
