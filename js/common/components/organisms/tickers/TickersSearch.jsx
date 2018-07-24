@@ -5,10 +5,7 @@ import { TickersSearchInput } from './TickersSearch.styled';
 import Box from '../../atom/Box';
 import { IconButton } from '../../atom/Button';
 
-// search onChange 마다 redux store를 업데이트 해야하는가?
-// state로 관리해도 괜찮지 않을까?
-
-const TickersSearch = ({ onSearch, onToggleFavorite, showFavorites }) => (
+const TickersSearch = ({ onSearch, toggleShowFavorites, showFavorites }) => (
   <Flex
     height={38}
     py={4}
@@ -16,7 +13,7 @@ const TickersSearch = ({ onSearch, onToggleFavorite, showFavorites }) => (
     alignItems="center"
     borderBottom="1px solid #ededed"
   >
-    <IconButton onClick={onToggleFavorite}>
+    <IconButton onClick={toggleShowFavorites}>
       <Icon type={showFavorites ? 'starred' : 'star'} />
     </IconButton>
     <Box

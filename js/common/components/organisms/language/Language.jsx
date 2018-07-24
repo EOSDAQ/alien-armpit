@@ -32,7 +32,7 @@ class Language extends Component {
               key={option}
               option={option}
               language={language}
-              onClick={() => this.changeLanguage(option)} 
+              onClick={() => this.changeLanguage(option)}
             />
           ))}
         >

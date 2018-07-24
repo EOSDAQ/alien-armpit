@@ -36,7 +36,7 @@ const TickersBody = (props) => {
     <Scrollbars {...scrollOptions}>
       {coinList.map((coin) => {
         const buy = coin.dayChange > 0;
-        
+
         return (
           <SheetRow
             key={coin.coinCode}

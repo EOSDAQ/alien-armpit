@@ -56,11 +56,11 @@ const TickersSubHeader = ({
 );
 
 const mapStateToProps = state => ({
-  sort: state.tickers.sort,
+  sort: state.tickers.box.sort,
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateSort: field => dispatch(actions.updateSort({ field })),
+  updateSort: field => dispatch(actions.updateSortSaga({ field })),
 });
 
 export default connect(
