@@ -44,7 +44,11 @@ const plugins = [
       removeComments: true,
       collapseWhitespace: true,
     },
+<<<<<<< HEAD
     production: process.env.NODE_ENV === 'production',
+=======
+    production: process.argv.indexOf('-p') >= 0,
+>>>>>>> chore(webpack): add external modules and minify html output on production
   }),
 ];
 
