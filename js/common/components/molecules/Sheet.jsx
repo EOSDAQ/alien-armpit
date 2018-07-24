@@ -22,23 +22,6 @@ export const SheetTab = styled('a')`
   }
 `;
 
-export const SheetSearch = () => {
-  const height = 29;
-  return (
-    <Box
-      bg="#fff"
-      border="1px solid #000"
-      height={height}
-    >
-      <Input
-        type="text"
-        height={height - 2}
-        border={0}
-      />
-    </Box>
-  );
-};
-
 export const SheetHeader = styled('div')`
   width: 100%;
   background-color: #fff;

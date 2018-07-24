@@ -1,0 +1,28 @@
+import { call, put } from 'redux-saga/effects';
+import { actions } from './tickersReducer';
+import * as api from './tickersApi';
+
+export function* loadCoins() {
+  try {
+    const result = yield call(api.loadCoins);
+    yield put(actions.updateCoinList(result.coins));
+    yield put(actions.updateFilteredCoinList());
+  } catch(err) {
+    console.log(err);
+  }
+}
+
+export function* toggleShowFavorites() {
+  yield put(actions.toggleShowFavorites());
+  yield put(actions.updateFilteredCoinList());
+}
+
+export function* updateSort({ payload }) {
+  yield put(actions.updateSort(payload));
+  yield put(actions.updateFilteredCoinList());
+}
+
+export function* updateSearchValue({ payload }) {  
+  yield put(actions.updateSearchValue(payload));
+  yield put(actions.updateFilteredCoinList());
+}

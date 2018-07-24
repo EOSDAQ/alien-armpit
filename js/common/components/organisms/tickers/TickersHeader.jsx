@@ -7,11 +7,11 @@ const mockTabs = ['EOS', '보유코인'];
 
 const TickersHeader = (props) => {
   const {
-    updateTab,
-    tab,
+    updateSelectedTab,
+    selectedTab,
   } = props;
 
-  const selectedIdx = mockTabs.findIndex(t => tab === t);
+  const selectedIdx = mockTabs.findIndex(t => selectedTab === t);
 
   return (
     <SheetHeader>
@@ -24,12 +24,12 @@ const TickersHeader = (props) => {
               tabIndex={i === selectedIdx ? -1 : 0}
               onKeyDown={(e) => {
                 if (e.keyCode === 13) {
-                  updateTab(tabId);
+                  updateSelectedTab(tabId);
                 }
               }}
               onClick={(e) => {
                 e.preventDefault();
-                updateTab(tabId);
+                updateSelectedTab(tabId);
               }}
             >
               {tabId}

@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import debounce from 'lodash.debounce';
 import { actions } from '../../../../reducer/tickers/tickersReducer';
 
-import {
-  SheetWrapper,
-  // SheetSearch,
-} from '../../molecules/Sheet';
+import { SheetWrapper } from '../../molecules/Sheet';
 import TickersHeader from './TickersHeader';
 import TickersSubHeader from './TickersSubHeader';
 import TickersBody from './TickersBody';
@@ -14,74 +12,46 @@ import TickersSearch from './TickersSearch';
 class Tickers extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      searchValue: null,
-      showFavorites: false,
-    };
+    this.debouncedHandleChange = debounce(this.debouncedHandleChange, 300);
   }
 
-  onSearch(value) {
-    this.setState({
-      searchValue: value,
-    });
+  componentDidMount() {
+    this.props.loadCoins();
   }
-  
-  onToggleFavorite() {
-    const { showFavorites } = this.state;
-    this.setState({
-      showFavorites: !showFavorites,
-    });
+
+  handleChange(event) {
+    this.debouncedHandleChange(event.value);
+  }
+
+  debouncedHandleChange(value) {
+    this.props.updateSearchValue(value);
   }
 
   render() {
     const {
-      updateTab,
-      tab,
-      sort,
-      coins: _coins,
+      selectedTab,
+      box,
+      updateSelectedTab,
+      toggleShowFavorites,
     } = this.props;
-
     const {
-      searchValue,
+      filteredCoinList,
       showFavorites,
-    } = this.state;
-
-    let coins = [..._coins];
-    if (searchValue) {
-      coins = coins.filter((c) => {
-        const match = new RegExp(searchValue, 'i').exec(c.coinName + c.coinCode);
-        return match !== null; // use index value to sort.
-      });
-    }
-
-    if (showFavorites) {
-      coins = coins.filter(c => c.favorite);
-    }
-
-    coins = coins.sort((a, b) => {
-      const { field, order } = sort;
-      let compare;
-      if (typeof a[field] === 'string') {
-        compare = a[field].toUpperCase() > b[field].toUpperCase();
-      } else {
-        compare = a[field] > b[field];
-      }
-      return compare ? order : -order;
-    });
+    } = box;
 
     return (
       <SheetWrapper>
         <TickersSearch
-          onSearch={value => this.onSearch(value)}
+          onSearch={value => this.debouncedHandleChange(value)}
           showFavorites={showFavorites}
-          onToggleFavorite={() => this.onToggleFavorite()}
+          toggleShowFavorites={() => toggleShowFavorites()}
         />
         <TickersHeader
-          tab={tab}
-          updateTab={updateTab}
+          selectedTab={selectedTab}
+          updateSelectedTab={updateSelectedTab}
         />
         <TickersSubHeader />
-        <TickersBody coinList={coins} />
+        <TickersBody coinList={filteredCoinList} />
       </SheetWrapper>
     );
   }
@@ -92,7 +62,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateTab: (tabId) => { dispatch(actions.updateTab(tabId)); },
+  updateSelectedTab: (tabId) => { dispatch(actions.updateSelectedTab(tabId)); },
+  loadCoins: () => { dispatch(actions.loadCoins()); },
+  updateSearchValue: (value) => { dispatch(actions.updateSearchValueSaga(value)); },
+  toggleShowFavorites: () => { dispatch(actions.toggleShowFavoritesSaga()); },
 });
 
 export default connect(
