@@ -1,16 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
-
-const SelectOptions = styled.div`
-  position: absolute;
-  top: 40px;
-  right: 0px;
-  width: 100px;
-  color: black;
-  background: white;
-  border-radius: 2px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, .1);
-`;
+import { SelectOptions } from './Select.styled';
 
 class Select extends React.PureComponent {
   constructor(props) {
@@ -39,17 +28,34 @@ class Select extends React.PureComponent {
   }
 
   onDocumentClick(e) {
-    const { showDropdown } = this.state;
+    const { showDropdown: _showDropdown } = this.state;
     const contains = this.ref.contains(e.target);
     const insideSelected = this.selectedRef.contains(e.target);
 
+    let showDropdown = false;
+
+    if (!_showDropdown) {
+      showDropdown = contains || insideSelected;
+    } else if (insideSelected) {
+      showDropdown = false;
+    } else {
+      showDropdown = !_showDropdown;
+    }
+
     this.setState({
-      showDropdown: (showDropdown && insideSelected) ? !contains : contains,
+      showDropdown,
     });
   }
 
   render() {
-    const { children, options } = this.props;
+    const {
+      children,
+      options,
+      direction = {
+        top: 40,
+        right: 0,
+      },
+    } = this.props;
     const { showDropdown } = this.state;
 
     return (
@@ -61,7 +67,7 @@ class Select extends React.PureComponent {
           {children}
         </div>
         {showDropdown && (
-          <SelectOptions>
+          <SelectOptions {...direction}>
             {options.map(option => option)}
           </SelectOptions>
         )}
