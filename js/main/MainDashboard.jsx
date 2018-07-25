@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '../common/components/atom/Box';
 import Flex from '../common/components/atom/Flex';
 import Text from '../common/components/atom/Text';
-import { CoinImage } from './MainDashboard.styled';
+import { CoinImage, CoinPriceChange } from './MainDashboard.styled';
 
 const timer = new Worker('/workers/timer.js');
 
@@ -172,14 +172,9 @@ class MainDashboard extends React.Component {
                   >
                     {coin.name}
                   </Text>
-                  <Text
-                    color="rgba(255, 255, 255, .8)"
-                    fontSize={12}
-                    mr={40}
-                    fontFamily="menlo, consolas, monospace"
-                  >
+                  <CoinPriceChange>
                     (0%)
-                  </Text>
+                  </CoinPriceChange>
                 </Flex>
               );
             })}
