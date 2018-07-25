@@ -5,8 +5,10 @@ const history = require('connect-history-api-fallback');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
-  './js/app.jsx',
+  './app.jsx',
 ];
+
+const context = path.resolve(__dirname, 'js');
 
 const output = {
   path: path.join(__dirname, '/dist'),
@@ -38,7 +40,7 @@ const devtool = 'cheap-module-eval-source-map';
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new HtmlWebpackPlugin({
-    template: 'static/index.html',
+    template: 'app.html',
     inject: true,
     minify: {
       removeComments: true,
@@ -75,6 +77,7 @@ const externals = {
 
 module.exports = {
   mode: 'development',
+  context,
   entry,
   output,
   resolve,
