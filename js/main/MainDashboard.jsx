@@ -1,8 +1,8 @@
 import React from 'react';
-import { css } from 'emotion';
 import Box from '../common/components/atom/Box';
 import Flex from '../common/components/atom/Flex';
 import Text from '../common/components/atom/Text';
+import { CoinImage } from './MainDashboard.styled';
 
 const timer = new Worker('/workers/timer.js');
 
@@ -157,13 +157,9 @@ class MainDashboard extends React.Component {
                   alignItems="center"
                   flex="0 0 auto"
                 >
-                  <img
+                  <CoinImage
                     src={`./images/${coin.src}`}
                     alt={coin.src}
-                    className={css`
-                      width: 20px;
-                      height: 20px;
-                    `}
                   />
                   <Text
                     color="white"
