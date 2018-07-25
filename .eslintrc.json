@@ -1,5 +1,6 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
   "rules": {
     "func-names": ["error", "never"],
     "react/prefer-stateless-function": [1, { "ignorePureComponents": true }],
@@ -8,6 +9,9 @@
     "jsx-a11y/href-no-hash": "off",
     "no-unused-vars": ["error", { "varsIgnorePattern": "[rR]eact" }]
   },
+  "plugins": [
+    "flowtype"
+  ],
   "env": {
     "browser": true
   }
