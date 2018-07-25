@@ -38,6 +38,7 @@ const Box = styled(tag)`
   ${flex}
   ${display}
   ${borderRadius}
+  ${({ css: cssProps }) => cssProps && cssProps}
   ${({ overflow }) => overflow && css`
     overflow: ${overflow};
   `}
