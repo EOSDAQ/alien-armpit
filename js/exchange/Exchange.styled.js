@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '../common/css/theme';
+import { Container } from 'common/components/atom/Box';
 import {
   exchangeLeftWidth,
   exchangeRightWidth,
@@ -9,11 +9,10 @@ export const ExchangeBody = styled('div')`
   background-color: #fafafa;  
 `;
 
-export const ExchangeContainer = styled('div')`
+export const ExchangeContainer = Container.extend`
   display: flex;
-  margin: 0 auto;
-  width: 1280px;
-  padding: 24px 0 42px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 `;
 
 export const ExchangeLeftSide = styled('div')`
@@ -21,10 +20,13 @@ export const ExchangeLeftSide = styled('div')`
   width: ${exchangeLeftWidth}px;
   flex-direction: column;  
   margin-right: 12px;
+  flex: 0 0 auto;
 `;
 
 export const ExchangeRightSide = styled('div')`
   display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
   width: ${exchangeRightWidth}px;
 `;
 

@@ -8,6 +8,7 @@ import {
 export const OrderLogWrapper = styled(SheetWrapper)`
   width: 300px;
   margin-left: 12px;
+  flex: 1 1;
 `;
 
 const OrderLogCellStyle = `

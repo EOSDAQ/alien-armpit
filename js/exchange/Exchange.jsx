@@ -19,27 +19,34 @@ import {
 const Exchange = () => (
   <ExchangeBody>
     <Header />
-    <StickyContainer>
-      <ExchangeContainer>
-        <ExchangeLeftSide>
-          <Tickers />
-          <OrderBook />
-        </ExchangeLeftSide>
+    <ExchangeContainer large>
+      <ExchangeLeftSide>
+        <Tickers />
+        <OrderBook />
+      </ExchangeLeftSide>
+      <StickyContainer>
         <ExchangeRightSide>
-          <Sticky>
-            {({ style }) => (
-              <div style={style}>
-                <ExchangeChart />
-                <ExchangeRightBottom>
-                  <OrderForm />
-                  <OrderLog />
-                </ExchangeRightBottom>
-              </div>
-            )}
+          <Sticky topOffset={-72}>
+            {({ style: _style, distanceFromBottom }) => {
+              let style = {
+                ..._style,
+                top: 72,
+              };
+
+              return (
+                <div style={style}>
+                  <ExchangeChart />
+                  <ExchangeRightBottom>
+                    <OrderForm />
+                    <OrderLog />
+                  </ExchangeRightBottom>
+                </div>
+              );
+            }}
           </Sticky>
         </ExchangeRightSide>
-      </ExchangeContainer>
-    </StickyContainer>
+      </StickyContainer>
+    </ExchangeContainer>
     <Footer />
   </ExchangeBody>
 );

@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { SheetWrapper } from '../../common/components/molecules/Sheet';
 
 export const ExchangeChartWrap = styled(SheetWrapper)`  
-  height: 480px;
+  height: 520px;
   width: 740px;  
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
 `;
 
