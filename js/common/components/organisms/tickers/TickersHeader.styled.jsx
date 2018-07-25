@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import { colors } from '../../../css/theme';
 
 export const TickersTab = styled.div`

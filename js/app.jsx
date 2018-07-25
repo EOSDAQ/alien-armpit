@@ -7,7 +7,7 @@ import { routerMiddleware, ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import createSagaMiddleware from 'redux-saga';
 import { I18nextProvider } from 'react-i18next';
-import { ThemeProvider } from 'emotion-theming';
+import { ThemeProvider } from 'styled-components';
 
 import './common/css/global.styled';
 import reducer from './reducer/reducer';

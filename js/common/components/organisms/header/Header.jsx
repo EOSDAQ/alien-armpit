@@ -1,11 +1,11 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Box from '../atom/Box';
-import { Container } from '../../../main/Main.styled';
-import Flex from '../atom/Flex';
-import Text from '../atom/Text';
-import Language from './language/Language';
+import Box from '../../atom/Box';
+import Flex from '../../atom/Flex';
+import Text from '../../atom/Text';
+import Language from '../language/Language';
+import { HeaderStyled } from './Header.styled';
 
 class Header extends React.Component {
   constructor(props) {
@@ -25,13 +25,7 @@ class Header extends React.Component {
     const { t } = this.props;
 
     return (
-      <nav
-        css={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
-        }}
-      >
+      <HeaderStyled>
         <Box
           bg="#141A2A"
           color="grey100"
@@ -79,7 +73,7 @@ class Header extends React.Component {
             </Flex>
           </Box>
         </Box>
-      </nav>
+      </HeaderStyled>
     );
   }
 }

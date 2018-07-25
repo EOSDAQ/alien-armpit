@@ -1,30 +1,16 @@
 {
   "presets": ["react"],
   "plugins": [
-    "emotion",
+    "babel-plugin-styled-components",
     "syntax-dynamic-import",
     "transform-object-rest-spread"
   ],
   "env": {
-    "production": {
-      "plugins": [
-        [
-          "emotion",
-          {
-            "sourceMap": true
-          }
-        ]
-      ]
-    },
     "development": {
       "plugins": [
-        [
-          "emotion",
-          {
-            "autoLabel": true,
-            "labelFormat": "[filename]--[local]"
-          }
-        ]
+        ["babel-plugin-styled-components", {
+          "displayName": true
+        }]
       ]
     }
   }

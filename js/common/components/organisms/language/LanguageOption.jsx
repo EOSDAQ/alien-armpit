@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import Icon from '../../atom/Icon';
 import { SelectOption } from '../../molecules/Select.styled';
 import Box from '../../atom/Box';

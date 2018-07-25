@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import { SheetWrapper } from '../../common/components/molecules/Sheet';
 
 export const ExchangeChartWrap = styled(SheetWrapper)`  

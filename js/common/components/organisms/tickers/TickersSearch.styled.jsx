@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import styled from 'styled-components';
 
 export const TickersSearchInput = styled.input`
   height: 28px;

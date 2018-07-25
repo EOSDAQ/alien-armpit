@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import Box from '../atom/Box';
 import { Input } from './Form';
 import { colors } from '../../css/theme';
