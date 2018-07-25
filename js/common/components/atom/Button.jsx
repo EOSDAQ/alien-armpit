@@ -5,8 +5,6 @@ const Button = styled.button`
   border: none;
   margin: 0px;
   padding: 0px 8px;
-  margin-right: -8px;
-  /* outline: none; */
   background: transparent;
   color: inherit;
   font: inherit;

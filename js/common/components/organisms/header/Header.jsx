@@ -32,7 +32,8 @@ class Header extends React.Component {
         >
           <Box
             py={8}
-            width={1280}
+            maxWidth={1280}
+            width="100%"
             mx="auto"
           >
             <Flex
