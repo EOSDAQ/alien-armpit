@@ -10,7 +10,7 @@ const entry = [
 
 const output = {
   path: path.join(__dirname, '/dist'),
-  filename: '[name].bundle.js',
+  filename: '[name].[hash].bundle.js',
   chunkFilename: '[name].[chunkhash].js',
 };
 

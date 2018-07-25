@@ -1,8 +1,17 @@
 {
-  "presets": ["react"],
+  "presets": ["flow", "react"],
   "plugins": [
-    "emotion",
+    "babel-plugin-styled-components",
     "syntax-dynamic-import",
     "transform-object-rest-spread"
-  ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        ["babel-plugin-styled-components", {
+          "displayName": true
+        }]
+      ]
+    }
+  }
 }

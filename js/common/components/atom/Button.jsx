@@ -1,12 +1,10 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 
 const Button = styled.button`
   border: none;
   margin: 0px;
   padding: 0px 8px;
-  margin-right: -8px;
-  /* outline: none; */
   background: transparent;
   color: inherit;
   font: inherit;
@@ -30,6 +28,31 @@ const Button = styled.button`
 
   &:hover {
     background: rgba(0, 0, 0, .4);
+  }
+`;
+
+export const IconButton = styled.button`
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  ${({ small }) => small && `
+    width: 20px;
+    height: 20px;
+  `}
+  box-shadow: 0;
+  outline: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  & svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, .02);
   }
 `;
 

@@ -1,58 +1,69 @@
-import styled from 'react-emotion';
-import { colors } from '../../../css/theme';
+import styled from 'styled-components';
+import theme, { colors } from '../../../css/theme';
 import { SheetCell } from '../../molecules/Sheet';
 import {
-  sheetRowHeight,
-  tickersFavoriateWidth,
   tickersCoinNameWidth,
   tickersCurrentPriceWidth,
   tickersDayChangeWidth,
   tickersDayVolumeWidth,
-  tickersCellBorderWidth,
 } from '../../../constants/styleConstants';
 
-export const TickersCell = styled(SheetCell)`
-  border-bottom: ${tickersCellBorderWidth}px solid ${colors.grey180};
-  line-height: ${sheetRowHeight - tickersCellBorderWidth}px;  
+export const TickersCell = SheetCell.extend`
 `;
 
-export const FavoriateCell = styled(TickersCell)`
-  width: ${tickersFavoriateWidth}px;
+export const FavoriteCell = TickersCell.extend`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const CoinNameCell = styled(TickersCell)`
-  width: ${tickersCoinNameWidth}px;
+export const CoinNameCell = TickersCell.extend`
+  /* width: ${tickersCoinNameWidth}px; */
 `;
 
-export const CoinNameText = styled('span')`
+export const CoinNameText = styled.span`
   font-size: 14px;
   font-weight: 500;
-  color: ${colors.black500};  
+  color: black;  
 `;
 
-export const CoinCodeText = styled('span')`
-  font-size: 12px;
+export const CoinCodeText = styled.span`
+  font-size: 13px;
   color: ${colors.grey390};
+  font-family: ${theme.fontFamily.mono};
   margin-left: 4px;
 `;
 
-export const CurrentPriceCell = styled(TickersCell)`
+export const CurrentPriceCell = TickersCell.extend`
   width: ${tickersCurrentPriceWidth}px;
+  font-family: ${theme.fontFamily.number};
+  letter-spacing: .5px;
+  color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
+  font-weight: 500;
+  font-size: 14px;
+  text-align: right;
+`;
+
+export const DayChangeCell = TickersCell.extend`
+  /* width: ${tickersDayChangeWidth}px; */
+  font-family: ${theme.fontFamily.number};
+  letter-spacing: .5px;
+  color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
+  font-weight: 400;
+  font-size: 13px;
+  text-align: right;
+`;
+
+export const DayVolumeCell = TickersCell.extend`
+  font-family: ${theme.fontFamily.number};
+  color: ${theme.colors.black720};
+  letter-spacing: .5px;
   font-size: 13px;
 `;
 
-export const DayChangeCell = styled(TickersCell)`
-  width: ${tickersDayChangeWidth}px;
-  font-size: 13px;
-`;
-
-export const DayVolumeCell = styled(TickersCell)`
-  width: ${tickersDayVolumeWidth}px;
-  font-size: 13px;
-`;
-
-export const DayVolumeUnitText = styled('span')`
-  font-size; 12px;
-  color: ${colors.grey390};
-  margin-left: 4px;
+export const DayVolumeUnitText = styled.span`
+  font-size: 12px;
+  font-family: ${theme.fontFamily.sans};
+  color: ${colors.grey400};
+  margin-left: 2px;
 `;

@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import { colors } from '../../common/css/theme';
 
 export const OrderBookTradeLogWrapper = styled('div')`

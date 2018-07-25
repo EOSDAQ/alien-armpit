@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import 'intersection-observer'; // polyfill intersection observer for non-supporting browsers
 
 class Waypoint extends React.Component {
@@ -102,11 +101,6 @@ class Waypoint extends React.Component {
 Waypoint.defaultProps = {
   steps: 1,
   runOnce: false,
-};
-
-Waypoint.propTypes = {
-  steps: PropTypes.number,
-  runOnce: PropTypes.bool,
 };
 
 export default Waypoint;

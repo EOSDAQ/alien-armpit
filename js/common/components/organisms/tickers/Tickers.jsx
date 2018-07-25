@@ -1,148 +1,71 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import debounce from 'lodash.debounce';
 import { actions } from '../../../../reducer/tickers/tickersReducer';
 
-import {
-  SheetWrapper,
-  // SheetSearch,
-} from '../../molecules/Sheet';
+import { SheetWrapper } from '../../molecules/Sheet';
 import TickersHeader from './TickersHeader';
 import TickersSubHeader from './TickersSubHeader';
 import TickersBody from './TickersBody';
+import TickersSearch from './TickersSearch';
 
-const mockCoinList = [
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: true,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-  {
-    favoriate: false,
-    coinName: '이오스닥닥',
-    coinCode: 'DAQ/EOS',
-    currentPrice: 0.00232408,
-    dayChange: -5.13,
-    dayVolume: 12904233,
-  },
-];
+class Tickers extends React.Component {
+  constructor(props) {
+    super(props);
+    this.debouncedHandleChange = debounce(this.debouncedHandleChange, 300);
+  }
 
-const Tickers = (props) => {
-  const {
-    updateTab,
-    tab,
-  } = props;
+  componentDidMount() {
+    this.props.loadCoins();
+  }
 
-  return (
-    <SheetWrapper>
-      <TickersHeader
-        tab={tab}
-        updateTab={updateTab}
-      />
-      <div>
+  handleChange(event) {
+    this.debouncedHandleChange(event.value);
+  }
+
+  debouncedHandleChange(value) {
+    this.props.updateSearchValue(value);
+  }
+
+  render() {
+    const {
+      selectedTab,
+      box,
+      updateSelectedTab,
+      toggleShowFavorites,
+    } = this.props;
+    const {
+      filteredCoinList,
+      showFavorites,
+    } = box;
+
+    return (
+      <SheetWrapper>
+        <TickersSearch
+          onSearch={value => this.debouncedHandleChange(value)}
+          showFavorites={showFavorites}
+          toggleShowFavorites={() => toggleShowFavorites()}
+        />
+        <TickersHeader
+          selectedTab={selectedTab}
+          updateSelectedTab={updateSelectedTab}
+        />
         <TickersSubHeader />
-        <TickersBody coinList={mockCoinList} />
-      </div>
-    </SheetWrapper>
-  );
-};
+        <TickersBody coinList={filteredCoinList} />
+      </SheetWrapper>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   ...state.tickers,
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateTab: (tabId) => { dispatch(actions.updateTab(tabId)); },
+  updateSelectedTab: (tabId) => { dispatch(actions.updateSelectedTab(tabId)); },
+  loadCoins: () => { dispatch(actions.loadCoins()); },
+  updateSearchValue: (value) => { dispatch(actions.updateSearchValueSaga(value)); },
+  toggleShowFavorites: () => { dispatch(actions.toggleShowFavoritesSaga()); },
 });
 
 export default connect(

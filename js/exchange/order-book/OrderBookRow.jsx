@@ -14,7 +14,10 @@ const OrderBookRow = ({ orderBunch, maxAmount, isUpside}) => {
   const priceJsx = <OrderBookPriceCell key="orderBookPrice" price={price} change={change} isUpside={isUpside} />;
 
   return (
-    <Flex borderBottom="1px solid #fff" lineHeight="32px">
+    <Flex
+      height={40}
+      borderBottom="1px solid #fff"
+    >
       { isUpside
         ? [amountJsx, priceJsx]
         : [priceJsx, amountJsx]

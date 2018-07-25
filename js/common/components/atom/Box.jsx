@@ -1,6 +1,7 @@
 import React from 'react';
-import styled,
-{ css } from 'react-emotion';
+import styled, { css } from 'styled-components';
+import tag from 'clean-tag';
+
 import {
   space,
   width,
@@ -14,12 +15,13 @@ import {
   left,
   bottom,
   top,
+  flex,
   display,
   borderRadius,
   maxHeight,
 } from 'styled-system';
 
-const Box = styled.div`
+const Box = styled(tag)`
   ${space}
   ${width}
   ${height}
@@ -33,8 +35,10 @@ const Box = styled.div`
   ${bottom}
   ${left}
   ${right}
+  ${flex}
   ${display}
   ${borderRadius}
+  ${({ css: cssProps }) => cssProps && cssProps}
   ${({ overflow }) => overflow && css`
     overflow: ${overflow};
   `}

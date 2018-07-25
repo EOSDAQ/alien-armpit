@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 
 export const SnsIcon = styled.div`
   padding: 4px;

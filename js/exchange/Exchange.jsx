@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sticky, StickyContainer } from 'react-sticky';
 import { translate } from 'react-i18next';
-import Header from '../common/components/organisms/Header';
+import Header from '../common/components/organisms/header/Header';
 import Footer from '../common/components/organisms/Footer';
 import Tickers from '../common/components/organisms/tickers/Tickers';
 import OrderBook from './order-book/OrderBook';

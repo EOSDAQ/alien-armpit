@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../common/components/organisms/Footer';
-import Header from '../common/components/organisms/Header';
+import Header from '../common/components/organisms/header/Header';
 import MainHolder from './MainHolder';
 import MainWallet from './MainWallet';
 import MainTransaction from './MainTransaction';

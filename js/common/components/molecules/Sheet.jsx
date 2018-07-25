@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import Box from '../atom/Box';
 import { Input } from './Form';
 import { colors } from '../../css/theme';
@@ -10,72 +10,53 @@ import {
 
 export const SheetWrapper = styled('div')`
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.08);
   background-color: #fff;
-`;
-
-export const SheetHeading = styled('div')`
-  display: flex;
-  width: 100%;
-  text-align: center;
-
-  span {
-    display: block;
-    width: 100%;
-    color: ${colors.grey510};
-    font-size: 13px;
-    font-weight: 500;
-    line-height: ${sheetHeaderHeight}px;
-    border-bottom: 1px solid ${colors.black150};    
-  }
 `;
 
 export const SheetTab = styled('a')`
   div {
-    display: flex;
-
-    span {
-      display: block;
-      width: 100%;
-      color: ${({ isSelected }) => (isSelected ? colors.cyan700 : colors.grey590)};
-      font-size: 14px;
-      text-align: center;      
-      line-height: ${sheetHeaderHeight}px;
-      border-bottom: 1px solid ${({ isSelected }) => (isSelected ? colors.cyan700 : colors.grey330)};
-    }
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
   }
 `;
 
-export const SheetSearch = () => {
-  const height = 29;
-  return (
-    <Box
-      bg="#fff"
-      border="1px solid #000"
-      height={height}
-    >
-      <Input
-        type="text"
-        height={height - 2}
-        border={0}
-      />
-    </Box>
-  );
-};
-
 export const SheetHeader = styled('div')`
-  display: flex;
-  width: 100%;  
-  alignItems: center;
+  width: 100%;
   background-color: #fff;
 `;
 
+export const SheetHeading = styled('div')`
+  align-self: center;
+  justify-self: center;
+
+  span {
+    color: ${colors.grey600};
+    font-size: 13px;
+  }
+`;
+
 export const SheetRow = styled('div')`
-  display: flex;
-  height: ${sheetRowHeight}px;
+  display: grid;
+  grid-template-columns: ${(({ columns }) => columns)};
+  height: 40px;
+
+  &:nth-child(even) {
+    background: ${colors.grey50};
+  }
+`;
+
+export const SheetHeadingRow = styled(SheetRow)`
+  height: 32px;
+  font-size: 13px;
+  border-bottom: 1px solid #ddd;
 `;
 
 export const SheetCell = styled('div')`
-  height: ${sheetRowHeight}px;
-  background-color: #fff;  
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  justify-self: ${({ justifySelf }) => justifySelf || 'start'};
 `;

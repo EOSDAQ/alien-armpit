@@ -1,10 +1,12 @@
-import styled from 'react-emotion';
+import styled from 'styled-components';
 import { colors } from '../../common/css/theme';
 import { mixin } from '../../common/css/typography';
+
 import {
   orderFormPanelWidth,
   orderFormTotalUnitWidth,
 } from '../../common/constants/styleConstants';
+import Button from '../../common/components/atom/Button';
 
 export const OrderFormContainer = styled('div')`
   width: ${orderFormPanelWidth}px;
@@ -14,17 +16,13 @@ export const OrderFormContainer = styled('div')`
   &:first-child {
     border-right: 1px solid ${colors.grey170};  
   }
+  display: flex;
+  flex-direction: column;
 `;
 
 export const OrderFormTop = styled('div')`
   padding: 18px 14px 0px;
-`;
-
-export const OrderFormHeader = styled('h4')`  
-  height: 40px;
-  font-size: 16px;
-  font-weight: 600;
-  color: ${({ isBuy }) => (isBuy ? colors.red150 : '')}
+  flex: 1;
 `;
 
 export const OrderFormControl = styled('div')`
@@ -35,29 +33,34 @@ export const OrderFormControl = styled('div')`
   }
 
   label {
-    ${mixin.tradeLabel}
+    ${mixin.tradeLabel};
   }
+`;
 
-  div {
-    border-bottom: 1px solid ${colors.grey270};
+export const OrderFormLabel = styled('label')`
 
-    input[type=text] {
-      height: 29px;
-      line-height: 29px;
-      border: 0;
-      font-size: 14px;
-      color: #000;
-      padding: 0 10px;
-      outline: 0;
-      text-align: right;
-    }
+`;
+
+export const OrderFormInput = styled('div')`
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+
+  & input {
+    flex: 1;
   }
+`;
+
+export const OrderFormInputControl = styled('div')`
+  flex: 0 0 auto;
 `;
 
 export const OrderFormBottom = styled('div')`
   background-color: ${({ isBuy }) => (isBuy ? colors.red120 : colors.blue140)};
-  padding: 32px 14px 14px;
-  margin-top: 60px;
+  padding: 14px;
+  flex: 0 0 auto;
 `;
 
 export const OrderFormTotal = styled('div')`
@@ -85,14 +88,13 @@ export const OrderFormTotalUnit = styled('span')`
   text-align: right;
 `;
 
-export const OrderFormButton = styled('button')`
-  width: 100%;
-  height: 36px;
+export const OrderFormButton = styled(Button)`
   margin-top: 36px;
-  border-radius: 4px;
-  border: 1px solid ${({ isBuy }) => (isBuy ? colors.red150 : colors.blue350)};
-  background-color: ${({ isBuy }) => (isBuy ? colors.red150 : colors.blue350)};
-  font-size: 14px;
-  font-weight: 600;
+  width: 100%;
+  background-color: ${({ isBuy }) => (isBuy ? colors.red500 : colors.blue500)};
   color: #fff;
+
+  &:hover {
+    background-color: ${({ isBuy }) => (isBuy ? colors.red600 : colors.blue600)};
+  }
 `;
