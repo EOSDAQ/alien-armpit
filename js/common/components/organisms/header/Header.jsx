@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Box from '../../atom/Box';
+import Box, { Container } from '../../atom/Box';
 import Flex from '../../atom/Flex';
 import Text from '../../atom/Text';
 import Language from '../language/Language';
@@ -30,11 +30,9 @@ class Header extends React.Component {
           bg="#141A2A"
           color="grey100"
         >
-          <Box
-            py={8}
-            maxWidth={1280}
-            width="100%"
-            mx="auto"
+          <Container
+            large
+            py={12}
           >
             <Flex
               justifyContent="space-between"
@@ -72,7 +70,7 @@ class Header extends React.Component {
               </Flex>
               <Language />
             </Flex>
-          </Box>
+          </Container>
         </Box>
       </HeaderStyled>
     );

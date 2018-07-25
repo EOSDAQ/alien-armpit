@@ -53,4 +53,16 @@ const Box = styled(tag)`
   `}
 `;
 
+type ContainerProps = {
+  large?: boolean,
+}
+
+export const Container: React.ComponentType<ContainerProps> = Box.extend`
+  max-width: ${({ large }) => large ? '1280px' : '980px'};
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 0 auto;
+`;
+
 export default Box;

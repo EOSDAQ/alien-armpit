@@ -1,10 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Box from '../common/components/atom/Box';
 import Text from '../common/components/atom/Text';
-import { Container } from './Main.styled';
 import Flex from '../common/components/atom/Flex';
 import Icon from '../common/components/atom/Icon';
+import Box, { Container } from '../common/components/atom/Box';
 
 class MainComing extends React.Component {
   constructor(props) {
@@ -29,9 +28,10 @@ class MainComing extends React.Component {
       <Box
         width={1}
         bg="#141A2A"
-        py={24}
+        pt={20}
+        pb={16}
       >
-        <Container>
+        <Container large>
           <Flex justifyContent="space-between">
             <Text
               fontSize={14}
