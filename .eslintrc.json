@@ -10,9 +10,17 @@
     "no-unused-vars": ["error", { "varsIgnorePattern": "[rR]eact" }]
   },
   "plugins": [
-    "flowtype"
+    "flowtype",
+    "import"
   ],
   "env": {
     "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.dev.js"
+      }
+    }
   }
 }

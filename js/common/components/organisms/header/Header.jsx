@@ -7,7 +7,9 @@ import Text from '../../atom/Text';
 import Language from '../language/Language';
 import { HeaderStyled } from './Header.styled';
 
-class Header extends React.Component {
+type Props = {};
+
+class Header extends React.Component<Props> {
   constructor(props) {
     super(props);
 
@@ -31,7 +33,7 @@ class Header extends React.Component {
           color="grey100"
         >
           <Container
-            large
+            large="123"
             py={12}
           >
             <Flex

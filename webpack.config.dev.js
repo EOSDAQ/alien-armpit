@@ -9,6 +9,7 @@ const entry = [
 ];
 
 const context = path.resolve(__dirname, 'js');
+const nodeModules = path.resolve(__dirname, 'node_modules');
 
 const output = {
   path: path.join(__dirname, '/dist'),
@@ -18,13 +19,14 @@ const output = {
 
 const resolve = {
   extensions: ['.js', '.json', '.jsx'],
+  modules: [context, nodeModules],
 };
 
 const rules = [
   {
     test: /\.(js|jsx)$/,
     loader: 'babel-loader',
-    exclude: [path.resolve(__dirname, 'node_modules')],
+    exclude: [nodeModules],
   },
   {
     test: /\.svg$/,

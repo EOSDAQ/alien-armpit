@@ -1,4 +1,6 @@
 [ignore]
+node_modules/
+dist/
 
 [include]
 
@@ -7,5 +9,7 @@
 [lints]
 
 [options]
+module.system.node.resolve_dirname=./js
+module.system.node.resolve_dirname=node_modules
 
 [strict]
