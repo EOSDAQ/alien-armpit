@@ -13,7 +13,7 @@ const prodConfig = {
     ]),
     new CopyWebpackPlugin([
       {
-        from: 'public/',
+        from: '../public/',
         to: '.',
       },
     ]),
@@ -21,5 +21,4 @@ const prodConfig = {
 };
 
 const merged = merge(devConfig, prodConfig);
-console.log(merged.externals);
 module.exports = merged;
