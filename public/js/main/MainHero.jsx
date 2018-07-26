@@ -1,12 +1,13 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Box from '../common/components/atom/Box';
-import Text from '../common/components/atom/Text';
-import Waypoint from '../common/components/molecules/Waypoint';
-import animations from '../common/css/animations';
-import Image from '../common/components/atom/Image';
-import Sns from '../common/components/organisms/sns/Sns';
-import Flex from '../common/components/atom/Flex';
+import Box from 'common/components/atom/Box';
+import Text from 'common/components/atom/Text';
+import Waypoint from 'common/components/molecules/Waypoint';
+import animations from 'common/css/animations';
+import Image from 'common/components/atom/Image';
+import Sns from 'common/components/organisms/sns/Sns';
+import Flex from 'common/components/atom/Flex';
+import { staticPath } from 'common/constants/constants';
 
 const MainHero = (props) => {
   const { t } = props;
@@ -79,7 +80,7 @@ const MainHero = (props) => {
                 left={0}
                 style={{
                   zIndex: -1,
-                  background: 'url(/images/tokens.png) 50% 50%/cover no-repeat',
+                  background: `url(${staticPath.images}/tokens.png) 50% 50%/cover no-repeat`,
                 }}
               />
               <Box
@@ -92,11 +93,11 @@ const MainHero = (props) => {
                 style={{
                   transform: 'scaleX(-1)',
                   zIndex: -1,
-                  background: 'url(/images/tokens.png) 50% 50%/cover no-repeat',
+                  background: `url(${staticPath.images}/tokens.png) 50% 50%/cover no-repeat`,
                 }}
               />
               <Image
-                src="/images/eosdaq-mac.png"
+                src={`${staticPath.images}/eosdaq-mac.png`}
                 width={['100%', '100%', '100%', 1000]}
                 mt={[40, 80]}
                 mb={-80}

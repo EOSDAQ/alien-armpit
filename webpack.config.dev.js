@@ -5,21 +5,23 @@ const history = require('connect-history-api-fallback');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
-  './app.jsx',
+  'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+  './js/app.jsx',
 ];
 
-const context = path.resolve(__dirname, 'js');
+const context = path.resolve(__dirname, 'public');
 const nodeModules = path.resolve(__dirname, 'node_modules');
 
 const output = {
-  path: path.join(__dirname, '/dist'),
-  filename: '[name].[hash].bundle.js',
-  chunkFilename: '[name].[chunkhash].js',
+  path: path.join(__dirname, '/public'),
+  publicPath: '/static/',
+  filename: '[name].bundle.js',
+  chunkFilename: '[name].js',
 };
 
 const resolve = {
   extensions: ['.js', '.json', '.jsx'],
-  modules: [context, nodeModules],
+  modules: [path.resolve(context, 'js'), nodeModules],
 };
 
 const rules = [
@@ -42,14 +44,16 @@ const devtool = 'cheap-module-eval-source-map';
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new HtmlWebpackPlugin({
-    template: 'app.html',
-    inject: true,
+    template: 'template/template.html',
+    inject: false,
     minify: {
       removeComments: true,
       collapseWhitespace: true,
     },
     production: process.argv.indexOf('-p') >= 0,
   }),
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.NoEmitOnErrorsPlugin(),
 ];
 
 const optimization = {
@@ -84,14 +88,14 @@ module.exports = {
   output,
   resolve,
   plugins,
-  serve: {
-    content: 'public',
-    port: 3001,
-    contentPath: __dirname,
-    add: (app) => {
-      app.use(connect(history()));
-    },
-  },
+  // serve: {
+  //   content: 'public',
+  //   port: 3001,
+  //   contentPath: __dirname,
+  //   add: (app) => {
+  //     app.use(connect(history()));
+  //   },
+  // },
   externals,
   optimization,
   devtool,

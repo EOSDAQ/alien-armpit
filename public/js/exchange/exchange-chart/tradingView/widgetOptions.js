@@ -1,4 +1,5 @@
-import { colors } from '../../../common/css/theme';
+import { colors } from 'common/css/theme';
+import { staticPath } from 'common/constants/constants';
 
 const widgetOptions = {
   debug: true,
@@ -7,7 +8,7 @@ const widgetOptions = {
   locale: 'en',
   container_id: 'tv_chart_container',
   datafeed: new window.Datafeeds.UDFCompatibleDatafeed('https://demo_feed.tradingview.com'),
-  library_path: '/charting_library/',
+  library_path: `${staticPath.root}/lib/trading-view/charting_library/`,
   chartsStorageUrl: 'https://saveload.tradingview.com',
   chartsStorageApiVersion: '1.1',
   client_id: 'tradingview.com',

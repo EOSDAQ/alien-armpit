@@ -1,3 +1,8 @@
+export const staticPath = {
+  root: '/static',
+  images: '/static/images',
+};
+
 export const scrollbarsOptions = {
   autoHide: true,
   autoHideDuration: 700,

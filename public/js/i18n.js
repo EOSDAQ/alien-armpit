@@ -2,6 +2,8 @@ import i18n from 'i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { reactI18nextModule } from 'react-i18next';
+import { staticPath } from 'common/constants/constants';
+
 
 // follow ISO 3166-1 alpha2 code
 const locales = ['ko', 'en'/*, 'cn', 'jp'*/];
@@ -16,7 +18,7 @@ i18n
     defaultNS: 'main',
     ns: ['main', 'common'],
     backend: {
-      loadPath: '/locale/{{lng}}/{{ns}}.json',
+      loadPath: `${staticPath.root}/locale/{{lng}}/{{ns}}.json`,
     },
     react: {
       wait: true,

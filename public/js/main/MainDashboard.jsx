@@ -1,10 +1,11 @@
 import React from 'react';
-import Box from '../common/components/atom/Box';
-import Flex from '../common/components/atom/Flex';
-import Text from '../common/components/atom/Text';
+import Box from 'common/components/atom/Box';
+import Flex from 'common/components/atom/Flex';
+import Text from 'common/components/atom/Text';
+import { staticPath } from 'common/constants/constants';
 import { CoinImage, CoinPriceChange } from './MainDashboard.styled';
 
-const timer = new Worker('/workers/timer.js');
+const timer = new Worker(`${staticPath.root}/js/workers/timer.js`);
 
 const coinList = [
   { name: 'CARMEL', src: 'ic-carmel.png' },
@@ -160,7 +161,7 @@ class MainDashboard extends React.Component {
                   flex="0 0 auto"
                 >
                   <CoinImage
-                    src={`./images/${coin.src}`}
+                    src={`${staticPath.images}/${coin.src}`}
                     alt={coin.src}
                   />
                   <Text
