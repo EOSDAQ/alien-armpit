@@ -68,7 +68,7 @@ class Select extends React.PureComponent {
         </div>
         {showDropdown && (
           <SelectOptions {...direction}>
-            {options.map(option => option)}
+            {options}
           </SelectOptions>
         )}
       </div>

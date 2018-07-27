@@ -9,6 +9,8 @@ import Text from '../../atom/Text';
 import Flex from '../../atom/Flex';
 import { actions } from 'reducer/account/accountReducer';
 import { ViewerIdenticon, ViewerName } from './HeaderAuthenticate.styled';
+import Select from '../../molecules/Select';
+import HeaderAccountMenu from './HeaderAccountMenu';
 
 class HeaderAuthenticate extends React.Component {
   constructor(props) {
@@ -70,10 +72,9 @@ class HeaderAuthenticate extends React.Component {
     if (authenticated) {
       return (
         <Flex alignItems="center">
-          <ViewerIdenticon
-            src={viewer.identicon}
-            onClick={this.props.forgetScatterIdentity}
-          />
+          <Select options={<HeaderAccountMenu viewer={viewer} />}>
+            <ViewerIdenticon src={viewer.identicon} />
+          </Select>
           {!viewer.authorized && <Redirect to="/register" />}
         </Flex>
       );
@@ -96,7 +97,6 @@ const mapStateToProps = (state) => state.account;
 
 const mapDispatchToProps = (dispatch) => ({
   getScatterIdentity: () => dispatch(actions.getScatterIdentity()),
-  forgetScatterIdentity: () => dispatch(actions.forgetScatterIdentity()),
 });
 
 export default connect(
