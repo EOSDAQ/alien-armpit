@@ -1,27 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Eos from 'eosjs';
 import Identicon from 'identicon.js';
 import Icon from '../../atom/Icon';
 import { TextButton } from '../../atom/Button';
 import Text from '../../atom/Text';
 import Flex from '../../atom/Flex';
-
-const Avatar = (props) => {
-  return (
-    <div 
-      style={{
-        borderRadius: '999rem',
-        overflow: 'hidden',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        width: 36,
-        height: 36,
-        border: '1px solid rgba(104, 247, 250, 0.25)',
-        backgroundImage: `url(${props.src})`,
-      }}
-    />
-  )
-}
+import { actions } from 'reducer/account/accountReducer';
+import { ViewerIdenticon, ViewerName } from './HeaderAuthenticate.styled';
 
 class HeaderAuthenticate extends React.Component {
   constructor(props) {
@@ -32,113 +18,80 @@ class HeaderAuthenticate extends React.Component {
 
   }
   onSignIn() {
-    if (window.scatter) {
-      window.scatter
-        .getIdentity({
-          accounts: [{
-            blockchain:'eos',
-            host: 'ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com',
-            port: 18888,
-            protocol:'http',
-            chainId:'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
-          }],
-          // personal: ['email'],
-        })
-        .then(identity => {
-          const account = identity.accounts[0];
+    var options = {
+      foreground: [103, 246, 249, 255],               // rgba black
+      background: [19, 19, 19, 255],         // rgba white
+      margin: 0.2,                              // 20% margin
+      size: 40,                                // 420px square
+      format: 'svg'                             // use SVG instead of PNG
+    };
 
-          const network = {
-            blockchain:'eos',
-            host: 'ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com',
-            port: 18888,
-            protocol:'http',
-            chainId:'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
-          };
+    this.setState({
+      identicon: <Avatar src={'data:image/svg+xml;base64,' + new Identicon(pubKey, options).toString()} />,
+      account: account.name,
+    });
 
-          const eos = scatter.eos( network, Eos, {} );
+    //         const updated = await eos.updateauth({
+    //           account: account.name,
+    //           permission: 'active',
+    //           parent: 'owner',
+    //           auth: {
+    //             threshold: 1,
+    //             keys: [
+    //               {
+    //                 key: pubKey, 
+    //                 weight:1
+    //               },
+    //             ],
+    //             accounts: [
+    //               {
+    //                 permission: {
+    //                   actor: 'eosdaq',
+    //                   permission: 'eosio.code'
+    //                 },
+    //                 weight:1,
+    //               }
+    //             ],
+    //           },
+    //         });
 
-          eos.contract('eosdaq').then(async contract => {
-            // code: 3090003
-            // details: []
-            // name: "unsatisfied_authorization"
-            // what: "Provided keys, permissions, and delays do not satisfy declared authorizations"
+    //         // return;
 
-            const acc = await eos.getAccount(account.name);
-            const pubKey = acc.permissions.filter(p => p.perm_name === 'owner')[0].required_auth.keys[0].key;
-            var options = {
-              foreground: [103, 246, 249, 255],               // rgba black
-              background: [19, 19, 19, 255],         // rgba white
-              margin: 0.2,                              // 20% margin
-              size: 40,                                // 420px square
-              format: 'svg'                             // use SVG instead of PNG
-            };
+    //         try {
+    //           const order = await contract.askorder(account.name, 100, '3000.0000 SYS', '0.0000 SYS', '0.0000 ABC', {
+    //             authorization: account.name,
+    //             sign: true,
+    //           });
+    //         } catch(err) {
+    //           if (typeof err === 'string') {
+    //             const { error } = JSON.parse(err);
+    //             if (error.code === 3090003) {
+    //             }
+    //           }
+    //         }
+    //       })
+    //     })
+    //     .catch(err => console.error(err));
 
-            this.setState({
-              identicon: <Avatar src={'data:image/svg+xml;base64,' + new Identicon(pubKey, options).toString()} />,
-              account: account.name,
-            });
-
-            const updated = await eos.updateauth({
-              account: account.name,
-              permission: 'active',
-              parent: 'owner',
-              auth: {
-                threshold: 1,
-                keys: [
-                  {
-                    key: pubKey, 
-                    weight:1
-                  },
-                ],
-                accounts: [
-                  {
-                    permission: {
-                      actor: 'eosdaq',
-                      permission: 'eosio.code'
-                    },
-                    weight:1,
-                  }
-                ],
-              },
-            });
-
-            // return;
-
-            try {
-              const order = await contract.askorder(account.name, 100, '3000.0000 SYS', '0.0000 SYS', '0.0000 ABC', {
-                authorization: account.name,
-                sign: true,
-              });
-            } catch(err) {
-              if (typeof err === 'string') {
-                const { error } = JSON.parse(err);
-                if (error.code === 3090003) {
-                }
-              }
-            }
-          })
-        })
-        .catch(err => console.error(err));
-
-    }
+    // }
   }
 
   render() {
-    const { account } = this.state;
+    const { authenticated, viewer } = this.props;
 
-    if (account) {
+    if (authenticated) {
       return (
         <Flex alignItems="center">
-          <Text fontSize={12} color="#eee" mr={4}>
-            {'@' + account + ''}
-          </Text>
-          {this.state.identicon}
+          <ViewerIdenticon
+            src={viewer.identicon}
+            onClick={this.props.forgetScatterIdentity}
+          />
         </Flex>
-      )
+      );
     }
 
     return (
-      <TextButton onClick={() => this.onSignIn()}>
+      <TextButton onClick={this.props.getScatterIdentity}>
         <Flex alignItems="flex-end">
           <Text fontSize={14} mr={4}>
             Sign in with
@@ -150,4 +103,14 @@ class HeaderAuthenticate extends React.Component {
   }
 }
 
-export default HeaderAuthenticate;
+const mapStateToProps = (state) => state.account;
+
+const mapDispatchToProps = (dispatch) => ({
+  getScatterIdentity: () => dispatch(actions.getScatterIdentity()),
+  forgetScatterIdentity: () => dispatch(actions.forgetScatterIdentity()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HeaderAuthenticate);
