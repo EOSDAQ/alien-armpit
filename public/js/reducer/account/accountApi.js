@@ -32,8 +32,17 @@ export const getScatterIdentity = async () => {
 
     const eosAccount = await eos.getAccount(account.name);
     // check user's permission.
-
+ 
     const publicKey = eosAccount.permissions.filter(p => p.perm_name === 'owner')[0].required_auth.keys[0].key;
+
+    // publicKey가 백엔드에 등록되어 있는지 확인해본다.
+    // 없는 경우 -> 회원가입 || 있는 경우 -> 로그인
+    // 지금은. window.exist로 체크한다.
+    let authorized = false;
+
+    if (window.exist) {
+      authorized = true;
+    }
 
     const identiconOptions = {
       foreground: [103, 246, 249, 255],
@@ -49,6 +58,7 @@ export const getScatterIdentity = async () => {
       name: account.name,
       publicKey: publicKey,
       identicon,
+      authorized,
     };
   }
 }

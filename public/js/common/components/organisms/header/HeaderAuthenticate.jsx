@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Eos from 'eosjs';
 import Identicon from 'identicon.js';
 import Icon from '../../atom/Icon';
@@ -18,19 +19,6 @@ class HeaderAuthenticate extends React.Component {
 
   }
   onSignIn() {
-    var options = {
-      foreground: [103, 246, 249, 255],               // rgba black
-      background: [19, 19, 19, 255],         // rgba white
-      margin: 0.2,                              // 20% margin
-      size: 40,                                // 420px square
-      format: 'svg'                             // use SVG instead of PNG
-    };
-
-    this.setState({
-      identicon: <Avatar src={'data:image/svg+xml;base64,' + new Identicon(pubKey, options).toString()} />,
-      account: account.name,
-    });
-
     //         const updated = await eos.updateauth({
     //           account: account.name,
     //           permission: 'active',
@@ -86,6 +74,7 @@ class HeaderAuthenticate extends React.Component {
             src={viewer.identicon}
             onClick={this.props.forgetScatterIdentity}
           />
+          {!viewer.authorized && <Redirect to="/register" />}
         </Flex>
       );
     }
