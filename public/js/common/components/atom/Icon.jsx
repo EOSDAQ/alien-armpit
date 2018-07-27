@@ -6,13 +6,12 @@ class Icon extends React.PureComponent {
     if (!type) {
       return null;
     }
-    
+
+    // eslint-disable-next-line
     const { default: Comp } = require(`./icons/ic-${type}.svg`);
 
     return (
-      <Comp
-        {...iconProps}
-      />
+      <Comp {...iconProps} />
     );
   }
 }

@@ -6,6 +6,7 @@ import Flex from '../../atom/Flex';
 import Text from '../../atom/Text';
 import Language from '../language/Language';
 import { HeaderStyled } from './Header.styled';
+import HeaderAuthenticate from './HeaderAuthenticate';
 
 type Props = {};
 
@@ -14,9 +15,6 @@ class Header extends React.Component<Props> {
     super(props);
 
     this.navs = [
-      // { title: 'Exchange', link: '/exchange' },
-      // { title: 'Wallet', link: '/wallet' },
-      // { title: 'Support', link: '/support' },
       { title: 'exchange', link: '' },
       { title: 'wallet', link: '' },
       { title: 'support', link: '' },
@@ -70,7 +68,10 @@ class Header extends React.Component<Props> {
                   </Text>
                 ))}
               </Flex>
-              <Language />
+              <Flex>
+                <HeaderAuthenticate />
+                <Language />
+              </Flex>
             </Flex>
           </Container>
         </Box>

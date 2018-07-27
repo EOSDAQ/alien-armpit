@@ -56,4 +56,21 @@ export const IconButton = styled.button`
   }
 `;
 
+export const TextButton = styled.button`
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #ddd;
+  fill: currentColor;
+  cursor: pointer;
+  font: inherit;
+  padding: 4px 8px;
+  appearance: none;
+  transition: .2s color ease;
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
 export default Button;
