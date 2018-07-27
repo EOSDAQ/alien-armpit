@@ -13,59 +13,6 @@ import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
 
 class HeaderAuthenticate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      account: null,
-    };
-
-  }
-  onSignIn() {
-    //         const updated = await eos.updateauth({
-    //           account: account.name,
-    //           permission: 'active',
-    //           parent: 'owner',
-    //           auth: {
-    //             threshold: 1,
-    //             keys: [
-    //               {
-    //                 key: pubKey, 
-    //                 weight:1
-    //               },
-    //             ],
-    //             accounts: [
-    //               {
-    //                 permission: {
-    //                   actor: 'eosdaq',
-    //                   permission: 'eosio.code'
-    //                 },
-    //                 weight:1,
-    //               }
-    //             ],
-    //           },
-    //         });
-
-    //         // return;
-
-    //         try {
-    //           const order = await contract.askorder(account.name, 100, '3000.0000 SYS', '0.0000 SYS', '0.0000 ABC', {
-    //             authorization: account.name,
-    //             sign: true,
-    //           });
-    //         } catch(err) {
-    //           if (typeof err === 'string') {
-    //             const { error } = JSON.parse(err);
-    //             if (error.code === 3090003) {
-    //             }
-    //           }
-    //         }
-    //       })
-    //     })
-    //     .catch(err => console.error(err));
-
-    // }
-  }
-
   render() {
     const { authenticated, viewer } = this.props;
 

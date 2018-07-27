@@ -24,7 +24,6 @@ const accountReducer = handleActions({
   [actions.signIn]: (state, { payload }) => {
     return {
       authenticated: true,
-      authorized: false,
       viewer: payload,
     };
   },

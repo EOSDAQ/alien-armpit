@@ -4,7 +4,7 @@ import Box from '../atom/Box';
 
 export const SelectOptions = styled(Box)`
   position: absolute;
-  width: 160px;
+  min-width: 160px;
   color: black;
   background: white;
   border-radius: 2px;
