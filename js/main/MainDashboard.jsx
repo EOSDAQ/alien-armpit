@@ -16,6 +16,8 @@ const coinList = [
   { name: 'PLT', src: 'ic-plactal.svg' },
   { name: 'HORUS', src: 'ic-horus.png' },
   { name: 'ITAM', src: 'ic-itam.svg' },
+  { name: 'KARMA', src: 'ic-karma.png' },
+  { name: 'ATD', src: 'ic-atidium.png' },
 ];
 
 class MainDashboard extends React.Component {
