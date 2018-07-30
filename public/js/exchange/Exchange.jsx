@@ -26,12 +26,13 @@ const Exchange = () => (
       </ExchangeLeftSide>
       <StickyContainer>
         <ExchangeRightSide>
-          <Sticky topOffset={-72}>
+          <Sticky topOffset={-58}>
             {({ style: _style, distanceFromBottom }) => {
-              let style = {
-                ..._style,
-                top: 72,
-              };
+              let style = { ..._style, top: 58 };
+              if (distanceFromBottom <= 52) {
+                style.position = 'absolute';
+                style.top = 180;
+              }
 
               return (
                 <div style={style}>
