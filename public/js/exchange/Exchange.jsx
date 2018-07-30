@@ -28,7 +28,7 @@ const Exchange = () => (
         <ExchangeRightSide>
           <Sticky topOffset={-58}>
             {({ style: _style, distanceFromBottom }) => {
-              let style = { ..._style, top: 58 };
+              const style = { ..._style, top: 58 };
               if (distanceFromBottom <= 52) {
                 style.position = 'absolute';
                 style.top = 180;

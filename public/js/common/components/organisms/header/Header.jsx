@@ -7,6 +7,7 @@ import Text from '../../atom/Text';
 import Language from '../language/Language';
 import { HeaderStyled } from './Header.styled';
 import HeaderAuthenticate from './HeaderAuthenticate';
+import { staticPath } from 'common/constants/constants';
 
 type Props = {};
 
@@ -43,7 +44,7 @@ class Header extends React.Component<Props> {
               >
                 <Link to="/">
                   <img
-                    src="/images/ic-logo.png"
+                    src={`${staticPath.images}/ic-logo.png`}
                     alt=""
                     style={{
                       height: 25,
