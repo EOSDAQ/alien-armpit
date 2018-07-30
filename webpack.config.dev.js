@@ -1,7 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const connect = require('koa-connect');
-const history = require('connect-history-api-fallback');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
@@ -88,14 +86,6 @@ module.exports = {
   output,
   resolve,
   plugins,
-  // serve: {
-  //   content: 'public',
-  //   port: 3001,
-  //   contentPath: __dirname,
-  //   add: (app) => {
-  //     app.use(connect(history()));
-  //   },
-  // },
   externals,
   optimization,
   devtool,
