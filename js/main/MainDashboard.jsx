@@ -9,7 +9,6 @@ const timer = new Worker('/workers/timer.js');
 const coinList = [
   { name: 'CARMEL', src: 'ic-carmel.png' },
   { name: 'CET', src: 'ic-chaince.png' },
-  { name: 'chintai', src: 'ic-chintai.png' },
   { name: 'eosDAC', src: 'ic-eosdac.png' },
   { name: 'IQ', src: 'ic-iq.png' },
   { name: 'INSTAR', src: 'ic-instar.svg' },
