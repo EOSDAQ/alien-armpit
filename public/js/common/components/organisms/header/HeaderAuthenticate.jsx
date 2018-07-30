@@ -1,21 +1,22 @@
 // @flow
 
 import React from 'react';
+import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Icon from '../../atom/Icon';
 import { TextButton } from '../../atom/Button';
 import Text from '../../atom/Text';
 import Flex from '../../atom/Flex';
-import { actions } from 'reducer/account/accountReducer';
+import { actions, type GetScatterIdentityPayload } from 'reducer/account/accountReducer';
 import { ViewerIdenticon } from './HeaderAuthenticate.styled';
 import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
-import { AppState } from 'reducer/reducer';
+import type { AppState } from 'reducer/reducer';
 
-type Props = {
-  
-}
+type Props = {}
+  & $Call<typeof mapStateToProps, AppState>
+  & $Call<typeof mapDispatchToProps, *>;
 
 const HeaderAuthenticate = (props: Props) => {
   const {
@@ -24,7 +25,7 @@ const HeaderAuthenticate = (props: Props) => {
     getScatterIdentity,
   } = props;
 
-  if (authenticated) {
+  if (viewer && authenticated) {
     return (
       <Flex alignItems="center">
         <Select options={<HeaderAccountMenu viewer={viewer} />}>
@@ -45,12 +46,14 @@ const HeaderAuthenticate = (props: Props) => {
       </Flex>
     </TextButton>
   );
-}
+};
 
 const mapStateToProps = ({ account }: AppState) => (account);
 
-const mapDispatchToProps = (dispatch: *) => ({
-  getScatterIdentity: () => dispatch(actions.getScatterIdentity()),
+const mapDispatchToProps = (dispatch: Dispatch<*>) => ({
+  getScatterIdentity: (payload: GetScatterIdentityPayload) => (
+    dispatch(actions.getScatterIdentity(payload))
+  ),
 });
 
 export default connect(
