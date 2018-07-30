@@ -4,7 +4,7 @@ import tickersReducer from './tickers/tickersReducer';
 // import orderFormReducer from './order-form/orderFormReducer';
 import orderLogReducer from './order-log/orderLogReducer';
 import languageReducer from './language/languageReducer';
-import accountReducer from './account/accountReducer';
+import accountReducer, { type AccountState } from './account/accountReducer';
 
 const reducer = combineReducers({
   language: languageReducer,
@@ -14,5 +14,9 @@ const reducer = combineReducers({
   // orderForm: orderFormReducer,
   orderLog: orderLogReducer,
 });
+
+export type AppState = {
+  account: AccountState,
+}
 
 export default reducer;
