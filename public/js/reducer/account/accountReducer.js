@@ -1,7 +1,5 @@
 // @flow
 
-import { createAction, handleActions, type ActionType } from 'redux-actions';
-
 export const types = {
   GET_SCATTER_IDENTITY: 'account/getScatterIdentity',
   FORGET_SCATTER_IDENTITY: 'account/forgetScatterIdentity',
@@ -16,45 +14,54 @@ type Viewer = {
   authorized: boolean,
 };
 
-type SignInPayload = {
-  authenticated: boolean,
-  viewer?: Viewer
-};
-
-export type GetScatterIdentityPayload = {
-  from: string,
-};
-
 export const actions = {
-  getScatterIdentity: createAction(
-    types.GET_SCATTER_IDENTITY,
-    (payload: GetScatterIdentityPayload) => payload,
-  ),
-  forgetScatterIdentity: createAction(types.FORGET_SCATTER_IDENTITY),
-  signIn: createAction(types.SIGN_IN, (payload: SignInPayload) => payload),
-  signOut: createAction(types.SIGN_OUT),
+  getScatterIdentity: (payload: void) => ({
+    type: types.GET_SCATTER_IDENTITY,
+    payload,
+  }),
+  forgetScatterIdentity: (payload: void) => ({
+    type: types.FORGET_SCATTER_IDENTITY,
+    payload,
+  }),
+  signIn: (payload: { viewer: Viewer }) => ({
+    type: types.SIGN_IN,
+    payload,
+  }),
+  signOut: (payload: void) => ({
+    type: types.SIGN_OUT,
+    payload,
+  }),
 };
 
 const initialState: {
   authenticated: boolean,
-  authorized: boolean,
   viewer: Viewer|null,
 } = {
   authenticated: false,
-  authorized: false,
   viewer: null,
 };
 
 export type AccountState = typeof initialState;
 
-export type SignInAction = ActionType<typeof actions.signIn>;
+type Action =
+  | $Call<typeof actions.signIn, *>
+  | $Call<typeof actions.signOut, *>;
 
-const accountReducer = handleActions({
-  [types.SIGN_IN]: (state, { payload }: ActionType<typeof actions.signIn>) => ({
-    authenticated: payload.authenticated,
-    viewer: payload.viewer,
-  }),
-  [types.SIGN_OUT]: () => (initialState),
-}, initialState);
+const accountReducer = (
+  state: typeof initialState = initialState,
+  action: Action,
+) => {
+  switch (action.type) {
+    case types.SIGN_IN:
+      return {
+        authenticated: true,
+        viewer: action.payload.viewer,
+      };
+    case types.SIGN_OUT:
+      return initialState;
+    default:
+      return state;
+  }
+};
 
 export default accountReducer;

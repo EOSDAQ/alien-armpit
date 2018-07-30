@@ -7,12 +7,12 @@ import * as accountSaga from './account/accountSaga';
 export default function* saga() {
   yield [
     takeLatest(
-      accountTypes.GET_SCATTER_IDENTITY, 
-      accountSaga.getScatterIdentity
+      accountTypes.GET_SCATTER_IDENTITY,
+      accountSaga.getScatterIdentity,
     ),
     takeLatest(
-      accountTypes.FORGET_SCATTER_IDENTITY, 
-      accountSaga.forgetScatterIdentity
+      accountTypes.FORGET_SCATTER_IDENTITY,
+      accountSaga.forgetScatterIdentity,
     ),
 
     takeLatest(tickersTypes.UPDATE_SORT_SAGA, tickersSaga.updateSort),

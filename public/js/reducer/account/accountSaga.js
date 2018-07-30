@@ -8,7 +8,7 @@ import { actions } from './accountReducer';
 export function* getScatterIdentity(): Generator<Effect, void, any> {
   try {
     const result = yield call(api.getScatterIdentity);
-    yield put(actions.signIn(result));
+    yield put(actions.signIn({ viewer: result }));
   } catch (e) {
     console.error(e);
   }

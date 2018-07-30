@@ -8,7 +8,7 @@ import Icon from '../../atom/Icon';
 import { TextButton } from '../../atom/Button';
 import Text from '../../atom/Text';
 import Flex from '../../atom/Flex';
-import { actions, type GetScatterIdentityPayload } from 'reducer/account/accountReducer';
+import { actions } from 'reducer/account/accountReducer';
 import { ViewerIdenticon } from './HeaderAuthenticate.styled';
 import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
@@ -37,7 +37,7 @@ const HeaderAuthenticate = (props: Props) => {
   }
 
   return (
-    <TextButton onClick={getScatterIdentity}>
+    <TextButton onClick={() => getScatterIdentity()}>
       <Flex alignItems="flex-end">
         <Text fontSize={14} mr={4}>
           Sign in with
@@ -51,9 +51,9 @@ const HeaderAuthenticate = (props: Props) => {
 const mapStateToProps = ({ account }: AppState) => (account);
 
 const mapDispatchToProps = (dispatch: Dispatch<*>) => ({
-  getScatterIdentity: (payload: GetScatterIdentityPayload) => (
-    dispatch(actions.getScatterIdentity(payload))
-  ),
+  getScatterIdentity: (payload) => {
+    dispatch(actions.getScatterIdentity(payload));
+  },
 });
 
 export default connect(
