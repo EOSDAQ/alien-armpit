@@ -43,7 +43,7 @@ const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new HtmlWebpackPlugin({
     template: 'template/template.html',
-    inject: false,
+    inject: true,
     minify: {
       removeComments: true,
       collapseWhitespace: true,
