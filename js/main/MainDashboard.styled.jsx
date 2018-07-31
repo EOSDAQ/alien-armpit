@@ -8,7 +8,7 @@ export const CoinImage = styled.img`
   height: 20px;
 `;
 
-export const CoinPriceChange = Text.extend`
+export const CoinPriceChange = styled(Text)`
   font-size: 10px;
   margin-right: 40px;
   color: rgba(255, 255, 255, .8);

@@ -10,6 +10,7 @@ import Flex from '../common/components/atom/Flex';
 
 const MainHero = (props) => {
   const { t } = props;
+
   return (
     <Waypoint runOnce>
       {({ isIntersecting }) => {

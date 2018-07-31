@@ -14,12 +14,9 @@ class Header extends React.Component<Props> {
     super(props);
 
     this.navs = [
-      // { title: 'Exchange', link: '/exchange' },
-      // { title: 'Wallet', link: '/wallet' },
-      // { title: 'Support', link: '/support' },
-      { title: 'exchange', link: '' },
-      { title: 'wallet', link: '' },
-      { title: 'support', link: '' },
+      { title: 'exchange', link: '/exchange' },
+      { title: 'wallet', link: '/wallet' },
+      { title: 'support', link: '/support' },
     ];
   }
 
@@ -63,7 +60,7 @@ class Header extends React.Component<Props> {
                     <Link
                       to={nav.link}
                       key={nav.title}
-                      style={{ cursor: nav.link ? '' : 'not-allowed' }}
+                      // style={{ cursor: nav.link ? '' : 'not-allowed' }}
                     >
                       {t(`header.${nav.title}`)}
                     </Link>

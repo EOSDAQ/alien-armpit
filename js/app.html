@@ -54,7 +54,7 @@
     }
 
     const isIE = detectIE();
-    if (!isIE) {
+    if (isIE) {
       location.href = location.origin + '/html/ie.html';
     }
   </script>

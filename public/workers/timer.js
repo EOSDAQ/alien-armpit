@@ -1,5 +1,7 @@
 // onmessage = function(e) {
 // }
-setInterval(() => {
+
+// eslint-disable-next-line
+setInterval(function() {
   postMessage('tick');
 }, 140);
