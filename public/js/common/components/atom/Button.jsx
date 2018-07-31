@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { colors } from '../../css/theme';
 
 const Button = styled.button`
   border: none;
@@ -9,11 +10,13 @@ const Button = styled.button`
   color: inherit;
   font: inherit;
   font-size: 14px;
-  line-height: 30px;
-  height: 30px;
+  height: 50px;
+  padding: 0 32px;
   transition: .2s background ease;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
+  display: flex;
+  align-items: flex-end;
 
   &::-moz-focus-inner {
     border: 0;
@@ -23,12 +26,21 @@ const Button = styled.button`
   & svg {
     display: inline-block;
     vertical-align: middle;
-    margin-right: 8px;
   }
 
   &:hover {
     background: rgba(0, 0, 0, .4);
   }
+
+  ${({ primary }) => primary && css`
+    color: white;
+    fill: white;
+    background-color: ${colors.blue500};
+
+    &:hover {
+      background-color: ${colors.blue600};
+    }
+  `}
 `;
 
 export const IconButton = styled.button`

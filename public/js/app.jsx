@@ -57,7 +57,10 @@ const render = () => {
 
 if (module.hot) {
   module.hot.accept(
-    ['./app.jsx'],
+    [
+      './pages.jsx',
+      './common/components/organisms/modal/Modal.jsx',
+    ],
     render,
   );
 }

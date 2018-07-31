@@ -15,6 +15,23 @@ type Props =
   & $Call<typeof mapDispatchToProps, *>;
 
 class Modal extends React.Component<Props> {
+  componentWillReceiveProps(nextProps) {
+    const { modal } = this.props;
+    if (modal && !nextProps.modal) {
+      this.resetBodyScroll();
+    } else if (!modal && nextProps.modal) {
+      this.preventBodyScroll();
+    }
+  }
+
+  resetBodyScroll() {
+    document.getElementsByTagName('html')[0].style.overflow = 'auto';
+  }
+  
+  preventBodyScroll() {
+    document.getElementsByTagName('html')[0].style.overflow = 'hidden';
+  }
+
   onModalClick(e) {
     const { closeModal } = this.props;
 

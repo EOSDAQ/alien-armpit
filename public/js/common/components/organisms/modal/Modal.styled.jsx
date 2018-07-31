@@ -33,11 +33,11 @@ export const ModalStyled = styled.div`
 export const ModalDialogue = styled.div`
   animation: ${modalAppear} 200ms ease-in-out; 
   background: white;
+  text-align: left;
   margin-bottom: 32px;
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0,0,0,.15);
-  width: 990px;
-  height: 550px;
-  padding: 50px;
+  width: 450px;
+  padding: 32px;
   margin: auto;
 `;
