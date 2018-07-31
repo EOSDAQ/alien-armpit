@@ -7,6 +7,7 @@ import tickersReducer from './tickers/tickersReducer';
 import orderLogReducer from './order-log/orderLogReducer';
 import languageReducer from './language/languageReducer';
 import accountReducer, { type AccountState } from './account/accountReducer';
+import modal, { type ModalState } from './modal/modalReducer';
 
 const reducer = combineReducers({
   language: languageReducer,
@@ -14,10 +15,12 @@ const reducer = combineReducers({
   tickers: tickersReducer,
   account: accountReducer,
   // orderForm: orderFormReducer,
+  modal: modal.reducer,
   orderLog: orderLogReducer,
 });
 
 export type AppState = {
+  modal: ModalState,
   account: AccountState,
 }
 

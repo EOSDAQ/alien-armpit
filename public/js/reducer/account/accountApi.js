@@ -3,6 +3,10 @@ import Identicon from 'identicon.js';
 
 export const getScatterIdentity = async () => {
   // 유저가 signIn을 클릭하는 시점 바로 직전에 scatter를 설치했을 수 있기 때문에 매번 이곳에서 window.scatter를 체크한다.
+  if (!window.scatter) {
+    throw Error('Scatter is not installed!');
+  }
+
   if (window.scatter) {
     const network = {
       blockchain: 'eos',

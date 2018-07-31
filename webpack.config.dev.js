@@ -26,6 +26,7 @@ const rules = [
   {
     test: /\.(js|jsx)$/,
     loader: 'babel-loader',
+    include: [context],
     exclude: [nodeModules],
   },
   {

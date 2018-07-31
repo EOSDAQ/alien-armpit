@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Switch, Route } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -17,6 +17,7 @@ import theme from './common/css/theme';
 import i18n from './i18n';
 import pages from './pages';
 import saga from './reducer/saga';
+import Modal from 'common/components/organisms/modal/Modal';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
@@ -35,14 +36,17 @@ const render = () => {
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>
           <ConnectedRouter history={history}>
-            <Switch>
-              {pages.map(pageProps => (
-                <Route
-                  key={pageProps.path.slice(1)}
-                  {...pageProps}
-                />
-              ))}
-            </Switch>
+            <React.Fragment>
+              <Switch>
+                {pages.map(pageProps => (
+                  <Route
+                    key={pageProps.path.slice(1)}
+                    {...pageProps}
+                  />
+                ))}
+              </Switch>
+              <Modal />
+            </React.Fragment>
           </ConnectedRouter>
         </ThemeProvider>
       </I18nextProvider>
@@ -53,7 +57,7 @@ const render = () => {
 
 if (module.hot) {
   module.hot.accept(
-    ['./pages.jsx'],
+    ['./app.jsx'],
     render,
   );
 }
