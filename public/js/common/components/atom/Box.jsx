@@ -23,7 +23,7 @@ import {
   maxHeight,
 } from 'styled-system';
 
-const Box = styled(tag)`
+const Box = styled.div`
   ${space}
   ${width}
   ${height}

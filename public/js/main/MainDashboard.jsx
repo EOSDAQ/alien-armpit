@@ -10,13 +10,14 @@ const timer = new Worker(`${staticPath.root}/js/workers/timer.js`);
 const coinList = [
   { name: 'CARMEL', src: 'ic-carmel.png' },
   { name: 'CET', src: 'ic-chaince.png' },
-  { name: 'chintai', src: 'ic-chintai.png' },
   { name: 'eosDAC', src: 'ic-eosdac.png' },
   { name: 'IQ', src: 'ic-iq.png' },
   { name: 'INSTAR', src: 'ic-instar.svg' },
   { name: 'PLT', src: 'ic-plactal.svg' },
   { name: 'HORUS', src: 'ic-horus.png' },
   { name: 'ITAM', src: 'ic-itam.svg' },
+  { name: 'KARMA', src: 'ic-karma.png' },
+  { name: 'ATD', src: 'ic-atidium.png' },
 ];
 
 class MainDashboard extends React.Component {

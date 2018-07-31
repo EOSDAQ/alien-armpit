@@ -11,6 +11,7 @@ import { staticPath } from 'common/constants/constants';
 
 const MainHero = (props) => {
   const { t } = props;
+
   return (
     <Waypoint runOnce>
       {({ isIntersecting }) => {

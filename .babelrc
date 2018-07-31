@@ -1,5 +1,15 @@
 {
-  "presets": ["flow", "react"],
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "ie 11"]
+      },
+      "modules": false,
+      "useBuiltIns": "usage"
+    }],
+    "flow",
+    "react"
+  ],
   "plugins": [
     "babel-plugin-styled-components",
     "syntax-dynamic-import",

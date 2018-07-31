@@ -1,4 +1,3 @@
-<% const { options, files } = htmlWebpackPlugin %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,18 +13,18 @@
   <!-- meta name="theme-color", content="#48C9CC" -->  
   <!-- meta name="msapplication-TileColor" content="#2e2e2e" -->
   <!-- link rel="apple-touch-icon" sizes="180x180" href="" -->
-  <link rel="apple-touch-icon" sizes="180x180" href="static/images/icon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="static/images/icon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="static/images/icon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121560623-1"></script>
-  <script src="/static/lib/trading-view/charting_library/charting_library.min.js"></script>
-  <script src="static/lib/trading-view/datafeeds/udf/dist/polyfills.js"></script>
-  <script src="static/lib/trading-view/datafeeds/udf/dist/bundle.js"></script>
+  <script src="charting_library/charting_library.min.js"></script>
+  <script src="datafeeds/udf/dist/polyfills.js"></script>
+  <script src="datafeeds/udf/dist/bundle.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -36,12 +35,32 @@
 </head>
 <body>
   <div id="app"></div>
-  <% if(!options.production) { %>
+  <script type="text/javascript">
+    function detectIE() {
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf('MSIE ');
+      if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+      }
+
+      var trident = ua.indexOf('Trident/');
+      if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+      }
+      return false;
+    }
+
+    const isIE = detectIE();
+    if (isIE) {
+      location.href = location.origin + '/html/ie.html';
+    }
+  </script>
+  <% if(!htmlWebpackPlugin.options.production) { %>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-  <% } %>
-  <% for (key in files.js) { %>
-    <script type="text/javascript" src="<%= files.js[key] %>"></script>
   <% } %>
 </body>
 </html>
