@@ -15,15 +15,20 @@ const InstallScatter = props => (
     <Description>
       Scatter provides Single Sign On (SSO). Your “private key” is never sent to any servers, so hackers don’t have a way of getting access to thousands of accounts at once.
     </Description>
-    <Button primary>
-      <Text mr={4}>
-        Install
-      </Text>
-      <Icon type="scatter" width={50} />
-      <Text ml={4}>
-        Chrome extension
-      </Text>
-    </Button>
+    <a
+      href="https://chrome.google.com/webstore/detail/scatter/ammjpmhgckkpcamddpolhchgomcojkle"
+      target="_blank"
+    >
+      <Button primary>
+        <Text mr={4}>
+          Install
+        </Text>
+        <Icon type="scatter" width={50} />
+        <Text ml={4}>
+          Chrome extension
+        </Text>
+      </Button>
+    </a>
   </div>
 );
 
