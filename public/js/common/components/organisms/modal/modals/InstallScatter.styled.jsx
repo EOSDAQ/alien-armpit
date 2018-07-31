@@ -11,9 +11,10 @@ export const Title = styled.h1`
 `;
 
 export const WhyLabel = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 1em;
-  color: ${colors.grey600};
+  font-weight: 500;
+  color: ${colors.grey900};
 `;
 
 export const Description = styled.div`
