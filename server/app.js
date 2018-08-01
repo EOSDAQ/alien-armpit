@@ -44,6 +44,7 @@ app.use(cookieParser());
 app.use('/static', express.static(staticPath));
 
 app.get('*', (req, res) => {
+  console.log('why here?')
   res.render('index.html');
 });
 

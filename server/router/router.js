@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const mailRoute = require('./mail');
+const authRoute = require('./auth/auth');
 
-router.use('/mail', mailRoute);
+router.use('/auth', authRoute);
 
 module.exports = router;
