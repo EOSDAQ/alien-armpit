@@ -9,25 +9,22 @@ export const ExchangeBody = styled('div')`
   background-color: #fafafa;  
 `;
 
-export const ExchangeContainer = Container.extend`
+export const ExchangeContainer = styled(Container)`
   display: flex;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  justify-content: center;
+  margin: 16px auto;
 `;
 
 export const ExchangeLeftSide = styled('div')`
-  display: flex;
   width: ${exchangeLeftWidth}px;
-  flex-direction: column;  
   margin-right: 12px;
   flex: 0 0 auto;
 `;
 
 export const ExchangeRightSide = styled('div')`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-  width: ${exchangeRightWidth}px;
+  flex: 1 1;
+  width: auto;
+  position: relative;
 `;
 
 export const ExchangeRightBottom = styled('div')`

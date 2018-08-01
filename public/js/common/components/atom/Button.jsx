@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { justifyContent } from 'styled-system';
+import { color } from 'styled-system';
 import { colors } from '../../css/theme';
 
 const scale = (props) => {
@@ -58,6 +59,30 @@ const Button = styled.button`
       background-color: ${colors.blue600};
     }
   `}
+`;
+
+export const PlainButton = styled.button`
+  border: 0;
+  padding: 0 8px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 30px;
+  height: 30px;
+  background: transparent;
+  cursor: pointer;
+  ${color};
+  display: inline-flex;
+  align-items: center;
+  border-radius: 2px;
+  transition: .2s background-color ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .15);
+  }
+
+  & svg {
+    margin: 0 4px;
+  }
 `;
 
 export const IconButton = styled.button`

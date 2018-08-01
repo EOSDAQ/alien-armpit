@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sticky, StickyContainer } from 'react-sticky';
+// import { Sticky, StickyContainer } from 'react-sticky';
 import { translate } from 'react-i18next';
 import Header from '../common/components/organisms/header/Header';
 import Footer from '../common/components/organisms/Footer';
@@ -15,6 +15,8 @@ import {
   ExchangeRightSide,
   ExchangeRightBottom,
 } from './Exchange.styled';
+import Sticky from 'common/components/molecules/Sticky';
+import Box from 'common/components/atom/Box';
 
 const Exchange = () => (
   <ExchangeBody>
@@ -24,29 +26,24 @@ const Exchange = () => (
         <Tickers />
         <OrderBook />
       </ExchangeLeftSide>
-      <StickyContainer>
-        <ExchangeRightSide>
-          <Sticky topOffset={-58}>
-            {({ style: _style, distanceFromBottom }) => {
-              const style = { ..._style, top: 58 };
-              if (distanceFromBottom <= 52) {
-                style.position = 'absolute';
-                style.top = 180;
-              }
-
-              return (
-                <div style={style}>
-                  <ExchangeChart />
-                  <ExchangeRightBottom>
-                    <OrderForm />
-                    <OrderLog />
-                  </ExchangeRightBottom>
-                </div>
-              );
-            }}
-          </Sticky>
-        </ExchangeRightSide>
-      </StickyContainer>
+      <ExchangeRightSide>
+        <Sticky>
+          {(style) => {
+            return (
+              <Box 
+                style={style}
+                position="sticky"
+              >
+                <ExchangeChart />
+                <ExchangeRightBottom>
+                  <OrderForm />
+                  <OrderLog />
+                </ExchangeRightBottom>
+              </Box>
+            );
+          }}
+        </Sticky>
+      </ExchangeRightSide>
     </ExchangeContainer>
     <Footer />
   </ExchangeBody>

@@ -1,10 +1,10 @@
 import React from 'react';
 import Icon from '../../atom/Icon';
-import Button from '../../atom/Button';
+import { PlainButton } from '../../atom/Button';
 
 const LanguageSelectedItem = ({ language }) => {
   return (
-    <Button>
+    <PlainButton color="white">
       <Icon
         width={16}
         height={16}
@@ -12,7 +12,7 @@ const LanguageSelectedItem = ({ language }) => {
         type="language"
       />
       {language === 'ko' ? '한국어' : 'English'}
-    </Button>
+    </PlainButton>
   );
 }
 
