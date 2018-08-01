@@ -1,8 +1,24 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { justifyContent } from 'styled-system';
 import { colors } from '../../css/theme';
 
+const scale = (props) => {
+  const { large } = props;
+
+  if (large) {
+    return ` 
+      height: 62px;
+    `;
+  }
+
+  return `
+    height: 50px;    
+  `;
+};
+
 const Button = styled.button`
+  width: ${({ width }) => (width || 'auto')};
   border: none;
   margin: 0px;
   padding: 0px 8px;
@@ -10,13 +26,14 @@ const Button = styled.button`
   color: inherit;
   font: inherit;
   font-size: 14px;
-  height: 50px;
   padding: 0 32px;
   transition: .2s background ease;
   border-radius: 2px;
   cursor: pointer;
   display: flex;
   align-items: flex-end;
+  ${justifyContent}
+  ${scale}
 
   &::-moz-focus-inner {
     border: 0;

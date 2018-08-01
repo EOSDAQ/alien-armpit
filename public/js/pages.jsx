@@ -32,6 +32,10 @@ function asyncRoute(dynamicImport) {
 
 const pages = [
   {
+    path: '/signin',
+    component: asyncRoute(() => import(/* webpackChunkName: "signin" */ './sign/Signin')),
+  },
+  {
     path: '/exchange',
     component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
   },

@@ -2,6 +2,7 @@
 
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form';
 import tickersReducer from './tickers/tickersReducer';
 // import orderFormReducer from './order-form/orderFormReducer';
 import orderLogReducer from './order-log/orderLogReducer';
@@ -10,6 +11,7 @@ import accountReducer, { type AccountState } from './account/accountReducer';
 import modal, { type ModalState } from './modal/modalReducer';
 
 const reducer = combineReducers({
+  form: formReducer,
   language: languageReducer,
   route: routerReducer,
   tickers: tickersReducer,
