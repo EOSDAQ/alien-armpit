@@ -20,8 +20,8 @@ router.get('/verify', (req, res) => {
   const mailOptions = {  
     from: 'EOSDAQ <noreply@eosdaq.com>',
     to: 'indegser@gmail.com',
-    subject: 'Nodemailer 테스트',
-    text: '평문 보내기 테스트 '
+    subject: 'Verify your email address. indegser',
+    html: '<a href="http://localhost:3000/mail/verify/12Qd3cF" target="_blank">verify!</a>'
   };
 
   smtp.sendMail(mailOptions, (err, response) => {
@@ -30,10 +30,15 @@ router.get('/verify', (req, res) => {
       res.status(404).send('err');
       return;
     }
-
-    console.log('RESP', response);
+    
     res.status(200).send();
   });
 });
+
+router.get('/verify/:key', (req, res) => {
+  const { key } = req.params;
+  // Backend api goes here.
+  res.status(200).send('Successfully verified!');
+})
 
 module.exports = router;

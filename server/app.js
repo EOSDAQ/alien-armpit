@@ -13,24 +13,24 @@ const staticPath = path.join(__dirname, `../${config.staticPath}`);
 app.use(router);
 
 // webpack hot loading setup
-// if (env === 'local') {
-//   (() => {
-//     const webpack = require('webpack');
-//     const webpackConfig = require('../webpack.config.dev');
-//     const compiler = webpack(webpackConfig);
+if (env === 'local') {
+  (() => {
+    const webpack = require('webpack');
+    const webpackConfig = require('../webpack.config.dev');
+    const compiler = webpack(webpackConfig);
 
-//     app.use(require('webpack-dev-middleware')(compiler, {
-//       logLevel: 'warn',
-//       publicPath: webpackConfig.output.publicPath,
-//     }));
+    app.use(require('webpack-dev-middleware')(compiler, {
+      logLevel: 'warn',
+      publicPath: webpackConfig.output.publicPath,
+    }));
 
-//     app.use(require('webpack-hot-middleware')(compiler, {
-//       log: console.log,
-//       path: '/__webpack_hmr',
-//       heartbeat: 10 * 1000,
-//     }));
-//   })();
-// }
+    app.use(require('webpack-hot-middleware')(compiler, {
+      log: console.log,
+      path: '/__webpack_hmr',
+      heartbeat: 10 * 1000,
+    }));
+  })();
+}
 
 // view engine setup
 app.set('views', staticPath);
