@@ -1,14 +1,20 @@
-const express = require('express');
 const fs = require('fs');
-const crypto = require('crypto');
 const path = require('path');
-const router = express.Router();
+const crypto = require('crypto');
+const express = require('express');
+const bodyParser = require('body-parser');
 const mail = require('nodemailer');
+const router = express.Router();
 
-
-
-router.get('/verify-email', (req, res) => {
-  const tempHash = encodeURIComponent(crypto.createHash('sha512').update(Date.now().toString(16)).digest('base64'));
+router.post('/verify-email', bodyParser.json(), (req, res) => {
+  const {
+    email,
+    publicKey,
+    timestamp,
+  } = req.body;
+  
+  const tempHash = encodeURIComponent(crypto.createHash('sha512').update(email).digest('base64'));
+  // tell backend to save tempUser with body data.
 
   const smtp = mail.createTransport({  
     service: 'Gmail',
@@ -18,7 +24,6 @@ router.get('/verify-email', (req, res) => {
         clientId: '870612167639-cicfd405me73g9a55d8r2eu4ofp7g0ql.apps.googleusercontent.com',
         clientSecret: 'VvsWf2IFZSYpKzyr1In5jN-U',
         refreshToken: '1/p2bBGv4tlK1fzHQvGctZsRDhLW4LCFJoSuZyGZs6328',
-        // pass: 'TGJ>y3gh',
     },
   });
 
@@ -26,8 +31,8 @@ router.get('/verify-email', (req, res) => {
   fs.readFile(templatePath, 'utf-8', (err, data) => {
     const mailOptions = {  
       from: 'EOSDAQ <noreply@eosdaq.com>',
-      to: 'indegser@gmail.com',
-      subject: 'Verify your email address. indegser',
+      to: email,
+      subject: `Confirm your email address. ${email.split('@')[0]}`,
       html: data.replace('{{REDIRECT_URI}}', `http://localhost:3000/mail/verify/${tempHash}`),
     };
   
@@ -46,9 +51,11 @@ router.get('/verify-email', (req, res) => {
 
 router.get('/verify-email/:key', (req, res) => {
   const { key } = req.params;
-  // Backend api goes here.
+  // Backend will verify this key(tempHash) with tempUser and authorize user.
+  // [SUCCESS] -> go to /register/success
+  // [FAIL] -> go to /register/fail
 
-  res.redirect('/');
+  res.redirect(`/register/success#${key}`);
 });
 
 module.exports = router;
