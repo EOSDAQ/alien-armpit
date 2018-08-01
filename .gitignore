@@ -2,6 +2,11 @@ node_modules/
 /dist/
 public/*.*
 
+# Executable file
+eosdaq-linux
+eosdaq-macos
+eosdaq-win.exe
+
 
 # Logs
 logs
@@ -13,3 +18,5 @@ npm-debug.log*
 
 # Optional eslint cache
 .eslintcache
+
+
