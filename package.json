@@ -5,7 +5,7 @@
   "main": "index.js",
   "bin": "bin/run-for-pkg",
   "scripts": {
-    "start:dev": "npm run webpack-dev && node bin/run-web", 
+    "start:dev": "npm run webpack:dev && node bin/run-web", 
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run webpack && pkg . --targets node10-linux-x64",
     "webpack:dev": "webpack --config webpack.config.dev.js",
