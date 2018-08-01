@@ -4,10 +4,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const config = require('./config');
+const router = require('./router/router');
 
 const app = express();
 const { env } = config;
 const staticPath = path.join(__dirname, `../${config.staticPath}`);
+
+app.use(router);
 
 // webpack hot loading setup
 if (env === 'local') {
@@ -41,6 +44,7 @@ app.use(cookieParser());
 app.use('/static', express.static(staticPath));
 
 app.get('*', (req, res) => {
+  console.log('why here?')
   res.render('index.html');
 });
 
