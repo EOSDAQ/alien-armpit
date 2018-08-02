@@ -2,7 +2,6 @@ import 'babel-polyfill';
 
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { Switch, Route } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { routerMiddleware, ConnectedRouter } from 'react-router-redux';
