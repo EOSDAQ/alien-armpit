@@ -15,9 +15,10 @@ import 'components/css/global.styled';
 import reducer from './reducer/reducer';
 import theme from './components/css/theme';
 import i18n from './i18n';
-import pages from './pages';
 import saga from './reducer/saga';
-import Modal from 'components/organisms/modal/Modal';
+
+// eslint-disable-next-line
+import Pages from 'pages/Pages';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
@@ -36,17 +37,7 @@ const render = () => {
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>
           <ConnectedRouter history={history}>
-            <React.Fragment>
-              <Switch>
-                {pages.map(pageProps => (
-                  <Route
-                    key={pageProps.path.slice(1)}
-                    {...pageProps}
-                  />
-                ))}
-              </Switch>
-              <Modal />
-            </React.Fragment>
+            <Pages />
           </ConnectedRouter>
         </ThemeProvider>
       </I18nextProvider>
@@ -57,10 +48,7 @@ const render = () => {
 
 if (module.hot) {
   module.hot.accept(
-    [
-      './pages.jsx',
-      'components/organisms/modal/Modal.jsx',
-    ],
+    ['./pages/Pages.jsx'],
     render,
   );
 }
