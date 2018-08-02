@@ -1,7 +1,4 @@
-// @flow
-
 import React from 'react';
-import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Icon from '../../atom/Icon';
@@ -12,13 +9,8 @@ import { actions } from 'reducer/account/accountReducer';
 import { ViewerIdenticon } from './HeaderAuthenticate.styled';
 import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
-import type { AppState } from 'reducer/reducer';
 
-type Props = {}
-  & $Call<typeof mapStateToProps, AppState>
-  & $Call<typeof mapDispatchToProps, *>;
-
-const HeaderAuthenticate = (props: Props) => {
+const HeaderAuthenticate = (props) => {
   const {
     authenticated,
     viewer,
@@ -48,9 +40,9 @@ const HeaderAuthenticate = (props: Props) => {
   );
 };
 
-const mapStateToProps = ({ account }: AppState) => (account);
+const mapStateToProps = ({ account }) => (account);
 
-const mapDispatchToProps = (dispatch: Dispatch<*>) => ({
+const mapDispatchToProps = (dispatch) => ({
   getScatterIdentity: (payload) => {
     dispatch(actions.getScatterIdentity(payload));
   },

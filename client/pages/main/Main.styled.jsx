@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import Text from 'common/components/atom/Text';
 import Box from 'common/components/atom/Box';

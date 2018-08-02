@@ -1,5 +1,3 @@
-// @flow
-
 export const types = {
   GET_SCATTER_IDENTITY: 'account/getScatterIdentity',
   FORGET_SCATTER_IDENTITY: 'account/forgetScatterIdentity',
@@ -7,50 +5,31 @@ export const types = {
   SIGN_OUT: 'account/signOut',
 };
 
-type Viewer = {
-  publicKey: string,
-  name: string,
-  identicon: string,
-  authorized: boolean,
-};
-
 export const actions = {
-  getScatterIdentity: (payload: void) => ({
+  getScatterIdentity: (payload) => ({
     type: types.GET_SCATTER_IDENTITY,
     payload,
   }),
-  forgetScatterIdentity: (payload: void) => ({
+  forgetScatterIdentity: (payload) => ({
     type: types.FORGET_SCATTER_IDENTITY,
     payload,
   }),
-  signIn: (payload: { viewer: Viewer }) => ({
+  signIn: (payload) => ({
     type: types.SIGN_IN,
     payload,
   }),
-  signOut: (payload: void) => ({
+  signOut: (payload) => ({
     type: types.SIGN_OUT,
     payload,
   }),
 };
 
-const initialState: {
-  authenticated: boolean,
-  viewer: Viewer|null,
-} = {
+const initialState = {
   authenticated: false,
   viewer: null,
 };
 
-export type AccountState = typeof initialState;
-
-type Action =
-  | $Call<typeof actions.signIn, *>
-  | $Call<typeof actions.signOut, *>;
-
-const accountReducer = (
-  state: typeof initialState = initialState,
-  action: Action,
-) => {
+const accountReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.SIGN_IN:
       return {

@@ -1,12 +1,9 @@
-// @flow
-
-import { type Effect } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import * as api from './accountApi';
 import { actions } from './accountReducer';
 import modal from '../modal/modalReducer';
 
-export function* getScatterIdentity(): Generator<Effect, void, any> {
+export function* getScatterIdentity() {
   try {
     const result = yield call(api.getScatterIdentity);
     yield put(actions.signIn({ viewer: result }));

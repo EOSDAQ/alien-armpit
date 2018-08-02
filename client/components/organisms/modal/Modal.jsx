@@ -1,20 +1,12 @@
-// @flow
-
 import React from 'react';
-import type { Dispatch } from 'redux';
 import { createPortal } from 'react-dom';
 import { connect } from 'react-redux';
 import { type AppState } from 'reducer/reducer';
 import { ModalStyled, ModalDialogue } from './Modal.styled';
 import InstallScatter from './modals/InstallScatter';
 import _modal from 'reducer/modal/modalReducer';
-import animations from '../../../css/animations';
 
-type Props =
-  & $Call<typeof mapStateToProps, AppState>
-  & $Call<typeof mapDispatchToProps, *>;
-
-class Modal extends React.Component<Props> {
+class Modal extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { modal } = this.props;
     if (modal && !nextProps.modal) {
@@ -75,9 +67,9 @@ class Modal extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = ({ modal }: AppState) => ({ modal });
+const mapStateToProps = ({ modal }) => ({ modal });
 
-const mapDispatchToProps = (dispatch: *) => ({
+const mapDispatchToProps = (dispatch) => ({
   closeModal: (payload) => {
     dispatch(_modal.actions.closeModal(payload));
   },

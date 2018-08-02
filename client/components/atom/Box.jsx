@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -54,11 +52,7 @@ const Box = styled.div`
   `}
 `;
 
-type ContainerProps = {
-  large?: boolean,
-}
-
-export const Container: React.ComponentType<ContainerProps> = Box.extend`
+export const Container = Box.extend`
   max-width: ${({ large }) => large ? '1280px' : '980px'};
   width: 100%;
   padding-left: 16px;
