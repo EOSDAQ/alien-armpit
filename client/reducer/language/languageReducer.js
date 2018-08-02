@@ -1,6 +1,6 @@
-import { combineReducers } from 'redux';
-import { createAction, handleActions } from 'redux-actions';
-import { languages } from '../../common/constants/constants';
+import { combineReducers } from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/redux/index';
+import { createAction, handleActions } from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/redux-actions/index';
+import { languages } from 'common/constants/constants';
 
 export const types = {
   OPEN_DROPBOX: 'language/dropbox/OPEN',

@@ -1,8 +1,8 @@
 // @flow
 
-import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
-import { reducer as formReducer } from 'redux-form';
+import { combineReducers } from '../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/redux/index';
+import { routerReducer } from '../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-router-redux/index';
+import { reducer as formReducer } from '../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/redux-form/index';
 import tickersReducer from './tickers/tickersReducer';
 // import orderFormReducer from './order-form/orderFormReducer';
 import orderLogReducer from './order-log/orderLogReducer';
