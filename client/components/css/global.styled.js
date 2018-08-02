@@ -1,4 +1,4 @@
-import { injectGlobal } from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/styled-components/typings/styled-components';
+import { injectGlobal } from 'styled-components';
 import theme from './theme';
 
 /* eslint-disable-next-line */

@@ -15,8 +15,8 @@ import {
   ExchangeRightSide,
   ExchangeRightBottom,
 } from './Exchange.styled';
-import Sticky from 'common/components/molecules/Sticky';
-import Box from 'common/components/atom/Box';
+import Sticky from 'components/molecules/Sticky';
+import Box from 'components/atom/Box';
 
 const Exchange = () => (
   <ExchangeBody>

@@ -3,7 +3,7 @@ import {
   SheetHeader,
   SheetHeading,
   SheetHeadingRow,
-} from '../../common/components/molecules/Sheet';
+} from 'components/molecules/Sheet';
 
 const OrderLogSubHeader = () => (
   <SheetHeader>

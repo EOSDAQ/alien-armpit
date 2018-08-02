@@ -1,5 +1,5 @@
-import { colors } from 'common/css/theme';
-import { staticPath } from 'common/constants/constants';
+import { colors } from 'components/css/theme';
+import { staticPath } from 'constants/constants';
 
 const widgetOptions = {
   debug: true,

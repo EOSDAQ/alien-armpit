@@ -11,13 +11,13 @@ import createSagaMiddleware from 'redux-saga';
 import { I18nextProvider } from 'react-i18next';
 import { ThemeProvider } from 'styled-components';
 
-import './common/css/global.styled';
+import 'components/css/global.styled';
 import reducer from './reducer/reducer';
-import theme from './common/css/theme';
+import theme from './components/css/theme';
 import i18n from './i18n';
 import pages from './pages';
 import saga from './reducer/saga';
-import Modal from 'common/components/organisms/modal/Modal';
+import Modal from 'components/organisms/modal/Modal';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
@@ -59,7 +59,7 @@ if (module.hot) {
   module.hot.accept(
     [
       './pages.jsx',
-      './common/components/organisms/modal/Modal.jsx',
+      'components/organisms/modal/Modal.jsx',
     ],
     render,
   );

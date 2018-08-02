@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { colors } from '../../common/css/theme';
 import {
   SheetWrapper,
   SheetCell,
-} from '../../common/components/molecules/Sheet';
+} from 'components/molecules/Sheet';
 
 export const OrderLogWrapper = styled(SheetWrapper)`
   width: 300px;

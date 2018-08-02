@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { scrollbarsOptions } from 'common/constants/constants';
+import { scrollbarsOptions } from 'constants/constants';
 import {
   FavoriteCell,
   CoinNameCell,
@@ -17,7 +17,7 @@ import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
 import { actions } from 'reducer/tickers/tickersReducer';
 import { SheetRow } from '../../molecules/Sheet';
-import { tickersSheetRowColumns } from 'common/constants/styleConstants';
+import { tickersSheetRowColumns } from 'components/styleConstants';
 
 const toMillion = (number) => {
   const value = (number / 1.0e+6).toString();

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { scrollbarsOptions } from '../../common/constants/constants';
-import { actions } from '../../reducer/order-log/orderLogReducer';
+import { scrollbarsOptions } from 'constants/constants';
+import { actions } from 'reducer/order-log/orderLogReducer';
 import {
   OrderLogWrapper,
   OrderLogBody,
@@ -12,10 +12,10 @@ import {
 } from './OrderLog.styled';
 import {
   SheetRow,
-} from '../../common/components/molecules/Sheet';
+} from 'components/molecules/Sheet';
 import OrderLogHeader from './OrderLogHeader';
 import OrderLogSubHeader from './OrderLogSubHeader';
-import { Number } from '../../common/components/atom/Text';
+import { Number } from 'components/atom/Text';
 
 
 const mockRows = [

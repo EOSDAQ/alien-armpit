@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Container } from 'common/components/atom/Box';
+import { Container } from 'components/atom/Box';
 import {
   exchangeLeftWidth,
   exchangeRightWidth,
-} from 'constants/styleConstants';
+} from 'pages/styleConstants';
 
 export const ExchangeBody = styled('div')`
   background-color: #fafafa;  

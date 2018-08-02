@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '../../../main/Main.styled';
+import { Container } from 'pages/main/Main.styled';
 import Flex from '../atom/Flex';
 import Box from '../atom/Box';
 import Text from '../atom/Text';

@@ -33,15 +33,15 @@ function asyncRoute(dynamicImport) {
 const pages = [
   {
     path: '/signin',
-    component: asyncRoute(() => import(/* webpackChunkName: "signin" */ './sign/Signin')),
+    component: asyncRoute(() => import(/* webpackChunkName: "signin" */ './pages/sign/Signin')),
   },
   {
     path: '/exchange',
-    component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
+    component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './pages/exchange/Exchange')),
   },
   {
     path: '/',
-    component: asyncRoute(() => import(/* webpackChunkName: "landing" */ './main/Main')),
+    component: asyncRoute(() => import(/* webpackChunkName: "landing" */ './pages/main/Main')),
   },
 ];
 

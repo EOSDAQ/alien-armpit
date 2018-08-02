@@ -1,6 +1,6 @@
 import React from 'react';
-import { SheetHeader } from '../../common/components/molecules/Sheet';
-import Tab from '../../common/components/molecules/Tab';
+import { SheetHeader } from 'components/molecules/Sheet';
+import Tab from 'components/molecules/Tab';
 import { OrderLogTab } from './OrderLogHeader.stlyed';
 
 const mockTabs = ['거래기록', '미체결내역'];
