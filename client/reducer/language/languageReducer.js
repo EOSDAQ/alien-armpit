@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
-import { languages } from 'common/constants/constants';
+import { languages } from 'constants/constants';
 
 export const types = {
   OPEN_DROPBOX: 'language/dropbox/OPEN',

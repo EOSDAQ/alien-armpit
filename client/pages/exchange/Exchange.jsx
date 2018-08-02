@@ -1,9 +1,9 @@
 import React from 'react';
 // import { Sticky, StickyContainer } from 'react-sticky';
 import { translate } from 'react-i18next';
-import Header from '../common/components/organisms/header/Header';
-import Footer from '../common/components/organisms/Footer';
-import Tickers from '../common/components/organisms/tickers/Tickers';
+import Header from 'components/organisms/header/Header';
+import Footer from 'components/organisms/Footer';
+import Tickers from 'components/organisms/tickers/Tickers';
 import OrderBook from './order-book/OrderBook';
 import ExchangeChart from './exchange-chart/ExchangeChart';
 import OrderForm from './order-form/OrderForm';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Footer from 'common/components/organisms/Footer';
-import Header from 'common/components/organisms/header/Header';
-import Flex from 'common/components/atom/Flex';
-import Icon from 'common/components/atom/Icon';
+import Footer from 'components/organisms/Footer';
+import Header from 'components/organisms/header/Header';
+import Flex from 'components/atom/Flex';
+import Icon from 'components/atom/Icon';
 import {
   SigninWrapper,
   SigninHeader,

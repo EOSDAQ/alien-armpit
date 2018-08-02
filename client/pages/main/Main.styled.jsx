@@ -1,8 +1,8 @@
 import React from 'react';
-import Text from 'common/components/atom/Text';
-import Box from 'common/components/atom/Box';
-import Flex from 'common/components/atom/Flex';
-import animations from 'common/css/animations';
+import Text from 'components/atom/Text';
+import Box from 'components/atom/Box';
+import Flex from 'components/atom/Flex';
+import animations from 'components/css/animations';
 
 export const Section = props => (
   <Box

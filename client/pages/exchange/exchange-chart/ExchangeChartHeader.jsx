@@ -1,11 +1,14 @@
 import React from 'react';
-import { ChartHeader, CoinInfo, CoinLabel, CoinName, CoinPriceSection, CoinPrice, CoinPriceChangeStat, CoinPriceLabel, CoinStat, CoinStats, CoinStatLabel, CoinStatValue } from './ExchangeChartHeader.styled';
+import {
+  ChartHeader, CoinInfo, CoinLabel, CoinName, CoinPriceSection, CoinPrice,
+  CoinPriceChangeStat, CoinPriceLabel, CoinStat, CoinStats, CoinStatLabel, CoinStatValue,
+} from './ExchangeChartHeader.styled';
 
 const stats = [
   { name: 'high', value: 0.0039 },
   { name: 'low', value: 0.0038 },
   { name: 'volume', value: 36000000 },
-]
+];
 
 const ExchangeChartHeader = () => (
   <ChartHeader>

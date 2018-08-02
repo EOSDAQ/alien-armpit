@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from 'common/css/theme';
+import { colors } from 'components/css/theme';
 
 export const SigninWrapper = styled('div')`
   width: 668px;

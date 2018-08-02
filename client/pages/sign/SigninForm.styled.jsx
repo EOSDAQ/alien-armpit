@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { colors } from 'common/css/theme';
-import { GreyBorderInput } from 'common/components/atom/Input';
+import { colors } from 'components/css/theme';
+import { GreyBorderInput } from 'components/atom/Input';
 
 export const SigninLabel = styled('label')`
   font-size: 14px;

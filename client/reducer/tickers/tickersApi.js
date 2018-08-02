@@ -1,6 +1,6 @@
 import axios from 'axios';
 import errorHandler from '../api/errorHandler';
-import { staticPath } from 'common/constants/constants';
+import { staticPath } from 'constants/constants';
 
 export const loadCoins = async () => {
   try {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Waypoint from '../common/components/molecules/Waypoint';
+import Waypoint from 'components/molecules/Waypoint';
 import {
   Section,
   Container,

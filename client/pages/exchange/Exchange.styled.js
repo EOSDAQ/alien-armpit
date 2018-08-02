@@ -3,7 +3,7 @@ import { Container } from 'common/components/atom/Box';
 import {
   exchangeLeftWidth,
   exchangeRightWidth,
-} from '../common/constants/styleConstants';
+} from 'constants/styleConstants';
 
 export const ExchangeBody = styled('div')`
   background-color: #fafafa;  

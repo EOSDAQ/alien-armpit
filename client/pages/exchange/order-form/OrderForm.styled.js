@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { SheetWrapper } from '../../common/components/molecules/Sheet';
-import { orderFormPanelWidth } from '../../common/constants/styleConstants';
+import { SheetWrapper } from 'components/molecules/Sheet';
+import { orderFormPanelWidth } from 'pages/styleConstants';
 
 export const OrderFormWrapper = styled(SheetWrapper)`
   display: flex;

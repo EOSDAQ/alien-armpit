@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme, { colors } from '../../common/css/theme';
+import theme, { colors } from 'components/css/theme';
 
 export const ChartHeader = styled('div')`
   display: flex;

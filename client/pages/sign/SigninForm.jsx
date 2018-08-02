@@ -1,8 +1,8 @@
-import React from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react/index';
-import { Field, reduxForm } from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/redux-form/index';
-import { translate } from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-i18next/index';
-import Button from 'common/components/atom/Button';
-import { email as emailValidation } from 'common/utils/validations';
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { translate } from 'react-i18next';
+import Button from 'components/atom/Button';
+import { email as emailValidation } from 'utils/validations';
 import {
   SigninInputWrap,
   SigninLabel,

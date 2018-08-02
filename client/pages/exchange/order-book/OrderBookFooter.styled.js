@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '../../common/css/theme';
+import { colors } from 'components/css/theme';
 
 const orderBookFooterHeight = 42;
 const orderBookFooterContentsHeight = 23;

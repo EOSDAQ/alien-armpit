@@ -1,8 +1,8 @@
 import React from 'react';
-import Box from 'common/components/atom/Box';
-import Flex from 'common/components/atom/Flex';
-import Text from 'common/components/atom/Text';
-import { staticPath } from 'common/constants/constants';
+import Box from 'components/atom/Box';
+import Flex from 'components/atom/Flex';
+import Text from 'components/atom/Text';
+import { staticPath } from 'constants/constants';
 import { CoinImage, CoinPriceChange } from './MainDashboard.styled';
 
 const timer = new Worker(`${staticPath.root}/js/workers/timer.js`);

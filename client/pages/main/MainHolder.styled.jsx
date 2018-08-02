@@ -1,9 +1,9 @@
 import React from 'react';
-import Box from '../common/components/atom/Box';
-import Icon from '../common/components/atom/Icon';
-import Text from '../common/components/atom/Text';
-import animations from '../common/css/animations';
-import Flex from '../common/components/atom/Flex';
+import Box from 'components/atom/Box';
+import Icon from 'components/atom/Icon';
+import Text from 'components/atom/Text';
+import animations from 'components/css/animations';
+import Flex from 'components/atom/Flex';
 
 export const EOSFeature = ({ children, animate, delay, color }) => (
   <Flex

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { scrollbarsOptions } from '../../common/constants/constants';
+import { scrollbarsOptions } from 'constants/constants';
 
 import {
   OrderBookWrapper,
 } from './OrderBook.styled';
-import Flex from '../../common/components/atom/Flex';
+import Flex from 'components/atom/Flex';
 import OrderBookHeader from './OrderBookHeader';
 import OrderBookList from './OrderBookList';
 import OrderBookTradeInfo from './OrderBookTradeInfo';

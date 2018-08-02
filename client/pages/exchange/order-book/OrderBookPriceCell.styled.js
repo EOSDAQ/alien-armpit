@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { colors } from '../../common/css/theme';
+import { colors } from 'components/css/theme';
 import {
   SheetRow,
-} from '../../common/components/molecules/Sheet';
+} from 'components/molecules/Sheet';
 
 export const OrderBookPrice = styled(SheetRow)`
   flex: 1;  

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { mixin } from '../../common/css/typography';
+import { mixin } from 'components/css/typography';
 
 export const OrderBookTradeInfoWrapper = styled('div')`
   display: flex;

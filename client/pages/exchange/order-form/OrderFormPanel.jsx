@@ -3,7 +3,6 @@ import React from 'react';
 import {
   OrderFormContainer,
   OrderFormTop,
-  OrderFormHeader,
   OrderFormControl,
   OrderFormBottom,
   OrderFormTotal,
@@ -14,9 +13,9 @@ import {
   OrderFormInputControl,
   OrderFormLabel,
 } from './OrderFormPanel.styled';
-import Input from '../../common/components/atom/Input';
-import Icon from '../../common/components/atom/Icon';
-import { IconButton } from '../../common/components/atom/Button';
+import Input from 'components/atom/Input';
+import Icon from 'components/atom/Icon';
+import { IconButton } from 'components/atom/Button';
 
 const OrderForm = (props) => {
   const {

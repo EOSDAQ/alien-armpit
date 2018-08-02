@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { colors } from '../../common/css/theme';
-import { mixin } from '../../common/css/typography';
+import { colors } from 'components/css/theme';
+import { mixin } from 'components/css/typography';
 
 import {
   orderFormPanelWidth,
   orderFormTotalUnitWidth,
-} from '../../common/constants/styleConstants';
-import Button from '../../common/components/atom/Button';
+} from 'pages/styleConstants';
+import Button from 'components/atom/Button';
 
 export const OrderFormContainer = styled('div')`
   width: ${orderFormPanelWidth}px;

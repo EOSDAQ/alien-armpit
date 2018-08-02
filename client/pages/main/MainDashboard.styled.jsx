@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Text from '../common/components/atom/Text';
-import theme from '../common/css/theme';
+import Text from 'components/atom/Text';
+import theme from 'components/css/theme';
 
 export const CoinImage = styled.img`
   width: 20px;

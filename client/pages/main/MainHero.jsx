@@ -1,13 +1,13 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Box from 'common/components/atom/Box';
-import Text from 'common/components/atom/Text';
-import Waypoint from 'common/components/molecules/Waypoint';
-import animations from 'common/css/animations';
-import Image from 'common/components/atom/Image';
-import Sns from 'common/components/organisms/sns/Sns';
-import Flex from 'common/components/atom/Flex';
-import { staticPath } from 'common/constants/constants';
+import Box from 'components/atom/Box';
+import Text from 'components/atom/Text';
+import Waypoint from 'components/molecules/Waypoint';
+import animations from 'components/css/animations';
+import Image from 'components/atom/Image';
+import Sns from 'components/organisms/sns/Sns';
+import Flex from 'components/atom/Flex';
+import { staticPath } from 'constants/constants';
 
 const MainHero = (props) => {
   const { t } = props;

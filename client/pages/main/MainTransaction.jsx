@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Waypoint from '../common/components/molecules/Waypoint';
+import Waypoint from 'components/molecules/Waypoint';
 import {
   Section,
   Container,
@@ -12,10 +12,10 @@ import {
   Description,
   SectionLabel,
 } from './Main.styled';
-import Text from '../common/components/atom/Text';
-import Box from '../common/components/atom/Box';
-import animations from '../common/css/animations';
-import Flex from '../common/components/atom/Flex';
+import Text from 'components/atom/Text';
+import Box from 'components/atom/Box';
+import animations from 'components/css/animations';
+import Flex from 'components/atom/Flex';
 
 const compare = [
   { name: 'EOS', value: 4000, text: '200x' },

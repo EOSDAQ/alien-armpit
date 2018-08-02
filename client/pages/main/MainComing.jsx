@@ -1,9 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Text from 'common/components/atom/Text';
-import Flex from 'common/components/atom/Flex';
-import Icon from 'common/components/atom/Icon';
-import Box, { Container } from 'common/components/atom/Box';
+import Text from 'components/atom/Text';
+import Flex from 'components/atom/Flex';
+import Icon from 'components/atom/Icon';
+import Box, { Container } from 'components/atom/Box';
 
 class MainComing extends React.Component {
   constructor(props) {
