@@ -4,6 +4,8 @@ import { reducer as formReducer } from 'redux-form';
 import tickersReducer from './tickers/tickersReducer';
 import orderLogReducer from './order-log/orderLogReducer';
 import languageReducer from './language/languageReducer';
+import accountReducer from './account/accountReducer';
+import modal from './modal/modalReducer';
 
 const reducer = combineReducers({
   form: formReducer,
