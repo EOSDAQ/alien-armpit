@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 
 import { IconButton } from '../../atom/Button';
 import Icon from '../../atom/Icon';
-import { colors } from '../../../css/theme';
-import { actions } from '../../../../reducer/tickers/tickersReducer';
+import { colors } from '../../css/theme';
+import { actions } from 'reducer/tickers/tickersReducer';
 import Box from '../../atom/Box';
 import { SheetHeadingRow, SheetCell } from '../../molecules/Sheet';
-import { tickersSheetRowColumns } from '../../../constants/styleConstants';
+import { tickersSheetRowColumns } from '../../styleConstants';
 
 const heads = [
   { label: null, field: 'favorite' },

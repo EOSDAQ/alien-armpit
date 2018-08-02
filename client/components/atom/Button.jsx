@@ -1,8 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { justifyContent } from 'styled-system';
-import { color } from 'styled-system';
-import { colors } from '../../css/theme';
+import { color, justifyContent } from 'styled-system';
+import { colors } from '../css/theme';
 
 const scale = (props) => {
   const { large } = props;

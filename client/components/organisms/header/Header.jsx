@@ -9,9 +9,7 @@ import { HeaderStyled } from './Header.styled';
 import HeaderAuthenticate from './HeaderAuthenticate';
 import { staticPath } from 'common/constants/constants';
 
-type Props = {};
-
-class Header extends React.Component<Props> {
+class Header extends React.Component {
   constructor(props) {
     super(props);
 

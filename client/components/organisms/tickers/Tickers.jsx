@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import debounce from 'lodash.debounce';
-import { actions } from '../../../../reducer/tickers/tickersReducer';
+import { actions } from 'reducer/tickers/tickersReducer';
 
 import { SheetWrapper } from '../../molecules/Sheet';
 import TickersHeader from './TickersHeader';

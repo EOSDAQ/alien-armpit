@@ -1,4 +1,4 @@
-import { combineReducers } from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/redux/index';
+import { combineReducers } from 'redux';
 import { createAction, handleActions } from '../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/redux-actions/index';
 
 export const types = {

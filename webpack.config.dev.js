@@ -4,10 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
   'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-  './js/app.jsx',
+  './app.jsx',
 ];
 
-const context = path.resolve(__dirname, 'public');
+const context = path.resolve(__dirname, 'client');
 const nodeModules = path.resolve(__dirname, 'node_modules');
 
 const output = {
@@ -19,7 +19,7 @@ const output = {
 
 const resolve = {
   extensions: ['.js', '.json', '.jsx'],
-  modules: [path.resolve(context, 'js'), nodeModules],
+  modules: [path.resolve(context), nodeModules],
 };
 
 const rules = [

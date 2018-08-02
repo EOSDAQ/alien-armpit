@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from '../../../css/theme';
-import { TextButton } from '../../atom/Button';
+import { colors } from 'components/css/theme';
+import { TextButton } from 'components/atom/Button';
 
 export const AccountMenu = styled.div`
   padding: 16px;

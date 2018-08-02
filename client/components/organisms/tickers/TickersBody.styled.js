@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import theme, { colors } from '../../../css/theme';
+import theme, { colors } from 'components/css/theme';
 import { SheetCell } from '../../molecules/Sheet';
 import {
   tickersCoinNameWidth,
   tickersCurrentPriceWidth,
   tickersDayChangeWidth,
   tickersDayVolumeWidth,
-} from '../../../constants/styleConstants';
+} from 'components/styleConstants';
 
 export const TickersCell = SheetCell.extend`
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Flex from '../atom/Flex';
 import Box from '../atom/Box';
-import { colors } from '../../css/theme';
+import { colors } from '../css/theme';
 
 function setBorderStyle(relIdx) {
   switch (relIdx) {

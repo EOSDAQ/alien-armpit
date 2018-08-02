@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Box from '../../atom/Box';
-import Button, { TextButton } from '../../atom/Button';
-import Text from '../../atom/Text';
-import { actions } from '../../../../reducer/account/accountReducer';
+import { actions } from 'reducer/account/accountReducer';
 import { AccountMenu, AccountMenuWelcome, AccountName, MenuActions, CopyPublicKey, MenuAction } from './HeaderAccountMenu.styled';
 import Icon from '../../atom/Icon';
 

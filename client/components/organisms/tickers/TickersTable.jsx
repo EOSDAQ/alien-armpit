@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from '../../../css/theme';
+import { colors } from '../../css/theme';
 
 export const TickersRow = styled.div`
   display: grid;

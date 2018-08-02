@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from '../../../../css/theme';
+import { colors } from 'components/css/theme';
 
 export const Title = styled.h1`
   font-size: 24px;

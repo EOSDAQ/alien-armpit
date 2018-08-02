@@ -1,12 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Box from '../atom/Box';
-import { Input } from './Form';
-import { colors } from '../../css/theme';
-import {
-  sheetRowHeight,
-  sheetHeaderHeight,
-} from '../../constants/styleConstants';
+import { colors } from '../css/theme';
 
 export const SheetWrapper = styled('div')`
   border: 1px solid rgba(0, 0, 0, 0.08);

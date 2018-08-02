@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme, { colors } from '../../../css/theme';
+import theme, { colors } from 'components/css/theme';
 
 export const ViewerIdenticon = styled.div`
   border-radius: 999rem;
