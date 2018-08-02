@@ -1,7 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { connect } from 'react-redux';
-import { type AppState } from 'reducer/reducer';
 import { ModalStyled, ModalDialogue } from './Modal.styled';
 import InstallScatter from './modals/InstallScatter';
 import _modal from 'reducer/modal/modalReducer';
