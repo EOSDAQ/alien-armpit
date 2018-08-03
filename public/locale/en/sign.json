@@ -8,5 +8,21 @@
     "policyCookie": "Cookie Use",
     "privacyOptions": "Privacy Options",
     "register": "Register"
+  },
+  "sentEmail": {
+    "title": "Confirmation email is sent.",
+    "desc": "Check |=email| Inbox and click <br />confirm button to use EOSDAQ." ,
+    "notReceive": "If you did not receive confirmation email from us.",
+    "resend": "Resend"
+  },
+  "googleOtp": {
+    "title": "Enable Google Auth",
+    "desc": "Google 2단계 인증은 당신의 계정 보호와 백업을 위해 필요합니다. Google Authentication App을 다운받은 후, 아래의 QR코드를 스캔하거나 8자리 대체 코드를 등록하세요.",
+    "qrCode": "QR Code",
+    "backupKey": "Backup key",
+    "caution": "Please save this key on paper. This key will allow you to recover your Google Authentication in case of phone loss.",
+    "nextStep": "Proceed to next step >",
+    "title2": "2단계 인증",
+    "desc2": "Google Authenticator 앱에서 생성된 6자리 코드를 입력해주세요"
   }
 }

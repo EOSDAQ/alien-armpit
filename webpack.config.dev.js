@@ -15,6 +15,8 @@ const output = {
   publicPath: '/static/',
   filename: '[name].bundle.js',
   chunkFilename: '[name].js',
+  // for worker-loader issue
+  globalObject: 'this',
 };
 
 const resolve = {
@@ -23,6 +25,12 @@ const resolve = {
 };
 
 const rules = [
+  {
+    test: /\.worker\.js$/,
+    use: [      
+      'worker-loader',
+    ],
+  },
   {
     test: /\.(js|jsx)$/,
     use: [

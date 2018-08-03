@@ -5,6 +5,7 @@ import tickersReducer from './tickers/tickersReducer';
 import orderLogReducer from './order-log/orderLogReducer';
 import languageReducer from './language/languageReducer';
 import accountReducer from './account/accountReducer';
+import googleOtpReducer from './google-otp/googleOtpReducer';
 import modal from './modal/modalReducer';
 import orderBookReducer from './order-book/orderBookReducer';
 
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   modal: modal.reducer,
   orderBook: orderBookReducer.reducer,
   orderLog: orderLogReducer,
+  googleOtp: googleOtpReducer,
 });
 
 export default reducer;

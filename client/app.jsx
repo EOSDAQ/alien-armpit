@@ -20,12 +20,11 @@ import saga from './reducer/saga';
 import Pages from 'pages/Pages';
 
 const history = createHistory();
-const middleware = routerMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
+export const store = createStore(
   reducer,
-  compose(applyMiddleware(middleware, sagaMiddleware)),
+  compose(applyMiddleware(routerMiddleware(history), sagaMiddleware)),
 );
 
 sagaMiddleware.run(saga);

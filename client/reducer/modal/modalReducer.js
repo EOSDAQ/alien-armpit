@@ -4,11 +4,11 @@ const types = {
 };
 
 const actions = {
-  openModal: (payload) => ({
+  openModal: payload => ({
     type: types.OPEN_MODAL,
     payload,
   }),
-  closeModal: (payload) => ({
+  closeModal: payload => ({
     type: types.CLOSE_MODAL,
     payload,
   }),

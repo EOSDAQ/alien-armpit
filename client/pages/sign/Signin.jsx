@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { translate } from 'react-i18next';
+import { actions } from 'reducer/signin/signinReducer';
 import Footer from 'components/organisms/Footer';
 import Header from 'components/organisms/header/Header';
 import Flex from 'components/atom/Flex';
@@ -12,8 +15,22 @@ import {
 import SigninForm from './SigninForm';
 
 class Signin extends React.Component {
-  onSubmit() {
-    console.log('onSubmit');
+  onSubmit(formData) {
+    const data = formData;
+    const {
+      viewer,
+      sendConfirmEmail,
+      redirectToSentEmail,
+    } = this.props;
+
+    if (!viewer || !viewer.name) {
+      alert('need accountName');
+      return;
+    }
+
+    data.accountName = viewer.name;
+    sendConfirmEmail(data);
+    redirectToSentEmail(data.email);
   }
 
   render() {
@@ -28,7 +45,7 @@ class Signin extends React.Component {
               {t('signin.title')}
             </SigninHeader>
             <SigninDesc dangerouslySetInnerHTML={{ __html: t('signin.desc') }} />
-            <SigninForm onSubmit={this.onSubmit} />
+            <SigninForm onSubmit={value => this.onSubmit(value)} />
           </SigninWrapper>
         </Flex>
         <Footer />
@@ -37,4 +54,21 @@ class Signin extends React.Component {
   }
 }
 
-export default translate('sign')(Signin);
+const mapStateToProps = state => ({
+  viewer: state.account.viewer,
+});
+
+const mapDispatchToProps = dispatch => ({
+  sendConfirmEmail: (email) => { dispatch(actions.sendConfirmEmailSaga(email)); },
+  redirectToSentEmail: (email) => {
+    dispatch(push({
+      pathname: '/sentEmail',
+      state: { email },
+    }));
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(translate('sign')(Signin));

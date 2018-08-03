@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { actions } from './tickersReducer';
-import * as api from './tickersApi';
+import * as api from 'api/tickers';
 
 export function* loadCoins() {
   try {
@@ -22,7 +22,7 @@ export function* updateSort({ payload }) {
   yield put(actions.updateFilteredCoinList());
 }
 
-export function* updateSearchValue({ payload }) {  
+export function* updateSearchValue({ payload }) {
   yield put(actions.updateSearchValue(payload));
   yield put(actions.updateFilteredCoinList());
 }

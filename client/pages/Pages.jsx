@@ -38,6 +38,10 @@ const routes = [
     component: asyncRoute(() => import(/* webpackChunkName: "signin" */ './sign/Signin')),
   },
   {
+    path: '/sentEmail',
+    component: asyncRoute(() => import(/* webpackChunkName: "sentEmail" */ './sent-email/SentEmail')),
+  },
+  {
     path: '/exchange',
     component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
   },

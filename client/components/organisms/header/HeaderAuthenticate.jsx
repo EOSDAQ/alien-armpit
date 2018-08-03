@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { setScatter } from 'api/scatter';
 import Icon from '../../atom/Icon';
 import { TextButton } from '../../atom/Button';
 import Text from '../../atom/Text';
@@ -8,7 +9,6 @@ import { actions } from 'reducer/account/accountReducer';
 import { ViewerIdenticon } from './HeaderAuthenticate.styled';
 import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
-import { setScatter } from 'reducer/account/accountApi';
 
 class HeaderAuthenticate extends React.Component {
   componentDidMount() {

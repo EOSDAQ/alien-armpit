@@ -7,6 +7,7 @@ import Icon from '../../atom/Icon';
 let publicKeyEl = null;
 
 const HeaderAccountMenu = ({ viewer, signOut }) => {
+  console.log('HeaderAccountMenu', viewer);
   return (
     <AccountMenu>
       <AccountMenuWelcome>
@@ -17,8 +18,7 @@ const HeaderAccountMenu = ({ viewer, signOut }) => {
       </AccountName>
       <MenuActions>
         <CopyPublicKey onClick={() => {
-          publicKeyEl.select();
-          console.log(publicKeyEl);
+          publicKeyEl.select();          
           document.execCommand('copy');
         }}>
           Copy public key

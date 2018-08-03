@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { translate } from 'react-i18next';
 import Button from 'components/atom/Button';
 import { email as emailValidation } from 'utils/validations';
+import { replaceAndBuildArray } from 'utils/utils';
 import {
   SigninInputWrap,
   SigninLabel,
@@ -36,45 +37,25 @@ const renderInput = ({
   </SigninInputWrap>
 );
 
-
-const replaceToJsxAndBuildArray = (source, condition, replacement) => {
-  let result;
-  if (typeof source === 'string') {
-    result = source.split(condition);
-    result.splice(result.length - 1, 0, replacement);
-  }
-
-  if (typeof source === 'object') {
-    result = source.slice(0);
-    const target = result[result.length - 1];
-    const splitted = target.split(condition);
-    splitted.splice(splitted.length - 1, 0, replacement);
-    result.splice(result.length - 1, 1);
-    result = result.concat(splitted);
-  }
-
-  return result;
-};
-
 const SigninForm = (props) => {
   const { t, handleSubmit } = props;
 
   const policy = t('signin.policy');
-  let policyArr = replaceToJsxAndBuildArray(
+  let policyArr = replaceAndBuildArray(
     policy,
     '${termsOfService}',
     <a className="link" href="/termsOfService">
       {t('signin.policyTerms')}
     </a>,
   );
-  policyArr = replaceToJsxAndBuildArray(
+  policyArr = replaceAndBuildArray(
     policyArr,
     '${privacyPolicy}',
     <a className="link" href="/privacyPolicy">
       {t('signin.policyPrivacy')}
     </a>,
   );
-  policyArr = replaceToJsxAndBuildArray(
+  policyArr = replaceAndBuildArray(
     policyArr,
     '${cookieUse}',
     <a className="link" href="/privacyOption">
@@ -92,7 +73,7 @@ const SigninForm = (props) => {
         component={renderInput}
       />
       <SigninPolicy>
-        {policyArr}
+        {[...policyArr]}
         &nbsp;·&nbsp;
         <a className="link" href="/privacyOption">
           {t('signin.privacyOptions')}
@@ -106,5 +87,5 @@ const SigninForm = (props) => {
 };
 
 export default reduxForm({
-  form: 'signinForm',
+  form: 'signin',
 })(translate('sign')(SigninForm));

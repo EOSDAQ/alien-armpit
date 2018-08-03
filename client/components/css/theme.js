@@ -61,6 +61,7 @@ const theme = {
     sans: '-apple-system, BlinkMacSystemFont, Noto Sans, Roboto, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Noto Sans KR", "Malgun Gothic", "Dotum", sans-serif',
     mono: 'Roboto Mono, menlo, monospace',
     number: '-apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Oxygen, Ubuntu, sans-serif',
+    notosans: 'Noto Sans CJK KR',
   },
   space: [0, 4, 8, 12],
 };

@@ -3,6 +3,7 @@
 const local = require('./local');
 const development = require('./development');
 const production = require('./production');
+const commonConfig = require('./common');
 
 const env = process.env.NODE_ENV || 'local';
 let config = local;
@@ -13,5 +14,6 @@ if (env === 'production') {
   config = development;
 }
 
+config = Object.assign({}, commonConfig, config);
 config.env = env;
 module.exports = config;

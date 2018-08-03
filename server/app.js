@@ -1,16 +1,16 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const config = require('./config');
-const router = require('./router/router');
+const googleOtpRoute = require('./router/googleOtp');
+const accountRoute = require('./router/account');
 
 const app = express();
 const { env } = config;
 const staticPath = path.join(__dirname, `../${config.staticPath}`);
-
-app.use(router);
 
 // webpack hot loading setup
 if (env === 'local') {
@@ -38,11 +38,14 @@ app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
 app.use(logger('dev'));
-app.use(express.json());
+app.use(bodyParser.json());
+// app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/static', express.static(staticPath));
 
+app.use('/gotp', googleOtpRoute);
+app.use('/account', accountRoute);
 app.get('*', (req, res) => {
   res.render('index.html');
 });
