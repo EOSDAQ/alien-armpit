@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { colors } from '../css/theme';
 
 export const SheetWrapper = styled('div')`
+  position: relative;
   background: white;
   box-shadow: 0px 5px 0px rgba(0,0,0,0.09);
   border: 1px solid rgba(0, 0, 0, 0.11);
