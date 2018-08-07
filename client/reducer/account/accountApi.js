@@ -42,7 +42,9 @@ export const transfer = async (data) => {
     memo: data.price,
   });
 
-  console.log(result);
+  const { transaction: { transaction }, processed } = result;
+
+  alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
 };
 
 export const getScatterIdentity = async () => {

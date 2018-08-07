@@ -13,10 +13,14 @@ import { setScatter } from 'reducer/account/accountApi';
 class HeaderAuthenticate extends React.Component {
   componentDidMount() {
     const { getScatterIdentity } = this.props;
-    document.addEventListener('scatterLoaded', () => {
-      setScatter();
+    if (!window.scatter) {
+      document.addEventListener('scatterLoaded', () => {
+        setScatter();
+        getScatterIdentity();
+      });
+    } else {
       getScatterIdentity();
-    });
+    }
   }
 
   render() {
