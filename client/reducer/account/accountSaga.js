@@ -41,9 +41,32 @@ export function* order({ payload }) {
   const { type, price, amount } = payload;
   const from = yield select(s => s.account.viewer.name);
 
-  yield call(api.transfer, {
-    quantity: `${(price * amount).toFixed(4)} ${type === 'sell' ? 'ABC' : 'SYS'}`,
-    price: parseFloat(price),
-    from,
-  });
+  try { 
+    yield call(api.transfer, {
+      quantity: `${(price * amount).toFixed(4)} ${type === 'sell' ? 'ABC' : 'SYS'}`,
+      price: parseFloat(price),
+      from,
+    });
+  } catch (e) {
+    if (!e.code) {
+      // 스캐터 오류가 아님.
+      console.error(e);
+      return;
+    }
+
+    switch (e.code) {
+      case 500: {
+        const { showInstallMessage } = payload;
+        if (showInstallMessage) {
+          yield put(modal.actions.openModal({
+            type: 'INSTALL_SCATTER',
+          }));
+        }
+        break;
+      }
+      case 423: // scatter locked.
+      case 402: // user closed the popup
+      default:
+    }
+  }
 }

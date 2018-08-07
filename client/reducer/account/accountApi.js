@@ -35,21 +35,17 @@ document.addEventListener('scatterLoaded', setScatter);
 export const transfer = async (data) => {
   const eos = scatter.eos(network, Eos, {});
 
-  try {
-    const result = await eos.transfer({
-      from: data.from,
-      to: 'eosdaq',
-      quantity: data.quantity,
-      memo: data.price,
-    });
-    console.log(result);
-  } catch (err) {
-    console.error(err);
-  }
+  const result = await eos.transfer({
+    from: data.from,
+    to: 'eosdaq',
+    quantity: data.quantity,
+    memo: data.price,
+  });
+
+  console.log(result);
 };
 
 export const getScatterIdentity = async () => {
-  console.log('get scatter identity');
   // 유저가 signIn을 클릭하는 시점 바로 직전에 scatter를 설치했을 수 있기 때문에 매번 이곳에서 window.scatter를 체크한다.
   if (!scatter) {
     throw new CustomScatterError({
