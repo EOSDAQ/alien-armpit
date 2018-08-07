@@ -8,6 +8,11 @@ export function* getScatterIdentity() {
     const result = yield call(api.getScatterIdentity);
     yield put(actions.signIn({ viewer: result }));
   } catch (e) {
+    if (e.code && e.code === 423) {
+      // scatter locked.
+      return;
+    }
+
     yield put(modal.actions.openModal({
       type: 'INSTALL_SCATTER',
     }));

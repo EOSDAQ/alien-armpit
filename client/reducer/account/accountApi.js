@@ -37,9 +37,10 @@ export const getScatterIdentity = async () => {
     });
 
     let account;
+
     if (Array.isArray(accounts)) {
       // filter through...
-      account = accounts[0];
+      [account] = accounts;
     }
 
     if (!account) {
@@ -67,11 +68,10 @@ export const getScatterIdentity = async () => {
       authorized,
     };
   }
-}
+};
 
 export const forgetScatterIdentity = async () => {
   if (window.scatter) {
     await window.scatter.forgetIdentity();
   }
-  return;
-}
+};
