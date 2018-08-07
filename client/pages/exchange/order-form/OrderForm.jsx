@@ -4,8 +4,8 @@ import Flex from 'components/atom/Flex';
 import { SheetWrapper } from 'components/molecules/Sheet';
 
 class OrderForm extends React.Component {
-  onSubmit(e, type) {
-    console.log(e, type);
+  onSubmit(values, type) {
+    console.log(values, type);
   }
 
   render() {
@@ -17,7 +17,7 @@ class OrderForm extends React.Component {
           {types.map(type => (
             <OrderFormPanel
               key={type}
-              type={type}
+              form={`order::${type}`}
               onSubmit={e => this.onSubmit(e, type)}
             />
           ))}

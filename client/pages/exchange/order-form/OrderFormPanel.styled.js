@@ -21,27 +21,6 @@ export const OrderFormContainer = styled('div')`
   flex-direction: column;
 `;
 
-export const OrderFormTop = styled('div')`
-  padding: 32px 16px;
-  flex: 1;
-`;
-
-export const OrderFormControl = styled('div')`
-  margin-top: 12px;
-
-  &:first-child {
-    margin-top: 0;
-  }
-
-  label {
-    ${mixin.tradeLabel};
-  }
-`;
-
-export const OrderFormLabel = styled('label')`
-
-`;
-
 export const OrderFormInput = styled(Input)`
   text-align: right;
 `;

@@ -10,68 +10,60 @@ import {
   OrderFormTotalAmount,
   OrderFormTotalUnit,
   OrderFormButton,
-  OrderFormInput,
 } from './OrderFormPanel.styled';
-import { InputControl } from 'components/atom/Input';
+import Input, { InputControl } from 'components/atom/Input';
+import Box from 'components/atom/Box';
 
+// TODO. add validation logic.
 const OrderForm = (props) => {
   const {
     isBuy,
     handleSubmit,
   } = props;
-  const actionStr = isBuy ? 'buy' : 'sell';
-  const priceInputId = `price_input_for_${actionStr}`;
-  const amountInputId = `amout_input_for_${actionStr}`;
 
-  console.log(handleSubmit);
+  const fields = ['price', 'amount'];
+
   return (
     <OrderFormContainer>
       <form onSubmit={handleSubmit}>
-      <OrderFormTop>
-        <OrderFormControl>
-          <InputControl>
-            <label htmlFor={priceInputId}>
-              가격
-              <OrderFormInput id={priceInputId} type="number" />
+        <Box flex="1" py={32} pb={16}>
+          {fields.map(name => (
+            <InputControl key={name}>
+              <label htmlFor={name}>
+                {name}
+              </label>
+              <Field
+                name={name}
+                type="number"
+                component={({ input, ...inputProps }) => <Input {...input} {...inputProps} />}
+              />
+            </InputControl>
+          ))}
+        </Box>
+        <OrderFormBottom isBuy={isBuy}>
+          <OrderFormTotal>
+            <label>
+              총 거래 금액
+              <div>
+                <OrderFormTotalAmount>
+                  299,588,232
+                </OrderFormTotalAmount>
+                <OrderFormTotalUnit>
+                  EOS
+                </OrderFormTotalUnit>
+              </div>
             </label>
-          </InputControl>
-        </OrderFormControl>
-        <OrderFormControl>
-          <InputControl>
-            <label htmlFor={amountInputId}>
-              수량
-            </label>
-          </InputControl>
-        </OrderFormControl>
-        <OrderFormInput>
-        </OrderFormInput>
-      </OrderFormTop>
-      <OrderFormBottom isBuy={isBuy}>
-        <OrderFormTotal>
-          <label>
-            총 거래 금액
-            <div>
-              <OrderFormTotalAmount>
-                299,588,232
-              </OrderFormTotalAmount>
-              <OrderFormTotalUnit>
-                EOS
-              </OrderFormTotalUnit>
-            </div>
-          </label>
-        </OrderFormTotal>
-        <OrderFormButton
-          type="button"
-          isBuy={isBuy}
-        >
-          {`IQ ${isBuy ? '매수' : '매도'}`}
-        </OrderFormButton>
-      </OrderFormBottom>
+          </OrderFormTotal>
+          <OrderFormButton
+            type="submit"
+            isBuy={isBuy}
+          >
+            {`IQ ${isBuy ? '매수' : '매도'}`}
+          </OrderFormButton>
+        </OrderFormBottom>
       </form>
     </OrderFormContainer>
   );
 };
 
-export default reduxForm({
-  form: 'order',
-})(OrderForm);
+export default reduxForm({})(OrderForm);
