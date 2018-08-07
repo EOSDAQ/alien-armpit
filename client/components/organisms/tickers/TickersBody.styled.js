@@ -1,20 +1,34 @@
 import styled from 'styled-components';
 import theme, { colors } from 'components/css/theme';
-import { SheetCell } from '../../molecules/Sheet';
+import { SheetCell, SheetRow } from 'components/molecules/Sheet';
 import {
   tickersCoinNameWidth,
   tickersCurrentPriceWidth,
   tickersDayChangeWidth,
-  tickersDayVolumeWidth,
 } from 'components/styleConstants';
 
 export const TickersCell = SheetCell.extend`
+
+`;
+
+export const TickersRow = styled(SheetRow)`
+  height: 45px;
 `;
 
 export const FavoriteCell = TickersCell.extend`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const CoinIcon = styled.div`
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+
+  transition: .2s all ease;
+  background: url(${({ url }) => url}) 50% 50%/cover no-repeat;
+
 `;
 
 export const CoinNameCell = TickersCell.extend`
@@ -24,12 +38,19 @@ export const CoinNameCell = TickersCell.extend`
 export const CoinNameText = styled.span`
   font-size: 14px;
   font-weight: 500;
-  color: black;  
+  color: #555;
+  letter-spacing: .3px;
+  line-height: 1;
+  transition: .2s color ease;
+
+  &:hover {
+    color: #000;
+  }
 `;
 
 export const CoinCodeText = styled.span`
-  font-size: 13px;
-  color: ${colors.grey390};
+  font-size: 12px;
+  color: ${colors.grey400};
   font-family: ${theme.fontFamily.mono};
   margin-left: 4px;
 `;

@@ -4,6 +4,7 @@
       "favorite": true,
       "coinName": "Everipedia",
       "coinCode": "IQ/EOS",
+      "coinIconUrl": "https://static.upbit.com/logos/EOS.png",
       "currentPrice": 0.0039,
       "dayChange": 0.05,
       "dayVolume": 73858000000
@@ -11,6 +12,7 @@
     {
       "favorite": true,
       "coinName": "EOX",
+      "coinIconUrl": "https://static.upbit.com/logos/XRP.png",
       "coinCode": "EOX/EOS",
       "currentPrice": 0.0152,
       "dayChange": 1.21,
@@ -19,6 +21,7 @@
     {
       "favorite": false,
       "coinName": "eosDAC",
+      "coinIconUrl": "https://static.upbit.com/logos/IOTA.png",
       "coinCode": "eosDAC/EOS",
       "currentPrice": 0.0034,
       "dayChange": -2.84,
@@ -27,6 +30,7 @@
     {
       "favorite": true,
       "coinName": "EON",
+      "coinIconUrl": "https://static.upbit.com/logos/RFR.png",
       "coinCode": "EON/EOS",
       "currentPrice": 0.2210,
       "dayChange": 0.15,
@@ -35,6 +39,7 @@
     {
       "favorite": false,
       "coinName": "CETOS",
+      "coinIconUrl": "https://static.upbit.com/logos/GRS.png",
       "coinCode": "CETI/EOS",
       "currentPrice": 0.4480,
       "dayChange": 0.22,
@@ -43,6 +48,7 @@
     {
       "favorite": false,
       "coinName": "Ubuntu",
+      "coinIconUrl": "https://static.upbit.com/logos/NEO.png",
       "coinCode": "UBT/EOS",
       "currentPrice": 0.9980,
       "dayChange": -0.12,
@@ -51,6 +57,7 @@
     {
       "favorite": true,
       "coinName": "Bittersweet",
+      "coinIconUrl": "https://static.upbit.com/logos/DMT.png",
       "coinCode": "BTS/EOS",
       "currentPrice": 0.2990,
       "dayChange": 4.23,
@@ -59,6 +66,7 @@
     {
       "favorite": false,
       "coinName": "Gainsboro",
+      "coinIconUrl": "https://static.upbit.com/logos/ARDR.png",
       "coinCode": "GB/EOS",
       "currentPrice": 0.004,
       "dayChange": -0.01,
@@ -67,6 +75,7 @@
     {
       "favorite": false,
       "coinName": "Onyx",
+      "coinIconUrl": "https://static.upbit.com/logos/MTL.png",
       "coinCode": "ONYX/EOS",
       "currentPrice": 0.8827,
       "dayChange": -0.92,
@@ -75,6 +84,7 @@
     {
       "favorite": false,
       "coinName": "Cerulean",
+      "coinIconUrl": "https://static.upbit.com/logos/SBD.png",
       "coinCode": "CRLN/EOS",
       "currentPrice": 0.002,
       "dayChange": 0.52,
@@ -83,6 +93,7 @@
     {
       "favorite": true,
       "coinName": "Gunmetal",
+      "coinIconUrl": "https://static.upbit.com/logos/IGNIS.png",
       "coinCode": "GUN/EOS",
       "currentPrice": 0.0790,
       "dayChange": -1.33,
@@ -91,6 +102,7 @@
     {
       "favorite": false,
       "coinName": "Jasper",
+      "coinIconUrl": "https://static.upbit.com/logos/STRAT.png",
       "coinCode": "JPR/EOS",
       "currentPrice": 0.019,
       "dayChange": -0.02,
@@ -99,6 +111,7 @@
     {
       "favorite": false,
       "coinName": "Trolly",
+      "coinIconUrl": "https://static.upbit.com/logos/BAT.png",
       "coinCode": "TRLY/EOS",
       "currentPrice": 0.0227,
       "dayChange": -0.02,

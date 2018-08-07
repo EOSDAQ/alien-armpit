@@ -12,6 +12,8 @@ import {
   DayChangeCell,
   DayVolumeCell,
   DayVolumeUnitText,
+  CoinIcon,
+  TickersRow,
 } from './TickersBody.styled';
 import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
@@ -38,7 +40,7 @@ const TickersBody = (props) => {
         const buy = coin.dayChange > 0;
 
         return (
-          <SheetRow
+          <TickersRow
             key={coin.coinCode}
             columns={tickersSheetRowColumns}
           >
@@ -48,16 +50,17 @@ const TickersBody = (props) => {
               </IconButton>
             </FavoriteCell>
             <CoinNameCell>
+              <CoinIcon url={coin.coinIconUrl} />
               <Link // TODO. prevent history being pushed when it is active.
                 to={`/exchange/${coin.coinCode.replace('/', '_')}`}
               >
                 <CoinNameText>
                   {coin.coinName}
                 </CoinNameText>
+                <CoinCodeText>
+                  {coin.coinCode}
+                </CoinCodeText>
               </Link>
-              <CoinCodeText>
-                {coin.coinCode}
-              </CoinCodeText>
             </CoinNameCell>
             <CurrentPriceCell buy={buy}>
               {coin.currentPrice.toFixed(4)}
@@ -72,7 +75,7 @@ const TickersBody = (props) => {
                 백만
               </DayVolumeUnitText>
             </DayVolumeCell>
-          </SheetRow>
+          </TickersRow>
         );
       })}
     </Scrollbars>

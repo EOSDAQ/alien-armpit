@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { colors } from '../css/theme';
 
 export const SheetWrapper = styled('div')`
-  border: 1px solid rgba(0, 0, 0, 0.08);
   background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, .1);
 `;
 
 export const SheetTab = styled('a')`
@@ -35,10 +35,7 @@ export const SheetRow = styled('div')`
   display: grid;
   grid-template-columns: ${(({ columns }) => columns)};
   height: 40px;
-
-  &:nth-child(even) {
-    background: ${colors.grey50};
-  }
+  box-shadow: 0px 0px 0px .2px #eee;
 `;
 
 export const SheetHeadingRow = styled(SheetRow)`
