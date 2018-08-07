@@ -1,24 +1,29 @@
 import styled from 'styled-components';
 import theme, { colors } from 'components/css/theme';
 import { SheetCell, SheetRow } from 'components/molecules/Sheet';
-import {
-  tickersCoinNameWidth,
-  tickersCurrentPriceWidth,
-  tickersDayChangeWidth,
-} from 'components/styleConstants';
-
-export const TickersCell = SheetCell.extend`
-
-`;
 
 export const TickersRow = styled(SheetRow)`
   height: 45px;
+  grid-gap: 16px;
+  padding-right: 16px;
+  transition: .05s background-color ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .02);
+  }
+`;
+
+export const TickersCell = styled(SheetCell)`
+  font-size: 13px;
+  text-align: right;
+  justify-self: flex-end;
 `;
 
 export const FavoriteCell = TickersCell.extend`
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-self: flex-start;
 `;
 
 export const CoinIcon = styled.div`
@@ -32,19 +37,19 @@ export const CoinIcon = styled.div`
 `;
 
 export const CoinNameCell = TickersCell.extend`
-  /* width: ${tickersCoinNameWidth}px; */
+  justify-self: flex-start;
 `;
 
 export const CoinNameText = styled.span`
   font-size: 14px;
   font-weight: 500;
-  color: #555;
+  color: ${colors.grey600};
   letter-spacing: .3px;
   line-height: 1;
   transition: .2s color ease;
 
   &:hover {
-    color: #000;
+    color: ${colors.grey900};
   }
 `;
 
@@ -56,30 +61,23 @@ export const CoinCodeText = styled.span`
 `;
 
 export const CurrentPriceCell = TickersCell.extend`
-  width: ${tickersCurrentPriceWidth}px;
   font-family: ${theme.fontFamily.number};
   letter-spacing: .5px;
   color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
-  font-weight: 500;
-  font-size: 14px;
   text-align: right;
 `;
 
 export const DayChangeCell = TickersCell.extend`
-  /* width: ${tickersDayChangeWidth}px; */
   font-family: ${theme.fontFamily.number};
   letter-spacing: .5px;
   color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
-  font-weight: 400;
-  font-size: 13px;
   text-align: right;
 `;
 
 export const DayVolumeCell = TickersCell.extend`
   font-family: ${theme.fontFamily.number};
-  color: ${theme.colors.black720};
+  color: ${colors.black720};
   letter-spacing: .5px;
-  font-size: 13px;
 `;
 
 export const DayVolumeUnitText = styled.span`
