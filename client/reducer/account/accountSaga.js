@@ -3,7 +3,8 @@ import * as api from './accountApi';
 import { actions } from './accountReducer';
 import modal from '../modal/modalReducer';
 
-export function* getScatterIdentity() {
+export function* getScatterIdentity({ payload = {} }) {
+
   try {
     const result = yield call(api.getScatterIdentity);
     yield put(actions.signIn({ viewer: result }));
@@ -13,9 +14,12 @@ export function* getScatterIdentity() {
       return;
     }
 
-    yield put(modal.actions.openModal({
-      type: 'INSTALL_SCATTER',
-    }));
+    const { showInstallMessage } = payload;
+    if (showInstallMessage) {
+      yield put(modal.actions.openModal({
+        type: 'INSTALL_SCATTER',
+      }));
+    }
   }
 }
 
