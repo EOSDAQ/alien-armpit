@@ -85,4 +85,5 @@ export const DayVolumeUnitText = styled.span`
   font-family: ${theme.fontFamily.sans};
   color: ${colors.grey400};
   margin-left: 2px;
+  margin-top: 2px;
 `;

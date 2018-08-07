@@ -50,6 +50,8 @@ export const colors = {
   black650: '#323838',
   black720: '#202121',
   primary500: '#41BBD9',
+  azure: '#08f',
+  azureA60: 'rgba(0, 136, 255, 0.6)',
 };
 
 const theme = {

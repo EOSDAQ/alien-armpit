@@ -2,7 +2,7 @@ import { colors } from 'components/css/theme';
 import { staticPath } from 'constants/constants';
 
 const widgetOptions = {
-  debug: true,
+  // debug: true,
   symbol: 'AAPL',
   interval: 'D',
   locale: 'en',

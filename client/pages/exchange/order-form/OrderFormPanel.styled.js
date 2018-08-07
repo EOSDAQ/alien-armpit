@@ -7,6 +7,7 @@ import {
   orderFormTotalUnitWidth,
 } from 'pages/styleConstants';
 import Button from 'components/atom/Button';
+import Input from 'components/atom/Input';
 
 export const OrderFormContainer = styled('div')`
   width: ${orderFormPanelWidth}px;
@@ -21,7 +22,7 @@ export const OrderFormContainer = styled('div')`
 `;
 
 export const OrderFormTop = styled('div')`
-  padding: 18px 14px 0px;
+  padding: 32px 16px;
   flex: 1;
 `;
 
@@ -41,16 +42,8 @@ export const OrderFormLabel = styled('label')`
 
 `;
 
-export const OrderFormInput = styled('div')`
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 0 4px;
-  display: flex;
-  align-items: center;
-
-  & input {
-    flex: 1;
-  }
+export const OrderFormInput = styled(Input)`
+  text-align: right;
 `;
 
 export const OrderFormInputControl = styled('div')`

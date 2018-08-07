@@ -1,21 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from '../css/theme';
+import theme, { colors } from '../css/theme';
+
+export const InputControl = styled.div`
+  & label {
+    font-size: 13px;
+    display: block;
+    color: ${colors.grey600};
+  }
+`;
 
 const Input = styled('input')`
-  height: 30px;
+  height: 36px;
   background: white;
-  border-radius: 4px;
+  border-radius: 2px;
   max-width: 280px;
   font-size: 14px;
-  border: 0;
+  border: 1px solid #efefef;
+  padding: 4px 8px;
+  margin: 8px 0 20px 0;
+  width: 100%;
 
   &:focus, &:active {
     background: white;
     outline: 0;
-    border-color: ${colors.blue300};
-    box-shadow: 0px 0px 5px #8CAEE5;
-  } 
+    border: 1px solid ${colors.azure};
+    box-shadow: 0px 0px 4px ${colors.azureA60};
+  }
+
+  &[type=number] {
+    font-family: ${theme.fontFamily.number};
+    font-size: 15px;
+    letter-spacing: 1px;
+    appearance: textfield;
+  }
 `;
 
 const scale = (props) => {

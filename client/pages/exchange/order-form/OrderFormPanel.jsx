@@ -1,4 +1,5 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 
 import {
   OrderFormContainer,
@@ -10,52 +11,39 @@ import {
   OrderFormTotalUnit,
   OrderFormButton,
   OrderFormInput,
-  OrderFormInputControl,
-  OrderFormLabel,
 } from './OrderFormPanel.styled';
-import Input from 'components/atom/Input';
-import Icon from 'components/atom/Icon';
-import { IconButton } from 'components/atom/Button';
+import { InputControl } from 'components/atom/Input';
 
 const OrderForm = (props) => {
   const {
     isBuy,
+    handleSubmit,
   } = props;
   const actionStr = isBuy ? 'buy' : 'sell';
   const priceInputId = `price_input_for_${actionStr}`;
   const amountInputId = `amout_input_for_${actionStr}`;
 
+  console.log(handleSubmit);
   return (
     <OrderFormContainer>
+      <form onSubmit={handleSubmit}>
       <OrderFormTop>
         <OrderFormControl>
-          <OrderFormLabel htmlFor={priceInputId}>
-            가격
-            <OrderFormInput>
-              <Input type="text" id={priceInputId} />
-              <OrderFormInputControl>
-                <IconButton small>
-                  <Icon type="minus" />
-                </IconButton>
-                <IconButton small>
-                  <Icon type="plus" />
-                </IconButton>
-              </OrderFormInputControl>
-            </OrderFormInput>
-          </OrderFormLabel>
+          <InputControl>
+            <label htmlFor={priceInputId}>
+              가격
+              <OrderFormInput id={priceInputId} type="number" />
+            </label>
+          </InputControl>
         </OrderFormControl>
         <OrderFormControl>
-          <OrderFormLabel htmlFor={amountInputId}>
-            수량
-          </OrderFormLabel>
+          <InputControl>
+            <label htmlFor={amountInputId}>
+              수량
+            </label>
+          </InputControl>
         </OrderFormControl>
         <OrderFormInput>
-          <Input type="text" id={amountInputId} />
-          <OrderFormInputControl>
-            <IconButton small>
-              <Icon type="expand" />
-            </IconButton>
-          </OrderFormInputControl>
         </OrderFormInput>
       </OrderFormTop>
       <OrderFormBottom isBuy={isBuy}>
@@ -79,8 +67,11 @@ const OrderForm = (props) => {
           {`IQ ${isBuy ? '매수' : '매도'}`}
         </OrderFormButton>
       </OrderFormBottom>
+      </form>
     </OrderFormContainer>
   );
 };
 
-export default OrderForm;
+export default reduxForm({
+  form: 'order',
+})(OrderForm);
