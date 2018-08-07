@@ -1,5 +1,10 @@
+// eslint-disable-next-line
+/* global scatter */
+
 import Eos from 'eosjs';
 import Identicon from 'identicon.js';
+
+let scatter = null;
 
 const network = {
   blockchain: 'eos',
@@ -18,6 +23,15 @@ class CustomScatterError extends Error {
   }
 }
 
+export function setScatter() {
+  if (window.scatter) {
+    scatter = window.scatter;
+  }
+  window.scatter = null;
+}
+
+document.addEventListener('scatterLoaded', setScatter);
+
 export const transfer = async (data) => {
   const eos = scatter.eos(network, Eos, {});
 
@@ -35,16 +49,17 @@ export const transfer = async (data) => {
 };
 
 export const getScatterIdentity = async () => {
+  console.log('get scatter identity');
   // 유저가 signIn을 클릭하는 시점 바로 직전에 scatter를 설치했을 수 있기 때문에 매번 이곳에서 window.scatter를 체크한다.
-  if (!window.scatter) {
+  if (!scatter) {
     throw new CustomScatterError({
       message: 'scatter is not installed',
       code: 500,
     });
   }
 
-  if (window.scatter) {
-    const { publicKey: scatterPublicKey, accounts } = await window.scatter.getIdentity({
+  if (scatter) {
+    const { publicKey: scatterPublicKey, accounts } = await scatter.getIdentity({
       accounts: [network],
     });
 

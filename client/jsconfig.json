@@ -4,6 +4,6 @@
     "target": "es6",
     "moduleResolution": "node",
     "jsx": "preserve",
-    "checkJs": true
+    "checkJs": false
   }
 }

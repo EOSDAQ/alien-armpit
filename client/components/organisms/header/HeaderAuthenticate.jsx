@@ -8,11 +8,15 @@ import { actions } from 'reducer/account/accountReducer';
 import { ViewerIdenticon } from './HeaderAuthenticate.styled';
 import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
+import { setScatter } from 'reducer/account/accountApi';
 
 class HeaderAuthenticate extends React.Component {
   componentDidMount() {
     const { getScatterIdentity } = this.props;
-    getScatterIdentity();
+    document.addEventListener('scatterLoaded', () => {
+      setScatter();
+      getScatterIdentity();
+    });
   }
 
   render() {
