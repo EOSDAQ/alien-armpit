@@ -9,6 +9,15 @@ const network = {
   chainId: 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
 };
 
+class CustomScatterError extends Error {
+  constructor({ code, message }) {
+    super(message);
+    this.code = code;
+    this.message = message;
+    this.timestamp = Date.now();
+  }
+}
+
 export const transfer = async (data) => {
   const eos = scatter.eos(network, Eos, {});
 
@@ -28,7 +37,10 @@ export const transfer = async (data) => {
 export const getScatterIdentity = async () => {
   // 유저가 signIn을 클릭하는 시점 바로 직전에 scatter를 설치했을 수 있기 때문에 매번 이곳에서 window.scatter를 체크한다.
   if (!window.scatter) {
-    throw Error('Scatter is not installed!');
+    throw new CustomScatterError({
+      message: 'scatter is not installed',
+      code: 500,
+    });
   }
 
   if (window.scatter) {

@@ -9,16 +9,25 @@ export function* getScatterIdentity({ payload = {} }) {
     const result = yield call(api.getScatterIdentity);
     yield put(actions.signIn({ viewer: result }));
   } catch (e) {
-    if (e.code && e.code === 423) {
-      // scatter locked.
+    if (!e.code) {
+      // 스캐터 오류가 아님.
+      console.error(e);
       return;
     }
 
-    const { showInstallMessage } = payload;
-    if (showInstallMessage) {
-      yield put(modal.actions.openModal({
-        type: 'INSTALL_SCATTER',
-      }));
+    switch (e.code) {
+      case 500: {
+        const { showInstallMessage } = payload;
+        if (showInstallMessage) {
+          yield put(modal.actions.openModal({
+            type: 'INSTALL_SCATTER',
+          }));
+        }
+        break;
+      }
+      case 423: // scatter locked.
+      case 402: // user closed the popup
+      default:
     }
   }
 }
