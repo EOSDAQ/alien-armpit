@@ -3,17 +3,15 @@ import { colors } from 'components/css/theme';
 import { mixin } from 'components/css/typography';
 
 import {
-  orderFormPanelWidth,
   orderFormTotalUnitWidth,
 } from 'pages/styleConstants';
 import Button from 'components/atom/Button';
 import Input from 'components/atom/Input';
 
 export const OrderFormContainer = styled('div')`
-  width: ${orderFormPanelWidth}px;
-  border-radius: 2px;
-  display: inline-block;
+  width: 50%;
   background-color: #fff;
+
   &:first-child {
     border-right: 1px solid ${colors.grey170};  
   }
@@ -63,6 +61,7 @@ export const OrderFormTotalUnit = styled('span')`
 export const OrderFormButton = styled(Button)`
   margin-top: 36px;
   width: 100%;
+  text-align: center;
   background-color: ${({ isBuy }) => (isBuy ? colors.red500 : colors.blue500)};
   color: #fff;
 

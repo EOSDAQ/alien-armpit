@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import * as api from './accountApi';
 import { actions } from './accountReducer';
 import modal from '../modal/modalReducer';
@@ -17,4 +17,15 @@ export function* getScatterIdentity() {
 export function* forgetScatterIdentity() {
   yield call(api.forgetScatterIdentity);
   yield put(actions.signOut());
+}
+
+export function* order({ payload }) {
+  const { type, price, amount } = payload;
+  const from = yield select(s => s.account.viewer.name);
+
+  yield call(api.transfer, {
+    quantity: `${(price * amount).toFixed(4)} ${type === 'sell' ? 'ABC' : 'SYS'}`,
+    price: parseFloat(price),
+    from,
+  });
 }

@@ -23,7 +23,6 @@ const HeaderAuthenticate = (props) => {
         <Select options={<HeaderAccountMenu viewer={viewer} />}>
           <ViewerIdenticon src={viewer.identicon} />
         </Select>
-        {!viewer.authorized && <Redirect to="/register" />}
       </Flex>
     );
   }

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Container } from 'components/atom/Box';
 import {
   exchangeLeftWidth,
-  exchangeRightWidth,
 } from 'pages/styleConstants';
 
 export const ExchangeBody = styled('div')`
@@ -29,6 +28,6 @@ export const ExchangeRightSide = styled('div')`
 
 export const ExchangeRightBottom = styled('div')`
   display: flex;
-  width: ${exchangeRightWidth}px;
   margin-top: 12px;
+  align-items: flex-start;
 `;

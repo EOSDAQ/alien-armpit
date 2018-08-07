@@ -11,8 +11,8 @@ class Select extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
-    document.addEventListener('click', this.onDocumentClick)
+  componentDidMount() {
+    document.addEventListener('click', this.onDocumentClick);
   }
 
   componentWillReceiveProps(nextProps) {

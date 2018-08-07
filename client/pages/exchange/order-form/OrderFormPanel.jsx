@@ -3,30 +3,30 @@ import { Field, reduxForm } from 'redux-form';
 
 import {
   OrderFormContainer,
-  OrderFormTop,
-  OrderFormControl,
   OrderFormBottom,
   OrderFormTotal,
   OrderFormTotalAmount,
   OrderFormTotalUnit,
   OrderFormButton,
+  OrderFormInput,
 } from './OrderFormPanel.styled';
-import Input, { InputControl } from 'components/atom/Input';
+import { InputControl } from 'components/atom/Input';
 import Box from 'components/atom/Box';
 
 // TODO. add validation logic.
 const OrderForm = (props) => {
   const {
-    isBuy,
+    form,
     handleSubmit,
   } = props;
 
   const fields = ['price', 'amount'];
+  const isBuy = form.indexOf('buy') >= 0;
 
   return (
     <OrderFormContainer>
       <form onSubmit={handleSubmit}>
-        <Box flex="1" py={32} pb={16}>
+        <Box flex={1} p={16}>
           {fields.map(name => (
             <InputControl key={name}>
               <label htmlFor={name}>
@@ -35,7 +35,7 @@ const OrderForm = (props) => {
               <Field
                 name={name}
                 type="number"
-                component={({ input, ...inputProps }) => <Input {...input} {...inputProps} />}
+                component={({ input, ...inputProps }) => <OrderFormInput {...input} {...inputProps} />}
               />
             </InputControl>
           ))}
@@ -43,13 +43,13 @@ const OrderForm = (props) => {
         <OrderFormBottom isBuy={isBuy}>
           <OrderFormTotal>
             <label>
-              총 거래 금액
+              Quantity
               <div>
                 <OrderFormTotalAmount>
                   299,588,232
                 </OrderFormTotalAmount>
                 <OrderFormTotalUnit>
-                  EOS
+                  {isBuy ? 'SYS' : 'ABC'}
                 </OrderFormTotalUnit>
               </div>
             </label>
@@ -58,7 +58,7 @@ const OrderForm = (props) => {
             type="submit"
             isBuy={isBuy}
           >
-            {`IQ ${isBuy ? '매수' : '매도'}`}
+            {`ABC ${isBuy ? '매수' : '매도'}`}
           </OrderFormButton>
         </OrderFormBottom>
       </form>

@@ -14,7 +14,10 @@ export default function* saga() {
       accountTypes.FORGET_SCATTER_IDENTITY,
       accountSaga.forgetScatterIdentity,
     ),
-
+    takeLatest(
+      accountTypes.ORDER,
+      accountSaga.order,
+    ),
     takeLatest(tickersTypes.UPDATE_SORT_SAGA, tickersSaga.updateSort),
     takeLatest(tickersTypes.UPDATE_SEARCH_VALUE_SAGA, tickersSaga.updateSearchValue),
     takeLatest(tickersTypes.TOGGLE_SHOW_FAVORITES_SAGA, tickersSaga.toggleShowFavorites),
