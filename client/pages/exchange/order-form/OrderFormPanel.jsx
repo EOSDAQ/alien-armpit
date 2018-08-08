@@ -42,25 +42,51 @@ const OrderForm = (props) => {
               <Field
                 name={name}
                 type="number"
-                normalize={(v, pv) => {
-                  if (v === '') {
-                    return 0; // when input is empty show 0.
+                normalize={(v) => {
+                  let value = v;
+
+                  value = value.replace(/[^0-9.]+/g, '');
+                  value = value.replace(/^0+?/, ''); // normalize cases like 0001 to 1
+
+                  if (value === '') {
+                    value = '0';
                   }
 
-                  const value = v.replace(/^0+[1-9]?/, v.slice(-1)); // normalize cases like 0001 to 1
-                  
-                  const test = /^\d+(?:\.?)(\d*)/; // NOT ALLOWED CASES: 1.2323.123 | 1.asdf
+                  if (value.slice(0, 1) === '.') {
+                    value = `0${value}`;
+                  }
+
+                  const test = /^\d+(?:\.)(\d*)/; // NOT ALLOWED CASES: 1.2323.123 | 1.asdf
                   const result = test.exec(value);
 
-                  if (result === null || (result[0].length !== value.length)) {
-                    return pv;
-                  }
+                  if (Array.isArray(result)) {
+                    let decimals;
+                    [value, decimals] = result;
 
-                  if (result[1].length >= 4) { // decimal places exceed 4
-                    return parseFloat(value).toFixed(4);
+                    if (decimals.length >= 4) {
+                      value = value.slice(0, -decimals.length) + decimals.slice(0, 4);
+                    }
                   }
-
                   return value;
+                }}
+                onChange={(e, v, pv) => {
+                  if (v.length === pv.length) {
+                    const fragV = v.split('');
+                    const fragPv = pv.split('');
+                    const changedIndex = fragV.findIndex((fragment, i) => fragPv[i] !== fragment);
+                    if (changedIndex < 0) {
+                      // same! 1111.2222 -> 1111.2222
+                      const se = e.target.selectionEnd;
+
+                      setTimeout(() => {
+                        e.target.setSelectionRange(se, se);
+                      }, 0);
+                    } else {
+                      setTimeout(() => {
+                        e.target.setSelectionRange(changedIndex + 1, changedIndex + 1);
+                      }, 0);
+                    }
+                  }
                 }}
                 component={OrderFormField}
               />
