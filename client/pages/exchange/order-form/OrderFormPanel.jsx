@@ -13,6 +13,10 @@ import {
 import { InputControl } from 'components/atom/Input';
 import Box from 'components/atom/Box';
 
+const OrderFormField = ({ input }) => (
+  <OrderFormInput {...input} />
+);
+
 // TODO. add validation logic.
 const OrderForm = (props) => {
   const {
@@ -35,7 +39,7 @@ const OrderForm = (props) => {
               <Field
                 name={name}
                 type="number"
-                component={({ input, ...inputProps }) => <OrderFormInput {...input} {...inputProps} />}
+                component={OrderFormField}
               />
             </InputControl>
           ))}

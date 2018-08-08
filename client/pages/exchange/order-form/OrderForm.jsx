@@ -21,7 +21,7 @@ class OrderForm extends React.Component {
 
     return (
       <SheetWrapper>
-        {!authenticated && (
+        {authenticated && (
           <OrderFormDisabled>
             로그인이 필요한 서비스입니다.
           </OrderFormDisabled>
