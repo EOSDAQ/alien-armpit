@@ -6,7 +6,7 @@ const devConfig = require('./webpack.config.dev');
 
 const prodConfig = {
   entry: [
-    './js/app.jsx',
+    'app.jsx',
   ],
   output: {
     path: path.join(__dirname, '/dist'),

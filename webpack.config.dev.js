@@ -25,7 +25,11 @@ const resolve = {
 const rules = [
   {
     test: /\.(js|jsx)$/,
-    loader: 'babel-loader',
+    use: [
+      'thread-loader',
+      'cache-loader',
+      'babel-loader',
+    ],
     include: [context],
     exclude: [nodeModules],
   },

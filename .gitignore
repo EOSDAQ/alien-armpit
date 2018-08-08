@@ -19,4 +19,5 @@ npm-debug.log*
 # Optional eslint cache
 .eslintcache
 
-
+# Cache loader
+.cache-loader
