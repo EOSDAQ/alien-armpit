@@ -2,6 +2,7 @@ import { call, put, select } from 'redux-saga/effects';
 import * as api from './accountApi';
 import { actions } from './accountReducer';
 import modal from '../modal/modalReducer';
+import { toFixed } from 'utils/format';
 
 export function* getScatterIdentity({ payload = {} }) {
 
@@ -25,7 +26,7 @@ export function* getScatterIdentity({ payload = {} }) {
         }
         break;
       }
-      case 423: // scatter locked.
+      case 423: // scatter locked. || authenticate failed.
       case 402: // user closed the popup
       default:
     }
@@ -39,15 +40,17 @@ export function* forgetScatterIdentity() {
 
 export function* order({ payload }) {
   const { type, price, amount } = payload;
-  const from = yield select(s => s.account.viewer.name);
-
-  try { 
+  
+  try {
+    const from = yield select(s => s.account.viewer.name);
+    
     yield call(api.transfer, {
-      quantity: `${(price * amount).toFixed(4)} ${type === 'sell' ? 'ABC' : 'SYS'}`,
+      quantity: `${toFixed(4, price * amount)} ${type === 'sell' ? 'ABC' : 'SYS'}`,
       price: parseFloat(price),
       from,
     });
   } catch (e) {
+    console.log(e.code);
     if (!e.code) {
       // 스캐터 오류가 아님.
       console.error(e);

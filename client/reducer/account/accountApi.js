@@ -33,6 +33,13 @@ export function setScatter() {
 document.addEventListener('scatterLoaded', setScatter);
 
 export const transfer = async (data) => {
+  if (!scatter) {
+    throw CustomScatterError({
+      code: 401,
+      message: 'Scatter is not installed',
+    });
+  }
+
   const eos = scatter.eos(network, Eos, {});
 
   const result = await eos.transfer({
@@ -57,6 +64,8 @@ export const getScatterIdentity = async () => {
   }
 
   if (scatter) {
+    await scatter.authenticate();
+    
     const { publicKey: scatterPublicKey, accounts } = await scatter.getIdentity({
       accounts: [network],
     });
