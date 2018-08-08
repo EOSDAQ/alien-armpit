@@ -1,5 +1,7 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { Field, reduxForm, getFormValues } from 'redux-form';
 
 import {
   OrderFormContainer,
@@ -21,6 +23,7 @@ const OrderFormField = ({ input }) => (
 const OrderForm = (props) => {
   const {
     form,
+    values,
     handleSubmit,
   } = props;
 
@@ -39,6 +42,26 @@ const OrderForm = (props) => {
               <Field
                 name={name}
                 type="number"
+                normalize={(v, pv) => {
+                  if (v === '') {
+                    return 0; // when input is empty show 0.
+                  }
+
+                  const value = v.replace(/^0+[1-9]?/, v.slice(-1)); // normalize cases like 0001 to 1
+                  
+                  const test = /^\d+(?:\.?)(\d*)/; // NOT ALLOWED CASES: 1.2323.123 | 1.asdf
+                  const result = test.exec(value);
+
+                  if (result === null || (result[0].length !== value.length)) {
+                    return pv;
+                  }
+
+                  if (result[1].length >= 4) { // decimal places exceed 4
+                    return parseFloat(value).toFixed(4);
+                  }
+
+                  return value;
+                }}
                 component={OrderFormField}
               />
             </InputControl>
@@ -50,7 +73,7 @@ const OrderForm = (props) => {
               Quantity
               <div>
                 <OrderFormTotalAmount>
-                  299,588,232
+                  {values ? (values.price * values.amount).toFixed(4) : (0).toFixed(4)}
                 </OrderFormTotalAmount>
                 <OrderFormTotalUnit>
                   {isBuy ? 'SYS' : 'ABC'}
@@ -70,4 +93,14 @@ const OrderForm = (props) => {
   );
 };
 
-export default reduxForm({})(OrderForm);
+const mapStateToProps = (state, { form }) => ({ values: getFormValues(form)(state) });
+
+export default compose(
+  reduxForm({
+    initialValues: {
+      amount: (1).toFixed(4),
+      price: (30).toFixed(4),
+    },
+  }),
+  connect(mapStateToProps),
+)(OrderForm);
