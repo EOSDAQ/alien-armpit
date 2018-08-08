@@ -14,6 +14,7 @@ import {
 } from './OrderFormPanel.styled';
 import { InputControl } from 'components/atom/Input';
 import Box from 'components/atom/Box';
+import { toFixed } from 'utils/format';
 
 const OrderFormField = ({ input }) => (
   <OrderFormInput {...input} />
@@ -42,51 +43,13 @@ const OrderForm = (props) => {
               <Field
                 name={name}
                 type="number"
-                normalize={(v) => {
-                  let value = v;
+                normalize={v => toFixed(4, v, { appendZero: false })}
+                onChange={(e) => {
+                  const pos = e.target.selectionEnd;
 
-                  value = value.replace(/[^0-9.]+/g, '');
-                  value = value.replace(/^0+?/, ''); // normalize cases like 0001 to 1
-
-                  if (value === '') {
-                    value = '0';
-                  }
-
-                  if (value.slice(0, 1) === '.') {
-                    value = `0${value}`;
-                  }
-
-                  const test = /^\d+(?:\.)(\d*)/; // NOT ALLOWED CASES: 1.2323.123 | 1.asdf
-                  const result = test.exec(value);
-
-                  if (Array.isArray(result)) {
-                    let decimals;
-                    [value, decimals] = result;
-
-                    if (decimals.length >= 4) {
-                      value = value.slice(0, -decimals.length) + decimals.slice(0, 4);
-                    }
-                  }
-                  return value;
-                }}
-                onChange={(e, v, pv) => {
-                  if (v.length === pv.length) {
-                    const fragV = v.split('');
-                    const fragPv = pv.split('');
-                    const changedIndex = fragV.findIndex((fragment, i) => fragPv[i] !== fragment);
-                    if (changedIndex < 0) {
-                      // same! 1111.2222 -> 1111.2222
-                      const se = e.target.selectionEnd;
-
-                      setTimeout(() => {
-                        e.target.setSelectionRange(se, se);
-                      }, 0);
-                    } else {
-                      setTimeout(() => {
-                        e.target.setSelectionRange(changedIndex + 1, changedIndex + 1);
-                      }, 0);
-                    }
-                  }
+                  setTimeout(() => {
+                    e.target.setSelectionRange(pos, pos);
+                  }, 0);
                 }}
                 component={OrderFormField}
               />
@@ -99,7 +62,7 @@ const OrderForm = (props) => {
               Quantity
               <div>
                 <OrderFormTotalAmount>
-                  {values ? (values.price * values.amount).toFixed(4) : (0).toFixed(4)}
+                  {toFixed(4, values ? values.price * values.amount : 0)}
                 </OrderFormTotalAmount>
                 <OrderFormTotalUnit>
                   {isBuy ? 'SYS' : 'ABC'}
@@ -124,8 +87,8 @@ const mapStateToProps = (state, { form }) => ({ values: getFormValues(form)(stat
 export default compose(
   reduxForm({
     initialValues: {
-      amount: (1).toFixed(4),
-      price: (30).toFixed(4),
+      amount: toFixed(4, 1),
+      price: toFixed(4, 30),
     },
   }),
   connect(mapStateToProps),
