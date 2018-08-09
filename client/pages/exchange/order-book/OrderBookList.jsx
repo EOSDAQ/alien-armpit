@@ -7,18 +7,18 @@ import OrderBookRow from './OrderBookRow';
 const OrderBookList = (props) => {
   const {
     orderList,
-    maxAmount,
+    maxQuotes,
     isUpside,
   } = props;
 
   return (
     <OrderBookListWrapper>
       {
-        orderList.map((orderBunch, index) => (
+        orderList.map((orderBunch) => (
           <OrderBookRow
-            key={maxAmount + index} // eslint-disable-line
+            key={orderBunch.price} // eslint-disable-line
             orderBunch={orderBunch}
-            maxAmount={maxAmount}
+            maxQuotes={maxQuotes}
             isUpside={isUpside}
           />
         ))

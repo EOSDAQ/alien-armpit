@@ -4,14 +4,14 @@ import OrderBookAmountCell from './OrderBookAmountCell';
 import OrderBookPriceCell from './OrderBookPriceCell';
 import { SheetRow } from 'components/molecules/Sheet';
 
-const OrderBookRow = ({ orderBunch, maxAmount, isUpside}) => {
+const OrderBookRow = ({ orderBunch, maxQuotes, isUpside}) => {
   const {
-    amount,
+    quotes,
     price,
     change,
   } = orderBunch;
 
-  const amountJsx = <OrderBookAmountCell key="orderBookAmount" amount={amount} maxAmount={maxAmount} isUpside={isUpside} />;
+  const amountJsx = <OrderBookAmountCell key="orderBookAmount" amount={quotes} maxQuotes={maxQuotes} isUpside={isUpside} />;
   const priceJsx = <OrderBookPriceCell key="orderBookPrice" price={price} change={change} isUpside={isUpside} />;
 
   return (

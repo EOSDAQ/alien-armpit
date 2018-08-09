@@ -10,7 +10,7 @@ import { toFixed } from 'utils/format';
 const OrderBookAmountCell = (props) => {
   const {
     amount,
-    maxAmount,
+    maxQuotes,
     isUpside,
   } = props;
   return (
@@ -22,7 +22,7 @@ const OrderBookAmountCell = (props) => {
       </OrderBookAmountNum>
       <OrderBookAmountBar
         isUpside={isUpside}
-        width={amount / maxAmount * 100}
+        width={amount / maxQuotes * 100}
       />
     </OrderBookAmount>
   );

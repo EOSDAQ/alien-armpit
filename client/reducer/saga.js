@@ -3,6 +3,8 @@ import { types as tickersTypes } from './tickers/tickersReducer';
 import { types as accountTypes } from './account/accountReducer';
 import * as tickersSaga from './tickers/tickersSaga';
 import * as accountSaga from './account/accountSaga';
+import * as orderBookSaga from './order-book/orderBookSaga';
+import orderBookReducer from './order-book/orderBookReducer';
 
 export default function* saga() {
   yield [
@@ -17,6 +19,11 @@ export default function* saga() {
     takeLatest(
       accountTypes.ORDER,
       accountSaga.order,
+    ),
+
+    takeLatest(
+      orderBookReducer.types.FETCH_ORDER_BOOK,
+      orderBookSaga.fetchOrderBook,
     ),
     takeLatest(tickersTypes.UPDATE_SORT_SAGA, tickersSaga.updateSort),
     takeLatest(tickersTypes.UPDATE_SEARCH_VALUE_SAGA, tickersSaga.updateSearchValue),

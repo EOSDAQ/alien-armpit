@@ -18,7 +18,6 @@ import {
 import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
 import { actions } from 'reducer/tickers/tickersReducer';
-import { SheetRow } from '../../molecules/Sheet';
 import { tickersSheetRowColumns } from 'components/styleConstants';
 
 const toMillion = (number) => {
