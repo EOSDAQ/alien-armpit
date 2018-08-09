@@ -4,23 +4,22 @@ import {
   SheetRow,
 } from 'components/molecules/Sheet';
 
-export const OrderBookPrice = styled(SheetRow)`
-  flex: 1;  
+export const OrderBookPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  margin: 1px 0;
+  color: ${({ dayChange }) => dayChange ? colors.red500 : colors.blue500 };
   background-color: ${({ isUpside }) => (isUpside ? colors.blue120 : colors.red120)};
-  font-size: 12px;  
 `;
 
-export const OrderBookAskingPrice = styled('span')`
-  display: flex;
-  width: 70%;
-  justify-content: flex-end;
-  padding: 0 10px;
-  font-weight: 700;
+export const OrderBookAskingPrice = styled('div')`
+  flex: 1 1;
+  font-size: 13px;
 `;
 
-export const OrderBookChange = styled('span')`
-  display: flex;
-  width: 30%;
-  padding-right: 10px;
-  justify-content: flex-end;
+export const OrderBookChange = styled('div')`
+  flex: 0 0 auto;
+  font-size: 12px;
 `;

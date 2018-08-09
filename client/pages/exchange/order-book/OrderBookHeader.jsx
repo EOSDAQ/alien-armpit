@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SheetHeader,
   SheetHeading,
-  SheetRow,
   SheetHeadingRow,
 } from 'components/molecules/Sheet';
 
@@ -14,9 +13,7 @@ const OrderBookHeader = () => (
       {
         mockHeadings.map(heading => (
           <SheetHeading key={heading}>
-            <span>
-              {heading}
-            </span>
+            {heading}
           </SheetHeading>
         ))
       }

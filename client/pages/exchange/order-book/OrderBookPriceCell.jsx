@@ -4,6 +4,8 @@ import {
   OrderBookAskingPrice,
   OrderBookChange,
 } from './OrderBookPriceCell.styled';
+import { toFixed } from 'utils/format';
+import { Number } from 'components/atom/Text';
 
 const OrderBookPriceCell = (props) => {
   const {
@@ -12,13 +14,22 @@ const OrderBookPriceCell = (props) => {
     isUpside,
   } = props;
 
+  const dayChange = change > 0;
+
   return (
-    <OrderBookPrice isUpside={isUpside}>
+    <OrderBookPrice
+      isUpside={isUpside}
+      dayChange={dayChange}
+    >
       <OrderBookAskingPrice>
-        {price.toLocaleString()}
+        <Number>
+          {toFixed(4, price.toLocaleString())}
+        </Number>
       </OrderBookAskingPrice>
       <OrderBookChange>
-        {`${change.toLocaleString()}%`}
+        <Number>
+          {`${toFixed(2, change.toLocaleString())}%`}
+        </Number>
       </OrderBookChange>
     </OrderBookPrice>
   );

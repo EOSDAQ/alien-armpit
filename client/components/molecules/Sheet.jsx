@@ -26,11 +26,8 @@ export const SheetHeader = styled('div')`
 export const SheetHeading = styled('div')`
   align-self: center;
   justify-self: center;
-
-  span {
-    color: ${colors.grey600};
-    font-size: 13px;
-  }
+  color: ${colors.grey500};
+  font-size: 12px;
 `;
 
 export const SheetRow = styled('div')`
@@ -41,9 +38,8 @@ export const SheetRow = styled('div')`
 `;
 
 export const SheetHeadingRow = styled(SheetRow)`
-  height: 32px;
-  font-size: 13px;
-  border-bottom: 1px solid #ddd;
+  height: 30px;
+  border-bottom: 1px solid ${colors.grey100};
 `;
 
 export const SheetCell = styled('div')`

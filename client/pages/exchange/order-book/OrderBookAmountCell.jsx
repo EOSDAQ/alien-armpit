@@ -4,6 +4,8 @@ import {
   OrderBookAmountNum,
   OrderBookAmountBar,
 } from './OrderBookAmountCell.styled';
+import { Number } from 'components/atom/Text';
+import { toFixed } from 'utils/format';
 
 const OrderBookAmountCell = (props) => {
   const {
@@ -14,7 +16,9 @@ const OrderBookAmountCell = (props) => {
   return (
     <OrderBookAmount isUpside={isUpside}>
       <OrderBookAmountNum isUpside={isUpside}>
-        {amount.toLocaleString()}
+        <Number>
+          {toFixed(4, amount.toLocaleString())}
+        </Number>
       </OrderBookAmountNum>
       <OrderBookAmountBar
         isUpside={isUpside}

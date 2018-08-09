@@ -9,7 +9,7 @@ import {
 } from 'styled-system';
 
 import Box from './Box';
-import theme from '../css/theme';
+import theme, { colors } from '../css/theme';
 
 const Text = styled(Box)`
   ${fontSize}

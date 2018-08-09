@@ -32,7 +32,7 @@ const TickersBody = (props) => {
     toggleFavorite,
   } = props;
 
-  const scrollStyle = { style: { height: 306 } };
+  const scrollStyle = { style: { height: 360 } };
   const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
   return (
     <Scrollbars {...scrollOptions}>

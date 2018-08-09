@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-import {
-  SheetRow,
-} from 'components/molecules/Sheet';
-import theme, { colors } from 'components/css/theme';
+import { colors } from 'components/css/theme';
 
 export const OrderBookAmount = styled.div`
   display: flex;
@@ -16,16 +13,17 @@ export const OrderBookAmount = styled.div`
 
 export const OrderBookAmountNum = styled('div')`
   position: absolute;
-  top: 0;
-  font-size: 12px;
-  margin-top: -6px;
-  top: 50%;
-  font-family: ${theme.fontFamily.number};
-  padding: ${({ isUpside }) => (isUpside ? '0 10px 0 0' : '0 0 0 10px')};
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  color: ${colors.grey500};
+  font-weight: 300;
+  padding: 0 12px;
+  margin-top: 1px;
 `;
 
 export const OrderBookAmountBar = styled('div')`
   height: 80%;
   width: calc(${({ width }) => (width)}% - 10px);
-  background-color: ${({ isUpside }) => (isUpside ? colors.blue100 : colors.red100)};
+  background-color: ${({ isUpside }) => (isUpside ? '#EBF6FE' : '#fff1f3')};
 `;
