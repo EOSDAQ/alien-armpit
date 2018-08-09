@@ -30,7 +30,7 @@ class ExchangeOrderBook extends React.Component {
   componentDidMount() {
     const { fetchOrderBook } = this.props;
     fetchOrderBook();
-    // setInterval(fetchOrderBook, 4000);
+    setInterval(fetchOrderBook, 5000);
   }
 
   render() {
@@ -42,6 +42,11 @@ class ExchangeOrderBook extends React.Component {
     if (fetching && !data) {
       return 'waiting for order book data';
     }
+
+    const {
+      totalBidQuotes,
+      totalAskQuotes,
+    } = data.info;
 
     return (
       <OrderBookWrapper>
@@ -63,7 +68,10 @@ class ExchangeOrderBook extends React.Component {
             />
           </Flex>
         </Scrollbars>
-        <OrderBookFooter />
+        <OrderBookFooter
+          totalBidQuotes={totalBidQuotes}
+          totalAskQuotes={totalAskQuotes}
+        />
       </OrderBookWrapper>
     );
   }

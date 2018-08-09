@@ -5,13 +5,15 @@ import {
   OrderBookFooterCellLeft,
   OrderBookFooterCellRight,
 } from './OrderBookFooter.styled';
+import { toFixed } from 'utils/format';
 
-const OrderBookFooter = () => {
+const OrderBookFooter = ({ totalAskQuotes, totalBidQuotes }) => {
+
   return (
     <Flex>
       <OrderBookFooterCellLeft>
         <div>
-          13,484,601.541
+          {toFixed(4, totalAskQuotes)}
         </div>
       </OrderBookFooterCellLeft>
       <OrderBookFooterCell>
@@ -21,7 +23,7 @@ const OrderBookFooter = () => {
       </OrderBookFooterCell>
       <OrderBookFooterCellRight>
         <div>
-          13,484,601.541
+          {toFixed(4, totalBidQuotes)}
         </div>
       </OrderBookFooterCellRight>
     </Flex>

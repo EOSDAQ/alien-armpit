@@ -33,16 +33,19 @@ const reducer = handleActions({
       })
       .sort((a, b) => b.price - a.price);
 
-    console.log(orders);
+    bid = orders.slice(slicedAsk.length);
+    ask = orders.slice(0, slicedAsk.length);
 
     return {
       ...state,
       fetching: false,
       data: {
-        bid: orders.slice(slicedAsk.length),
-        ask: orders.slice(0, slicedAsk.length),
+        bid,
+        ask,
         info: {
           ...info,
+          totalBidQuotes: bid.reduce((res, o) => res += o.quotes, 0),
+          totalAskQuotes: ask.reduce((res, o) => res += o.quotes, 0),
           maxQuotes: [ ...orders].sort((a, b) => a.quotes > b.quotes ? -1 : 1)[0].quotes,
         },
       },
