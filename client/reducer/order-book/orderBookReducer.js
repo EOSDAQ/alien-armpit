@@ -23,28 +23,27 @@ const reducer = handleActions({
   }),
   [types.UPDATE_ORDER_BOOK]: (state, { payload: { data } }) => {
     let { bid, ask, info } = data;
-    ask = ask.sort((a, b) => a.price > b.price ? -1 : 1);
-    bid = bid.sort((a, b) => a.price > b.price ? -1 : 1);
+    const slicedBid = bid.slice(0, 8);
+    const slicedAsk = ask.slice(-8);
 
-    ask = ask.map(order => ({
-      ...order,
-      change: (order.price - info.prevPrice) / info.currentPrice, 
-    })).slice(0, 8);
+    const orders = slicedAsk.concat(slicedBid)
+      .map(order => {
+        order['change'] = (order.price - info.prevPrice) / info.prevPrice;
+        return order;
+      })
+      .sort((a, b) => b.price - a.price);
 
-    bid = bid.map(order => ({
-      ...order,
-      change: (order.price - info.prevPrice) / info.currentPrice, 
-    })).slice(0, 8);
+    console.log(orders);
 
     return {
       ...state,
       fetching: false,
       data: {
-        ask,
-        bid,
+        bid: orders.slice(slicedAsk.length),
+        ask: orders.slice(0, slicedAsk.length),
         info: {
           ...info,
-          maxQuotes: bid.concat(ask).sort((a, b) => a.quotes > b.quotes ? -1 : 1)[0].quotes,
+          maxQuotes: [ ...orders].sort((a, b) => a.quotes > b.quotes ? -1 : 1)[0].quotes,
         },
       },
     }

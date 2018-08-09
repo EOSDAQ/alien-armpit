@@ -29,7 +29,8 @@ const mockTradeLog = [
 class ExchangeOrderBook extends React.Component {
   componentDidMount() {
     const { fetchOrderBook } = this.props;
-    setInterval(fetchOrderBook, 10000);
+    fetchOrderBook();
+    // setInterval(fetchOrderBook, 4000);
   }
 
   render() {
