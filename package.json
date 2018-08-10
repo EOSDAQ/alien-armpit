@@ -5,7 +5,8 @@
   "main": "index.js",
   "bin": "bin/run-for-pkg",
   "scripts": {
-    "start:dev": "npm run webpack:dev && node bin/run-web",
+    "start": "node bin/run-web",
+    "start:dev": "nodemon bin/run-web",
     "start:watch": "nodemon -w server/ bin/run-web",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run webpack && pkg . --targets node10-linux-x64",
@@ -31,6 +32,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.10.0",
+    "nodemon": "^1.18.3",
     "pkg": "^4.3.3",
     "redux-form": "^7.4.2",
     "webpack-dev-middleware": "^3.1.3",
