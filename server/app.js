@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const config = require('./config');
-const googleOtpRoute = require('./router/googleOtp');
+const otpRoute = require('./router/otp');
 const accountRoute = require('./router/account');
 
 const app = express();
@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/static', express.static(staticPath));
 
-app.use('/gotp', googleOtpRoute);
+app.use('/otp', otpRoute);
 app.use('/account', accountRoute);
 app.get('*', (req, res) => {
   res.render('index.html');

@@ -28,9 +28,14 @@ export function* getScatterIdentity({ payload = {} }) {
     if (!isOtpConfirmed) {
       // Case1. otp 인증되지 않았을 때
       yield put(modal.actions.openModal({
-        type: 'GOOGLE_OTP_INIT',
+        type: 'OTP_INIT',
       }));
+      return;
     }
+
+    yield put(modal.actions.openModal({
+      type: 'OTP_CHECK',
+    }));
   } catch (e) {
     if (!e.code) {
       // 스캐터 오류가 아님.
@@ -65,7 +70,7 @@ export function* order({ payload }) {
 
   try {
     const from = yield select(s => s.account.viewer.name);
-    yield call(api.transfer, {
+    yield call(scatterApi.transfer, {
       quantity: `${toFixed(4, price * amount)} ${type === 'sell' ? 'ABC' : 'SYS'}`,
       price: parseFloat(price),
       from,

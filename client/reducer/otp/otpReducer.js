@@ -1,7 +1,7 @@
 export const types = {
-  GET_INITIAL_DATA_SAGA: 'googleOtp/GET_INITIAL_DATA_SAGA',
-  UPDATE_DATA: 'googelOtp/UPDATE_DATA',
-  AUTHENTICATE_SAGA: 'googleOtp/AUTHENTICATE_SAGA',
+  GET_INITIAL_DATA_SAGA: 'otp/GET_INITIAL_DATA_SAGA',
+  UPDATE_DATA: 'otp/UPDATE_DATA',
+  AUTHENTICATE_SAGA: 'otp/AUTHENTICATE_SAGA',
 };
 
 export const actions = {
@@ -24,7 +24,7 @@ const initialState = {
   qrCodeUrl: '',
 };
 
-export const gooogleOtpReducer = (state = initialState, action) => {
+export const otpReducer = (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
@@ -38,4 +38,4 @@ export const gooogleOtpReducer = (state = initialState, action) => {
   }
 };
 
-export default gooogleOtpReducer;
+export default otpReducer;

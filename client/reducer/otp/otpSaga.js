@@ -1,12 +1,12 @@
 import { call, put } from 'redux-saga/effects';
-import * as api from 'api/googleOtp';
-import { actions as googleOtpActions } from './googleOtpReducer';
+import * as api from 'api/otp';
+import { actions as otpActions } from './otpReducer';
 import modalReducer from '../modal/modalReducer';
 
 export function* getInitialData({ payload: accountName }) {
   try {
     const result = yield call(api.getInitialData, accountName);
-    yield put(googleOtpActions.updateData(result));
+    yield put(otpActions.updateData(result));
   } catch (e) {
     console.log(e);
   }

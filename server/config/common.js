@@ -15,4 +15,5 @@ module.exports = {
       refreshToken: '1/p2bBGv4tlK1fzHQvGctZsRDhLW4LCFJoSuZyGZs6328',
     },
   },
+  key: 'VE9PVafdlrSNXlUjQBERO6A5a8d04V',
 };

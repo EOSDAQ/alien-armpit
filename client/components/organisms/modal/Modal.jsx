@@ -3,7 +3,8 @@ import { createPortal } from 'react-dom';
 import { connect } from 'react-redux';
 import { ModalStyled, ModalDialogue } from './Modal.styled';
 import InstallScatter from './modals/InstallScatter';
-import GoogleOtpModal from './modals/GoogleOtpModal';
+import OtpInitModal from './modals/OtpInitModal';
+import OtpCheckModal from './modals/OtpCheckModal';
 import _modal from 'reducer/modal/modalReducer';
 
 class Modal extends React.Component {
@@ -41,8 +42,10 @@ class Modal extends React.Component {
     switch (type) {
       case 'INSTALL_SCATTER':
         return <InstallScatter />;
-      case 'GOOGLE_OTP_INIT':
-        return <GoogleOtpModal />;
+      case 'OTP_INIT':
+        return <OtpInitModal />;
+      case 'OTP_CHECK':
+        return <OtpCheckModal />;
       default:
         return null;
     }

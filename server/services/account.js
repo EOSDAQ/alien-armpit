@@ -1,7 +1,32 @@
 const axios = require('axios');
 const config = require('../config');
+const crypto = require('../modules/crypto');
 
 const routePath = `${config.api}/acct`;
+
+const encryptUser = (u) => {
+  const user = u;
+  if (user.email) {
+    user.email = crypto.encrypt(user.email);
+  }
+
+  if (user.otpKey) {
+    user.otpKey = crypto.encrypt(user.otpKey);
+  }
+  return user;
+};
+
+const decryptUser = (u) => {
+  const user = u;
+  if (user.email) {
+    user.email = crypto.decrypt(user.email);
+  }
+
+  if (user.otpKey) {
+    user.otpKey = crypto.decrypt(user.otpKey);
+  }
+  return user;
+};
 
 const getUserAuthInfo = async (accountName) => {
   const user = await getUserByAccountName(accountName);
@@ -36,16 +61,16 @@ const getUserByAccountName = async (accountName) => {
     return null;
   }
 
-  // TODO che - 정상적인 데이터 받는 케이스 확인필요.
+  const user = decryptUser(data.resultData);
   return {
-    ...data.resultData,
+    ...user,
   };
 };
 
 const createUser = async (user) => {
   const url = `${routePath}/user`;
   try {
-    await axios.post(url, { ...user });
+    await axios.post(url, { ...(encryptUser(user)) });
   } catch (e) {
     throw new Error(e);
   }
@@ -64,19 +89,8 @@ const deleteUser = async (accountName) => {
 const updateUser = async (user) => {
   const url = `${routePath}/user/${user.accountName}`;
   try {
-    const result = await axios.put(url, { ...user });
+    const result = await axios.put(url, { ...(encryptUser(user)) });
     return result;
-  } catch (e) {
-    throw new Error(e);
-  }
-};
-
-const updateUserPartially = async (param) => {
-  const url = `${routePath}/user/${param.accountName}`;
-  try {
-    await axios.put(url, {
-      ...param,
-    });
   } catch (e) {
     throw new Error(e);
   }
@@ -88,5 +102,4 @@ module.exports = {
   createUser,
   deleteUser,
   updateUser,
-  updateUserPartially,
 };

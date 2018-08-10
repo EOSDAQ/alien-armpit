@@ -2,13 +2,13 @@ import { takeLatest } from 'redux-saga/effects';
 import { types as tickersTypes } from './tickers/tickersReducer';
 import { types as accountTypes } from './account/accountReducer';
 import { types as signinTypes } from './signin/signinReducer';
-import { types as googleOtpTypes } from './google-otp/googleOtpReducer';
+import { types as otpTypes } from './otp/otpReducer';
 import * as tickersSaga from './tickers/tickersSaga';
 import * as accountSaga from './account/accountSaga';
 import * as orderBookSaga from './order-book/orderBookSaga';
 import orderBookReducer from './order-book/orderBookReducer';
 import * as signinSaga from './signin/signinSaga';
-import * as googleOtpSaga from './google-otp/googleOtpSaga';
+import * as otpSaga from './otp/otpSaga';
 
 export default function* saga() {
   yield [
@@ -36,7 +36,7 @@ export default function* saga() {
 
     takeLatest(signinTypes.SEND_CONFIRM_EMAIL_SAGA, signinSaga.signin),
 
-    takeLatest(googleOtpTypes.GET_INITIAL_DATA_SAGA, googleOtpSaga.getInitialData),
-    takeLatest(googleOtpTypes.AUTHENTICATE_SAGA, googleOtpSaga.authenticate),
+    takeLatest(otpTypes.GET_INITIAL_DATA_SAGA, otpSaga.getInitialData),
+    takeLatest(otpTypes.AUTHENTICATE_SAGA, otpSaga.authenticate),
   ];
 }

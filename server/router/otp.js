@@ -1,13 +1,10 @@
 const express = require('express');
 const config = require('../config');
-const helper = require('../services/googleOtpHelper');
+const helper = require('../services/otpHelper');
 const accountService = require('../services/account');
 
 const router = express.Router();
 const { qrCode } = config.googleOtp;
-
-// todo: generate secret and save on db
-// const secret = 'JBSWY3DPEHPK3PXP';
 
 router.get('/check/auth', (req, res) => {
   const {
@@ -26,7 +23,7 @@ router.post('/getInitialData', (req, res) => {
     accountName,
   } = req.body;
   const otpKey = helper.generateSecretKey();
-  accountService.updateUserPartially({
+  accountService.updateUser({
     accountName,
     otpKey,
   });
@@ -54,7 +51,13 @@ router.post('/authenticate', async (req, res) => {
       throw new Error();
     }
 
-    await accountService.updateUserPartially({ accountName, otpConfirmed: true });
+    if (!user.otpConfirm) {
+      await accountService.updateUser({
+        accountName,
+        otpConfirm: true,
+      });
+    }
+
     res.status(200).send({ success: true });
   } catch (e) {
     res.status(200).send({ success: false });
