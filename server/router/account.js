@@ -1,29 +1,41 @@
 const express = require('express');
+const { check, validationResult } = require('express-validator/check');
 const cipher = require('../services/cipher');
 const service = require('../services/account');
 const mailService = require('../services/mail');
 
 const router = express.Router();
 
-router.get('/check', async (req, res) => {
-  const {
-    accountName,
-  } = req.query;
+router.get('/check', [
+  check('accountName').exists(),
+], async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const {
+      accountName,
+    } = req.query;
 
-  const authInfo = await service.getUserAuthInfo(accountName);
-  res.status(200).send({
-    success: true,
-    ...authInfo,
-  });
+    const authInfo = await service.getUserAuthInfo(accountName);
+    res.status(200).send({
+      success: true,
+      ...authInfo,
+    });
+  } catch (e) {
+    next(e);
+  }
 });
 
-router.post('/signin', async (req, res) => {
-  const {
-    accountName,
-    email,
-  } = req.body;
-
+router.post('/signin', [
+  check('accountName').exists(),
+  check('email').exists(),
+], async (req, res) => {
   try {
+    validationResult(req).throw();
+    const {
+      accountName,
+      email,
+    } = req.body;
+
     let user = await service.getUserByAccountName(accountName);
     if (!user) {
       user = {
@@ -41,7 +53,6 @@ router.post('/signin', async (req, res) => {
     await service.updateUser(user);
     res.status(200).send({ success: true });
   } catch (e) {
-    console.log(e);
     res.status(e.status || 500).send({ success: false });
   }
 });
