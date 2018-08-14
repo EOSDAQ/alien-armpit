@@ -39,6 +39,10 @@ const onListening = () => {
   console.log(`Listening on ${bind}`);
 };
 
+// TODO che - for graceful shutdown
+// process.on('SIGINT', () => {
+// });pm2
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
