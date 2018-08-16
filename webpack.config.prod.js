@@ -14,7 +14,7 @@ const prodConfig = {
     chunkFilename: '[name].[chunkhash].js',
   },
   mode: 'production',
-  // devtool: 'source-map',
+  devtool: '',
   externals: '',
   plugins: [
     new CleanWebpackPlugin([
@@ -24,7 +24,7 @@ const prodConfig = {
       {
         from: '../public/',
         to: '.',
-        ignore: ['js/**/*'],
+        ignore: ['**/*.js'],
       },
     ]),
   ],
