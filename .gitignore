@@ -6,7 +6,11 @@ public/*.*
 eosdaq-linux
 eosdaq-macos
 eosdaq-win.exe
+/eosdaq
 
+# Docker saved images
+alien_armpit.tar
+nginx.tar
 
 # Logs
 logs

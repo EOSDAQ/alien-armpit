@@ -29,7 +29,7 @@ class HeaderAuthenticate extends React.Component {
       viewer,
       getScatterIdentity,
     } = this.props;
-  
+
     if (viewer && authenticated) {
       return (
         <Flex alignItems="center">
@@ -39,7 +39,7 @@ class HeaderAuthenticate extends React.Component {
         </Flex>
       );
     }
-  
+
     return (
       <TextButton onClick={() => getScatterIdentity({ showInstallMessage: true })}>
         <Flex alignItems="flex-end">

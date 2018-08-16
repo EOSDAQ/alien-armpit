@@ -24,9 +24,7 @@ export function* getScatterIdentity({ payload = {} }) {
       return;
     }
 
-    // TODO che - ajax로 otp 등록 여부 확인
     if (!isOtpConfirmed) {
-      // Case1. otp 인증되지 않았을 때
       yield put(modal.actions.openModal({
         type: 'OTP_INIT',
       }));
@@ -42,7 +40,6 @@ export function* getScatterIdentity({ payload = {} }) {
       console.error(e);
       return;
     }
-
     switch (e.code) {
       case 500: {
         const { showInstallMessage } = payload;
