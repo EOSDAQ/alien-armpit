@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = [
-  'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
   './app.jsx',
 ];
 
@@ -63,7 +62,6 @@ const plugins = [
     },
     production: process.argv.indexOf('-p') >= 0,
   }),
-  new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
 ];
 

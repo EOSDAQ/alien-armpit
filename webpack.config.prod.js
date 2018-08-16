@@ -24,7 +24,7 @@ const prodConfig = {
       {
         from: '../public/',
         to: '.',
-        ignore: ['**/*.js'],
+        // ignore: ['**/*.js'],
       },
     ]),
   ],
