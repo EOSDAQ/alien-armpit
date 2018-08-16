@@ -6,7 +6,7 @@
   "bin": "bin/run-for-pkg",
   "scripts": {
     "start": "pm2-runtime start --env production pm2/pm2.config.js",
-    "start:watch": "nodemon -w server/ bin/run-web",
+    "start:watch": "nodemon -L -w server/ bin/run-web",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run webpack && pkg . --targets node10-linux-x64",
     "webpack:dev": "webpack --config webpack.config.dev.js",

@@ -13,14 +13,19 @@ const { server } = hotClient(
 );
 
 function wdm(app) {
-  app.use(webpackDevMiddleware(
-    compiler,
-    {
-      logLevel: 'warn',
-      writeToDisk: path => /index.html$/.test(path),
-      publicPath: config.output.publicPath,
-    },
-  ));
+  server.on('listening', () => {
+    const instance = webpackDevMiddleware(
+      compiler,
+      {
+        logLevel: 'warn',
+        writeToDisk: path => /index.html$/.test(path),
+        publicPath: config.output.publicPath,
+      },
+    );
+
+    app.use(instance);
+    require('./renderer')(app);
+  });
 }
 
 module.exports = wdm;

@@ -24,16 +24,12 @@ app.use('/account', accountRoute);
 
 middlewares(app);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(staticPath, 'index.html'));
-});
-
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(createError(err));
-});
+// app.use((req, res, next) => {
+//   const err = new Error('Not Found');
+//   err.status = 404;
+//   next(createError(err));
+// });
 
 // // error handler
 // app.use((err, req, res, next) => {
