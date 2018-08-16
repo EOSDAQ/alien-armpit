@@ -64,12 +64,13 @@ export const getScatterIdentity = async () => {
   }
 
   if (scatter) {
-    await scatter.authenticate();
-    
+    // await scatter.authenticate();
+
     const { publicKey: scatterPublicKey, accounts } = await scatter.getIdentity({
       accounts: [network],
     });
 
+    await scatter.authenticate();
     let account;
 
     if (Array.isArray(accounts)) {
