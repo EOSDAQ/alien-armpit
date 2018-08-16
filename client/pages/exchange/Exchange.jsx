@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Sticky, StickyContainer } from 'react-sticky';
 import { translate } from 'react-i18next';
+import Socket from 'components/organisms/socket/Socket';
 import Header from 'components/organisms/header/Header';
 import Footer from 'components/organisms/Footer';
 import Tickers from 'components/organisms/tickers/Tickers';
@@ -20,6 +21,9 @@ import Box from 'components/atom/Box';
 
 const Exchange = () => (
   <ExchangeBody>
+    {/*
+      <Socket />
+    */}
     <Header />
     <ExchangeContainer large>
       <ExchangeLeftSide>
@@ -28,20 +32,18 @@ const Exchange = () => (
       </ExchangeLeftSide>
       <ExchangeRightSide>
         <Sticky>
-          {(style) => {
-            return (
-              <Box 
-                style={style}
-                position="sticky"
-              >
-                <ExchangeChart />
-                <ExchangeRightBottom>
-                  <OrderForm />
-                  <OrderLog />
-                </ExchangeRightBottom>
-              </Box>
-            );
-          }}
+          {style => (
+            <Box
+              style={style}
+              position="sticky"
+            >
+              <ExchangeChart />
+              <ExchangeRightBottom>
+                <OrderForm />
+                <OrderLog />
+              </ExchangeRightBottom>
+            </Box>
+          )}
         </Sticky>
       </ExchangeRightSide>
     </ExchangeContainer>

@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = require('./server/config');
 
 const entry = [
   './app.jsx',
@@ -26,7 +27,7 @@ const resolve = {
 const rules = [
   {
     test: /\.worker\.js$/,
-    use: [      
+    use: [
       'worker-loader',
     ],
   },
@@ -63,6 +64,9 @@ const plugins = [
     production: process.argv.indexOf('-p') >= 0,
   }),
   new webpack.NoEmitOnErrorsPlugin(),
+  new webpack.DefinePlugin({
+    gConfig: JSON.stringify(config),
+  }),
 ];
 
 const optimization = {
