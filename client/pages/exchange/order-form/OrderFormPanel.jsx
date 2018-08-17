@@ -22,7 +22,7 @@ const OrderFormField = ({ input }) => (
 
 // TODO. add validation logic.
 const OrderForm = (props) => {
-  const {
+  let {
     form,
     values,
     handleSubmit,
@@ -30,7 +30,7 @@ const OrderForm = (props) => {
 
   const fields = ['price', 'amount'];
   const isBuy = form.indexOf('buy') >= 0;
-
+  values = values || 0;
   return (
     <OrderFormContainer>
       <form onSubmit={handleSubmit}>
@@ -59,13 +59,13 @@ const OrderForm = (props) => {
         <OrderFormBottom isBuy={isBuy}>
           <OrderFormTotal>
             <label>
-              Quantity
+              Total
               <div>
                 <OrderFormTotalAmount>
-                  {toFixed(4, values ? values.price * values.amount : 0)}
+                  {toFixed(4, values.price * values.amount)}
                 </OrderFormTotalAmount>
                 <OrderFormTotalUnit>
-                  {isBuy ? 'SYS' : 'ABC'}
+                  SYS
                 </OrderFormTotalUnit>
               </div>
             </label>

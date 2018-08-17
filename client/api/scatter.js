@@ -87,12 +87,12 @@ class Scatter {
 const scatter = new Scatter();
 
 export const transfer = async (data) => {
-  const result = await scatter.transfer({
-    from: data.from,
-    to: 'eosseieossei',
-    quantity: data.quantity,
-    memo: data.price.toFixed(4),
-  });
+  const result = await scatter.transfer(
+    data.from,
+    'eosseieossei',
+    data.amount,
+    data.price.toFixed(4),
+  );
 
   const { transaction: { transaction }, processed } = result;
 
@@ -102,7 +102,7 @@ export const transfer = async (data) => {
 export const sell = async (data) => {
   const contract = await scatter.contract('oo1122334455');
   try {
-    const result = await contract.transfer(data.from, 'eosseieossei', data.quantity, data.price.toFixed(4));
+    const result = await contract.transfer(data.from, 'eosseieossei', data.amount, data.price.toFixed(4));
     const { transaction: { transaction }, processed } = result;
     alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
   } catch(e) {
