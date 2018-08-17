@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { push } from 'connected-react-router';
+// import { push } from 'connected-react-router';
 import { staticPath } from 'constants/constants';
 import Flex from 'components/atom/Flex';
 import Footer from 'components/organisms/Footer';
@@ -57,7 +57,7 @@ class SentEmail extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  redirectToSignin: () => { dispatch(push('/signin')); },
+  // redirectToSignin: () => { dispatch(push('/signin')); },
 });
 
 export default connect(

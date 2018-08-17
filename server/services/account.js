@@ -57,6 +57,9 @@ const getUserByAccountName = async (accountName) => {
   }
 
   const { data } = response;
+  if (!data) {
+    return {};
+  }
   if (response.status === 500 && data.resultCode === '1000') {
     return null;
   }

@@ -1,5 +1,5 @@
 import { call, put, select } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
+// import { push } from 'connected-react-router';
 import * as scatterApi from 'api/scatter';
 import * as accountApi from 'api/account';
 import { actions } from './accountReducer';
@@ -18,31 +18,32 @@ export function* authenticateScatter() {
 export function* getScatterIdentity({ payload = {} }) {
   try {
     const result = yield call(scatterApi.getScatterIdentity);
-    yield put(actions.signIn({ viewer: result }));
     const { name: accountName } = result;
+    
+    // const authInfo = yield call(accountApi.check, accountName);
+    yield put(actions.signIn({ viewer: result }));
 
-    const authInfo = yield call(accountApi.check, accountName);
-    const {
-      isUserCreated,
-      isEmailConfirmed,
-      isOtpConfirmed,
-    } = authInfo;
+    // const {
+    //   isUserCreated,
+    //   isEmailConfirmed,
+    //   isOtpConfirmed,
+    // } = authInfo;
 
-    if (!isUserCreated || !isEmailConfirmed) {
-      yield put(push('/signin'));
-      return;
-    }
+    // if (!isUserCreated || !isEmailConfirmed) {
+    //   // yield put(push('/signin'));
+    //   return;
+    // }
 
-    if (!isOtpConfirmed) {
-      yield put(modal.actions.openModal({
-        type: 'OTP_INIT',
-      }));
-      return;
-    }
+    // if (!isOtpConfirmed) {
+    //   yield put(modal.actions.openModal({
+    //     type: 'OTP_INIT',
+    //   }));
+    //   return;
+    // }
 
-    yield put(modal.actions.openModal({
-      type: 'OTP_CHECK',
-    }));
+    // yield put(modal.actions.openModal({
+    //   type: 'OTP_CHECK',
+    // }));
   } catch (e) {
     console.log(e.code, payload);
     if (!e.code) {

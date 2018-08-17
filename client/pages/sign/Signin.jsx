@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
+// import { push } from 'connected-react-router';
 import { translate } from 'react-i18next';
 import { actions } from 'reducer/signin/signinReducer';
 import Footer from 'components/organisms/Footer';
@@ -60,12 +60,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   sendConfirmEmail: (email) => { dispatch(actions.sendConfirmEmailSaga(email)); },
-  redirectToSentEmail: (email) => {
-    dispatch(push({
-      pathname: '/sentEmail',
-      state: { email },
-    }));
-  },
+  // redirectToSentEmail: (email) => {
+  //   dispatch(push({
+  //     pathname: '/sentEmail',
+  //     state: { email },
+  //   }));
+  // },
 });
 
 export default connect(
