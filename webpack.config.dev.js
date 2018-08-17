@@ -50,7 +50,7 @@ const rules = [
   },
 ];
 
-const devtool = 'cheap-module-eval-source-map';
+const devtool = 'cheap-source-map';
 
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),

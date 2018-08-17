@@ -17,8 +17,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/static', express.static(staticPath));
 
+app.use('/static', express.static(staticPath));
 app.use('/otp', otpRoute);
 app.use('/account', accountRoute);
 
