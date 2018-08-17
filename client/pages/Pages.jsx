@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { actions } from 'reducer/account/accountReducer';
 import Modal from 'components/organisms/modal/Modal';
 
 function asyncRoute(dynamicImport) {
@@ -54,10 +52,6 @@ const routes = [
 ];
 
 class Pages extends React.Component {
-  componentDidMount() {
-    this.props.authenticateScatter();
-  }
-
   render() {
     return (
       <React.Fragment>
@@ -75,11 +69,4 @@ class Pages extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  authenticateScatter: payload => dispatch(actions.authenticateScatter(payload)),
-});
-
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Pages);
+export default Pages;
