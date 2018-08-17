@@ -79,11 +79,21 @@ export function* order({ payload }) {
 
   try {
     const from = yield select(s => s.account.viewer.name);
-    yield call(scatterApi.transfer, {
-      quantity: `${toFixed(4, price * amount)} ${type === 'sell' ? 'ABC' : 'SYS'}`,
-      price: parseFloat(price),
-      from,
-    });
+    const quantity = `${toFixed(4, price * amount)} ${type === 'sell' ? 'IPOS' : 'SYS'}`;
+
+    if (type === 'sell') {
+      yield call(scatterApi.sell, {
+        price: parseFloat(price),
+        quantity,
+        from,
+      })
+    } else {
+      yield call(scatterApi.transfer, {
+        price: parseFloat(price),
+        quantity,
+        from,
+      })
+    }
   } catch (e) {
     console.log(e.code);
     if (!e.code) {

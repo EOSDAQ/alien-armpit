@@ -68,31 +68,47 @@ class Scatter {
     const scatter = this.get();
     return scatter.forgetIdentity(...args);
   }
+
+  get eos() {
+    const scatter = this.get();
+    const eos = scatter.eos(network, Eos, {});
+    return eos;
+  }
+
+  transfer(...args) {
+    return this.eos.transfer(...args);
+  }
+
+  contract(...args) {
+    return this.eos.contract(...args);
+  }
 }
 
 const scatter = new Scatter();
 
 export const transfer = async (data) => {
-  if (!scatter) {
-    throw CustomScatterError({
-      code: 500,
-      message: 'Scatter is not installed',
-    });
-  }
-
-  const eos = scatter.eos(network, Eos, {});
-
-  const result = await eos.transfer({
+  const result = await scatter.transfer({
     from: data.from,
-    to: 'eosdaq',
+    to: 'eosseieossei',
     quantity: data.quantity,
-    memo: data.price,
+    memo: data.price.toFixed(4),
   });
 
   const { transaction: { transaction }, processed } = result;
 
   alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
 };
+
+export const sell = async (data) => {
+  const contract = await scatter.contract('oo1122334455');
+  try {
+    const result = await contract.transfer(data.from, 'eosseieossei', data.quantity, data.price.toFixed(4));
+    const { transaction: { transaction }, processed } = result;
+    alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
+  } catch(e) {
+    console.error(e);
+  }
+}
 
 export const authenticateScatter = async () => {
   const result = await scatter.authenticate();
