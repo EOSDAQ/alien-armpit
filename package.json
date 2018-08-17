@@ -13,7 +13,7 @@
     "webpack": "webpack --config webpack.config.prod.js -p",
     "deploy": "scp -i ~/.ssh/eosdaq.pem  -r dist/* ubuntu@ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com:/var/www/html",
     "docker-send": "docker build -t eosdaq/alien_armpit . && docker save -o alien_armpit.tar eosdaq/alien_armpit && scp -i ~/.ssh/eosdaq.pem  -r alien_armpit.tar ubuntu@ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/app/alien-armpit",
-    "docker-load": "docker load -i alien_armpit.tar && docker-compose up"
+    "docker-load": "docker load -i alien_armpit.tar && docker-compose up -d"
   },
   "repository": {
     "type": "git",
