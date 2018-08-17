@@ -17,6 +17,10 @@ export default function* saga() {
       accountSaga.getScatterIdentity,
     ),
     takeLatest(
+      accountTypes.AUTHENTICATE_SCATTER,
+      accountSaga.authenticateScatter,
+    ),
+    takeLatest(
       accountTypes.FORGET_SCATTER_IDENTITY,
       accountSaga.forgetScatterIdentity,
     ),

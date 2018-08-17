@@ -2,32 +2,21 @@ import 'babel-polyfill';
 
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { routerMiddleware, ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import createSagaMiddleware from 'redux-saga';
 import { I18nextProvider } from 'react-i18next';
 import { ThemeProvider } from 'styled-components';
 
 import 'components/css/global.styled';
-import reducer from './reducer/reducer';
 import theme from './components/css/theme';
 import i18n from './i18n';
-import saga from './reducer/saga';
 
 // eslint-disable-next-line
 import Pages from 'pages/Pages';
+import store from './store';
 
 const history = createHistory();
-const sagaMiddleware = createSagaMiddleware();
-
-export const store = createStore(
-  reducer,
-  compose(applyMiddleware(routerMiddleware(history), sagaMiddleware)),
-);
-
-sagaMiddleware.run(saga);
 
 const render = () => {
   ReactDOM.render(

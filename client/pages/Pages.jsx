@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import { actions } from 'reducer/account/accountReducer';
 import Modal from 'components/organisms/modal/Modal';
 
 function asyncRoute(dynamicImport) {
@@ -51,20 +53,33 @@ const routes = [
   },
 ];
 
-const Pages = () => {
-  return (
-    <React.Fragment>
-      <Switch>
-        {routes.map(routeProps => (
-          <Route
-            key={routeProps.path.slice(1)}
-            {...routeProps}
-          />
-        ))}
-      </Switch>
-      <Modal />
-    </React.Fragment>
-  );
+class Pages extends React.Component {
+  componentDidMount() {
+    this.props.authenticateScatter();
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <Switch>
+          {routes.map(routeProps => (
+            <Route
+              key={routeProps.path.slice(1)}
+              {...routeProps}
+            />
+          ))}
+        </Switch>
+        <Modal />
+      </React.Fragment>
+    );
+  }
 }
 
-export default Pages;
+const mapDispatchToProps = dispatch => ({
+  authenticateScatter: payload => dispatch(actions.authenticateScatter(payload)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Pages);

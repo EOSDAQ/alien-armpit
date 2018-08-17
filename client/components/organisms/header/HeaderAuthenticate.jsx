@@ -11,18 +11,6 @@ import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
 
 class HeaderAuthenticate extends React.Component {
-  componentDidMount() {
-    const { getScatterIdentity } = this.props;
-    if (!window.scatter) {
-      document.addEventListener('scatterLoaded', () => {
-        setScatter();
-        getScatterIdentity();
-      });
-    } else {
-      getScatterIdentity();
-    }
-  }
-
   render() {
     const {
       authenticated,

@@ -3,8 +3,8 @@
 
 import Eos from 'eosjs';
 import Identicon from 'identicon.js';
-
-let scatter = null;
+import { actions } from 'reducer/account/accountReducer';
+import store from '../store';
 
 const network = {
   blockchain: 'eos',
@@ -23,19 +23,59 @@ class CustomScatterError extends Error {
   }
 }
 
-export function setScatter() {
-  if (window.scatter) {
-    scatter = window.scatter;
+class Scatter {
+  constructor() {
+    this.instance = window.scatter;
+    this.loaded = !!this.instance;
+    if (!this.instance) {
+      document.addEventListener('scatterLoaded', () => this.onLoad());
+    }
   }
-  window.scatter = null;
+
+  onLoad() {
+    this.set(window.scatter);
+    store.dispatch(actions.authenticateScatter());
+    window.scatter = null;
+  }
+
+  set(instance) {
+    this.instance = instance;
+    this.loaded = !!instance;
+  }
+
+  get() {
+    if (this.instance) {
+      return this.instance;
+    }
+
+    throw new CustomScatterError({
+      code: 500,
+      message: 'Scatter is not installed',
+    });
+  }
+
+  authenticate() {
+    const scatter = this.get();
+    return scatter.authenticate();
+  }
+
+  getIdentity(...args) {
+    const scatter = this.get();
+    return scatter.getIdentity(...args);
+  }
+
+  revokeIdentity(...args) {
+    const scatter = this.get();
+    return scatter.forgetIdentity(...args);
+  }
 }
 
-document.addEventListener('scatterLoaded', setScatter);
+const scatter = new Scatter();
 
 export const transfer = async (data) => {
   if (!scatter) {
     throw CustomScatterError({
-      code: 401,
+      code: 500,
       message: 'Scatter is not installed',
     });
   }
@@ -54,59 +94,51 @@ export const transfer = async (data) => {
   alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
 };
 
+export const authenticateScatter = async () => {
+  const result = await scatter.authenticate();
+}
+
 export const getScatterIdentity = async () => {
-  // 유저가 signIn을 클릭하는 시점 바로 직전에 scatter를 설치했을 수 있기 때문에 매번 이곳에서 window.scatter를 체크한다.
-  if (!scatter) {
-    throw new CustomScatterError({
-      message: 'scatter is not installed',
-      code: 500,
-    });
+  const {
+    publicKey: scatterPublicKey,
+    accounts,
+  } = await scatter.getIdentity({
+    accounts: [network],
+  });
+
+  let account;
+
+  if (Array.isArray(accounts)) {
+    // filter through...
+    [account] = accounts;
   }
 
-  if (scatter) {
-    // await scatter.authenticate();
-
-    const { publicKey: scatterPublicKey, accounts } = await scatter.getIdentity({
-      accounts: [network],
-    });
-
-    await scatter.authenticate();
-    let account;
-
-    if (Array.isArray(accounts)) {
-      // filter through...
-      [account] = accounts;
-    }
-
-    if (!account) {
-      throw Error('No viable account');
-    }
-
-    // publicKey가 백엔드에 등록되어 있는지 확인해본다.
-    // 없는 경우 -> 회원가입 || 있는 경우 -> 로그인
-    // 지금은. window.exist로 체크한다.
-    const authorized = false;
-
-    const identiconOptions = {
-      foreground: [103, 246, 249, 255],
-      background: [19, 19, 19, 255],
-      margin: 0.2,
-      size: 40,
-      format: 'svg',
-    };
-
-    const identicon = `data:image/svg+xml;base64,${new Identicon(scatterPublicKey, identiconOptions).toString()}`;
-
-    return {
-      name: account.name,
-      identicon,
-      authorized,
-    };
+  if (!account) {
+    throw Error('No viable account');
   }
+
+  // publicKey가 백엔드에 등록되어 있는지 확인해본다.
+  // 없는 경우 -> 회원가입 || 있는 경우 -> 로그인
+  // 지금은. window.exist로 체크한다.
+  const authorized = false;
+
+  const identiconOptions = {
+    foreground: [103, 246, 249, 255],
+    background: [19, 19, 19, 255],
+    margin: 0.2,
+    size: 40,
+    format: 'svg',
+  };
+
+  const identicon = `data:image/svg+xml;base64,${new Identicon(scatterPublicKey, identiconOptions).toString()}`;
+
+  return {
+    name: account.name,
+    identicon,
+    authorized,
+  };
 };
 
 export const forgetScatterIdentity = async () => {
-  if (window.scatter) {
-    await window.scatter.forgetIdentity();
-  }
+  await scatter.revokeIdentity();
 };

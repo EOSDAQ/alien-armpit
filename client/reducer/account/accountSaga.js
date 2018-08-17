@@ -6,6 +6,15 @@ import { actions } from './accountReducer';
 import modal from '../modal/modalReducer';
 import { toFixed } from 'utils/format';
 
+export function* authenticateScatter() {
+  try {
+    yield call(scatterApi.authenticateScatter);
+    yield getScatterIdentity({});
+  } catch (e) {
+
+  }
+}
+
 export function* getScatterIdentity({ payload = {} }) {
   try {
     const result = yield call(scatterApi.getScatterIdentity);
@@ -35,12 +44,14 @@ export function* getScatterIdentity({ payload = {} }) {
       type: 'OTP_CHECK',
     }));
   } catch (e) {
+    console.log(e.code, payload);
     if (!e.code) {
       // 스캐터 오류가 아님.
       console.error(e);
       return;
     }
     switch (e.code) {
+      case 401:
       case 500: {
         const { showInstallMessage } = payload;
         if (showInstallMessage) {

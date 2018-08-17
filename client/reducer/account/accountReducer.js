@@ -1,4 +1,5 @@
 export const types = {
+  AUTHENTICATE_SCATTER: 'account/authenticateScatter',
   GET_SCATTER_IDENTITY: 'account/getScatterIdentity',
   FORGET_SCATTER_IDENTITY: 'account/forgetScatterIdentity',
   SIGN_IN: 'account/signIn',
@@ -7,6 +8,10 @@ export const types = {
 };
 
 export const actions = {
+  authenticateScatter: payload => ({
+    type: types.AUTHENTICATE_SCATTER,
+    payload,
+  }),
   getScatterIdentity: payload => ({
     type: types.GET_SCATTER_IDENTITY,
     payload,
