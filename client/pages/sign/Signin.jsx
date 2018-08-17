@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { translate } from 'react-i18next';
 import { actions } from 'reducer/signin/signinReducer';
 import Footer from 'components/organisms/Footer';
