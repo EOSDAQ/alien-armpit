@@ -11,7 +11,6 @@ const coinList = [
   { name: 'CET', src: 'ic-chaince.png' },
   { name: 'eosDAC', src: 'ic-eosdac.png' },
   { name: 'IQ', src: 'ic-iq.png' },
-  { name: 'INSTAR', src: 'ic-instar.svg' },
   { name: 'PLT', src: 'ic-plactal.svg' },
   { name: 'HORUS', src: 'ic-horus.png' },
   { name: 'ITAM', src: 'ic-itam.svg' },
