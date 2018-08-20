@@ -3,6 +3,7 @@ import {
   SheetWrapper,
   SheetCell,
 } from 'components/molecules/Sheet';
+import { colors } from 'components/css/theme';
 
 export const OrderLogWrapper = styled(SheetWrapper)`
   width: 300px;
@@ -10,19 +11,20 @@ export const OrderLogWrapper = styled(SheetWrapper)`
   flex: 1 1;
 `;
 
-const OrderLogCellStyle = `
-  flex: 1;
-  padding: 0 10px;
+const OrderLogCell = styled(SheetCell).attrs({
+  justifySelf: "end",
+})`
+  text-align: right;
+  color: ${colors.grey600};
 `;
 
-export const OrderLogPrice = styled(SheetCell)`
-  ${OrderLogCellStyle}
+export const OrderLogPrice = styled(OrderLogCell)`
+  text-align: right;
 `;
 
-export const OrderLogAmount = styled(SheetCell)`
-  ${OrderLogCellStyle}
+export const OrderLogAmount = styled(OrderLogCell)`
+  text-align: right;
 `;
 
-export const OrderLogTime = styled(SheetCell)`
-  ${OrderLogCellStyle}
+export const OrderLogTime = styled(OrderLogCell)`
 `;
