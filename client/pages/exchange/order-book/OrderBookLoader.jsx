@@ -7,32 +7,23 @@ const OrderBookLoader = () => {
   return (
     <React.Fragment>
       {list.map((_, i) => (
-        <SheetRow 
+        <div
           key={i}
-          columns="1fr 1fr 1fr"
+          style={{
+            background: '#f4f4f4',
+            position: 'relative',
+          }}
         >
-          <Wrapper>
-            <Loader
-              style={{
-                animationDelay: i * 30 + 'ms',
-              }}
-            />
-          </Wrapper>
-          <Wrapper>
-            <Loader 
-              style={{
-                animationDelay: i * 30 + 'ms',
-              }}
-            />
-          </Wrapper>
-          <Wrapper>
-            <Loader 
-              style={{
-                animationDelay: i * 30 + 'ms',
-              }}
-            />
-          </Wrapper>
-        </SheetRow>
+          <SheetRow 
+            columns="1fr 1fr 1fr"
+          >
+            <Wrapper />
+            <Wrapper />
+            <Wrapper />
+          </SheetRow>
+          <Loader>
+          </Loader>
+        </div>
       ))}
     </React.Fragment>
   );
