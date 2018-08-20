@@ -13,6 +13,7 @@ import OrderBookTradeInfo from './OrderBookTradeInfo';
 import OrderBookTradeLog from './OrderBookTradeLog';
 import OrderBookFooter from './OrderBookFooter';
 import orderBookReducer from 'reducer/order-book/orderBookReducer';
+import OrderBookLoader from './OrderBookLoader';
 
 const mockTradeLog = [
   { price: 43.90, amount: 99226.283 },
@@ -29,8 +30,8 @@ const mockTradeLog = [
 class ExchangeOrderBook extends React.Component {
   componentDidMount() {
     const { fetchOrderBook } = this.props;
-    fetchOrderBook();
-    this.fetcher = setInterval(fetchOrderBook, 4000);
+    // fetchOrderBook();
+    // this.fetcher = setInterval(fetchOrderBook, 4000);
   }
 
   componentWillUnmount() {
@@ -43,39 +44,37 @@ class ExchangeOrderBook extends React.Component {
     const scrollStyle = { style: { height: 512 } };
     const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
 
-    if (fetching && !data) {
-      return 'waiting for order book data';
-    }
-
-    const {
-      totalBidQuotes,
-      totalAskQuotes,
-    } = data.info;
-
     return (
       <OrderBookWrapper>
         <OrderBookHeader />
         <Scrollbars {...scrollOptions}>
-          <Flex>
-            <OrderBookList
-              orderList={data.ask}
-              maxQuotes={data.info.maxQuotes}
-              isUpside
-            />
-            <OrderBookTradeInfo />
-          </Flex>
-          <Flex>
-            <OrderBookTradeLog tradeLogList={mockTradeLog} />
-            <OrderBookList
-              orderList={data.bid}
-              maxQuotes={data.info.maxQuotes}
-            />
-          </Flex>
+          {!data && <OrderBookLoader />}
+          {data && (
+            <React.Fragment>
+              <Flex>
+                <OrderBookList
+                  orderList={data.ask}
+                  maxQuotes={data.info.maxQuotes}
+                  isUpside
+                />
+                <OrderBookTradeInfo />
+              </Flex>
+              <Flex>
+                <OrderBookTradeLog tradeLogList={mockTradeLog} />
+                <OrderBookList
+                  orderList={data.bid}
+                  maxQuotes={data.info.maxQuotes}
+                />
+              </Flex>
+            </React.Fragment>
+          )}
         </Scrollbars>
-        <OrderBookFooter
-          totalBidQuotes={totalBidQuotes}
-          totalAskQuotes={totalAskQuotes}
-        />
+        {data && (
+          <OrderBookFooter
+            totalBidQuotes={data.info.totalBidQuotes}
+            totalAskQuotes={data.info.totalAskQuotes}
+          />
+        )}
       </OrderBookWrapper>
     );
   }
