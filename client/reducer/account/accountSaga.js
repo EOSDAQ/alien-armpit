@@ -77,7 +77,7 @@ export function* order({ payload }) {
   let { type, price, amount, coinCode } = payload;
 
   try {
-    const from = yield select(s => s.account.viewer.name);
+    const from = yield select(s => s.account.name);
 
     if (type === 'sell') {
       yield call(scatterApi.sell, {

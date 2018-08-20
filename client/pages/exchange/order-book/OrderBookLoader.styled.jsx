@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 const loading = keyframes`
   0% { transform: translateX(-110%); }
+  40% { transform: translateX(110%); }
   100% { transform: translateX(110%); }
 `;
 
@@ -11,7 +12,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-  animation: ${loading} 2.4s 0 both;
+  animation: ${loading} 4s 0 forwards;
   animation-timing-function: ease-in;
   animation-iteration-count: infinite;
   position: absolute;

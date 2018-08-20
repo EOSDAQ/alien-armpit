@@ -1,5 +1,7 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { scrollbarsOptions } from 'constants/constants';
 
@@ -14,6 +16,7 @@ import OrderBookTradeLog from './OrderBookTradeLog';
 import OrderBookFooter from './OrderBookFooter';
 import orderBookReducer from 'reducer/order-book/orderBookReducer';
 import OrderBookLoader from './OrderBookLoader';
+import { getToken } from 'reducer/selector';
 
 const mockTradeLog = [
   { price: 43.90, amount: 99226.283 },
@@ -40,7 +43,6 @@ class ExchangeOrderBook extends React.Component {
 
   render() {
     const { fetching, data } = this.props;
-
     const scrollStyle = { style: { height: 512 } };
     const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
 
@@ -80,12 +82,18 @@ class ExchangeOrderBook extends React.Component {
   }
 };
 
-const mapStateToProps = state => ({ ...state.orderBook });
+const mapStateToProps = (state, { match: { params }}) => ({ 
+  ...state.orderBook,
+  token: getToken(params.coinCode)(state),
+});
 const mapDispatchToProps = dispatch => ({
   fetchOrderBook: () => dispatch(orderBookReducer.actions.fetchOrderBook()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
+export default compose(
+  withRouter,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
 )(ExchangeOrderBook);
