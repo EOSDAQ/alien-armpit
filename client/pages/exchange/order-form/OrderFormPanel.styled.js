@@ -6,7 +6,7 @@ import {
   orderFormTotalUnitWidth,
 } from 'pages/styleConstants';
 import Button from 'components/atom/Button';
-import Input from 'components/atom/Input';
+import Input, { NumberInput } from 'components/atom/Input';
 
 export const OrderFormContainer = styled('div')`
   width: 50%;
@@ -19,7 +19,7 @@ export const OrderFormContainer = styled('div')`
   flex-direction: column;
 `;
 
-export const OrderFormInput = styled(Input)`
+export const OrderFormInput = styled(NumberInput)`
   text-align: right;
 `;
 

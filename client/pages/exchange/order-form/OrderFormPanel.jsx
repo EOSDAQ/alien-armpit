@@ -17,7 +17,10 @@ import Box from 'components/atom/Box';
 import { toFixed } from 'utils/format';
 
 const OrderFormField = ({ input }) => (
-  <OrderFormInput {...input} />
+  <OrderFormInput 
+    {...input}
+    autoComplete="off"
+  />
 );
 
 // TODO. add validation logic.
@@ -47,6 +50,13 @@ const OrderForm = (props) => {
             <InputControl key={name}>
               <label htmlFor={name}>
                 {name}
+                <span style={{
+                  fontSize: 11,
+                  color: '#aaa',
+                  marginLeft: 4,
+                }}>
+                  ({ticker.coinCode})
+                </span>
               </label>
               <Field
                 name={name}

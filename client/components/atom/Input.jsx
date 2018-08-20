@@ -27,13 +27,14 @@ const Input = styled('input')`
     border: 1px solid ${colors.azure};
     box-shadow: 0px 0px 4px ${colors.azureA60};
   }
+`;
 
-  &[type=number] {
-    font-family: ${theme.fontFamily.number};
-    font-size: 15px;
-    letter-spacing: 1px;
-    appearance: textfield;
-  }
+export const NumberInput = Input.extend`
+  appearance: none;
+  font-family: ${theme.fontFamily.number};
+  font-size: 15px;
+  letter-spacing: 1px;
+  appearance: textfield;
 `;
 
 const scale = (props) => {

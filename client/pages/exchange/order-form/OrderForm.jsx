@@ -24,16 +24,18 @@ class OrderForm extends React.Component {
     const types = ['buy', 'sell'];
                                       
     return (
-      <React.Fragment>
-        {types.map(type => (
-          <OrderFormPanel
-            key={type}
-            form={`order-${type}`}
-            ticker={ticker}
-            onSubmit={e => this.onSubmit(e, type)}
-          />
-        ))}
-      </React.Fragment>
+      <SheetWrapper>
+        <Flex>
+          {types.map(type => (
+            <OrderFormPanel
+              key={type}
+              form={`order-${type}`}
+              ticker={ticker}
+              onSubmit={e => this.onSubmit(e, type)}
+            />
+          ))}
+        </Flex>
+      </SheetWrapper>
     );
   }
 }
