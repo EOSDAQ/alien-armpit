@@ -42,7 +42,7 @@ const routes = [
     component: asyncRoute(() => import(/* webpackChunkName: "sentEmail" */ './sent-email/SentEmail')),
   },
   {
-    path: '/exchange',
+    path: '/exchange/:coinCode',
     component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
   },
   {

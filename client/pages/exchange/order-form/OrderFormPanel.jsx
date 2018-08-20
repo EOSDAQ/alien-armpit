@@ -25,12 +25,20 @@ const OrderForm = (props) => {
   let {
     form,
     values,
+    ticker,
     handleSubmit,
   } = props;
+
+  if (!ticker) {
+    return null;
+  }
+
+  const token = ticker.coinCode.split('/')[0];
 
   const fields = ['price', 'amount'];
   const isBuy = form.indexOf('buy') >= 0;
   values = values || 0;
+
   return (
     <OrderFormContainer>
       <form onSubmit={handleSubmit}>
@@ -74,7 +82,7 @@ const OrderForm = (props) => {
             type="submit"
             isBuy={isBuy}
           >
-            {`ABC ${isBuy ? '매수' : '매도'}`}
+            {`${token} ${isBuy ? '매수' : '매도'}`}
           </OrderFormButton>
         </OrderFormBottom>
       </form>
@@ -82,7 +90,10 @@ const OrderForm = (props) => {
   );
 };
 
-const mapStateToProps = (state, { form }) => ({ values: getFormValues(form)(state) });
+const mapStateToProps = (state, { form, ...props }) => ({ 
+  values: getFormValues(form)(state),
+  ...props,
+});
 
 export default compose(
   reduxForm({

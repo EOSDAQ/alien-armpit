@@ -35,7 +35,7 @@ const rules = [
   {
     test: /\.(js|jsx)$/,
     use: [
-      // 'thread-loader',
+      'thread-loader',
       'babel-loader',
     ],
     include: [context],

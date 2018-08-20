@@ -75,7 +75,7 @@ export function* forgetScatterIdentity() {
 }
 
 export function* order({ payload }) {
-  let { type, price, amount } = payload;
+  let { type, price, amount, coinCode } = payload;
 
   try {
     const from = yield select(s => s.account.viewer.name);
@@ -83,7 +83,7 @@ export function* order({ payload }) {
     if (type === 'sell') {
       yield call(scatterApi.sell, {
         price: parseFloat(price),
-        amount: toFixed(4, amount) + ' IPOS',
+        amount: toFixed(4, amount) + ' ' + coinCode,
         from,
       })
     } else {

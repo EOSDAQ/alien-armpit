@@ -22,7 +22,9 @@ const OrderBookAmountCell = (props) => {
       </OrderBookAmountNum>
       <OrderBookAmountBar
         isUpside={isUpside}
-        width={amount / maxQuotes * 100}
+        style={{
+          width: amount / maxQuotes * 100,
+        }}
       />
     </OrderBookAmount>
   );

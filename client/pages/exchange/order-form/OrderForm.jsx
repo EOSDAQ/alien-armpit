@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import OrderFormPanel from './OrderFormPanel';
 import Flex from 'components/atom/Flex';
 import { SheetWrapper } from 'components/molecules/Sheet';
@@ -8,47 +9,47 @@ import { OrderFormDisabled } from './OrderForm.styled';
 
 class OrderForm extends React.Component {
   onSubmit(values, type) {
-    const { order } = this.props;
+    const { order, ticker } = this.props;
+    const coinCode = ticker.coinCode.split('/')[0];
+
     order({
       ...values,
       type,
+      coinCode,
     });
   }
 
   render() {
-    const { authenticated } = this.props;
+    const { authenticated, ticker } = this.props;
     const types = ['buy', 'sell'];
-
+                                      
     return (
-      <SheetWrapper>
-        {!authenticated && (
-          <OrderFormDisabled>
-            로그인이 필요한 서비스입니다.
-          </OrderFormDisabled>
-        )}
-        <Flex>
-          {types.map(type => (
-            <OrderFormPanel
-              key={type}
-              form={`order-${type}`}
-              onSubmit={e => this.onSubmit(e, type)}
-            />
-          ))}
-        </Flex>
-      </SheetWrapper>
+      <React.Fragment>
+        {types.map(type => (
+          <OrderFormPanel
+            key={type}
+            form={`order-${type}`}
+            ticker={ticker}
+            onSubmit={e => this.onSubmit(e, type)}
+          />
+        ))}
+      </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, { match: { params }}) => ({
   authenticated: state.account.authenticated,
+  ticker: state.tickers.box.coinList.filter(c =>
+    c.coinCode.replace('/', '_') === params.coinCode
+  )[0],
 });
 
 const mapDispatchToProps = dispatch => ({
   order: payload => dispatch(actions.order(payload)),
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(OrderForm);
+)(OrderForm));

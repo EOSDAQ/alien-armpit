@@ -30,7 +30,11 @@ class ExchangeOrderBook extends React.Component {
   componentDidMount() {
     const { fetchOrderBook } = this.props;
     fetchOrderBook();
-    setInterval(fetchOrderBook, 5000);
+    this.fetcher = setInterval(fetchOrderBook, 5000);
+  }
+
+  componentWillUnmount() {
+    this.fetcher && clearInterval(this.fetcher);
   }
 
   render() {
