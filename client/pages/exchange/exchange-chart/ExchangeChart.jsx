@@ -9,7 +9,7 @@ import {
 } from './ExchangeChart.styled';
 import TradingView from './tradingView/TradingView';
 import ExchangeChartHeader from './ExchangeChartHeader';
-import { getTicker } from 'reducer/selector';
+import { getToken } from 'reducer/selector';
 
 class ExchangeChartBox extends React.Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class ExchangeChartBox extends React.Component {
 export default compose(
   withRouter,
   translate(),
-  connect((state, props) => ({
-    ticker: getTicker(state, props),
+  connect((state, { match: { params }}) => ({
+    ticker: getToken(params.coinCode)(state),
   })),
 )(ExchangeChartBox);

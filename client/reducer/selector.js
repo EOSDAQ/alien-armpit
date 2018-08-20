@@ -6,3 +6,7 @@ export const getTicker = (state, { match: { params }}) => (
     c.coinCode.replace('/', '_') === params.coinCode
   )[0]
 );
+
+export const getToken = (id) => {
+  return (state) => state.tokens[id];
+}
