@@ -32,4 +32,7 @@ export const toFixed = (place, _value, config = initialToFixedConfig) => {
   return `${int}.${decimal}`;
 };
 
-export const hello = '';
+export const capitalize = (text) => {
+  const mutated = text.slice(0, 1).toUpperCase();
+  return `${mutated}${text.slice(1)}`;
+};

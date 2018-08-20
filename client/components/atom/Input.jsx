@@ -32,8 +32,10 @@ const Input = styled('input')`
 export const NumberInput = Input.extend`
   appearance: none;
   font-family: ${theme.fontFamily.number};
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 1px;
+  height: 32px;
+  border-color: ${colors.grey100};
   appearance: textfield;
 `;
 

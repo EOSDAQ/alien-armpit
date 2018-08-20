@@ -14,7 +14,7 @@ import {
 } from './OrderFormPanel.styled';
 import { InputControl } from 'components/atom/Input';
 import Box from 'components/atom/Box';
-import { toFixed } from 'utils/format';
+import { toFixed, capitalize } from 'utils/format';
 
 const OrderFormField = ({ input }) => (
   <OrderFormInput 
@@ -49,7 +49,7 @@ const OrderForm = (props) => {
           {fields.map(name => (
             <InputControl key={name}>
               <label htmlFor={name}>
-                {name}
+                {capitalize(name)}
                 <span style={{
                   fontSize: 11,
                   color: '#aaa',
