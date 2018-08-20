@@ -10,19 +10,19 @@ const stats = [
   { name: 'volume', value: 36000000 },
 ];
 
-const ExchangeChartHeader = () => (
+const ExchangeChartHeader = ({ ticker }) => (
   <ChartHeader>
     <CoinInfo>
       <CoinName>
-        Everipedia
+        {ticker.coinName}
       </CoinName>
       <CoinLabel>
-        IQ/EOS
+        {ticker.coinCode}
       </CoinLabel>
     </CoinInfo>
     <CoinPriceSection>
       <CoinPrice>
-        0.0039
+        {ticker.currentPrice}
         <CoinPriceLabel>
           EOS
         </CoinPriceLabel>

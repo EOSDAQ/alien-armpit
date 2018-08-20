@@ -6,6 +6,7 @@ export const ChartHeader = styled('div')`
   display: flex;
   align-items: flex-end;
   padding: 1rem;
+  background: white;
 `;
 
 export const CoinInfo = styled('section')`
@@ -19,10 +20,10 @@ export const CoinLabel = styled('div')`
 `;
 
 export const CoinName = styled('div')`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 500;
   margin-bottom: 4px;
-  color: ${colors.grey800};
+  color: ${colors.grey900};
 `;
 
 export const CoinPriceSection = styled('section')`

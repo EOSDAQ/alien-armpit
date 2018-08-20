@@ -1,10 +1,15 @@
 import React from 'react';
 import { translate } from 'react-i18next';
+import { compose } from 'redux';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import {
   ExchangeChartWrap,
 } from './ExchangeChart.styled';
 import TradingView from './tradingView/TradingView';
 import ExchangeChartHeader from './ExchangeChartHeader';
+import { getTicker } from 'reducer/selector';
 
 class ExchangeChartBox extends React.Component {
   constructor(props) {
@@ -46,4 +51,10 @@ class ExchangeChartBox extends React.Component {
   }
 }
 
-export default translate()(ExchangeChartBox);
+export default compose(
+  withRouter,
+  translate(),
+  connect((state, props) => ({
+    ticker: getTicker(state, props),
+  })),
+)(ExchangeChartBox);

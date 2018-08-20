@@ -5,10 +5,6 @@ import { Field, reduxForm, change } from 'redux-form';
 
 import {
   OrderFormContainer,
-  OrderFormBottom,
-  OrderFormTotal,
-  OrderFormTotalAmount,
-  OrderFormTotalUnit,
   OrderFormButton,
   OrderFormInput,
   OrderFormAction,
@@ -84,45 +80,43 @@ const OrderForm = (props) => {
               />
             </InputControl>
           ))}
+          <InputControl>
+            <label>
+              Total
+              <span style={{
+                fontSize: 11,
+                color: '#aaa',
+                marginLeft: 4,
+              }}>
+                <Code>
+                  SYS
+                </Code>
+              </span>
+            </label>
+            <Field
+              name="total"
+              type="number"
+              normalize={(v, pv, allv) => {
+                const { total, price } = allv;
+                dispatch(change(
+                  form, 
+                  'amount',
+                  toFixed(4, total / price),
+                ));
+                return toFixed(4, v, { appendZero: false })}
+              }
+              onChange={(e) => {
+                const pos = e.target.selectionEnd;
+
+                setTimeout(() => {
+                  e.target.setSelectionRange(pos, pos);
+                }, 0);
+              }}
+              component={OrderFormField}
+            />
+          </InputControl>
         </Box>
         <OrderFormAction>
-          <OrderFormTotal>
-            <InputControl>
-              <label>
-                Total
-                <span style={{
-                  fontSize: 11,
-                  color: '#aaa',
-                  marginLeft: 4,
-                }}>
-                  <Code>
-                    SYS
-                  </Code>
-                </span>
-              </label>
-              <Field
-                name="total"
-                type="number"
-                normalize={(v, pv, allv) => {
-                  const { total, price } = allv;
-                  dispatch(change(
-                    form, 
-                    'amount',
-                    toFixed(4, total / price),
-                  ));
-                  return toFixed(4, v, { appendZero: false })}
-                }
-                onChange={(e) => {
-                  const pos = e.target.selectionEnd;
-
-                  setTimeout(() => {
-                    e.target.setSelectionRange(pos, pos);
-                  }, 0);
-                }}
-                component={OrderFormField}
-              />
-            </InputControl>
-          </OrderFormTotal>
           <OrderFormButton
             type="submit"
             small

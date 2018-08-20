@@ -25,6 +25,7 @@ class OrderForm extends React.Component {
                                       
     return (
       <SheetWrapper>
+        {!authenticated && <OrderFormDisabled />}
         <Flex>
           {types.map(type => (
             <OrderFormPanel
