@@ -32,7 +32,7 @@ const OrderForm = (props) => {
     return null;
   }
 
-  const symbol = token.coinCode.split('/')[0];
+  const { symbol, baseSymbol } = token;
 
   const fields = ['price', 'amount'];
   const isBuy = form.indexOf('buy') >= 0;
@@ -51,7 +51,7 @@ const OrderForm = (props) => {
                   marginLeft: 4,
                 }}>
                   <Code>
-                    {token.coinCode}
+                    {name === 'price' ? symbol + '/' + baseSymbol : symbol}
                   </Code>
                 </span>
               </label>
@@ -87,7 +87,7 @@ const OrderForm = (props) => {
                 marginLeft: 4,
               }}>
                 <Code>
-                  SYS
+                  {baseSymbol}
                 </Code>
               </span>
             </label>

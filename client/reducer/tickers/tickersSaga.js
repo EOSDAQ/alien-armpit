@@ -5,10 +5,10 @@ import * as api from 'api/tickers';
 
 export function* loadCoins() {
   try {
-    const result = yield call(api.loadCoins);
-    yield put(actions.updateCoinList(result.coins));
+    const tickers = yield call(api.loadCoins);
+    yield put(actions.updateCoinList(tickers));
     yield put(tokensActions.updateTokens({
-      tokens: result.coins,
+      tokens: tickers,
     }));
     yield put(actions.updateFilteredCoinList());
   } catch(err) {

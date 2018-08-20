@@ -22,7 +22,7 @@ export default handleActions({
     const { tokens } = payload;
 
     return tokens.reduce((res, token) => {
-      res[token.coinCode.replace('/', '_')] = token;
+      res[token.symbol + '_' + token.baseSymbol] = token;
       return res;
     }, {});
   }

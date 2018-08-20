@@ -19,6 +19,7 @@ import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
 import { actions } from 'reducer/tickers/tickersReducer';
 import { tickersSheetRowColumns } from 'components/styleConstants';
+import { toFixed } from 'utils/format';
 
 const toMillion = (number) => {
   const value = (number / 1.0e+6).toString();
@@ -37,10 +38,11 @@ const TickersBody = (props) => {
     <Scrollbars {...scrollOptions}>
       {coinList.map((coin) => {
         const buy = coin.dayChange > 0;
+        const to = coin.symbol + '_' + coin.baseSymbol;
 
         return (
           <TickersRow
-            key={coin.coinCode}
+            key={coin.name}
             columns={tickersSheetRowColumns}
           >
             <FavoriteCell>
@@ -51,18 +53,18 @@ const TickersBody = (props) => {
             <CoinNameCell>
               <CoinIcon url={coin.coinIconUrl} />
               <Link // TODO. prevent history being pushed when it is active.
-                to={`/exchange/${coin.coinCode.replace('/', '_')}`}
+                to={`/exchange/${to}`}
               >
                 <CoinNameText>
-                  {coin.coinName}
+                  {coin.name}
                 </CoinNameText>
                 <CoinCodeText>
-                  {coin.coinCode}
+                  {coin.symbol + '/' + coin.baseSymbol}
                 </CoinCodeText>
               </Link>
             </CoinNameCell>
             <CurrentPriceCell buy={buy}>
-              {coin.currentPrice.toFixed(4)}
+              {toFixed(4, coin.currentPrice / 1000)}
             </CurrentPriceCell>
             <DayChangeCell buy={buy}>
               {coin.dayChange}
