@@ -1,11 +1,15 @@
 import { call, put } from 'redux-saga/effects';
 import { actions } from './tickersReducer';
+import { actions as tokensActions } from '../tokens/tokensReducer';
 import * as api from 'api/tickers';
 
 export function* loadCoins() {
   try {
     const result = yield call(api.loadCoins);
     yield put(actions.updateCoinList(result.coins));
+    yield put(tokensActions.updateTokens({
+      tokens: result.coins,
+    }));
     yield put(actions.updateFilteredCoinList());
   } catch(err) {
     console.log(err);

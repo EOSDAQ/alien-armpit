@@ -15,14 +15,14 @@ const OrderBookList = (props) => {
   return (
     <OrderBookListWrapper>
       {
-        orderList.map((orderBunch) => orderBunch ? (
+        orderList.map((orderBunch, i) => orderBunch ? (
           <OrderBookRow
             key={orderBunch.price} // eslint-disable-line
             orderBunch={orderBunch}
             maxQuotes={maxQuotes}
             isUpside={isUpside}
           />
-        ) : <SheetRow columns="1fr 1fr" />)
+        ) : <SheetRow columns="1fr 1fr" key={i} />)
       }
     </OrderBookListWrapper>
   );

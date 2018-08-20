@@ -9,8 +9,8 @@ import { OrderFormDisabled } from './OrderForm.styled';
 
 class OrderForm extends React.Component {
   onSubmit(values, type) {
-    const { order, ticker } = this.props;
-    const coinCode = ticker.coinCode.split('/')[0];
+    const { order, token } = this.props;
+    const coinCode = token.coinCode.split('/')[0];
 
     order({
       ...values,
@@ -20,7 +20,7 @@ class OrderForm extends React.Component {
   }
 
   render() {
-    const { authenticated, ticker } = this.props;
+    const { authenticated, token } = this.props;
     const types = ['buy', 'sell'];
                                       
     return (
@@ -31,7 +31,7 @@ class OrderForm extends React.Component {
             <OrderFormPanel
               key={type}
               form={`order-${type}`}
-              ticker={ticker}
+              token={token}
               onSubmit={e => this.onSubmit(e, type)}
             />
           ))}
@@ -43,9 +43,7 @@ class OrderForm extends React.Component {
 
 const mapStateToProps = (state, { match: { params }}) => ({
   authenticated: state.account.authenticated,
-  ticker: state.tickers.box.coinList.filter(c =>
-    c.coinCode.replace('/', '_') === params.coinCode
-  )[0],
+  token: state.tokens[params.coinCode],
 });
 
 const mapDispatchToProps = dispatch => ({

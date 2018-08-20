@@ -8,9 +8,11 @@ import accountReducer from './account/accountReducer';
 import otpReducer from './otp/otpReducer';
 import modal from './modal/modalReducer';
 import orderBookReducer from './order-book/orderBookReducer';
+import tokensReducer from './tokens/tokensReducer';
 
 const reducer = combineReducers({
   form: formReducer,
+  tokens: tokensReducer,
   router: routerReducer,
   language: languageReducer,
   tickers: tickersReducer,

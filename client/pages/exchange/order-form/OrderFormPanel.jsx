@@ -1,6 +1,4 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { Field, reduxForm, change } from 'redux-form';
 
 import {
@@ -25,16 +23,16 @@ const OrderFormField = ({ input }) => (
 const OrderForm = (props) => {
   let {
     form,
-    ticker,
+    token,
     dispatch,
     handleSubmit,
   } = props;
 
-  if (!ticker) {
+  if (!token) {
     return null;
   }
 
-  const token = ticker.coinCode.split('/')[0];
+  const symbol = token.coinCode.split('/')[0];
 
   const fields = ['price', 'amount'];
   const isBuy = form.indexOf('buy') >= 0;
@@ -53,7 +51,7 @@ const OrderForm = (props) => {
                   marginLeft: 4,
                 }}>
                   <Code>
-                    {ticker.coinCode}
+                    {token.coinCode}
                   </Code>
                 </span>
               </label>
@@ -122,7 +120,7 @@ const OrderForm = (props) => {
             small
             isBuy={isBuy}
           >
-            {`${token} ${isBuy ? '매수' : '매도'}`}
+            {`${symbol} ${isBuy ? '매수' : '매도'}`}
           </OrderFormButton>
         </OrderFormAction>
       </form>
