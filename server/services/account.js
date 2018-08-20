@@ -55,7 +55,6 @@ const getUserByAccountName = async (accountName) => {
   } catch (e) {
     response = e.response;
   }
-
   const { data } = response;
   if (!data) {
     return {};

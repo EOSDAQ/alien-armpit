@@ -13,16 +13,21 @@ import HeaderAccountMenu from './HeaderAccountMenu';
 class HeaderAuthenticate extends React.Component {
   render() {
     const {
-      authenticated,
-      viewer,
+      account,
       getScatterIdentity,
     } = this.props;
 
-    if (viewer && authenticated) {
+    const {
+      authenticated,
+      name,
+      identicon,
+    } = account;
+
+    if (authenticated) {
       return (
         <Flex alignItems="center">
-          <Select options={<HeaderAccountMenu viewer={viewer} />}>
-            <ViewerIdenticon src={viewer.identicon} />
+          <Select options={<HeaderAccountMenu name={name} />}>
+            <ViewerIdenticon src={identicon} />
           </Select>
         </Flex>
       );
@@ -41,7 +46,7 @@ class HeaderAuthenticate extends React.Component {
   }
 }
 
-const mapStateToProps = ({ account }) => (account);
+const mapStateToProps = ({ account }) => ({ account });
 
 const mapDispatchToProps = dispatch => ({
   getScatterIdentity: payload => dispatch(actions.getScatterIdentity(payload)),

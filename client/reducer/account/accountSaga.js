@@ -17,17 +17,16 @@ export function* authenticateScatter() {
 
 export function* getScatterIdentity({ payload = {} }) {
   try {
-    const result = yield call(scatterApi.getScatterIdentity);
-    const { name: accountName } = result;
+    let account = yield call(scatterApi.getScatterIdentity);
+    const { name: accountName } = account;
     
-    // const authInfo = yield call(accountApi.check, accountName);
-    yield put(actions.signIn({ viewer: result }));
+    const authInfo = yield call(accountApi.check, accountName);
+    account = {
+      ...account,
+      ...authInfo,
+    };
 
-    // const {
-    //   isUserCreated,
-    //   isEmailConfirmed,
-    //   isOtpConfirmed,
-    // } = authInfo;
+    yield put(actions.signIn({ account }));
 
     // if (!isUserCreated || !isEmailConfirmed) {
     //   // yield put(push('/signin'));

@@ -16,10 +16,7 @@ router.get('/check', [
     } = req.query;
 
     const authInfo = await service.getUserAuthInfo(accountName);
-    res.status(200).send({
-      success: true,
-      ...authInfo,
-    });
+    res.status(200).send(authInfo);
   } catch (e) {
     next(e);
   }

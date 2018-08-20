@@ -44,7 +44,7 @@ const accountReducer = (state = initialState, action) => {
     case types.SIGN_IN:
       return {
         authenticated: true,
-        viewer: action.payload.viewer,
+        ...action.payload.account,
       };
     case types.SIGN_OUT:
       return initialState;
