@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from '../../atom/Icon';
 import { PlainButton } from '../../atom/Button';
+import Text from '../../atom/Text';
 
 const LanguageSelectedItem = ({ language }) => {
   return (
@@ -11,7 +12,9 @@ const LanguageSelectedItem = ({ language }) => {
         fill="#aaa"
         type="language"
       />
-      {language === 'ko' ? '한국어' : 'English'}
+      <Text fontSize={13}>
+        {language === 'ko' ? '한국어' : 'English'}
+      </Text>
     </PlainButton>
   );
 }

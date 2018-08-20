@@ -137,16 +137,17 @@ export const getScatterIdentity = async () => {
   // 없는 경우 -> 회원가입 || 있는 경우 -> 로그인
   // 지금은. window.exist로 체크한다.
   const authorized = false;
+  const hash = account.name + scatterPublicKey;
 
   const identiconOptions = {
     foreground: [103, 246, 249, 255],
     background: [19, 19, 19, 255],
-    margin: 0.2,
+    margin: 0.28,
     size: 40,
     format: 'svg',
   };
 
-  const identicon = `data:image/svg+xml;base64,${new Identicon(scatterPublicKey, identiconOptions).toString()}`;
+  const identicon = `data:image/svg+xml;base64,${new Identicon(hash, identiconOptions).toString()}`;
 
   return {
     name: account.name,

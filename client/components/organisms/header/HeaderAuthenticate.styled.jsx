@@ -7,8 +7,8 @@ export const ViewerIdenticon = styled.div`
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: 1px solid rgba(104, 247, 250, 0.25);
   background-image: url(${({ src }) => src});
 `;

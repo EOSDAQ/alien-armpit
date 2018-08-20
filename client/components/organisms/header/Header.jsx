@@ -5,7 +5,7 @@ import Box, { Container } from '../../atom/Box';
 import Flex from '../../atom/Flex';
 import Text from '../../atom/Text';
 import Language from '../language/Language';
-import { HeaderStyled } from './Header.styled';
+import { HeaderStyled, HeaderNavItem } from './Header.styled';
 import HeaderAuthenticate from './HeaderAuthenticate';
 import { staticPath } from 'constants/constants';
 
@@ -25,55 +25,48 @@ class Header extends React.Component {
 
     return (
       <HeaderStyled>
-        <Box
-          bg="#141A2A"
-          color="grey100"
+        <Container
+          large
+          py={4}
         >
-          <Container
-            large="123"
-            py={12}
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
           >
             <Flex
-              justifyContent="space-between"
               alignItems="center"
             >
-              <Flex
-                alignItems="center"
-              >
-                <Link to="/">
-                  <img
-                    src={`${staticPath.images}/ic-logo.png`}
-                    alt=""
-                    style={{
-                      height: 25,
-                      marginTop: 4,
-                    }}
-                  />
-                </Link>
-                {this.navs.map(nav => (
-                  <Text
+              <Link to="/">
+                <img
+                  src={`${staticPath.images}/ic-logo.png`}
+                  alt=""
+                  style={{
+                    width: 88,
+                    marginTop: 4,
+                  }}
+                />
+              </Link>
+              {this.navs.map(nav => (
+                <HeaderNavItem
+                  key={nav.title}
+                >
+                  <Link
+                    to={nav.link}
                     key={nav.title}
-                    ml={48}
-                    fontSize={14}
-                    display={['none', 'block']}
                   >
-                    <Link
-                      to={nav.link}
-                      key={nav.title}
-                      // style={{ cursor: nav.link ? '' : 'not-allowed' }}
-                    >
-                      {t(`header.${nav.title}`)}
-                    </Link>
-                  </Text>
-                ))}
-              </Flex>
-              <Flex>
-                <HeaderAuthenticate />
-                <Language />
-              </Flex>
+                    {t(`header.${nav.title}`)}
+                  </Link>
+                </HeaderNavItem>
+              ))}
             </Flex>
-          </Container>
-        </Box>
+            <Flex
+              alignItems="center"
+            >
+              <HeaderAuthenticate />
+              <Language />
+            </Flex>
+          </Flex>
+        </Container>
       </HeaderStyled>
     );
   }
