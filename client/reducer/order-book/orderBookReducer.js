@@ -36,6 +36,9 @@ const reducer = handleActions({
     bid = orders.slice(slicedAsk.length);
     ask = orders.slice(0, slicedAsk.length);
 
+    ask = [...new Array(8 - ask.length).fill(false), ...ask];
+    bid = [ ...bid, ...new Array(8 - bid.length).fill(false) ];
+
     return {
       ...state,
       fetching: false,
