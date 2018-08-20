@@ -23,20 +23,15 @@ export const OrderFormInput = styled(NumberInput)`
   text-align: right;
 `;
 
+export const OrderFormAction = styled('div')`
+  padding: 12px;
+`;
+
 export const OrderFormInputControl = styled('div')`
   flex: 0 0 auto;
 `;
 
-export const OrderFormBottom = styled('div')`
-  background-color: ${({ isBuy }) => (isBuy ? colors.red120 : colors.blue140)};
-  padding: 14px;
-  flex: 0 0 auto;
-`;
-
 export const OrderFormTotal = styled('div')`
-  label {
-    ${mixin.tradeLabel}
-  }
 `;
 
 export const OrderFormTotalAmount = styled('span')`
@@ -59,9 +54,9 @@ export const OrderFormTotalUnit = styled('span')`
 `;
 
 export const OrderFormButton = styled(Button)`
-  margin-top: 36px;
+  margin-top: 16px;
   width: 100%;
-  text-align: center;
+  justify-content: center;
   background-color: ${({ isBuy }) => (isBuy ? colors.red500 : colors.blue500)};
   color: #fff;
 

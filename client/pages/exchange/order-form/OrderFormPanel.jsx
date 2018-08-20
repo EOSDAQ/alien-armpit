@@ -1,7 +1,7 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm, getFormValues } from 'redux-form';
+import { Field, reduxForm, change } from 'redux-form';
 
 import {
   OrderFormContainer,
@@ -11,10 +11,12 @@ import {
   OrderFormTotalUnit,
   OrderFormButton,
   OrderFormInput,
+  OrderFormAction,
 } from './OrderFormPanel.styled';
 import { InputControl } from 'components/atom/Input';
 import Box from 'components/atom/Box';
 import { toFixed, capitalize } from 'utils/format';
+import { Code } from 'components/atom/Text';
 
 const OrderFormField = ({ input }) => (
   <OrderFormInput 
@@ -27,8 +29,8 @@ const OrderFormField = ({ input }) => (
 const OrderForm = (props) => {
   let {
     form,
-    values,
     ticker,
+    dispatch,
     handleSubmit,
   } = props;
 
@@ -40,12 +42,11 @@ const OrderForm = (props) => {
 
   const fields = ['price', 'amount'];
   const isBuy = form.indexOf('buy') >= 0;
-  values = values || 0;
 
   return (
     <OrderFormContainer>
       <form onSubmit={handleSubmit}>
-        <Box flex={1} p={16}>
+        <Box flex={1} p={12}>
           {fields.map(name => (
             <InputControl key={name}>
               <label htmlFor={name}>
@@ -55,13 +56,23 @@ const OrderForm = (props) => {
                   color: '#aaa',
                   marginLeft: 4,
                 }}>
-                  ({ticker.coinCode})
+                  <Code>
+                    {ticker.coinCode}
+                  </Code>
                 </span>
               </label>
               <Field
                 name={name}
                 type="number"
-                normalize={v => toFixed(4, v, { appendZero: false })}
+                normalize={(v, pv, { amount, price }) => {
+                  dispatch(change(
+                    form,
+                    'total',
+                    toFixed(4, amount * price),
+                  ));
+
+                  return toFixed(4, v, { appendZero: false })}
+                }
                 onChange={(e) => {
                   const pos = e.target.selectionEnd;
 
@@ -74,43 +85,61 @@ const OrderForm = (props) => {
             </InputControl>
           ))}
         </Box>
-        <OrderFormBottom isBuy={isBuy}>
+        <OrderFormAction>
           <OrderFormTotal>
-            <label>
-              Total
-              <div>
-                <OrderFormTotalAmount>
-                  {toFixed(4, values.price * values.amount)}
-                </OrderFormTotalAmount>
-                <OrderFormTotalUnit>
-                  SYS
-                </OrderFormTotalUnit>
-              </div>
-            </label>
+            <InputControl>
+              <label>
+                Total
+                <span style={{
+                  fontSize: 11,
+                  color: '#aaa',
+                  marginLeft: 4,
+                }}>
+                  <Code>
+                    SYS
+                  </Code>
+                </span>
+              </label>
+              <Field
+                name="total"
+                type="number"
+                normalize={(v, pv, allv) => {
+                  const { total, price } = allv;
+                  dispatch(change(
+                    form, 
+                    'amount',
+                    toFixed(4, total / price),
+                  ));
+                  return toFixed(4, v, { appendZero: false })}
+                }
+                onChange={(e) => {
+                  const pos = e.target.selectionEnd;
+
+                  setTimeout(() => {
+                    e.target.setSelectionRange(pos, pos);
+                  }, 0);
+                }}
+                component={OrderFormField}
+              />
+            </InputControl>
           </OrderFormTotal>
           <OrderFormButton
             type="submit"
+            small
             isBuy={isBuy}
           >
             {`${token} ${isBuy ? '매수' : '매도'}`}
           </OrderFormButton>
-        </OrderFormBottom>
+        </OrderFormAction>
       </form>
     </OrderFormContainer>
   );
 };
 
-const mapStateToProps = (state, { form, ...props }) => ({ 
-  values: getFormValues(form)(state),
-  ...props,
-});
-
-export default compose(
-  reduxForm({
-    initialValues: {
-      amount: toFixed(4, 1),
-      price: toFixed(4, 30),
-    },
-  }),
-  connect(mapStateToProps),
-)(OrderForm);
+export default reduxForm({
+  initialValues: {
+    amount: toFixed(4, 1),
+    price: toFixed(4, 30),
+    total: toFixed(4, 30),
+  },
+})(OrderForm);

@@ -4,11 +4,18 @@ import { color, justifyContent } from 'styled-system';
 import { colors } from '../css/theme';
 
 const scale = (props) => {
-  const { large } = props;
+  const { large, small } = props;
 
   if (large) {
     return ` 
       height: 62px;
+    `;
+  }
+
+  if (small) {
+    return `
+      height: 36px;
+      font-size: 14px;
     `;
   }
 
