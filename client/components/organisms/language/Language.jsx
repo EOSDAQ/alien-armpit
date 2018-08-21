@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions } from 'reducer/language/languageReducer';
@@ -6,7 +6,7 @@ import LanguageSelectedItem from './LangaugeSelectedItem';
 import LanguageOption from './LanguageOption';
 import Select from '../../molecules/Select';
 
-class Language extends Component {
+class Language extends React.Component {
   changeLanguage(lang) {
     const { i18n } = this.props;
     i18n.changeLanguage(lang);
