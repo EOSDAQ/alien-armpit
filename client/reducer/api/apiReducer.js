@@ -25,7 +25,6 @@ export default handleActions({
       [cacheKey]: {
         loading: true,
         error: null,
-        data: null,
         meta: {
           timestamp: Date.now(),
         }
@@ -33,7 +32,7 @@ export default handleActions({
     };
   },
   [types.UPDATE_QUERY]: (state, { payload }) => {
-    const { cacheKey, error, data } = payload;
+    const { cacheKey, error = null } = payload;
     const target = state[cacheKey] || {};
     const timestamp = Date.now();
     return {
@@ -41,9 +40,7 @@ export default handleActions({
       [cacheKey]: {
         ...target,
         loading: false,
-        timestamp,
         error,
-        data,
         meta: {
           duration: timestamp - target.meta.timestamp,
           timestamp,

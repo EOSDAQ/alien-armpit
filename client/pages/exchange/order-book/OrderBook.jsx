@@ -42,13 +42,12 @@ class ExchangeOrderBook extends React.Component {
   }
 
   render() {
-    const { token } = this.props;
+    const { token, ask, bid, info } = this.props;
     const scrollStyle = { style: { height: 512 } };
     const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
-
     if (!token) return null;
 
-    const payload = { symbol: token.symbol };
+    const payload = { symbol: token.symbol + '_' + token.baseSymbol };
 
     return (
       <OrderBookWrapper>
@@ -57,12 +56,11 @@ class ExchangeOrderBook extends React.Component {
           action={actions.fetchOrderBook(payload)}
           pollInterval={4000}
         >
-          {({ loading, data, error }) => {
+          {({ loading, error }) => {
             if (loading) {
               return <OrderBookLoader />;
             }
 
-            const { ask, bid, info } = data;
             return (
               <React.Fragment>
                 <Scrollbars {...scrollOptions}>
@@ -95,7 +93,8 @@ class ExchangeOrderBook extends React.Component {
   }
 };
 
-const mapStateToProps = (state, { match: { params }}) => ({ 
+const mapStateToProps = (state, { match: { params }}) => ({
+  ...state.orderBook[params.coinCode],
   token: getToken(params.coinCode)(state),
 });
 
