@@ -10,7 +10,7 @@ import { OrderFormDisabled } from './OrderForm.styled';
 class OrderForm extends React.Component {
   onSubmit(values, type) {
     const { order, token } = this.props;
-    const coinCode = token.coinCode.split('/')[0];
+    const coinCode = token.symbol;
 
     order({
       ...values,

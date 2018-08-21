@@ -9,9 +9,11 @@ import otpReducer from './otp/otpReducer';
 import modal from './modal/modalReducer';
 import orderBookReducer from './order-book/orderBookReducer';
 import tokensReducer from './tokens/tokensReducer';
+import apiReducer from './api/apiReducer';
 
 const reducer = combineReducers({
   form: formReducer,
+  api: apiReducer,
   tokens: tokensReducer,
   router: routerReducer,
   language: languageReducer,

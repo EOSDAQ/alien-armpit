@@ -6,12 +6,12 @@ import { SheetRow } from 'components/molecules/Sheet';
 
 const OrderBookRow = ({ orderBunch, maxQuotes, isUpside}) => {
   const {
-    quotes,
+    volume,
     price,
     change,
   } = orderBunch;
 
-  const amountJsx = <OrderBookAmountCell key="orderBookAmount" amount={quotes} maxQuotes={maxQuotes} isUpside={isUpside} />;
+  const amountJsx = <OrderBookAmountCell key="orderBookAmount" amount={volume} maxQuotes={maxQuotes} isUpside={isUpside} />;
   const priceJsx = <OrderBookPriceCell key="orderBookPrice" price={price} change={change} isUpside={isUpside} />;
 
   return (

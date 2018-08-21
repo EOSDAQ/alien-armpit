@@ -5,30 +5,34 @@ const types = {
   UPDATE_ORDER_BOOK: 'orderBook/UPDATE',
 };
 
-const actions = {
+export const actions = {
   fetchOrderBook: createAction(types.FETCH_ORDER_BOOK),
   updateOrderBook: createAction(types.UPDATE_ORDER_BOOK),
 };
 
-const defaultState = {
-  fetching: true,
-  data: null,
-  error: null,
-};
+const defaultState = {};
 
 const reducer = handleActions({
-  [types.FETCH_ORDER_BOOK]: state => ({
-    ...state,
-    fetching: true,
-  }),
   [types.UPDATE_ORDER_BOOK]: (state, { payload: { data } }) => {
-    let { bid, ask, info } = data;
-    const slicedBid = bid.slice(0, 8);
-    const slicedAsk = ask.slice(-8);
+    let { bid, ask } = data;
+
+    const slicedBid = bid ? bid.slice(0, 8) : [];
+    const slicedAsk = ask ? ask.slice(-8) : [];
 
     const orders = slicedAsk.concat(slicedBid)
       .map(order => {
-        order['change'] = (order.price - info.prevPrice) / info.prevPrice;
+        order.change = 0;
+        order.price = (order.price || 0) / 10000;
+        if (order.type === 1) {
+          order.volume = order.volume / order.price / 10000;
+        } else {
+          order.volume = (order.volume || 0) / 10000;
+        }
+        // if (!info) {
+        //   order['change'] = 0
+        // } else {
+        //   order['change'] = (order.price - info.prevPrice) / info.prevPrice;
+        // }
         return order;
       })
       .sort((a, b) => b.price - a.price);
@@ -38,19 +42,16 @@ const reducer = handleActions({
 
     ask = [...new Array(8 - ask.length).fill(false), ...ask];
     bid = [ ...bid, ...new Array(8 - bid.length).fill(false) ];
+    const [maxVolumeOrder] = [ ...orders].sort((a, b) => a.volume > b.volume ? -1 : 1);
 
     return {
       ...state,
-      fetching: false,
-      data: {
-        bid,
-        ask,
-        info: {
-          ...info,
-          totalBidQuotes: bid.reduce((res, o) => res += o.quotes, 0),
-          totalAskQuotes: ask.reduce((res, o) => res += o.quotes, 0),
-          maxQuotes: [ ...orders].sort((a, b) => a.quotes > b.quotes ? -1 : 1)[0].quotes,
-        },
+      bid,
+      ask,
+      info: {
+        totalBidQuotes: bid.reduce((res, o) => res += o.volume, 0),
+        totalAskQuotes: ask.reduce((res, o) => res += o.volume, 0),
+        maxQuotes: maxVolumeOrder ? maxVolumeOrder.volume : 0,
       },
     }
   },

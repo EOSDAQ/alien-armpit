@@ -17,6 +17,8 @@ import OrderBookFooter from './OrderBookFooter';
 import orderBookReducer from 'reducer/order-book/orderBookReducer';
 import OrderBookLoader from './OrderBookLoader';
 import { getToken } from 'reducer/selector';
+import Query from 'components/molecules/Query';
+import { actions } from 'reducer/order-book/orderBookReducer';
 
 const mockTradeLog = [
   { price: 43.90, amount: 99226.283 },
@@ -32,8 +34,6 @@ const mockTradeLog = [
 
 class ExchangeOrderBook extends React.Component {
   componentDidMount() {
-    const { fetchOrderBook } = this.props;
-    // fetchOrderBook();
     // this.fetcher = setInterval(fetchOrderBook, 4000);
   }
 
@@ -42,58 +42,67 @@ class ExchangeOrderBook extends React.Component {
   }
 
   render() {
-    const { fetching, data } = this.props;
+    const { token } = this.props;
     const scrollStyle = { style: { height: 512 } };
     const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
+
+    if (!token) return null;
+
+    const payload = { symbol: token.symbol };
 
     return (
       <OrderBookWrapper>
         <OrderBookHeader />
-        <Scrollbars {...scrollOptions}>
-          {!data && <OrderBookLoader />}
-          {data && (
-            <React.Fragment>
-              <Flex>
-                <OrderBookList
-                  orderList={data.ask}
-                  maxQuotes={data.info.maxQuotes}
-                  isUpside
+        <Query
+          action={actions.fetchOrderBook(payload)}
+          pollInterval={4000}
+        >
+          {({ loading, data, error }) => {
+            if (loading) {
+              return <OrderBookLoader />;
+            }
+
+            const { ask, bid, info } = data;
+
+            return (
+              <React.Fragment>
+                <Scrollbars {...scrollOptions}>
+                <Flex>
+                  <OrderBookList
+                    orderList={ask}
+                    maxQuotes={info.maxQuotes}
+                    isUpside
+                  />
+                  <OrderBookTradeInfo />
+                </Flex>
+                <Flex>
+                  <OrderBookTradeLog tradeLogList={mockTradeLog} />
+                  <OrderBookList
+                    orderList={bid}
+                    maxQuotes={info.maxQuotes}
+                  />
+                </Flex>
+                </Scrollbars>
+                <OrderBookFooter
+                  totalBidQuotes={info.totalBidQuotes}
+                  totalAskQuotes={info.totalAskQuotes}
                 />
-                <OrderBookTradeInfo />
-              </Flex>
-              <Flex>
-                <OrderBookTradeLog tradeLogList={mockTradeLog} />
-                <OrderBookList
-                  orderList={data.bid}
-                  maxQuotes={data.info.maxQuotes}
-                />
-              </Flex>
-            </React.Fragment>
-          )}
-        </Scrollbars>
-        {data && (
-          <OrderBookFooter
-            totalBidQuotes={data.info.totalBidQuotes}
-            totalAskQuotes={data.info.totalAskQuotes}
-          />
-        )}
+              </React.Fragment>
+            );
+          }}
+        </Query>
       </OrderBookWrapper>
     );
   }
 };
 
 const mapStateToProps = (state, { match: { params }}) => ({ 
-  ...state.orderBook,
   token: getToken(params.coinCode)(state),
-});
-const mapDispatchToProps = dispatch => ({
-  fetchOrderBook: () => dispatch(orderBookReducer.actions.fetchOrderBook()),
 });
 
 export default compose(
   withRouter,
   connect(
     mapStateToProps,
-    mapDispatchToProps,
   ),
 )(ExchangeOrderBook);
