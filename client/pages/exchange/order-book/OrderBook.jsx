@@ -63,25 +63,24 @@ class ExchangeOrderBook extends React.Component {
             }
 
             const { ask, bid, info } = data;
-
             return (
               <React.Fragment>
                 <Scrollbars {...scrollOptions}>
-                <Flex>
-                  <OrderBookList
-                    orderList={ask}
-                    maxQuotes={info.maxQuotes}
-                    isUpside
-                  />
-                  <OrderBookTradeInfo />
-                </Flex>
-                <Flex>
-                  <OrderBookTradeLog tradeLogList={mockTradeLog} />
-                  <OrderBookList
-                    orderList={bid}
-                    maxQuotes={info.maxQuotes}
-                  />
-                </Flex>
+                  <Flex>
+                    <OrderBookList
+                      orderList={ask}
+                      maxQuotes={info.maxQuotes}
+                      isUpside
+                    />
+                    <OrderBookTradeInfo />
+                  </Flex>
+                  <Flex>
+                    <OrderBookTradeLog tradeLogList={mockTradeLog} />
+                    <OrderBookList
+                      orderList={bid}
+                      maxQuotes={info.maxQuotes}
+                    />
+                  </Flex>
                 </Scrollbars>
                 <OrderBookFooter
                   totalBidQuotes={info.totalBidQuotes}

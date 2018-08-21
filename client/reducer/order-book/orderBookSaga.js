@@ -35,10 +35,10 @@ export function* fetchOrderBook({ payload }) {
     ask = [...new Array(8 - ask.length).fill(false), ...ask];
     bid = [ ...bid, ...new Array(8 - bid.length).fill(false) ];
     const [maxVolumeOrder] = [ ...orders].sort((a, b) => a.volume > b.volume ? -1 : 1);
-
+    
     const info = {
-      totalBidQuotes: bid.reduce((res, o) => res += o.volume, 0),
-      totalAskQuotes: ask.reduce((res, o) => res += o.volume, 0),
+      totalBidQuotes: bid.reduce((res, o) => res += (o.volume || 0), 0),
+      totalAskQuotes: ask.reduce((res, o) => res += (o.volume || 0), 0),
       maxQuotes: maxVolumeOrder ? maxVolumeOrder.volume : 0,
     }
 

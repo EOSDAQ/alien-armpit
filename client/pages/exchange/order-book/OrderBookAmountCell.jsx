@@ -17,7 +17,7 @@ const OrderBookAmountCell = (props) => {
     <OrderBookAmount isUpside={isUpside}>
       <OrderBookAmountNum isUpside={isUpside}>
         <Number>
-          {toFixed(4, amount.toLocaleString())}
+          {toFixed(4, amount).toLocaleString()}
         </Number>
       </OrderBookAmountNum>
       <OrderBookAmountBar
