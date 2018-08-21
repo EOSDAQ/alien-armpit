@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = require('./server/config');
 
 const entry = [
+  'webpack-hot-middleware/client',
   './app.jsx',
 ];
 
@@ -34,8 +35,7 @@ const rules = [
   {
     test: /\.(js|jsx)$/,
     use: [
-      'thread-loader',
-      'cache-loader',
+      // 'thread-loader',
       'babel-loader',
     ],
     include: [context],
@@ -54,6 +54,7 @@ const devtool = 'cheap-source-map';
 
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
+  new webpack.HotModuleReplacementPlugin(),
   new HtmlWebpackPlugin({
     template: 'template/template.html',
     inject: true,

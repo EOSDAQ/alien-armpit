@@ -12,7 +12,13 @@
   "plugins": [
     "babel-plugin-styled-components",
     "syntax-dynamic-import",
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    ["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }]
   ],
   "env": {
     "development": {

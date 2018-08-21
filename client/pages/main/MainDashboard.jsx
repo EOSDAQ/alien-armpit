@@ -4,16 +4,15 @@ import Flex from 'components/atom/Flex';
 import Text from 'components/atom/Text';
 import { staticPath } from 'constants/constants';
 import { CoinImage, CoinPriceChange } from './MainDashboard.styled';
-import TimerWorker from 'workers/timer.worker';
+// import TimerWorker from 'workers/timer.worker';
 
-const timer = new TimerWorker();
+// const timer = new TimerWorker();
 
 const coinList = [
   { name: 'CARMEL', src: 'ic-carmel.png' },
   { name: 'CET', src: 'ic-chaince.png' },
   { name: 'eosDAC', src: 'ic-eosdac.png' },
   { name: 'IQ', src: 'ic-iq.png' },
-  { name: 'INSTAR', src: 'ic-instar.svg' },
   { name: 'PLT', src: 'ic-plactal.svg' },
   { name: 'HORUS', src: 'ic-horus.png' },
   { name: 'ITAM', src: 'ic-itam.svg' },
