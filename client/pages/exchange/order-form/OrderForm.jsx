@@ -10,12 +10,11 @@ import { getRouteMatch } from 'reducer/selector';
 class OrderForm extends React.Component {
   onSubmit(values, type) {
     const { order, token } = this.props;
-    const coinCode = token.symbol;
 
     order({
       ...values,
       type,
-      coinCode,
+      symbol: token.symbol,
     });
   }
 
