@@ -4,9 +4,9 @@ import Flex from 'components/atom/Flex';
 import Text from 'components/atom/Text';
 import { staticPath } from 'constants/constants';
 import { CoinImage, CoinPriceChange } from './MainDashboard.styled';
-// import TimerWorker from 'workers/timer.worker';
+import TimerWorker from 'workers/timer.worker';
 
-// const timer = new TimerWorker();
+const timer = new TimerWorker();
 
 const coinList = [
   { name: 'CARMEL', src: 'ic-carmel.png' },

@@ -51,7 +51,6 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
-    "cache-loader": "^1.2.2",
     "clean-tag": "^2.0.0",
     "clean-webpack-plugin": "^0.1.19",
     "connected-react-router": "^4.4.1",
@@ -74,7 +73,6 @@
     "morgan": "^1.9.0",
     "nodemailer": "^4.6.7",
     "pm2": "^3.0.3",
-    "pug": "^2.0.3",
     "react": "^16.4.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.4.1",
@@ -92,8 +90,7 @@
     "thread-loader": "^1.2.0",
     "uuid": "^3.3.2",
     "webpack": "^4.12.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-hot-client": "^4.1.1",
+    "webpack-command": "^0.4.1",
     "webpack-hot-middleware": "^2.22.3",
     "webpack-merge": "^4.1.3"
   }
