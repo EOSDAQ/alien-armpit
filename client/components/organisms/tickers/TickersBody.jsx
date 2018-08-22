@@ -15,6 +15,7 @@ import {
   CoinIcon,
   TickersRow,
 } from './TickersBody.styled';
+import ChangeDetector from 'components/molecules/ChangeDetector';
 import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
 import { actions } from 'reducer/tickers/tickersReducer';
@@ -38,7 +39,8 @@ const TickersBody = (props) => {
     <Scrollbars {...scrollOptions}>
       {coinList.map((coin) => {
         const buy = coin.dayChange > 0;
-        const to = coin.symbol + '_' + coin.baseSymbol;
+        const to = `${coin.symbol}_${coin.baseSymbol}`;
+        const currentPrice = toFixed(4, coin.currentPrice / 1000);
 
         return (
           <TickersRow
@@ -59,12 +61,15 @@ const TickersBody = (props) => {
                   {coin.name}
                 </CoinNameText>
                 <CoinCodeText>
-                  {coin.symbol + '/' + coin.baseSymbol}
+                  {`${coin.symbol}/${coin.baseSymbol}`}
                 </CoinCodeText>
               </Link>
             </CoinNameCell>
             <CurrentPriceCell buy={buy}>
-              {toFixed(4, coin.currentPrice / 1000)}
+              {currentPrice}
+              <ChangeDetector
+                value={coin.currentPrice}
+              />
             </CurrentPriceCell>
             <DayChangeCell buy={buy}>
               {coin.dayChange}

@@ -16,7 +16,8 @@ class Tickers extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadCoins();
+    const { loadCoins } = this.props;
+    loadCoins();
   }
 
   handleChange(event) {
@@ -24,7 +25,8 @@ class Tickers extends React.Component {
   }
 
   debouncedHandleChange(value) {
-    this.props.updateSearchValue(value);
+    const { updateSearchValue } = this.props;
+    updateSearchValue(value);
   }
 
   render() {

@@ -39,7 +39,9 @@ class ExchangeChart extends React.Component {
     const { tradingViewKey } = this.state;
     return (
       <ExchangeChartWrap>
+        {/* 
         <ExchangeChartHeader />
+        */}
         <TradingView key={tradingViewKey} />
       </ExchangeChartWrap>
     );

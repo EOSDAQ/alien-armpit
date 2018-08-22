@@ -4,7 +4,6 @@ import { SheetCell, SheetRow } from 'components/molecules/Sheet';
 
 export const TickersRow = styled(SheetRow)`
   height: 45px;
-  grid-gap: 16px;
   padding-right: 16px;
   transition: .05s background-color ease;
 
@@ -16,7 +15,10 @@ export const TickersRow = styled(SheetRow)`
 export const TickersCell = styled(SheetCell)`
   font-size: 13px;
   text-align: right;
-  justify-self: flex-end;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 4px;
 `;
 
 export const FavoriteCell = TickersCell.extend`
@@ -33,7 +35,6 @@ export const CoinIcon = styled.div`
 
   transition: .2s all ease;
   background: url(${({ url }) => url}) 50% 50%/cover no-repeat;
-
 `;
 
 export const CoinNameCell = TickersCell.extend`
@@ -47,6 +48,7 @@ export const CoinNameText = styled.span`
   letter-spacing: .3px;
   line-height: 1;
   transition: .2s color ease;
+  align-content: flex-start;
 
   &:hover {
     color: ${colors.grey900};
@@ -63,21 +65,22 @@ export const CoinCodeText = styled.span`
 export const CurrentPriceCell = TickersCell.extend`
   font-family: ${theme.fontFamily.number};
   letter-spacing: .5px;
-  color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
-  text-align: right;
+  color: ${({ buy }) => buy ? colors.red500 : colors.blue500};
+  justify-content: flex-end;
 `;
 
 export const DayChangeCell = TickersCell.extend`
   font-family: ${theme.fontFamily.number};
   letter-spacing: .5px;
-  color: ${({ buy }) => buy ? theme.colors.red500 : theme.colors.blue500};
-  text-align: right;
+  color: ${({ buy }) => buy ? colors.red500 : colors.blue500};
+  justify-content: flex-end;
 `;
 
 export const DayVolumeCell = TickersCell.extend`
   font-family: ${theme.fontFamily.number};
   color: ${colors.black720};
   letter-spacing: .5px;
+  justify-content: flex-end;
 `;
 
 export const DayVolumeUnitText = styled.span`

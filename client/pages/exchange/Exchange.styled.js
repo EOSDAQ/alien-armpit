@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Container } from 'components/atom/Box';
 import {
   exchangeLeftWidth,
-} from 'pages/styleConstants';
+} from 'components/styleConstants';
 
 export const ExchangeBody = styled('div')`
   background-color: #fafcfe;
