@@ -44,7 +44,6 @@ class ExchangeChartBox extends React.Component {
     const { tradingViewKey } = this.state;
     return (
       <ExchangeChartWrap>
-        <ExchangeChartHeader />
         <TradingView key={tradingViewKey} />
       </ExchangeChartWrap>
     );
@@ -54,7 +53,4 @@ class ExchangeChartBox extends React.Component {
 export default compose(
   withRouter,
   translate(),
-  connect((state, { match: { params }}) => ({
-    ticker: getToken(params.coinCode)(state),
-  })),
 )(ExchangeChartBox);
