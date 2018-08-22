@@ -12,9 +12,8 @@ import OrderBookList from './OrderBookList';
 import OrderBookTradeInfo from './OrderBookTradeInfo';
 import OrderBookTradeLog from './OrderBookTradeLog';
 import OrderBookFooter from './OrderBookFooter';
-import orderBookReducer from 'reducer/order-book/orderBookReducer';
 import OrderBookLoader from './OrderBookLoader';
-import { getToken, getRouteMatch } from 'reducer/selector';
+import { getRouteMatch } from 'reducer/selector';
 import Query from 'components/molecules/Query';
 import { actions } from 'reducer/order-book/orderBookReducer';
 
