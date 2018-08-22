@@ -5,9 +5,8 @@ import Flex from 'components/atom/Flex';
 import { SheetWrapper } from 'components/molecules/Sheet';
 import { actions } from 'reducer/account/accountReducer';
 import { OrderFormDisabled } from './OrderForm.styled';
-import { getRouteMatch } from 'reducer/selector';
 
-class OrderForm extends React.Component {
+class OrderForm extends React.PureComponent {
   onSubmit(values, type) {
     const { order, token } = this.props;
 
@@ -20,8 +19,10 @@ class OrderForm extends React.Component {
 
   render() {
     const { authenticated, token } = this.props;
+    if (!token) return null;
+
     const types = ['buy', 'sell'];
-                                      
+                   
     return (
       <SheetWrapper>
         {!authenticated && <OrderFormDisabled />}
@@ -30,7 +31,8 @@ class OrderForm extends React.Component {
             <OrderFormPanel
               key={type}
               form={`order-${type}`}
-              token={token}
+              symbol={token.symbol}
+              baseSymbol={token.baseSymbol}
               onSubmit={e => this.onSubmit(e, type)}
             />
           ))}
@@ -40,12 +42,11 @@ class OrderForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const match = getRouteMatch(state, '/exchange/:code');
-
+const mapStateToProps = (state, { code }) => {
   return {
     authenticated: state.account.authenticated,
-    token: state.tokens[match.params.code],
+    code,
+    token: state.tokens[code],
   }
 };
 

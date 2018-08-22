@@ -8,7 +8,7 @@ import MainHero from './MainHero';
 import MainDashboard from './MainDashboard';
 import MainComing from './MainComing';
 
-const Main = () => (
+const Main = () => console.log('123') || (
   <div>
     <MainComing />
     <Header />

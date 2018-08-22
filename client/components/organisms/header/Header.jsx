@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from '@reach/router';
 import Box, { Container } from '../../atom/Box';
 import Flex from '../../atom/Flex';
 import Text from '../../atom/Text';

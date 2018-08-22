@@ -1,5 +1,5 @@
 import { call, put, select } from 'redux-saga/effects';
-// import { push } from 'connected-react-router';
+import { navigate } from '@reach/router';
 import * as scatterApi from 'api/scatter';
 import * as accountApi from 'api/account';
 import { actions } from './accountReducer';
@@ -20,18 +20,26 @@ export function* getScatterIdentity({ payload = {} }) {
     let account = yield call(scatterApi.getScatterIdentity);
     const { name: accountName } = account;
     
-    const authInfo = yield call(accountApi.check, accountName);
-    account = {
-      ...account,
-      ...authInfo,
-    };
+    const {
+      isEmailConfirmed,
+      isOtpConfirmed,
+    } = yield call(accountApi.check, accountName);
+
+    const authorized = isEmailConfirmed && isOtpConfirmed;
+
+    account.scope = [
+      '/exchange',
+      '/exchange/:code',
+      '/support',
+      authorized && 'trade',
+    ].filter(Boolean);
 
     yield put(actions.signIn({ account }));
 
-    // if (!isUserCreated || !isEmailConfirmed) {
-    //   // yield put(push('/signin'));
-    //   return;
-    // }
+    if (!isEmailConfirmed) {
+      // navigate('/signin');
+      return;
+    }
 
     // if (!isOtpConfirmed) {
     //   yield put(modal.actions.openModal({

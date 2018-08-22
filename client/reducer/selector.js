@@ -17,5 +17,14 @@ export const getRouteMatch = (state, path) => {
     path,
   });
 
-  return match;
+  return match || {};
 }
+
+export const getRouteParams = (props) => {
+  const { match } = props;
+  if (!match) {
+    return {};
+  }
+
+  return match.params;
+};

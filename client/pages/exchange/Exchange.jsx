@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from '@reach/router';
 import { translate } from 'react-i18next';
 import Socket from 'components/organisms/socket/Socket';
 import Header from 'components/organisms/header/Header';
@@ -19,45 +19,38 @@ import {
 import Sticky from 'components/molecules/Sticky';
 import Box from 'components/atom/Box';
 
-const Exchange = ({ match: { params, url }}) => (
-  <React.Fragment>
-    <Route 
-      path={url}
-      exact
-      render={() => <Redirect to={`${url}/IPOS_SYS`} />}
-    />
-    <Route 
-      path={`${url}/:code`}
-      render={() => (
-        <ExchangeBody>
-          <Header />
-          <ExchangeContainer large>
-            <ExchangeLeftSide>
-              <Tickers />
-              <OrderBook />
-            </ExchangeLeftSide>
-            <ExchangeRightSide>
-              <Sticky>
-                {style => (
-                  <Box
-                    style={style}
-                    position="sticky"
-                  >
-                    <ExchangeChart />
-                    <ExchangeRightBottom>
-                      <OrderForm />
-                      <OrderLog />
-                    </ExchangeRightBottom>
-                  </Box>
-                )}
-              </Sticky>
-            </ExchangeRightSide>
-          </ExchangeContainer>
-          <Footer />
-        </ExchangeBody>
-      )}
-    />
-  </React.Fragment>
-);
+class Exchange extends React.PureComponent {
+  render() {
+    const { code } = this.props;
+    console.log(code);
+    return (
+      <ExchangeBody>
+        <Header />
+        <ExchangeContainer large>
+          <ExchangeLeftSide>
+            <Tickers code={code} />
+            <OrderBook code={code} />
+          </ExchangeLeftSide>
+          <ExchangeRightSide>
+            <Sticky>
+              {style => (
+                <Box
+                  style={style}
+                  position="sticky"
+                >
+                  <ExchangeChart code={code} />
+                  <ExchangeRightBottom>
+                    <OrderForm code={code} />
+                  </ExchangeRightBottom>
+                </Box>
+              )}
+            </Sticky>
+          </ExchangeRightSide>
+        </ExchangeContainer>
+        <Footer />
+      </ExchangeBody>
+    );
+  }
+}
 
 export default translate(['exchange'])(Exchange);

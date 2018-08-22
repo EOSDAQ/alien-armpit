@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Router } from '@reach/router';
 import Modal from 'components/organisms/modal/Modal';
+import Signin from './sign/Signin';
 
 function asyncRoute(dynamicImport) {
   class AsyncRoute extends React.Component {
@@ -35,36 +36,32 @@ function asyncRoute(dynamicImport) {
 const routes = [
   {
     path: '/signin',
-    component: asyncRoute(() => import(/* webpackChunkName: "signin" */ './sign/Signin')),
+    Component: Signin,
   },
   {
     path: '/sentEmail',
-    component: asyncRoute(() => import(/* webpackChunkName: "sentEmail" */ './sent-email/SentEmail')),
+    Component: asyncRoute(() => import(/* webpackChunkName: "sentEmail" */ './sent-email/SentEmail')),
   },
   {
-    path: '/exchange',
-    component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
+    path: '/exchange/:code',
+    Component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
   },
   {
     path: '/',
-    component: asyncRoute(() => import(/* webpackChunkName: "landing" */ './main/Main')),
+    Component: asyncRoute(() => import(/* webpackChunkName: "landing" */ './main/Main')),
   },
 ];
 
 class Pages extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <Switch>
-          {routes.map(routeProps => (
-            <Route
-              key={routeProps.path.slice(1)}
-              {...routeProps}
-            />
-          ))}
-        </Switch>
-        <Modal />
-      </React.Fragment>
+      <Router>
+        <Redirect from="/exchange" to="/exchange/IPOS_SYS" />
+        {routes.map(({ ...props, Component }) => (
+          <Component key={props.path} {...props} />
+        ))}
+        <Modal default />
+      </Router>
     );
   }
 }

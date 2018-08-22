@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { scrollbarsOptions } from 'constants/constants';
@@ -13,7 +14,7 @@ import OrderBookTradeInfo from './OrderBookTradeInfo';
 import OrderBookTradeLog from './OrderBookTradeLog';
 import OrderBookFooter from './OrderBookFooter';
 import OrderBookLoader from './OrderBookLoader';
-import { getRouteMatch } from 'reducer/selector';
+import { getRouteMatch, getRouteParams } from 'reducer/selector';
 import Query from 'components/molecules/Query';
 import { actions } from 'reducer/order-book/orderBookReducer';
 
@@ -30,14 +31,6 @@ const mockTradeLog = [
 ];
 
 class ExchangeOrderBook extends React.Component {
-  componentDidMount() {
-    // this.fetcher = setInterval(fetchOrderBook, 4000);
-  }
-
-  componentWillUnmount() {
-    this.fetcher && clearInterval(this.fetcher);
-  }
-
   render() {
     const { token, ask, bid, info } = this.props;
     const scrollStyle = { style: { height: 512 } };
@@ -45,6 +38,7 @@ class ExchangeOrderBook extends React.Component {
     if (!token) return null;
 
     const payload = { symbol: token.symbol + '_' + token.baseSymbol };
+
     return (
       <OrderBookWrapper>
         <OrderBookHeader />
@@ -89,8 +83,7 @@ class ExchangeOrderBook extends React.Component {
   }
 };
 
-const mapStateToProps = (state) => {
-  const { params: { code }} = getRouteMatch(state, '/exchange/:code');
+const mapStateToProps = (state, { code }) => {
   return {
     ...state.orderBook[code],
     token: state.tokens[code],
