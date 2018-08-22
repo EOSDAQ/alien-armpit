@@ -4,10 +4,14 @@ import {
   ChartHeader, CoinInfo, CoinLabel, CoinName, CoinPriceSection, CoinPrice,
   CoinPriceChangeStat, CoinPriceLabel, CoinStat, CoinStats, CoinStatLabel, CoinStatValue,
 } from './ExchangeChartHeader.styled';
-import { getExchangeParam, getRouteMatch } from 'reducer/selector';
+import { getRouteMatch } from 'reducer/selector';
 import { toFixed } from 'utils/format';
 
 const ExchangeChartHeader = ({ token }) => {
+  if (!token) {
+    return null;
+  }
+
   const stats = [
     { name: 'high', value: token.highPrice },
     { name: 'low', value: token.lowPrice },
@@ -54,11 +58,13 @@ const ExchangeChartHeader = ({ token }) => {
 const mapStateToProps = (state) => {
   const { params: { code } } = getRouteMatch(state, '/exchange/:code');
   let token = state.tokens[code];
-  token.highPrice = 0.0039
-  token.lowPrice = 0.0030
+  if (token) {
+    token.highPrice = 0.0039
+    token.lowPrice = 0.0030
+  }
 
   return {
-    token: state.tokens[code],
+    token,
   };
 }
 

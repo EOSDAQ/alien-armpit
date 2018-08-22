@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import OrderFormPanel from './OrderFormPanel';
 import Flex from 'components/atom/Flex';
 import { SheetWrapper } from 'components/molecules/Sheet';
 import { actions } from 'reducer/account/accountReducer';
 import { OrderFormDisabled } from './OrderForm.styled';
+import { getRouteMatch } from 'reducer/selector';
 
 class OrderForm extends React.Component {
   onSubmit(values, type) {
@@ -41,16 +41,20 @@ class OrderForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { match: { params }}) => ({
-  authenticated: state.account.authenticated,
-  token: state.tokens[params.coinCode],
-});
+const mapStateToProps = (state) => {
+  const match = getRouteMatch(state, '/exchange/:code');
+
+  return {
+    authenticated: state.account.authenticated,
+    token: state.tokens[match.params.code],
+  }
+};
 
 const mapDispatchToProps = dispatch => ({
   order: payload => dispatch(actions.order(payload)),
 });
 
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(OrderForm));
+)(OrderForm);

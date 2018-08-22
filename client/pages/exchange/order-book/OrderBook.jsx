@@ -1,7 +1,5 @@
 import React from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { scrollbarsOptions } from 'constants/constants';
 
@@ -16,7 +14,7 @@ import OrderBookTradeLog from './OrderBookTradeLog';
 import OrderBookFooter from './OrderBookFooter';
 import orderBookReducer from 'reducer/order-book/orderBookReducer';
 import OrderBookLoader from './OrderBookLoader';
-import { getToken } from 'reducer/selector';
+import { getToken, getRouteMatch } from 'reducer/selector';
 import Query from 'components/molecules/Query';
 import { actions } from 'reducer/order-book/orderBookReducer';
 
@@ -93,14 +91,15 @@ class ExchangeOrderBook extends React.Component {
   }
 };
 
-const mapStateToProps = (state, { match: { params }}) => ({
-  ...state.orderBook[params.coinCode],
-  token: getToken(params.coinCode)(state),
-});
+const mapStateToProps = (state) => {
+  const { params: { code }} = getRouteMatch(state, '/exchange/:code');
 
-export default compose(
-  withRouter,
-  connect(
-    mapStateToProps,
-  ),
+  return {
+    ...state.orderBook[code],
+    token: state.tokens[code],
+  }
+}
+
+export default connect(
+  mapStateToProps,
 )(ExchangeOrderBook);
