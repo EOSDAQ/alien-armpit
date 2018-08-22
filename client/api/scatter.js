@@ -2,9 +2,23 @@
 /* global scatter */
 
 import Eos from 'eosjs';
-import Identicon from 'identicon.js';
+import jdenticon from 'jdenticon';
 import { actions } from 'reducer/account/accountReducer';
 import store from '../store';
+
+jdenticon.config = {
+  // hues: [170, 180, 195, 210],
+  // lightness: {
+  //   color: [.5, .5],
+  //   grayscale: [1, 1],
+  // },
+  // saturation: {
+  //   color: [.9, 1],
+  //   grayscale: [0, 0],
+  // },
+  // backColor: "#000",
+  // replaceMode: "once"
+};
 
 const network = {
   blockchain: 'eos',
@@ -133,17 +147,8 @@ export const getScatterIdentity = async () => {
     throw Error('No viable account');
   }
 
-  const hash = account.name + scatterPublicKey;
-
-  const identiconOptions = {
-    foreground: [103, 246, 249, 255],
-    background: [19, 19, 19, 255],
-    margin: 0.28,
-    size: 40,
-    format: 'svg',
-  };
-
-  const identicon = `data:image/svg+xml;base64,${new Identicon(hash, identiconOptions).toString()}`;
+  let identicon = jdenticon.toSvg(scatterPublicKey, 32);
+  identicon = identicon.replace(/(width|height)="\d+"/g, '');
 
   return {
     ...account,

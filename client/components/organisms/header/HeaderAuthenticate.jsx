@@ -27,7 +27,9 @@ class HeaderAuthenticate extends React.Component {
       return (
         <Flex alignItems="center">
           <Select options={<HeaderAccountMenu name={name} />}>
-            <ViewerIdenticon src={identicon} />
+            <ViewerIdenticon 
+              dangerouslySetInnerHTML={{__html: identicon }}
+            />
           </Select>
         </Flex>
       );
