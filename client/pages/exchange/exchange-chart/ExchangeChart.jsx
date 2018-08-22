@@ -1,17 +1,12 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { compose } from 'redux';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-
 import {
   ExchangeChartWrap,
 } from './ExchangeChart.styled';
 import TradingView from './tradingView/TradingView';
 import ExchangeChartHeader from './ExchangeChartHeader';
-import { getToken } from 'reducer/selector';
 
-class ExchangeChartBox extends React.Component {
+class ExchangeChart extends React.Component {
   constructor(props) {
     super(props);
     const { i18n } = props;
@@ -44,13 +39,11 @@ class ExchangeChartBox extends React.Component {
     const { tradingViewKey } = this.state;
     return (
       <ExchangeChartWrap>
+        <ExchangeChartHeader />
         <TradingView key={tradingViewKey} />
       </ExchangeChartWrap>
     );
   }
 }
 
-export default compose(
-  withRouter,
-  translate(),
-)(ExchangeChartBox);
+export default translate()(ExchangeChart);

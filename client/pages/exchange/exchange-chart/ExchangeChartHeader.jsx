@@ -1,49 +1,67 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   ChartHeader, CoinInfo, CoinLabel, CoinName, CoinPriceSection, CoinPrice,
   CoinPriceChangeStat, CoinPriceLabel, CoinStat, CoinStats, CoinStatLabel, CoinStatValue,
 } from './ExchangeChartHeader.styled';
+import { getExchangeParam, getRouteMatch } from 'reducer/selector';
+import { toFixed } from 'utils/format';
 
-const stats = [
-  { name: 'high', value: 0.0039 },
-  { name: 'low', value: 0.0038 },
-  { name: 'volume', value: 36000000 },
-];
+const ExchangeChartHeader = ({ token }) => {
+  const stats = [
+    { name: 'high', value: token.highPrice },
+    { name: 'low', value: token.lowPrice },
+    { name: 'volume', value: token.volume / 10000 },
+  ];
 
-const ExchangeChartHeader = ({ ticker }) => (
-  <ChartHeader>
-    <CoinInfo>
-      <CoinName>
-        {ticker.coinName}
-      </CoinName>
-      <CoinLabel>
-        {ticker.coinCode}
-      </CoinLabel>
-    </CoinInfo>
-    <CoinPriceSection>
-      <CoinPrice>
-        {ticker.currentPrice}
-        <CoinPriceLabel>
-          EOS
-        </CoinPriceLabel>
-      </CoinPrice>
-      <CoinPriceChangeStat>
-        ^ 1.45%
-      </CoinPriceChangeStat>
-    </CoinPriceSection>
-    <CoinStats>
-      {stats.map(stat => (
-        <CoinStat key={stat.value}>
-          <CoinStatLabel>
-            {stat.name}
-          </CoinStatLabel>
-          <CoinStatValue type={stat.name}>
-            {stat.name === 'volume' ? stat.value.toLocaleString() : stat.value}
-          </CoinStatValue>
-        </CoinStat>
-      ))}
-    </CoinStats>
-  </ChartHeader>
-);
+  return (
+    <ChartHeader>
+      <CoinInfo>
+        <CoinName>
+          {token.name}
+        </CoinName>
+        <CoinLabel>
+          {token.symbol}
+        </CoinLabel>
+      </CoinInfo>
+      <CoinPriceSection>
+        <CoinPrice>
+          {toFixed(4, token.currentPrice / 10000).toLocaleString()}
+          <CoinPriceLabel>
+            EOS
+          </CoinPriceLabel>
+        </CoinPrice>
+        <CoinPriceChangeStat>
+          {(token.currentPrice - token.prevPrice) / Math.max(token.prevPrice, 1) / 10000} %
+        </CoinPriceChangeStat>
+      </CoinPriceSection>
+      <CoinStats>
+        {stats.map(stat => (
+          <CoinStat key={stat.value}>
+            <CoinStatLabel>
+              {stat.name}
+            </CoinStatLabel>
+            <CoinStatValue type={stat.name}>
+              {toFixed(4, stat.value).toLocaleString()}
+            </CoinStatValue>
+          </CoinStat>
+        ))}
+      </CoinStats>
+    </ChartHeader>
+  );
+}
 
-export default ExchangeChartHeader;
+const mapStateToProps = (state) => {
+  const { params: { code } } = getRouteMatch(state, '/exchange/:code');
+  let token = state.tokens[code];
+  token.highPrice = 0.0039
+  token.lowPrice = 0.0030
+
+  return {
+    token: state.tokens[code],
+  };
+}
+
+export default connect(
+  mapStateToProps,
+)(ExchangeChartHeader);
