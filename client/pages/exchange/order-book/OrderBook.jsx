@@ -46,7 +46,6 @@ class ExchangeOrderBook extends React.Component {
     if (!token) return null;
 
     const payload = { symbol: token.symbol + '_' + token.baseSymbol };
-
     return (
       <OrderBookWrapper>
         <OrderBookHeader />
@@ -93,7 +92,6 @@ class ExchangeOrderBook extends React.Component {
 
 const mapStateToProps = (state) => {
   const { params: { code }} = getRouteMatch(state, '/exchange/:code');
-
   return {
     ...state.orderBook[code],
     token: state.tokens[code],

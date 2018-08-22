@@ -24,7 +24,7 @@ const Exchange = ({ match: { params, url }}) => (
     <Route 
       path={url}
       exact
-      render={() => <Redirect to={`${url}/IPOS_EOS`} />}
+      render={() => <Redirect to={`${url}/IPOS_SYS`} />}
     />
     <Route 
       path={`${url}/:code`}
