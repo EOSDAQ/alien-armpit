@@ -1,0 +1,9 @@
+{
+  "menu": {
+    "account": "Account",
+    "security": "Security",
+    "emailConfirm": "Email confirmation",
+    "connectOTP": "Connect Google OTP",
+    "signOut": "Sign out"
+  }
+}

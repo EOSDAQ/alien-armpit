@@ -1,23 +1,26 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from 'reducer/account/accountReducer';
+import { translate } from 'react-i18next';
 import { AccountMenu, AccountName, MenuAction, SectionLabel, AccountIdenticon, Section, SecurityAction, SecurityValue } from './HeaderAccountMenu.styled';
 import Flex from '../../atom/Flex';
 import Button, { WarningButton } from '../../atom/Button';
 import Icon from '../../atom/Icon';
 import { colors } from '../../css/theme';
+import { Link } from '@reach/router';
 
-const HeaderAccountMenu = ({ name, identicon, signOut, ...props }) => {
+const HeaderAccountMenu = ({ t, name, identicon, signOut, ...props }) => {
   // console.log(props);
   const security = [
-    { name: 'Email confirmation', value: false },
-    { name: 'Connect Google OTP', value: false },
+    { name: t('menu.emailConfirm'), value: false },
+    { name: t('menu.connectOTP'), value: false },
   ]
 
   return (
     <AccountMenu>
       <SectionLabel>
-        Account
+        {t('menu.account')}
       </SectionLabel>
       <Section>
         <Flex alignItems="center">
@@ -30,11 +33,11 @@ const HeaderAccountMenu = ({ name, identicon, signOut, ...props }) => {
         </Flex>
       </Section>
       <SectionLabel>
-        Security
+        {t('menu.security')}
       </SectionLabel>
       <Section>
-        {security.map((field) => (
-          <SecurityAction key={field.name}>
+        {security.map((field, i) => (
+          <SecurityAction key={i}>
             <div>
               {field.name}
             </div>
@@ -42,14 +45,16 @@ const HeaderAccountMenu = ({ name, identicon, signOut, ...props }) => {
               {field.value ? (
                 <Icon type="check" fill={colors.green500} />
               ) : (
-                <Icon type="next" fill={colors.blue500} />
+                <Link to="/signin">
+                  <Icon type="next" fill={colors.blue500} />
+                </Link>
               )}
             </SecurityValue>
           </SecurityAction>
         ))}
       </Section>
       <WarningButton onClick={signOut}>
-        Sign out
+        {t('menu.signOut')}
       </WarningButton>
     </AccountMenu>
   );
@@ -59,7 +64,10 @@ const mapDispatchToProps = (dispatch) => ({
   signOut: () => dispatch(actions.forgetScatterIdentity()),
 })
 
-export default connect(
-  null,
-  mapDispatchToProps,
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+  translate('account'),
 )(HeaderAccountMenu);

@@ -1,0 +1,9 @@
+{
+  "menu": {
+    "account": "계정",
+    "security": "보안",
+    "emailConfirm": "이메일 인증",
+    "connectOTP": "구글 OTP 연동",
+    "signOut": "로그아웃"
+  }
+}
