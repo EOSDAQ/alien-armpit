@@ -11,10 +11,6 @@ class Select extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
-    document.addEventListener('click', this.onDocumentClick);
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setState({
@@ -28,23 +24,30 @@ class Select extends React.PureComponent {
   }
 
   onDocumentClick(e) {
-    const { showDropdown: _showDropdown } = this.state;
     const contains = this.ref.contains(e.target);
-    const insideSelected = this.selectedRef.contains(e.target);
+    if (!contains) {
+      this.closeDropdown();
+    }
+  }
 
-    let showDropdown = false;
+  closeDropdown() {
+    this.setState({
+      showDropdown: false,
+    });
+    document.removeEventListener('click', this.onDocumentClick);
+  }
 
-    if (!_showDropdown) {
-      showDropdown = contains || insideSelected;
-    } else if (insideSelected) {
-      showDropdown = false;
+  onClick() {
+    const { showDropdown } = this.state;
+    if (!showDropdown) {
+      this.setState({
+        showDropdown: true,
+      });
+      document.addEventListener('click', this.onDocumentClick);
     } else {
-      showDropdown = !_showDropdown;
+      this.closeDropdown();
     }
 
-    this.setState({
-      showDropdown,
-    });
   }
 
   render() {
@@ -63,8 +66,13 @@ class Select extends React.PureComponent {
         ref={(e) => { this.ref = e; }}
         style={{ position: 'relative' }}
       >
-        <div ref={(e) => { this.selectedRef = e; }}>
-          {children}
+        <div
+          ref={(e) => { this.selectedRef = e; }}
+          onClick={() => this.onClick()}
+        >
+          {React.cloneElement(children, {
+            closeDropdown: () => this.closeDropdown(),
+          })}
         </div>
         {showDropdown && (
           <SelectOptions {...direction}>

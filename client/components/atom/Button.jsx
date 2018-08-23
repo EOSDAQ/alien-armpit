@@ -39,6 +39,8 @@ const Button = styled.button`
   cursor: pointer;
   display: flex;
   align-items: flex-end;
+  width: 100%;
+  justify-content: center;
   ${justifyContent}
   ${scale}
 
@@ -53,7 +55,7 @@ const Button = styled.button`
   }
 
   &:hover {
-    background: rgba(0, 0, 0, .4);
+    background-color: hsla(0, 100%, 0%, .02);
   }
 
   ${({ primary }) => primary && css`
@@ -65,6 +67,13 @@ const Button = styled.button`
       background-color: ${colors.blue600};
     }
   `}
+`;
+
+export const WarningButton = styled(Button)`
+  color: ${colors.red500};
+  background: white;
+
+  border: 1px solid ${colors.red200};
 `;
 
 export const PlainButton = styled.button`
