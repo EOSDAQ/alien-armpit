@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm, change } from 'redux-form';
+import { connect } from 'react-redux';
 
 import {
   OrderFormContainer,
@@ -11,6 +11,7 @@ import { InputControl } from 'components/atom/Input';
 import Box from 'components/atom/Box';
 import { toFixed, capitalize } from 'utils/format';
 import { Code } from 'components/atom/Text';
+import Form from 'components/molecules/Form';
 
 const OrderFormField = ({ input }) => (
   <OrderFormInput 
@@ -19,123 +20,113 @@ const OrderFormField = ({ input }) => (
   />
 );
 
-// const OrderForm = (props) => {
-//   let {
-//     form,
-//     symbol,
-//     baseSymbol,
-//     dispatch,
-//     handleSubmit,
-//   } = props;
-
-//   const fields = ['price', 'amount'];
-//   const isBuy = form.indexOf('buy') >= 0;
-//   const submitText = `${symbol} ${isBuy ? '매수' : '매도'}`
-//   console.log(submitText);
-//   return (
-//     <OrderFormContainer>
-//       <form onSubmit={handleSubmit}>
-//         <Box flex={1} p={12}>
-//           {fields.map(name => (
-//             <InputControl key={name}>
-//               <label htmlFor={name}>
-//                 {capitalize(name)}
-//                 <span style={{
-//                   fontSize: 11,
-//                   color: '#aaa',
-//                   marginLeft: 4,
-//                 }}>
-//                   <Code>
-//                     {name === 'price' ? symbol + '/' + baseSymbol : symbol}
-//                   </Code>
-//                 </span>
-//               </label>
-//               <Field
-//                 name={name}
-//                 type="number"
-//                 normalize={(v, pv, { amount, price }) => {
-//                   dispatch(change(
-//                     form,
-//                     'total',
-//                     toFixed(4, amount * price),
-//                   ));
-
-//                   return toFixed(4, v, { appendZero: false })}
-//                 }
-//                 onChange={(e) => {
-//                   const pos = e.target.selectionEnd;
-
-//                   setTimeout(() => {
-//                     e.target.setSelectionRange(pos, pos);
-//                   }, 0);
-//                 }}
-//                 component={OrderFormField}
-//               />
-//             </InputControl>
-//           ))}
-//           <InputControl>
-//             <label>
-//               Total
-//               <span style={{
-//                 fontSize: 11,
-//                 color: '#aaa',
-//                 marginLeft: 4,
-//               }}>
-//                 <Code>
-//                   {baseSymbol}
-//                 </Code>
-//               </span>
-//             </label>
-//             <Field
-//               name="total"
-//               type="number"
-//               normalize={(v, pv, allv) => {
-//                 const { total, price } = allv;
-//                 dispatch(change(
-//                   form, 
-//                   'amount',
-//                   toFixed(4, total / price),
-//                 ));
-//                 return toFixed(4, v, { appendZero: false })}
-//               }
-//               onChange={(e) => {
-//                 const pos = e.target.selectionEnd;
-
-//                 setTimeout(() => {
-//                   e.target.setSelectionRange(pos, pos);
-//                 }, 0);
-//               }}
-//               component={OrderFormField}
-//             />
-//           </InputControl>
-//         </Box>
-//         <OrderFormAction>
-//           <button
-//             type="submit"
-//             small
-//             isBuy={isBuy}
-//           >
-//             {submitText}
-//           </button>
-//         </OrderFormAction>
-//       </form>
-//     </OrderFormContainer>
-//   );
-// };
+const initialValues = {
+  amount: toFixed(4, 1),
+  price: toFixed(4, 30),
+  total: toFixed(4, 30),
+};
 
 const OrderForm = (props) => {
+  let {
+    form,
+    symbol,
+    baseSymbol,
+  } = props;
+  // console.log(props.symbol, 'ORDERFORM~');
+  const fields = ['price', 'amount'];
+  const isBuy = form.indexOf('buy') >= 0;
+  const submitText = `${symbol} ${isBuy ? '매수' : '매도'}`
   return (
-    <div>
-      {props.symbol}
-    </div>
-  )
-}
+    <OrderFormContainer>
+      <Form
+        initialValues={initialValues}
+      >
+        {({ setValues, values }) => {
+          return (
+            <React.Fragment>
+              <Box flex={1} p={12}>
+                {fields.map(name => (
+                  <InputControl key={name}>
+                    <label htmlFor={name}>
+                      {capitalize(name)}
+                      <span style={{
+                        fontSize: 11,
+                        color: '#aaa',
+                        marginLeft: 4,
+                      }}>
+                        <Code>
+                          {name === 'price' ? symbol + '/' + baseSymbol : symbol}
+                        </Code>
+                      </span>
+                    </label>
+                    <OrderFormInput
+                      name={name}
+                      value={values[name]}
+                      onChange={(e) => {
+                        const target = e.target;
+                        const pos = e.target.selectionEnd;
+                        const { value } = e.target;
+                        const otherKey = name === 'price' ? 'amount' : 'price';
+                        setValues({
+                          [name]: toFixed(4, value, { appendZero: false }),
+                          total: toFixed(4, values[otherKey] * value)
+                        });
+
+                        setTimeout(() => {
+                          target.setSelectionRange(pos, pos);
+                        }, 0);
+                      }}
+                      component={OrderFormField}
+                    />
+                  </InputControl>
+                ))}
+                <InputControl>
+                  <label>
+                    Total
+                    <span style={{
+                      fontSize: 11,
+                      color: '#aaa',
+                      marginLeft: 4,
+                    }}>
+                      <Code>
+                        {baseSymbol}
+                      </Code>
+                    </span>
+                  </label>
+                  <OrderFormInput
+                    name="total"
+                    value={values.total}
+                    onChange={(e) => {
+                      const target = e.target;
+                      const pos = e.target.selectionEnd;
+
+                      setValues({
+                        total: toFixed(4, e.target.value, { appendZero: false }),
+                        amount: toFixed(4, e.target.value / values.price),
+                      });
+
+                      setTimeout(() => {
+                        target.setSelectionRange(pos, pos);
+                      }, 0);
+                    }}
+                  />
+                </InputControl>
+              </Box>
+              <OrderFormAction>
+                <OrderFormButton
+                  type="submit"
+                  small
+                  isBuy={isBuy}
+                >
+                  {submitText}
+                </OrderFormButton>
+              </OrderFormAction>
+            </React.Fragment>
+          )
+        }}
+      </Form>
+    </OrderFormContainer>
+  );
+};
 
 export default OrderForm;
-// export default reduxForm({
-//   initialValues: {
-//     amount: toFixed(4, 1),
-//     price: toFixed(4, 30),
-//     total: toFixed(4, 30),
-//   },
-// })(OrderForm);

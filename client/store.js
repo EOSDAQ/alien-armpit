@@ -7,10 +7,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   reducer,
-  compose(
-    applyMiddleware(
-      sagaMiddleware,
-    ),
+  applyMiddleware(
+    sagaMiddleware,
   ),
 );
 

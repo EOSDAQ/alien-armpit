@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Router } from '@reach/router';
 import Modal from 'components/organisms/modal/Modal';
 import Signin from './sign/Signin';
+import Exchange from './exchange/Exchange';
 
 function asyncRoute(dynamicImport) {
   class AsyncRoute extends React.Component {
@@ -44,7 +45,7 @@ const routes = [
   },
   {
     path: '/exchange/:code',
-    Component: asyncRoute(() => import(/* webpackChunkName: "exchange" */ './exchange/Exchange')),
+    Component: Exchange,
   },
   {
     path: '/',
@@ -57,8 +58,8 @@ class Pages extends React.Component {
     return (
       <Router>
         <Redirect from="/exchange" to="/exchange/IPOS_SYS" />
-        {routes.map(({ ...props, Component }) => (
-          <Component key={props.path} {...props} />
+        {routes.map(({ path , Component }) => (
+          <Component key={path} path={path} />
         ))}
         <Modal default />
       </Router>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from '@reach/router';
+import { Redirect, Router, Match } from '@reach/router';
 import { translate } from 'react-i18next';
 import Socket from 'components/organisms/socket/Socket';
 import Header from 'components/organisms/header/Header';
@@ -22,7 +22,7 @@ import Box from 'components/atom/Box';
 class Exchange extends React.PureComponent {
   render() {
     const { code } = this.props;
-    console.log(code);
+
     return (
       <ExchangeBody>
         <Header />
@@ -53,4 +53,4 @@ class Exchange extends React.PureComponent {
   }
 }
 
-export default translate(['exchange'])(Exchange);
+export default Exchange;

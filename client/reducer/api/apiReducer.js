@@ -14,7 +14,7 @@ export const actions = {
 }
 
 const defaultState = {
-
+  dispatching: false,
 };
 
 export default handleActions({
@@ -22,6 +22,7 @@ export default handleActions({
     const { cacheKey } = payload;
     return {
       ...state,
+      dispatching: true,
       [cacheKey]: {
         loading: true,
         error: null,
@@ -37,6 +38,7 @@ export default handleActions({
     const timestamp = Date.now();
     return {
       ...state,
+      dispatching: false,
       [cacheKey]: {
         ...target,
         loading: false,

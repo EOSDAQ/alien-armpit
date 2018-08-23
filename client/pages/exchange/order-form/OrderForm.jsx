@@ -20,7 +20,6 @@ class OrderForm extends React.PureComponent {
   render() {
     const { authenticated, token } = this.props;
     if (!token) return null;
-
     const types = ['buy', 'sell'];
                    
     return (
@@ -42,7 +41,7 @@ class OrderForm extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { code }) => {
+const mapStateToProps = (state, { code, ...props }) => {
   return {
     authenticated: state.account.authenticated,
     code,

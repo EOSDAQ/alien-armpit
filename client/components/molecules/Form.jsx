@@ -1,0 +1,48 @@
+import React from 'react';
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      submit: this.onSubmit.bind(this),
+      values: props.initialValues || {},
+      setValues: this.setValues.bind(this),
+      onChange: this.onChange.bind(this),
+    }
+  }
+
+  onSubmit() {
+    const { form } = this;
+  }
+
+  setValues(values) {
+    this.setState({
+      values: {
+        ...this.state.values,
+        ...values,
+      },
+    });
+  }
+
+  onChange(e) {
+    this.setState({
+      values: {
+        ...this.state.values,
+        [e.target.name]: e.target.value,
+      },
+    });
+  }
+
+  render() {
+    return (
+      <form
+        ref={e => this.form = e}
+        onSubmit={() => this.onSubmit()}
+      >
+        {this.props.children(this.state)}
+      </form>
+    );
+  }
+}
+
+export default Form;

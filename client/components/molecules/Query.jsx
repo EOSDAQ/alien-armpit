@@ -9,7 +9,6 @@ class Query extends React.Component {
 
   componentDidMount() {
     const { cache } = this.props;
-    // insert validation logic.
     if (!cache) {
       this.dispatchAction();
     }
@@ -22,10 +21,13 @@ class Query extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.cacheKey !== nextProps.cacheKey) {
-      if (!nextProps.cache) {
-        setTimeout(() => this.dispatchAction(), 0);
+  componentDidUpdate(prevProps) {
+    const { dispatching, cacheKey, cache } = this.props;
+    if (dispatching) return;
+
+    if (cacheKey != prevProps.cacheKey) {
+      if (!cache) {
+        this.dispatchAction();
       }
     }
   }
@@ -35,7 +37,6 @@ class Query extends React.Component {
       dispatch,
       action,
       cacheKey,
-      pollInterval,
     } = this.props;
 
     const enhancedAction = {
@@ -47,12 +48,6 @@ class Query extends React.Component {
     };
 
     dispatch(enhancedAction);
-
-    // if (pollInterval) {
-    //   this.pollAgent = setInterval(() => {
-    //     dispatch(enhancedAction)
-    //   }, pollInterval);
-    // }
   }
 
   render() {
@@ -73,9 +68,9 @@ class Query extends React.Component {
 const mapStateToProps = (state, props) => {
   let { action } = props;
   const cacheKey = `${action.type}:${JSON.stringify(action.payload)}`;
-
   return {
     cacheKey,
+    dispatching: state.api.dispatching,
     cache: state.api[cacheKey],
   };
 }
