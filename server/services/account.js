@@ -2,7 +2,7 @@ const axios = require('axios');
 const config = require('../config');
 const crypto = require('../modules/crypto');
 
-const routePath = `${config.api}/acct`;
+const routePath = `${config.burgundyApi}/acct`;
 
 const encryptUser = (u) => {
   const user = u;

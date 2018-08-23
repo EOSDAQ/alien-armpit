@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { SheetHeader } from 'components/molecules/Sheet';
 import Tab from 'components/molecules/Tab';
 import { OrderLogTab } from './OrderLogHeader.stlyed';
-import { orderLogTabs } from './OrderLogConstants';
+import { orderLogTabs } from './orderLogConstants';
 
 const OrderLogHeader = (props) => {
   const {

@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import orderBookReducer from './orderBookReducer';
-import * as api from './orderBookApi';
+import * as api from 'api/orderBook';
 import * as apiReducer from '../api/apiReducer';
 
 export function* fetchOrderBook({ payload }) {

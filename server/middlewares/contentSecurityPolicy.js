@@ -19,7 +19,7 @@ const cspDirectives = {
   styleSrc: ["'self'", "'unsafe-inline'", '*.googleapis.com'],
   scriptSrc: ["'self'", "'unsafe-inline'", '*.googleapis.com', '*.google-analytics.com',
     '*.googletagmanager.com', 'unpkg.com', (req, res) => (`'nonce-${res.locals.nonce}'`)],
-  imgSrc: ["'self'", '*.google-analytics.com', '*.googleapis.com', '*.gstatic.com',
+  imgSrc: ["'self'", '*.google-analytics.com', '*.googleapis.com', '*.gstatic.com', 'www.googletagmanager.com',
     'static.upbit.com', // TODO remove
   ],
 };

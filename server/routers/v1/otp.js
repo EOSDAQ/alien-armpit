@@ -1,8 +1,8 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator/check');
-const config = require('../config');
-const helper = require('../services/otpHelper');
-const accountService = require('../services/account');
+const config = require('../../config');
+const helper = require('../../services/otpHelper');
+const accountService = require('../../services/account');
 
 const router = express.Router();
 const { qrCode } = config.googleOtp;

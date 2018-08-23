@@ -1,8 +1,8 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator/check');
-const cipher = require('../services/cipher');
-const service = require('../services/account');
-const mailService = require('../services/mail');
+const cipher = require('../../services/cipher');
+const service = require('../../services/account');
+const mailService = require('../../services/mail');
 
 const router = express.Router();
 

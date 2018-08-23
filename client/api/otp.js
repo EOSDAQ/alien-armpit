@@ -4,7 +4,7 @@ import errorHandler from './errorHandler';
 export const getInitialData = async (accountName) => {
   try {
     const params = { accountName };
-    const response = await axios.post('/otp/getInitialData', params);
+    const response = await axios.post('/api/v1/otp/getInitialData', params);
     return response.data;
   } catch (err) {
     return errorHandler(err);
@@ -13,7 +13,7 @@ export const getInitialData = async (accountName) => {
 
 export const authenticate = async (payload) => {
   try {
-    const response = await axios.post('/otp/authenticate', { ...payload });
+    const response = await axios.post('/api/v1/otp/authenticate', { ...payload });
     return response.data;
   } catch (err) {
     return errorHandler(err);
