@@ -22,7 +22,6 @@ import Box from 'components/atom/Box';
 class Exchange extends React.PureComponent {
   render() {
     const { code } = this.props;
-
     return (
       <ExchangeBody>
         <Header />

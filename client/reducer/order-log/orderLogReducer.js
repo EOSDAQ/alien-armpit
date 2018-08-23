@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
+import { orderLogTabs } from 'pages/exchange/order-log/orderLogConstants';
 
 export const types = {
   UPDATE_TAB: 'tradeLog/tab/UPDATE',
@@ -10,7 +11,7 @@ export const actions = {
 };
 
 const defaultState = {
-  tab: '거래기록',
+  tab: orderLogTabs[0],
 };
 
 const tab = handleActions({

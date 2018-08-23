@@ -18,5 +18,5 @@ export const languages = ['ko', 'en'];
 
 export const timezone = {
   ko: 'Asia/Seoul',
-  en: 'GMT',
+  en: 'Etc/UTC',
 };

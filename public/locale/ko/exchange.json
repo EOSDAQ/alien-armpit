@@ -1,3 +1,28 @@
 {
-  "test": "test"
+  "tickers": {    
+    "myCoin": "보유코인",
+    "coinName": "코인이름",
+    "currentPrice": "현재가",
+    "dayChange": "전일대비",
+    "dayVolume": "거래량"
+  },
+  "chart": {
+    "24hVolume": "거래량(최근 24시간)",
+    "prevClosePrice": "전일 종가",
+    "dayHigh": "당일 고가",
+    "dayLow": "당일 저가"
+  },
+  "orderBook": {
+    "price": "시장가",
+    "buyAmount": "매수잔량",
+    "sellAmount": "매도잔량",
+    "totalAmount": "총 잔량"
+  },
+  "orderLog": {
+    "tradeHistory": "거래기록",
+    "openOrders": "매체결내역",
+    "volume": "체결량",
+    "price": "체결가격",
+    "time": "체결시간"
+  }
 }

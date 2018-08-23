@@ -1,19 +1,19 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import {
   SheetHeader,
   SheetHeading,
   SheetHeadingRow,
 } from 'components/molecules/Sheet';
+import { headings } from './orderBookConstants';
 
-const mockHeadings = ['매도잔량', '시장가', '매수잔량'];
-
-const OrderBookHeader = () => (
+const OrderBookHeader = ({ t }) => (
   <SheetHeader>
     <SheetHeadingRow columns="1fr 1fr 1fr">
       {
-        mockHeadings.map(heading => (
+        headings.map(heading => (
           <SheetHeading key={heading}>
-            {heading}
+            {t(`orderBook.${heading}`)}
           </SheetHeading>
         ))
       }
@@ -21,4 +21,4 @@ const OrderBookHeader = () => (
   </SheetHeader>
 );
 
-export default OrderBookHeader;
+export default translate('exchange')(OrderBookHeader);

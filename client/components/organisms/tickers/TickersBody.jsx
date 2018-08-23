@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from '@reach/router';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -31,10 +32,12 @@ const TickersBody = (props) => {
   const {
     coinList,
     toggleFavorite,
+    t,
   } = props;
 
   const scrollStyle = { style: { height: 360 } };
   const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
+  const million = t('million');
   return (
     <Scrollbars {...scrollOptions}>
       {coinList.map((coin) => {
@@ -78,7 +81,7 @@ const TickersBody = (props) => {
             <DayVolumeCell>
               {toMillion(coin.dayVolume)}
               <DayVolumeUnitText>
-                백만
+                {million}
               </DayVolumeUnitText>
             </DayVolumeCell>
           </TickersRow>
@@ -95,4 +98,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps,
-)(TickersBody);
+)(translate('common')(TickersBody));

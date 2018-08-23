@@ -1,3 +1,28 @@
 {
-  "test": "test"
+  "tickers": {
+    "myCoin": "My Coin",
+    "coinName": "Name",
+    "currentPrice": "Last Price",
+    "dayChange": "Change",
+    "dayVolume": "Volume"
+  },
+  "chart": {
+    "24hVolume": "24h Volume",
+    "prevClosePrice": "Previous Close Price",
+    "dayHigh": "Day High",
+    "dayLow": "Day Low"
+  },
+  "orderBook": {
+    "price": "Price",
+    "buyAmount": "Bid Amount",
+    "sellAmount": "Ask Amount",
+    "totalAmount": "Total Amount"
+  },  
+  "orderLog": {
+    "tradeHistory": "Trade History",
+    "openOrders": "Open Orders",
+    "volume": "Volume",
+    "price": "Price",
+    "time": "Time"
+  }
 }

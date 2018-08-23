@@ -1,32 +1,33 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import {
   SheetHeader,
   SheetHeading,
   SheetHeadingRow,
 } from 'components/molecules/Sheet';
 
-const OrderLogSubHeader = () => (
+const OrderLogSubHeader = ({ t }) => (
   <SheetHeader>
     <SheetHeadingRow
       columns="1fr 1fr 1fr"
     >
       <SheetHeading>
         <span>
-          체결량(IQ)
+          {t('orderLog.volume')}(IQ)
         </span>
       </SheetHeading>
       <SheetHeading>
         <span>
-          체결가격
+          {t('orderLog.price')}
         </span>
       </SheetHeading>
       <SheetHeading>
         <span>
-          체결시간
+          {t('orderLog.time')}
         </span>
       </SheetHeading>
     </SheetHeadingRow>
   </SheetHeader>
 );
 
-export default OrderLogSubHeader;
+export default translate('exchange')(OrderLogSubHeader);

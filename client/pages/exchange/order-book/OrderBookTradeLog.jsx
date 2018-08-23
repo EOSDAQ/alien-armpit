@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import {
   OrderBookTradeLogWrapper,
   OrderBookTradeLogRow,
@@ -6,30 +7,27 @@ import {
   OrderBookTradeLogCell,
 } from './OrderBookTradeLog.styled';
 
-const OrderTradeLog = (props) => {
-  const { tradeLogList } = props;
-  return (
-    <OrderBookTradeLogWrapper>
-      <OrderBookTradeLogRow>
-        <OrderBookTradeLogHeader>
-          체결가
-        </OrderBookTradeLogHeader>
-        <OrderBookTradeLogHeader>
-          체결량
-        </OrderBookTradeLogHeader>
+const OrderTradeLog = ({ tradeLogList, t }) => (
+  <OrderBookTradeLogWrapper>
+    <OrderBookTradeLogRow>
+      <OrderBookTradeLogHeader>
+        {t('orderLog.price')}
+      </OrderBookTradeLogHeader>
+      <OrderBookTradeLogHeader>
+        {t('orderLog.volume')}
+      </OrderBookTradeLogHeader>
+    </OrderBookTradeLogRow>
+    { tradeLogList.map(log => (
+      <OrderBookTradeLogRow key={log.price + log.amount}>
+        <OrderBookTradeLogCell>
+          {log.price}
+        </OrderBookTradeLogCell>
+        <OrderBookTradeLogCell>
+          {log.amount}
+        </OrderBookTradeLogCell>
       </OrderBookTradeLogRow>
-      { tradeLogList.map(log => (
-        <OrderBookTradeLogRow key={log.price + log.amount}>
-          <OrderBookTradeLogCell>
-            {log.price}
-          </OrderBookTradeLogCell>
-          <OrderBookTradeLogCell>
-            {log.amount}
-          </OrderBookTradeLogCell>
-        </OrderBookTradeLogRow>
-      ))}
-    </OrderBookTradeLogWrapper>
-  );
-};
+    ))}
+  </OrderBookTradeLogWrapper>
+);
 
-export default OrderTradeLog;
+export default translate('exchange')(OrderTradeLog);

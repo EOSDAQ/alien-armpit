@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+  import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { scrollbarsOptions } from 'constants/constants';
 
@@ -32,12 +32,14 @@ const mockTradeLog = [
 
 class ExchangeOrderBook extends React.Component {
   render() {
-    const { token, ask, bid, info } = this.props;
+    const {
+      token, ask, bid, info,
+    } = this.props;
     const scrollStyle = { style: { height: 512 } };
     const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
     if (!token) return null;
 
-    const payload = { symbol: token.symbol + '_' + token.baseSymbol };
+    const payload = { symbol: `${token.symbol}_${token.baseSymbol}` };
 
     return (
       <OrderBookWrapper>
@@ -81,14 +83,14 @@ class ExchangeOrderBook extends React.Component {
       </OrderBookWrapper>
     );
   }
-};
+}
 
 const mapStateToProps = (state, { code }) => {
   return {
     ...state.orderBook[code],
     token: state.tokens[code],
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,

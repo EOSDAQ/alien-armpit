@@ -5,7 +5,6 @@ import { scrollbarsOptions } from 'constants/constants';
 import { actions } from 'reducer/order-log/orderLogReducer';
 import {
   OrderLogWrapper,
-  OrderLogBody,
   OrderLogPrice,
   OrderLogAmount,
   OrderLogTime,
