@@ -87,14 +87,14 @@ export function* order({ payload }) {
   try {
     const from = yield select(s => s.account.name);
 
-    if (type === 'sell') {
-      yield call(scatterApi.sell, {
+    if (type === 'bid') {
+      yield call(scatterApi.bid, {
         price: parseFloat(price),
         amount: toFixed(4, amount) + ' ' + symbol,
         from,
       })
     } else {
-      yield call(scatterApi.transfer, {
+      yield call(scatterApi.ask, {
         price: parseFloat(price),
         amount: toFixed(4, amount * price) + ' SYS',
         from,

@@ -6,42 +6,30 @@ import { SheetWrapper } from 'components/molecules/Sheet';
 import { actions } from 'reducer/account/accountReducer';
 import { OrderFormDisabled } from './OrderForm.styled';
 
-class OrderForm extends React.PureComponent {
-  onSubmit(values, type) {
-    const { order, token } = this.props;
-
-    order({
-      ...values,
-      type,
-      symbol: token.symbol,
-    });
-  }
-
-  render() {
-    const { authenticated, token } = this.props;
-    if (!token) return null;
-    const types = ['buy', 'sell'];
-                   
-    return (
-      <SheetWrapper>
-        {!authenticated && <OrderFormDisabled />}
-        <Flex>
-          {types.map(type => (
-            <OrderFormPanel
-              key={type}
-              form={`order-${type}`}
-              symbol={token.symbol}
-              baseSymbol={token.baseSymbol}
-              onSubmit={e => this.onSubmit(e, type)}
-            />
-          ))}
-        </Flex>
-      </SheetWrapper>
-    );
-  }
+const OrderForm = (props) => {
+  const { authenticated, token, order } = props;
+  if (!token) return null;
+  const types = ['ask', 'bid'];
+  
+  return (
+    <SheetWrapper>
+      {!authenticated && <OrderFormDisabled />}
+      <Flex>
+        {types.map(type => (
+          <OrderFormPanel
+            key={type}
+            type={type}
+            symbol={token.symbol}
+            baseSymbol={token.baseSymbol}
+            order={order}
+          />
+        ))}
+      </Flex>
+    </SheetWrapper>
+  );
 }
 
-const mapStateToProps = (state, { code, ...props }) => {
+const mapStateToProps = (state, { code }) => {
   return {
     authenticated: state.account.authenticated,
     code,

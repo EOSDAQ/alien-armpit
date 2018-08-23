@@ -100,7 +100,7 @@ class Scatter {
 
 const scatter = new Scatter();
 
-export const transfer = async (data) => {
+export const ask = async (data) => {
   const result = await scatter.transfer(
     data.from,
     'eosdaqoooo2o',
@@ -113,7 +113,7 @@ export const transfer = async (data) => {
   alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
 };
 
-export const sell = async (data) => {
+export const bid = async (data) => {
   const contract = await scatter.contract('oo1122334455');
   try {
     const result = await contract.transfer(data.from, 'eosdaqoooo2o', data.amount, data.price.toFixed(4));

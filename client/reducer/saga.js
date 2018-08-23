@@ -9,7 +9,6 @@ import * as orderBookSaga from './order-book/orderBookSaga';
 import orderBookReducer from './order-book/orderBookReducer';
 import * as signinSaga from './signin/signinSaga';
 import * as otpSaga from './otp/otpSaga';
-import { takeEvery } from 'redux-saga';
 
 export default function* saga() {
   yield [
@@ -30,7 +29,7 @@ export default function* saga() {
       accountSaga.order,
     ),
 
-    takeEvery(
+    takeLatest(
       orderBookReducer.types.FETCH_ORDER_BOOK,
       orderBookSaga.fetchOrderBook,
     ),

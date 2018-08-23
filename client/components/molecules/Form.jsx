@@ -11,8 +11,10 @@ class Form extends React.Component {
     }
   }
 
-  onSubmit() {
-    const { form } = this;
+  onSubmit(e) {
+    e.preventDefault();
+    const { values } = this.state;
+    this.props.onSubmit(values);
   }
 
   setValues(values) {
@@ -37,7 +39,7 @@ class Form extends React.Component {
     return (
       <form
         ref={e => this.form = e}
-        onSubmit={() => this.onSubmit()}
+        onSubmit={(e) => this.onSubmit(e)}
       >
         {this.props.children(this.state)}
       </form>

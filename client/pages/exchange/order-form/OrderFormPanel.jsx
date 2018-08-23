@@ -28,17 +28,24 @@ const initialValues = {
 
 const OrderForm = (props) => {
   let {
-    form,
+    type,
     symbol,
     baseSymbol,
+    order,
   } = props;
-  // console.log(props.symbol, 'ORDERFORM~');
+
   const fields = ['price', 'amount'];
-  const isBuy = form.indexOf('buy') >= 0;
-  const submitText = `${symbol} ${isBuy ? '매수' : '매도'}`
+
   return (
     <OrderFormContainer>
       <Form
+        onSubmit={(values) => {
+          order({
+            ...values,
+            type,
+            symbol,
+          })
+        }}
         initialValues={initialValues}
       >
         {({ setValues, values }) => {
@@ -116,9 +123,9 @@ const OrderForm = (props) => {
                 <OrderFormButton
                   type="submit"
                   small
-                  isBuy={isBuy}
+                  isAsk={type === 'ask'}
                 >
-                  {submitText}
+                  {`${symbol} ${type === 'ask' ? '매수' : '매도'}`}
                 </OrderFormButton>
               </OrderFormAction>
             </React.Fragment>
