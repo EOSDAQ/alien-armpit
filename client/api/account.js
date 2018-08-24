@@ -3,10 +3,10 @@ import errorHandler from './errorHandler';
 
 const userBaseUrl = '/api/v1/account/user';
 
-export const signin = async (params) => {
+export const signUp = async (params) => {
   try {
     const response = await axios.post(userBaseUrl, params);
-    return response.data;
+    return response.data.resultData;
   } catch (err) {
     return errorHandler(err);
   }

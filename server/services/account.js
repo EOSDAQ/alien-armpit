@@ -29,7 +29,6 @@ const createUser = async (user) => {
   const url = `${userBaseUrl}`;
   try {
     const response = await axios.post(url, { ...user });
-    // TODO
     return response.data;
   } catch (e) {
     throw new Error(e);
@@ -62,6 +61,7 @@ const revokeEmail = async (accountName, email, emailHash) => {
     const response = await axios.delete(url, {
       data: { email, emailHash },
     });
+
     return response.data;
   } catch (e) {
     throw new Error(e);

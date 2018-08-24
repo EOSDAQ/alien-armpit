@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { actions } from 'reducer/signin/signinReducer';
+import { actions } from 'reducer/account/accountReducer';
 import Footer from 'components/organisms/Footer';
 import Header from 'components/organisms/header/Header';
 import Flex from 'components/atom/Flex';
@@ -13,13 +13,12 @@ import {
   SigninDesc,
 } from './Signin.styled';
 import SigninForm from './SigninForm';
-import { navigate } from '@reach/router';
 
 class Signin extends React.Component {
   onSubmit({ email }) {
     const {
       name,
-      sendConfirmEmail,
+      createAccount,
     } = this.props;
 
     if (!name) {
@@ -27,14 +26,7 @@ class Signin extends React.Component {
       return;
     }
 
-    sendConfirmEmail({
-      accountName: name,
-      email,
-    });
-    
-    navigate('/sent-email', {
-      state: { email },
-    });
+    createAccount({ email });
   }
 
   render() {
@@ -67,7 +59,7 @@ class Signin extends React.Component {
 const mapStateToProps = state => state.account;
 
 const mapDispatchToProps = dispatch => ({
-  sendConfirmEmail: (email) => { dispatch(actions.sendConfirmEmailSaga(email)); },
+  createAccount: (payload) => dispatch(actions.createAccount(payload)),
 });
 
 export default compose(

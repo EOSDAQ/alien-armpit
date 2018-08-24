@@ -43,10 +43,11 @@ router.post('/user', [
     const user = await service.getUser(accountName);
     const emailHash = cipher.generateBase32str(20);
 
+    let data;
     if (user) {
-      await service.revokeEmail(accountName, email, emailHash);
+      data = await service.revokeEmail(accountName, email, emailHash);
     } else {
-      await service.createUser({
+      data = await service.createUser({
         accountName,
         email,
         emailHash,
@@ -54,7 +55,7 @@ router.post('/user', [
     }
 
     mailService.sendVerifyEmail(accountName, email, emailHash);
-    res.status(200).send({ success: true });
+    res.status(200).send(data);
   } catch (e) {
     res.status(e.status || 500).send({ success: false });
   }

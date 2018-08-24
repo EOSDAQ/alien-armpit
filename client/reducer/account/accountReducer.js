@@ -7,6 +7,8 @@ export const types = {
   SIGN_OUT: 'account/signOut',
   SIGN_UP: 'account/signUp',
   ORDER: 'account/order',
+  CREATE_ACCOUNT: 'account/create',
+  CREATED_ACCOUNT: 'account/created',
 };
 
 export const actions = {
@@ -24,6 +26,14 @@ export const actions = {
   }),
   updateAccountInfo: payload => ({
     type: types.UPDATE_ACCOUNT_INFO,
+    payload,
+  }),
+  createAccount: payload => ({
+    type: types.CREATE_ACCOUNT,
+    payload,
+  }),
+  createdAccount: payload => ({
+    type: types.CREATED_ACCOUNT,
     payload,
   }),
   signUp: payload => ({
@@ -55,6 +65,14 @@ const accountReducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       };
+    case types.CREATED_ACCOUNT:
+      return {
+        ...state,
+        otpConfirm: false,
+        emailConfirm: false,
+        security: 0,
+        authenticated: true,
+      }
     case types.SIGN_OUT:
       return initialState;
 

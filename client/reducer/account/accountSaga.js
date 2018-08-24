@@ -17,23 +17,39 @@ export function* authenticateScatter() {
 
 export function* restoreSession() {
   const account = yield getScatterIdentity();
+  if (!account) {
+    return;
+  }
+
   try {
     let user = yield call(accountApi.get, account.name);
     yield updateAccount(account, user);
   } catch(e) {
+    yield forgetScatterIdentity();
     return;
   }
 }
 
-export function* signUp({ payload }) {
-  try {
-    let account = yield call(scatterApi.getScatterIdentity);
-    const { isUserCreated } = yield call(accountApi.get, account.name);
-    if (isUserCreated) {
-      // email 중복 처리
-    }
-  } catch (err) {
-    console.error(err);
+export function* signUp() {
+  const account = yield getScatterIdentity();
+  if (account) {
+    yield put(actions.updateAccountInfo(account));
+    navigate('/signup');
+  }
+}
+
+export function* createAccount({ payload: { email } }) {
+  const { name } = yield select(state => state.account);
+  const data = yield call(accountApi.signUp, {
+    accountName: name,
+    email,
+  });
+
+  // TODO.
+  if (data) {
+    // successful
+    yield put(actions.createdAccount());
+    navigate('/');
   }
 }
 
@@ -57,9 +73,11 @@ export function* signIn() {
     const user = yield call(accountApi.get, account.name);
     yield updateAccount(account, user);
   } catch(err) {
-    // user is null;
-    yield put(actions.updateAccountInfo(account));
-    navigate('/signup');
+    // 지금은 signIn 실패했을 때 임시적으로 alert를 띄워준다.
+    alert('Account is not registered');
+    yield forgetScatterIdentity();
+    // yield put(actions.updateAccountInfo(account));
+    // navigate('/signup');
   }
 }
 
@@ -158,6 +176,7 @@ export function* order({ payload }) {
 const accountSaga = [
   takeEvery(types.SIGN_IN, signIn),
   takeEvery(types.SIGN_UP, signUp),
+  takeEvery(types.CREATE_ACCOUNT, createAccount),
   takeEvery(types.ORDER, order),
   takeEvery(types.AUTHENTICATE_SCATTER, authenticateScatter),
   takeEvery(types.FORGET_SCATTER_IDENTITY, forgetScatterIdentity),

@@ -15,6 +15,7 @@ class HeaderAuthenticate extends React.Component {
     const {
       account,
       signIn,
+      signUp,
     } = this.props;
 
     const {
@@ -35,14 +36,23 @@ class HeaderAuthenticate extends React.Component {
     }
 
     return (
-      <TextButton onClick={() => signIn()}>
-        <Flex alignItems="flex-end">
-          <Text fontSize={14} mr={4}>
-            Sign in with
-          </Text>
-          <Icon type="scatter" width={50} />
-        </Flex>
-      </TextButton>
+      <div>
+        <TextButton onClick={() => signIn()}>
+          <Flex alignItems="flex-end">
+            <Text fontSize={14} mr={4}>
+              Sign In
+            </Text>
+          </Flex>
+        </TextButton>
+        <TextButton onClick={() => signUp()}>
+          <Flex alignItems="flex-end">
+            <Text fontSize={14} mr={4}>
+              Sign Up with
+            </Text>
+            <Icon type="scatter" width={50} />
+          </Flex>
+        </TextButton>
+      </div>
     );
   }
 }
@@ -50,6 +60,7 @@ class HeaderAuthenticate extends React.Component {
 const mapStateToProps = ({ account }) => ({ account });
 
 const mapDispatchToProps = dispatch => ({
+  signUp: payload => dispatch(actions.signUp(payload)),
   signIn: payload => dispatch(actions.signIn(payload)),
 });
 
