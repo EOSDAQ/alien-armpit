@@ -28,18 +28,17 @@ class Signin extends React.Component {
     }
 
     sendConfirmEmail({
-      accoutName: name,
+      accountName: name,
       email,
     });
     
-    navigate('/signin/sent-email', {
+    navigate('/sent-email', {
       state: { email },
     });
   }
 
   render() {
     const { t, name } = this.props;
-    console.log(name);
 
     return (
       <React.Fragment>

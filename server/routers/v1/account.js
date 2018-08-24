@@ -10,13 +10,15 @@ router.get('/user/:accountName', [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
-    validationResult(req).throw();
+    // validationResult(req).throw();
+    console.log(req.params);
     const {
       accountName,
     } = req.params;
     const user = await service.getUser(accountName);
+
     res
-      .status(user ? 200 : 500)
+      .status(user ? 200 : 404)
       .send({
         success: !!user,
         resultCode: user ? '0000' : '1000',
@@ -54,7 +56,6 @@ router.post('/user', [
     mailService.sendVerifyEmail(accountName, email, emailHash);
     res.status(200).send({ success: true });
   } catch (e) {
-    console.log(e);
     res.status(e.status || 500).send({ success: false });
   }
 });

@@ -9,16 +9,26 @@ import { toFixed } from 'utils/format';
 export function* authenticateScatter() {
   try {
     yield call(scatterApi.authenticateScatter);
-    yield getScatterIdentity({});
+    yield restoreSession();
+    // yield getScatterIdentity({});
   } catch (e) {
+  }
+}
 
+export function* restoreSession() {
+  const account = yield getScatterIdentity();
+  try {
+    let user = yield call(accountApi.get, account.name);
+    yield updateAccount(account, user);
+  } catch(e) {
+    return;
   }
 }
 
 export function* signUp({ payload }) {
   try {
     let account = yield call(scatterApi.getScatterIdentity);
-    const { isUserCreated } = yield call(accountApi.check, account.name);
+    const { isUserCreated } = yield call(accountApi.get, account.name);
     if (isUserCreated) {
       // email 중복 처리
     }
@@ -27,53 +37,38 @@ export function* signUp({ payload }) {
   }
 }
 
-export function* signIn({ payload }) {
+function* updateAccount(account, user) {
+  const { emailConfirm, otpConfirm } = user;
+  const security = [emailConfirm, otpConfirm].filter(Boolean).length;
+
+  yield put(actions.updateAccountInfo({
+    authenticated: true,
+    ...account,
+    security,
+    emailConfirm,
+    otpConfirm,
+  }));
+}
+
+export function* signIn() {
+  const account = yield getScatterIdentity();
+  
   try {
-    let account = yield call(scatterApi.getScatterIdentity);
-    const {
-      isOtpConfirmed,
-    } = yield call(accountApi.check, account.name);
-  } catch (err) {
-    console.error(err);
+    const user = yield call(accountApi.get, account.name);
+    yield updateAccount(account, user);
+  } catch(err) {
+    // user is null;
+    yield put(actions.updateAccountInfo(account));
+    navigate('/signup');
   }
 }
 
-export function* getScatterIdentity({ payload = {} }) {
+export function* getScatterIdentity() {
   try {
-    let account = yield call(scatterApi.getScatterIdentity);
-    const { name: accountName } = account;
-    const user = yield call(accountApi.get, accountName);
-
-    // 유저 계정이 없으면 signin 페이지로 보냄
-    if (!user) {
-      navigate('/signin');
-      return;
-    }
-
-    const {
-      emailConfirm,
-      otpConfirm,
-    } = user;
-
-    const authorized = emailConfirm && otpConfirm;
-    account.authorized = authorized;
-
-    account.scope = [
-      '/exchange',
-      '/exchange/:code',
-      '/support',
-      authorized && 'trade',
-    ].filter(Boolean);
-
-    yield put(actions.signIn({ account }));
-
-    if (!authorized) {
-      navigate('/signup');
-      yield call(scatterApi.forgetScatterIdentity);
-      return;
-    }
-
-
+    const account = yield call(scatterApi.getScatterIdentity);
+    return account;
+    // yield put(actions.updateAccountInfo({ account }));
+    // yield signIn({ account });
     // if (!isOtpConfirmed) {
     //   yield put(modal.actions.openModal({
     //     type: 'OTP_INIT',
@@ -85,7 +80,7 @@ export function* getScatterIdentity({ payload = {} }) {
     //   type: 'OTP_CHECK',
     // }));
   } catch (e) {
-    console.log(e.code, payload);
+
     if (!e.code) {
       // 스캐터 오류가 아님.
       console.error(e);
@@ -94,18 +89,20 @@ export function* getScatterIdentity({ payload = {} }) {
     switch (e.code) {
       case 401:
       case 500: {
-        const { showInstallMessage } = payload;
-        if (showInstallMessage) {
-          yield put(modal.actions.openModal({
-            type: 'INSTALL_SCATTER',
-          }));
-        }
+        yield put(modal.actions.openModal({
+          type: 'INSTALL_SCATTER',
+        }));
+        // const { showInstallMessage } = payload;
+        // if (showInstallMessage) {
+        // }
         break;
       }
       case 423: // scatter locked. || authenticate failed.
       case 402: // user closed the popup
       default:
     }
+
+    return null;
   }
 }
 

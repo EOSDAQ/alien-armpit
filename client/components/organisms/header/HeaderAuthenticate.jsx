@@ -14,15 +14,15 @@ class HeaderAuthenticate extends React.Component {
   render() {
     const {
       account,
-      getScatterIdentity,
+      signIn,
     } = this.props;
 
     const {
-      authorized,
+      authenticated,
       identicon,
     } = account;
 
-    if (authorized) {
+    if (authenticated) {
       return (
         <Flex alignItems="center">
           <Select options={<HeaderAccountMenu {...account} />}>
@@ -35,7 +35,7 @@ class HeaderAuthenticate extends React.Component {
     }
 
     return (
-      <TextButton onClick={() => getScatterIdentity({ showInstallMessage: true })}>
+      <TextButton onClick={() => signIn()}>
         <Flex alignItems="flex-end">
           <Text fontSize={14} mr={4}>
             Sign in with
@@ -50,7 +50,7 @@ class HeaderAuthenticate extends React.Component {
 const mapStateToProps = ({ account }) => ({ account });
 
 const mapDispatchToProps = dispatch => ({
-  getScatterIdentity: payload => dispatch(actions.getScatterIdentity(payload)),
+  signIn: payload => dispatch(actions.signIn(payload)),
 });
 
 export default connect(

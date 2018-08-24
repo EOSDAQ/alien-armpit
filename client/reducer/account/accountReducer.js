@@ -2,6 +2,7 @@ export const types = {
   AUTHENTICATE_SCATTER: 'account/authenticateScatter',
   GET_SCATTER_IDENTITY: 'account/getScatterIdentity',
   FORGET_SCATTER_IDENTITY: 'account/forgetScatterIdentity',
+  UPDATE_ACCOUNT_INFO: 'account/UPDATE_ACCOUNT_INFO',
   SIGN_IN: 'account/signIn',
   SIGN_OUT: 'account/signOut',
   SIGN_UP: 'account/signUp',
@@ -19,6 +20,10 @@ export const actions = {
   }),
   forgetScatterIdentity: payload => ({
     type: types.FORGET_SCATTER_IDENTITY,
+    payload,
+  }),
+  updateAccountInfo: payload => ({
+    type: types.UPDATE_ACCOUNT_INFO,
     payload,
   }),
   signUp: payload => ({
@@ -41,15 +46,14 @@ export const actions = {
 
 const initialState = {
   authenticated: false,
-  viewer: null,
 };
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.SIGN_IN:
+    case types.UPDATE_ACCOUNT_INFO:
       return {
-        authenticated: true,
-        ...action.payload.account,
+        ...state,
+        ...action.payload,
       };
     case types.SIGN_OUT:
       return initialState;
