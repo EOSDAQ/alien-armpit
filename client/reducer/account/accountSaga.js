@@ -58,10 +58,10 @@ export function* getScatterIdentity({ payload = {} }) {
     ].filter(Boolean);
     
     yield put(actions.signIn({ account }));
-    
+
     if (!authorized) {
-      yield call(scatterApi.forgetScatterIdentity);
       navigate('/signup');
+      yield call(scatterApi.forgetScatterIdentity);
       return;
     }
     

@@ -1,6 +1,6 @@
 {
   "signin": {
-    "title": "Let`s shake hands!",
+    "title": "Join EOSDAQ",
     "desc": "Before diving into the world of EOS and eosdaq, <br />we must know your personal information in detail.",
     "policy": "By signing up, you agree to the ${termsOfService} and ${privacyPolicy}, including ${cookieUse}. Others will be able to find you by email or phone number when provided",
     "policyTerms": "Terms of Service",

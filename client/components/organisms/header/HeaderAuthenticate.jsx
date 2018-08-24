@@ -18,12 +18,11 @@ class HeaderAuthenticate extends React.Component {
     } = this.props;
 
     const {
-      authenticated,
-      name,
+      authorized,
       identicon,
     } = account;
 
-    if (authenticated) {
+    if (authorized) {
       return (
         <Flex alignItems="center">
           <Select options={<HeaderAccountMenu {...account} />}>
