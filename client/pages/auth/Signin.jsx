@@ -38,7 +38,9 @@ class Signin extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, name } = this.props;
+    console.log(name);
+
     return (
       <React.Fragment>
         <div>
@@ -49,7 +51,9 @@ class Signin extends React.Component {
               <SigninHeader>
                 {t('signin.title')}
               </SigninHeader>
-              <SigninDesc dangerouslySetInnerHTML={{ __html: t('signin.desc') }} />
+              <SigninDesc>
+                {t('signin.desc').replace('${accountName}', name)}
+              </SigninDesc>
               <SigninForm onSubmit={value => this.onSubmit(value)} />
             </SigninWrapper>
           </Flex>

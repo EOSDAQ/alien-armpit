@@ -6,7 +6,7 @@ import SentEmail from './sentEmail/SentEmail';
 const SignRouter = () => {
   return (
     <Router path="/">
-      <Signin path="signin" />
+      <Signin path="signup" />
       <SentEmail path="sent-email" />
     </Router>
   );

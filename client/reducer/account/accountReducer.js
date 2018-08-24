@@ -4,6 +4,7 @@ export const types = {
   FORGET_SCATTER_IDENTITY: 'account/forgetScatterIdentity',
   SIGN_IN: 'account/signIn',
   SIGN_OUT: 'account/signOut',
+  SIGN_UP: 'account/signUp',
   ORDER: 'account/order',
 };
 
@@ -18,6 +19,10 @@ export const actions = {
   }),
   forgetScatterIdentity: payload => ({
     type: types.FORGET_SCATTER_IDENTITY,
+    payload,
+  }),
+  signUp: payload => ({
+    type: types.SIGN_UP,
     payload,
   }),
   signIn: payload => ({

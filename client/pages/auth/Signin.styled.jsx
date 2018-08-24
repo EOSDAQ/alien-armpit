@@ -8,17 +8,17 @@ export const SigninWrapper = styled('div')`
 `;
 
 export const SigninHeader = styled('h2')`
-  font-size: 48px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
   color: ${colors.grey800};
   padding-top: 34px;
 `;
 
 export const SigninDesc = styled('p')`
   font-size: 16px;
-  font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.6;
   color: ${colors.grey600};
-  padding-top: 11px;
+  padding-top: 12px;
 `;
 

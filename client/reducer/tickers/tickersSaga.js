@@ -1,5 +1,5 @@
-import { call, put } from 'redux-saga/effects';
-import { actions } from './tickersReducer';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { actions, types } from './tickersReducer';
 import { actions as tokensActions } from '../tokens/tokensReducer';
 import * as api from 'api/tickers';
 
@@ -30,3 +30,12 @@ export function* updateSearchValue({ payload }) {
   yield put(actions.updateSearchValue(payload));
   yield put(actions.updateFilteredCoinList());
 }
+
+const tickersSaga = [
+  takeLatest(types.UPDATE_SORT_SAGA, updateSort),
+  takeLatest(types.UPDATE_SEARCH_VALUE_SAGA, updateSearchValue),
+  takeLatest(types.TOGGLE_SHOW_FAVORITES_SAGA, toggleShowFavorites),
+  takeLatest(types.LOAD_COINS, loadCoins),
+];
+
+export default tickersSaga;
