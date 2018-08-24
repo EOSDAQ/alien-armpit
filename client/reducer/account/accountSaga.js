@@ -49,7 +49,7 @@ export function* createAccount({ payload: { email } }) {
   if (data) {
     // successful
     yield put(actions.createdAccount());
-    navigate('/');
+    navigate('/sent-email');
   }
 }
 

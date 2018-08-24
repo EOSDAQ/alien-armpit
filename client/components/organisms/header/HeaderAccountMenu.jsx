@@ -10,11 +10,17 @@ import Icon from '../../atom/Icon';
 import { colors } from '../../css/theme';
 import { Link } from '@reach/router';
 
-const HeaderAccountMenu = ({ t, name, identicon, signOut, ...props }) => {
-  // console.log(props);
+const HeaderAccountMenu = ({ t, signOut, ...account }) => {
+  const {
+    name,
+    identicon,
+    otpConfirm,
+    emailConfirm,
+  } = account;
+
   const security = [
-    { name: t('menu.emailConfirm'), value: false },
-    { name: t('menu.connectOTP'), value: false },
+    { name: t('menu.emailConfirm'), value: emailConfirm },
+    { name: t('menu.connectOTP'), value: otpConfirm },
   ]
 
   return (
