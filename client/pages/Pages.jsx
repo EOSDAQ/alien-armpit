@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect, Router } from '@reach/router';
 import Modal from 'components/organisms/modal/Modal';
-import Signin from './sign/Signin';
 import Exchange from './exchange/Exchange';
 
 function asyncRoute(dynamicImport) {
@@ -36,16 +35,12 @@ function asyncRoute(dynamicImport) {
 
 const routes = [
   {
-    path: '/signin',
-    Component: Signin,
-  },
-  {
-    path: '/sentEmail',
-    Component: asyncRoute(() => import(/* webpackChunkName: "sentEmail" */ './sent-email/SentEmail')),
-  },
-  {
     path: '/exchange/:code',
     Component: Exchange,
+  },
+  {
+    path: '*',
+    Component: asyncRoute(() => import(/* webpackChunkName: "auth" */ './auth/AuthRouter')),
   },
   {
     path: '/',

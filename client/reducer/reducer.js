@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import tickersReducer from './tickers/tickersReducer';
 import orderLogReducer from './order-log/orderLogReducer';
 import languageReducer from './language/languageReducer';
@@ -11,7 +10,6 @@ import tokensReducer from './tokens/tokensReducer';
 import apiReducer from './api/apiReducer';
 
 const reducer = combineReducers({
-  form: formReducer,
   api: apiReducer,
   tokens: tokensReducer,
   language: languageReducer,
