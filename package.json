@@ -57,6 +57,7 @@
     "connected-react-router": "^4.4.1",
     "cookie-parser": "^1.4.3",
     "copy-webpack-plugin": "^4.5.2",
+    "dotenv": "^6.0.0",
     "eosjs": "^16.0.0",
     "express": "^4.16.3",
     "express-validator": "^5.3.0",

@@ -6,6 +6,7 @@ const userBaseUrl = `${routePath}/user`;
 
 const getUser = async (accountName) => {
   const url = `${userBaseUrl}/${accountName}`;
+  
   try {
     const response = await axios.get(url);
     return response.data.resultData;
