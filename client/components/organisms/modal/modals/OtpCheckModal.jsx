@@ -17,14 +17,14 @@ class OtpCheckModal extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { authenticate, viewer } = this.props;
+    const { validate, viewer } = this.props;
     const codeInput = this.codeInput.current;
     const code = codeInput.value;
     if (code.length !== 6) {
       return;
     }
-    authenticate({
-      password: code,
+    validate({
+      code,
       accountName: viewer.name,
     });
   }
@@ -55,7 +55,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  authenticate: (payload) => { dispatch(actions.authenticateSaga(payload)); },
+  validate: (payload) => { dispatch(actions.validateOtpSaga(payload)); },
 });
 
 export default connect(

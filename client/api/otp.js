@@ -1,19 +1,18 @@
 import axios from 'axios';
 import errorHandler from './errorHandler';
 
-export const getInitialData = async (accountName) => {
+export const initOtp = async (accountName) => {
   try {
-    const params = { accountName };
-    const response = await axios.post('/api/v1/otp/getInitialData', params);
+    const response = await axios.post(`/api/v1/account/${accountName}/otp/init`);
     return response.data;
   } catch (err) {
     return errorHandler(err);
   }
 };
 
-export const authenticate = async (payload) => {
+export const validateOtp = async ({ accountName, code }) => {
   try {
-    const response = await axios.post('/api/v1/otp/authenticate', { ...payload });
+    const response = await axios.post(`/api/v1/account/${accountName}/otp/validate`, { code });
     return response.data;
   } catch (err) {
     return errorHandler(err);

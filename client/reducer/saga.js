@@ -18,7 +18,8 @@ export default function* saga() {
     ),
     takeLatest(signinTypes.SEND_CONFIRM_EMAIL_SAGA, signinSaga.signin),
 
-    takeLatest(otpTypes.GET_INITIAL_DATA_SAGA, otpSaga.getInitialData),
-    takeLatest(otpTypes.AUTHENTICATE_SAGA, otpSaga.authenticate),
+    takeLatest(otpTypes.INIT_OTP_SAGA, otpSaga.initOtp),
+    takeLatest(otpTypes.VALIDATE_OTP_SAGA, otpSaga.validateOtp),
   ]);
+
 }

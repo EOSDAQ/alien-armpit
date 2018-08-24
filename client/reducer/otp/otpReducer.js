@@ -1,20 +1,20 @@
 export const types = {
-  GET_INITIAL_DATA_SAGA: 'otp/GET_INITIAL_DATA_SAGA',
+  INIT_OTP_SAGA: 'otp/INIT_OTP_SAGA',
   UPDATE_DATA: 'otp/UPDATE_DATA',
-  AUTHENTICATE_SAGA: 'otp/AUTHENTICATE_SAGA',
+  VALIDATE_OTP_SAGA: 'otp/VALIDATE_OTP_SAGA',
 };
 
 export const actions = {
-  getInitialDataSaga: payload => ({
-    type: types.GET_INITIAL_DATA_SAGA,
+  initOtpSaga: payload => ({
+    type: types.INIT_OTP_SAGA,
     payload,
   }),
   updateData: payload => ({
     type: types.UPDATE_DATA,
     payload,
   }),
-  authenticateSaga: payload => ({
-    type: types.AUTHENTICATE_SAGA,
+  validateOtpSaga: payload => ({
+    type: types.VALIDATE_OTP_SAGA,
     payload,
   }),
 };

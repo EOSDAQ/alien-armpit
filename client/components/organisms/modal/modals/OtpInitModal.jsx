@@ -25,10 +25,10 @@ class OtpInitModal extends React.Component {
 
   componentDidMount() {
     const {
-      getInitialData,
+      initOtp,
       viewer,
     } = this.props;
-    getInitialData(viewer.name);
+    initOtp(viewer.name);
   }
 
   componentDidUpdate() {
@@ -105,7 +105,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInitialData: (accountName) => { dispatch(actions.getInitialDataSaga(accountName)); },
+  initOtp: (accountName) => { dispatch(actions.initOtpSaga(accountName)); },
   showOtpCheckModal: () => {
     dispatch(modalReducer.actions.openModal({
       type: 'OTP_CHECK',

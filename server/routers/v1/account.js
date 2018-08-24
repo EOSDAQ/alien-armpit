@@ -6,24 +6,28 @@ const mailService = require('../../services/mail');
 
 const router = express.Router();
 
-router.get('/check', [
+router.get('/user/:accountName', [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
     const {
       accountName,
-    } = req.query;
-
-    const authInfo = await service.getUserAuthInfo(accountName);
-    // res.redirect('/signin');
-    res.status(200).send(authInfo);
+    } = req.params;
+    const user = await service.getUser(accountName);
+    res
+      .status(user ? 200 : 500)
+      .send({
+        success: !!user,
+        resultCode: user ? '0000' : '1000',
+        user,
+      });
   } catch (e) {
     next(e);
   }
 });
 
-router.post('/signin', [
+router.post('/user', [
   check('accountName').exists(),
   check('email').exists(),
 ], async (req, res) => {
@@ -34,46 +38,99 @@ router.post('/signin', [
       email,
     } = req.body;
 
-    let user = await service.getUserByAccountName(accountName);
-    if (!user) {
-      user = {
+    const user = await service.getUser(accountName);
+    const emailHash = cipher.generateBase32str(20);
+
+    if (user) {
+      await service.revokeEmail(accountName, email, emailHash);
+    } else {
+      await service.createUser({
         accountName,
         email,
-      };
-
-      await service.createUser(user);
+        emailHash,
+      });
     }
 
-    const emailHash = cipher.generateBase32str(20);
     mailService.sendVerifyEmail(accountName, email, emailHash);
-    user.email = email;
-    user.emailHash = emailHash;
-    await service.updateUser(user);
     res.status(200).send({ success: true });
   } catch (e) {
+    console.log(e);
     res.status(e.status || 500).send({ success: false });
   }
 });
 
-// TODO che - 수정 필요 임시로 email 대신 accountName을 넣음
-router.get('/verifyEmail/:accountName/:hash', async (req, res) => {
-  const {
-    accountName,
-    hash,
-  } = req.params;
+router.get('/verifyEmail/:accountName/:email/:emailHash', [
+  check('accountName').exists(),
+  check('email').exists(),
+  check('emailHash').exists(),
+], async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const {
+      accountName,
+      email,
+      emailHash,
+    } = req.params;
 
-  const user = await service.getUserByAccountName(accountName);
-  if (hash !== user.emailHash) {
-    return;
+    // Backend will verify this key(tempHash) with tempUser and authorize user.
+    // [SUCCESS] -> go to /register/success
+    // [FAIL] -> go to /register/fail
+    // res.redirect(`/register/success#${key}`);
+    const result = await service.confirmEmail(accountName, email, emailHash);    
+    if (!result.emailConfirm) {
+    }
+  } catch (e) {
+    next(e);
   }
-
-  user.emailConfirm = true;
-  await service.updateUser(user);
-  // Backend will verify this key(tempHash) with tempUser and authorize user.
-  // [SUCCESS] -> go to /register/success
-  // [FAIL] -> go to /register/fail
-  // res.redirect(`/register/success#${key}`);
   res.redirect('/');
+});
+
+router.post('/:accountName/otp/init/', [
+  check('accountName').exists(),
+], async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const {
+      accountName,
+    } = req.params;
+    let result;
+    result = await service.initOtp(accountName);
+
+    if (result.resultCode === '1000') {
+      await service.revokeOtp(accountName);
+      result = await service.initOtp(accountName);
+    }
+
+    res.status(200).send({
+      success: true,
+      otpKey: result.otpKey,
+    });
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+router.post('/:accountName/otp/validate', [
+  check('code').exists(),
+], async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const {
+      accountName,
+      code,
+    } = req.params;
+
+    const result = await service.validateOtp(accountName, code);
+    if (!result || !result.otpConfirm) {
+      res.status(401).send({ success: false });
+      return;
+    }
+
+    res.status(200).send({ success: true });
+  } catch (e) {
+    next(e);
+  }
 });
 
 module.exports = router;

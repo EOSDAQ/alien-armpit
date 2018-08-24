@@ -1,107 +1,122 @@
 const axios = require('axios');
 const config = require('../config');
-const crypto = require('../modules/crypto');
 
 const routePath = `${config.burgundyApi}/acct`;
+const userBaseUrl = `${routePath}/user`;
 
-const encryptUser = (u) => {
-  const user = u;
-  if (user.email) {
-    user.email = crypto.encrypt(user.email);
-  }
-
-  if (user.otpKey) {
-    user.otpKey = crypto.encrypt(user.otpKey);
-  }
-  return user;
-};
-
-const decryptUser = (u) => {
-  const user = u;
-  if (user.email) {
-    user.email = crypto.decrypt(user.email);
-  }
-
-  if (user.otpKey) {
-    user.otpKey = crypto.decrypt(user.otpKey);
-  }
-  return user;
-};
-
-const getUserAuthInfo = async (accountName) => {
-  const user = await getUserByAccountName(accountName);
-
-  if (!user) {
-    return {
-      isUserCreated: false,
-      isEmailConfirmed: false,
-      isOtpConfirmed: false,
-    };
-  }
-
-  return {
-    isUserCreated: !!user.email,
-    isEmailConfirmed: !!user.emailConfirm,
-    isOtpConfirmed: !!user.otpConfirm,
-  };
-};
-
-const getUserByAccountName = async (accountName) => {
-  const url = `${routePath}/user/${accountName}`;
-  let response;
-
+const getUser = async (accountName) => {
+  const url = `${userBaseUrl}/${accountName}`;
   try {
-    response = await axios.get(url);
+    const response = await axios.get(url);
+    return response.data.resultData;
   } catch (e) {
-    response = e.response;
-  }
-  const { data } = response;
-  if (!data) {
-    return {};
-  }
-  if (response.status === 500 && data.resultCode === '1000') {
-    return null;
-  }
+    const { response } = e;
+    const {
+      status,
+      data,
+    } = response;
 
-  const user = decryptUser(data.resultData);
-  return {
-    ...user,
-  };
+    // record not found
+    if (status === 500 && data.resultCode === '1000') {
+      return null;
+    }
+
+    throw new Error(e);
+  }
 };
 
 const createUser = async (user) => {
-  const url = `${routePath}/user`;
+  const url = `${userBaseUrl}`;
   try {
-    await axios.post(url, { ...(encryptUser(user)) });
+    const response = await axios.post(url, { ...user });
+    // TODO
+    return response.data;
   } catch (e) {
     throw new Error(e);
   }
 };
 
 const deleteUser = async (accountName) => {
-  const url = `${routePath}/user/${accountName}`;
+  const url = `${userBaseUrl}/${accountName}`;
   try {
-    const user = await axios.delete(url);
-    return user;
+    const response = await axios.delete(url);
+    return response.data;
   } catch (e) {
     throw new Error(e);
   }
 };
 
-const updateUser = async (user) => {
-  const url = `${routePath}/user/${user.accountName}`;
+const confirmEmail = async (accountName, email, emailHash) => {
+  const url = `${userBaseUrl}/${accountName}/confirmEmail`;
   try {
-    const result = await axios.put(url, { ...(encryptUser(user)) });
-    return result;
+    const response = await axios.post(url, { email, emailHash });
+    return response.data;
   } catch (e) {
+    throw new Error(e);
+  }
+};
+
+const revokeEmail = async (accountName, email, emailHash) => {
+  const url = `${userBaseUrl}/${accountName}/revokeEmail`;  
+  try {
+    const response = await axios.delete(url, {
+      data: { email, emailHash },
+    });
+    return response.data;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+const initOtp = async (accountName) => {
+  const url = `${userBaseUrl}/${accountName}/newOTP`;
+  try {
+    const response = await axios.post(url);
+    return response.data;
+  } catch (e) {
+    const { response } = e;
+    const { status, data } = response;
+    if (status === 500 && data.resultCode === '1000') {
+      return data;
+    }
+    throw new Error(e);
+  }
+};
+
+const revokeOtp = async (accountName) => {
+  const url = `${userBaseUrl}/${accountName}/revokeOTP`;
+  try {
+    const response = await axios.delete(url);
+    return response.data;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+const validateOtp = async (accountName, code) => {
+  const url = `${userBaseUrl}/${accountName}/validateOTP`;
+  try {
+    const response = await axios.post(url, { code });
+    return response.data;
+  } catch (e) {
+    const { response } = e;
+    const { status, data } = response;
+    if (status === 400 && data.resultCode === '1101') {
+      return null;
+    }
+
     throw new Error(e);
   }
 };
 
 module.exports = {
-  getUserAuthInfo,
-  getUserByAccountName,
+  // getUserAuthInfo,
+  getUser,
   createUser,
   deleteUser,
-  updateUser,
+  confirmEmail,
+  revokeEmail,
+  initOtp,
+  revokeOtp,
+  validateOtp,
 };

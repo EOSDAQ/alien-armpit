@@ -9,7 +9,7 @@ const sendVerifyEmail = async (accountName, email, hash) => {
   const splittedEmail = email.split('@');
   try {
     const data = fs.readFileSync(templatePath, 'utf-8');
-    const url = `${config.url}/account/verifyEmail/${accountName}/${hash}`;
+    const url = `${config.url}/api/v1/account/verifyEmail/${accountName}/${email}/${hash}`;
     const mailOptions = {
       from: 'EOSDAQ <noreply@eosdaq.com>',
       to: email,

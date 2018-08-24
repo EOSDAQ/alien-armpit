@@ -42,21 +42,29 @@ export function* getScatterIdentity({ payload = {} }) {
   try {
     let account = yield call(scatterApi.getScatterIdentity);
     const { name: accountName } = account;
-    
-    const {
-      isEmailConfirmed,
-      isOtpConfirmed,
-    } = yield call(accountApi.check, accountName);
+    const user = yield call(accountApi.get, accountName);
 
-    const authorized = isEmailConfirmed && isOtpConfirmed;
+    // 유저 계정이 없으면 signin 페이지로 보냄
+    if (!user) {
+      navigate('/signin');
+      return;
+    }
+
+    const {
+      emailConfirm,
+      otpConfirm,
+    } = user;
+
+    const authorized = emailConfirm && otpConfirm;
     account.authorized = authorized;
+
     account.scope = [
       '/exchange',
       '/exchange/:code',
       '/support',
       authorized && 'trade',
     ].filter(Boolean);
-    
+
     yield put(actions.signIn({ account }));
 
     if (!authorized) {
@@ -64,7 +72,7 @@ export function* getScatterIdentity({ payload = {} }) {
       yield call(scatterApi.forgetScatterIdentity);
       return;
     }
-    
+
 
     // if (!isOtpConfirmed) {
     //   yield put(modal.actions.openModal({

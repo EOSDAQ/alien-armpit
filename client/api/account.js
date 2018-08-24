@@ -1,22 +1,31 @@
 import axios from 'axios';
 import errorHandler from './errorHandler';
 
+const userBaseUrl = '/api/v1/account/user';
+
 export const signin = async (data) => {
   try {
     const params = data;
-    const response = await axios.post('/api/v1/account/signin', { ...params });
+    const response = await axios.post(userBaseUrl, { ...params });
     return response.data;
   } catch (err) {
     return errorHandler(err);
   }
 };
 
-export const check = async (accountName) => {
+export const get = async (accountName) => {
   try {
-    const params = { accountName };
-    const response = await axios.get('/api/v1/account/check', { params });
-    return response.data;
+    const response = await axios.get(`${userBaseUrl}/${accountName}`);
+    const { user } = response.data;
+    return user;
   } catch (err) {
+    const { response } = err;
+    const { status, data } = response;
+
+    if (status === 500 && data.resultCode === '1000') {
+      return null;
+    }
+
     return errorHandler(err);
   }
 };
