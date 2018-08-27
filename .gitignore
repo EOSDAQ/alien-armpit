@@ -25,6 +25,3 @@ npm-debug.log*
 
 # Cache loader
 .cache-loader
-
-# dotenv
-.env

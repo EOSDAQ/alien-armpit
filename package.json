@@ -13,7 +13,9 @@
     "webpack": "webpack --config webpack.config.prod.js -p",
     "deploy": "scp -i ~/.ssh/eosdaq.pem  -r dist/* ubuntu@ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com:/var/www/html",
     "docker-send": "docker build -t eosdaq/alien_armpit . && docker save -o alien_armpit.tar eosdaq/alien_armpit && scp -i ~/.ssh/eosdaq.pem  -r alien_armpit.tar ubuntu@ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/app/alien-armpit",
-    "docker-load": "docker load -i alien_armpit.tar && docker-compose up -d"
+    "docker-load": "docker load -i alien_armpit.tar && docker-compose up -d",
+    "docker-nginx-build": "docker build -t eosdaq/nginx -f Dockerfile.nginx nginx && docker save -o ngnix.tar eosdaq/eosdaq",
+    "docker-ngnix-send": "npm run nginx-build && scp -i -r ngnix.tar ubuntu@ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/app/nginx"
   },
   "repository": {
     "type": "git",
@@ -52,6 +54,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
+    "camelcase": "^5.0.0",
     "clean-tag": "^2.0.0",
     "clean-webpack-plugin": "^0.1.19",
     "connected-react-router": "^4.4.1",
