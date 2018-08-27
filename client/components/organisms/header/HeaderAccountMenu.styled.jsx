@@ -62,6 +62,13 @@ export const SecurityAction = styled('div')`
 export const SecurityValue = styled('div')`
   width: 20px;
   height: 20px;
+  padding: 4px;
+  flex: 0 0 auto;
+`;
+
+export const SecurityButton = styled('div')`
+  width: 20px;
+  height: 20px;
   flex: 0 0 auto;
 `;
 

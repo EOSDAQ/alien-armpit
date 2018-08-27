@@ -78,6 +78,7 @@
     "morgan": "^1.9.0",
     "nodemailer": "^4.6.7",
     "pm2": "^3.0.3",
+    "querystring": "^0.2.0",
     "react": "^16.4.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.4.1",

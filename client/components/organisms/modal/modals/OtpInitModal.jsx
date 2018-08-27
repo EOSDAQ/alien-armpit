@@ -63,7 +63,7 @@ class OtpInitModal extends React.Component {
           { t('googleOtp.qrCode') }
         </Label>
         <QrCodeWrap>
-          { otpKey && <QRCode value={`otpauth://totp/eosdaq.com:${account.name}?secret=${otpKey}`} /> }
+          { otpKey && <QRCode value={`otpauth://totp/eosdaq.com:${account.name}?secret=${otpKey}&issuer=EOSDAQ`} /> }
         </QrCodeWrap>
         <Label>
           { t('googleOtp.backupKey') }

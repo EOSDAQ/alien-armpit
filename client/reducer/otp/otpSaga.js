@@ -16,6 +16,7 @@ export function* initOtp({ payload }) {
 export function* validateOtp({ payload }) {
   try {
     const result = yield call(api.validateOtp, payload);
+    console.log(result);
     if (!result.success) {
       alert('authentication fail');
       return;

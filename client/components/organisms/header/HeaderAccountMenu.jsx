@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from 'reducer/account/accountReducer';
 import { translate } from 'react-i18next';
-import { AccountMenu, AccountName, AccountEmail, SectionLabel, AccountIdenticon, Section, SecurityAction, SecurityValue } from './HeaderAccountMenu.styled';
+import { AccountMenu, AccountName, AccountEmail, SectionLabel, AccountIdenticon, Section, SecurityAction, SecurityValue, SecurityButton } from './HeaderAccountMenu.styled';
 import Flex from '../../atom/Flex';
 import Button, { WarningButton } from '../../atom/Button';
 import Icon from '../../atom/Icon';
@@ -65,15 +65,15 @@ const HeaderAccountMenu = ({ t, signOut, initOtp, closeDropdown, ...account }) =
             <div>
               {field.name}
             </div>
-            <SecurityValue>
-              {field.value ? (
+            {field.value ? (
+              <SecurityValue>
                 <Icon type="check" fill={colors.green500} />
-              ) : (
-                <Button onClick={field.onClick}>
-                  <Icon type="next" fill={colors.blue500} />
-                </Button>
-              )}
-            </SecurityValue>
+              </SecurityValue>
+            ) : (
+              <SecurityButton onClick={field.onClick}>
+                <Icon type="next" fill={colors.blue500} />
+              </SecurityButton>
+            )}
           </SecurityAction>
         ))}
       </Section>

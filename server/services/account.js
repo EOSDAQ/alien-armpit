@@ -1,4 +1,5 @@
 const axios = require('axios');
+const qs = require('querystring');
 const config = require('../config');
 
 const routePath = `${config.burgundyApi}/acct`;
@@ -97,10 +98,10 @@ const revokeOtp = async (accountName) => {
 const validateOtp = async (accountName, code) => {
   const url = `${userBaseUrl}/${accountName}/validateOTP`;
   try {
-    const response = await axios.post(url, { code });
+    const response = await axios.post(url, qs.stringify({ code }));
     return response.data;
   } catch (e) {
-    const { response } = e;
+    const { response, request } = e;
     const { status, data } = response;
     if (status === 400 && data.resultCode === '1101') {
       return null;

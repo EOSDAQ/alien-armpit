@@ -19,6 +19,7 @@ export const validateOtp = async ({ accountName, code }) => {
     const response = await axios.post(`/api/v1/account/${accountName}/otp/validate`, { code });
     return response.data;
   } catch (err) {
+    console.error(err);
     return errorHandler(err);
   }
 };

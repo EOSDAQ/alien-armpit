@@ -128,7 +128,6 @@ router.post('/:accountName/otp/init/', [
       await service.revokeOtp(accountName);
       result = await service.initOtp(accountName);
     }
-
     res.status(200).send(result);
   } catch (e) {
     console.log(e);
@@ -146,9 +145,8 @@ router.post('/:accountName/otp/validate', [
     } = req.params;
 
     const { code } = req.body;
-
     const result = await service.validateOtp(accountName, code);
-    if (!result || !result.otpConfirm) {
+    if (!result) {
       res.status(401).send({ success: false });
       return;
     }
