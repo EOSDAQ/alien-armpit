@@ -1,9 +1,13 @@
 import axios from 'axios';
 import errorHandler from './errorHandler';
 
-export const initOtp = async (accountName) => {
+export const initOtp = async ({ accountName }) => {
   try {
-    const response = await axios.post(`/api/v1/account/${accountName}/otp/init`);
+    const response = await axios.post(
+      `/api/v1/account/${accountName}/otp/init`,
+      { accountName },
+    );
+    
     return response.data;
   } catch (err) {
     return errorHandler(err);

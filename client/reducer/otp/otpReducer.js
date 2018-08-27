@@ -20,8 +20,7 @@ export const actions = {
 };
 
 const initialState = {
-  otpKey: '',
-  qrCodeUrl: '',
+  otpKey: null,
 };
 
 export const otpReducer = (state = initialState, action) => {

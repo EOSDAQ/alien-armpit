@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { QRCode } from 'react-qr-svg';
 import { actions } from 'reducer/otp/otpReducer';
 import modalReducer from 'reducer/modal/modalReducer';
 import {
@@ -13,11 +14,11 @@ import {
   Caution,
   NextStep,
 } from './OtpModal.styled';
+import Message from '../../../molecules/Message';
 
 class OtpInitModal extends React.Component {
   constructor(props) {
     super(props);
-    this.qrCodeCanvas = React.createRef();
     this.state = {
       isDrawn: false,
     };
@@ -26,33 +27,13 @@ class OtpInitModal extends React.Component {
   componentDidMount() {
     const {
       initOtp,
-      viewer,
+      account,
+      otpKey,
     } = this.props;
-    initOtp(viewer.name);
-  }
 
-  componentDidUpdate() {
-    this.drawQrCode();
-  }
-
-  drawQrCode() {
-    const { qrCodeUrl } = this.props;
-    const { isDrawn } = this.state;
-
-    if (!qrCodeUrl || isDrawn) {
-      return;
-    }
-
-    const canvas = this.qrCodeCanvas.current;
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, 80, 80);
-      this.setState({
-        isDrawn: true,
-      });
-    };
-    img.src = qrCodeUrl;
+    !otpKey && initOtp({
+      accountName: account.name
+    });
   }
 
   handleNextStepClick(e) {
@@ -66,6 +47,7 @@ class OtpInitModal extends React.Component {
   render() {
     const {
       t,
+      account,
       otpKey,
     } = this.props;
 
@@ -80,16 +62,19 @@ class OtpInitModal extends React.Component {
         <Label>
           { t('googleOtp.qrCode') }
         </Label>
-        <QrCodeWrap />
-        <canvas ref={this.qrCodeCanvas} width="80" height="80" />
+        <QrCodeWrap>
+          { otpKey && <QRCode value={`otpauth://totp/eosdaq.com:${account.name}?secret=${otpKey}`} /> }
+        </QrCodeWrap>
         <Label>
           { t('googleOtp.backupKey') }
         </Label>
         <BackupKey>
-          { otpKey }
+          {otpKey}
         </BackupKey>
         <Caution>
-          { t('googleOtp.caution') }
+          <Message warning>
+            { t('googleOtp.caution') }
+          </Message>
         </Caution>
         <NextStep href="#" onClick={e => this.handleNextStepClick(e)}>
           { t('googleOtp.nextStep') }
@@ -100,12 +85,12 @@ class OtpInitModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  viewer: state.account.viewer,
+  account: state.account,
   ...state.otp,
 });
 
 const mapDispatchToProps = dispatch => ({
-  initOtp: (accountName) => { dispatch(actions.initOtpSaga(accountName)); },
+  initOtp: (payload) => { dispatch(actions.initOtpSaga(payload)); },
   showOtpCheckModal: () => {
     dispatch(modalReducer.actions.openModal({
       type: 'OTP_CHECK',

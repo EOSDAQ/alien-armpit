@@ -8,10 +8,11 @@ import Flex from '../../atom/Flex';
 import Button, { WarningButton } from '../../atom/Button';
 import Icon from '../../atom/Icon';
 import { colors } from '../../css/theme';
-import { Link } from '@reach/router';
+import { Link, navigate } from '@reach/router';
 import Box from '../../atom/Box';
+import modal from 'reducer/modal/modalReducer';
 
-const HeaderAccountMenu = ({ t, signOut, ...account }) => {
+const HeaderAccountMenu = ({ t, signOut, initOtp, ...account }) => {
   const {
     name,
     email,
@@ -21,8 +22,18 @@ const HeaderAccountMenu = ({ t, signOut, ...account }) => {
   } = account;
 
   const security = [
-    { name: t('menu.emailConfirm'), value: emailConfirm },
-    { name: t('menu.connectOTP'), value: otpConfirm },
+    { 
+      name: t('menu.emailConfirm'),
+      value: emailConfirm,
+      onClick: () => {
+        navigate('/sent-email');
+      }
+    },
+    { 
+      name: t('menu.connectOTP'), 
+      value: otpConfirm,
+      onClick: () => initOtp(),
+    },
   ]
 
   return (
@@ -58,9 +69,9 @@ const HeaderAccountMenu = ({ t, signOut, ...account }) => {
               {field.value ? (
                 <Icon type="check" fill={colors.green500} />
               ) : (
-                <Link to="/signin">
+                <Button onClick={field.onClick}>
                   <Icon type="next" fill={colors.blue500} />
-                </Link>
+                </Button>
               )}
             </SecurityValue>
           </SecurityAction>
@@ -75,6 +86,9 @@ const HeaderAccountMenu = ({ t, signOut, ...account }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   signOut: () => dispatch(actions.forgetScatterIdentity()),
+  initOtp: () => dispatch(modal.actions.openModal({
+    type: 'OTP_INIT',
+  })),
 })
 
 export default compose(

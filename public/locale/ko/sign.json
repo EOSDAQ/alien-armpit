@@ -15,8 +15,8 @@
     "notReceive": "If you did not receive a verification email or if you have mistyped your email address, you can resend the verification email.",
     "resend": "Resend"
   },
-  "googleAuth": {
-    "title": "Enable Google Auth",
+  "googleOtp": {
+    "title": "구글 OTP로 계정을 보호하세요",
     "desc": "Google 2단계 인증은 당신의 계정 보호와 백업을 위해 필요합니다. Google Authentication App을 다운받은 후, 아래의 QR코드를 스캔하거나 8자리 대체 코드를 등록하세요.",
     "qrCode": "QR Code",
     "backupKey": "Backup key",

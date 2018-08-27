@@ -51,13 +51,15 @@ const routes = [
 class Pages extends React.Component {
   render() {
     return (
-      <Router>
-        <Redirect from="/exchange" to="/exchange/IPOS_SYS" />
-        {routes.map(({ path , Component }) => (
-          <Component key={path} path={path} />
-        ))}
+      <React.Fragment>
+        <Router>
+          <Redirect from="/exchange" to="/exchange/IPOS_SYS" />
+          {routes.map(({ path , Component }) => (
+            <Component key={path} path={path} />
+          ))}
+        </Router>
         <Modal default />
-      </Router>
+      </React.Fragment>
     );
   }
 }

@@ -7,42 +7,42 @@ export const Wrap = styled('div')`
   width: 100%;  
 `;
 
-export const Title = styled('h3')`
-  font-size: 24px;
+export const Title = styled('div')`
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 400;
   color: ${colors.grey900};
+  margin-top: 24px;
+  margin-bottom: 16px;
 `;
 
 export const Desc = styled('p')`
-  font-size: 13px;
-  font-family: ${fontFamily.notosans};
-  color: ${colors.grey600};
-  padding-top: 20px;
-  padding-bottom: 7px;
-  line-height: 1.3;
+  font-size: 14px;
+  color: ${colors.grey700};
+  line-height: 1.6;
 `;
 
-export const Label = styled('p')`
+export const Label = styled('div')`
   font-size: 13px;
   color: ${colors.grey600};
-  padding-top: 26px;
+  margin-top: 48px;
 `;
 
 export const QrCodeWrap = styled('div')`
   padding-top: 12px;
+  width: 160px;
 `;
 
-export const BackupKey = styled('strong')`
+export const BackupKey = styled('div')`
   display: block;
-  font-size: 18px;
+  font-size: 24px;
+  font-family: ${fontFamily.mono};
   color: ${colors.grey900};
   padding-top: 10px;
 `;
 
-export const Caution = styled('p')`
-  font-size: 13px;
-  color: ${colors.red500};
-  padding-top: 10px;
-  line-height: 1.3;
+export const Caution = styled('div')`
+  margin-top: 0px;
 `;
 
 export const NextStep = styled('a')`

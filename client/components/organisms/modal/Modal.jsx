@@ -8,11 +8,11 @@ import OtpCheckModal from './modals/OtpCheckModal';
 import _modal from 'reducer/modal/modalReducer';
 
 class Modal extends React.Component {
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { modal } = this.props;
-    if (modal && !nextProps.modal) {
+    if (prevProps.modal && !modal) {
       this.resetBodyScroll();
-    } else if (!modal && nextProps.modal) {
+    } else if (!prevProps.modal && modal) {
       this.preventBodyScroll();
     }
   }

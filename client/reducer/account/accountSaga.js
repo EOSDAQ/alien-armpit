@@ -149,7 +149,11 @@ export function* resendEmail({ payload: { email }}) {
     email,
   });
 
-  console.log(data, '@#@#@#@#');
+  yield put(actions.updateAccountInfo({
+    email,
+  }));
+
+  alert('Verification email sent');
 }
 
 export function* order({ payload }) {

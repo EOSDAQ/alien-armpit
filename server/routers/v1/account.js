@@ -124,16 +124,12 @@ router.post('/:accountName/otp/init/', [
     } = req.params;
     let result;
     result = await service.initOtp(accountName);
-
     if (result.resultCode === '1000') {
       await service.revokeOtp(accountName);
       result = await service.initOtp(accountName);
     }
 
-    res.status(200).send({
-      success: true,
-      otpKey: result.otpKey,
-    });
+    res.status(200).send(result);
   } catch (e) {
     console.log(e);
     next(e);
