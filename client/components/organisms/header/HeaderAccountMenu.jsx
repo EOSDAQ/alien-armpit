@@ -8,11 +8,11 @@ import Flex from '../../atom/Flex';
 import Button, { WarningButton } from '../../atom/Button';
 import Icon from '../../atom/Icon';
 import { colors } from '../../css/theme';
-import { Link, navigate } from '@reach/router';
+import { navigate } from '@reach/router';
 import Box from '../../atom/Box';
 import modal from 'reducer/modal/modalReducer';
 
-const HeaderAccountMenu = ({ t, signOut, initOtp, ...account }) => {
+const HeaderAccountMenu = ({ t, signOut, initOtp, closeDropdown, ...account }) => {
   const {
     name,
     email,
@@ -32,7 +32,7 @@ const HeaderAccountMenu = ({ t, signOut, initOtp, ...account }) => {
     { 
       name: t('menu.connectOTP'), 
       value: otpConfirm,
-      onClick: () => initOtp(),
+      onClick: () => closeDropdown() || initOtp(),
     },
   ]
 

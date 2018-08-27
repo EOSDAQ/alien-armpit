@@ -76,7 +76,12 @@ class Select extends React.PureComponent {
         </div>
         {showDropdown && (
           <SelectOptions {...direction}>
-            {options}
+            {(Array.isArray(options) ? options : [options]).map((option) => 
+              React.cloneElement(option, {
+                key: option.key,
+                closeDropdown: () => this.closeDropdown(),
+              })
+            )}
           </SelectOptions>
         )}
       </div>
