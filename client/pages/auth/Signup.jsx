@@ -11,8 +11,8 @@ import {
   SigninWrapper,
   SigninHeader,
   SigninDesc,
-} from './Signin.styled';
-import SigninForm from './SigninForm';
+} from './Signup.styled';
+import SigninForm from './SignupForm';
 
 class Signin extends React.Component {
   onSubmit({ email }) {

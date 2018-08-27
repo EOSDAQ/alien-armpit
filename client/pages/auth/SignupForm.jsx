@@ -8,7 +8,7 @@ import {
   SigninInput,
   SigninError,
   SigninPolicy,
-} from './SigninForm.styled';
+} from './SignupForm.styled';
 import Form from 'components/molecules/Form';
 import Input from 'components/atom/Input';
 

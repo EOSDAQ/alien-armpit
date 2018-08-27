@@ -1,12 +1,12 @@
 import React from 'react';
 import { Router } from '@reach/router';
-import Signin from './Signin';
+import Signup from './Signup';
 import SentEmail from './sentEmail/SentEmail';
 
 const SignRouter = () => {
   return (
     <Router path="/">
-      <Signin path="signup" />
+      <Signup path="signup" />
       <SentEmail path="sent-email" />
     </Router>
   );

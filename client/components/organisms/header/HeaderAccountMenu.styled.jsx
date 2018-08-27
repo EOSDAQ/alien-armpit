@@ -33,9 +33,15 @@ export const AccountIdenticon = styled.div`
 `;
 
 export const AccountName = styled.div`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: ${colors.grey700};
+`;
+
+export const AccountEmail = styled('div')`
+  color: ${colors.grey500};
+  font-size: 14px;
+  margin-top: 2px;
 `;
 
 export const MenuActions = styled.div`

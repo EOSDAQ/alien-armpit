@@ -3,16 +3,18 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from 'reducer/account/accountReducer';
 import { translate } from 'react-i18next';
-import { AccountMenu, AccountName, MenuAction, SectionLabel, AccountIdenticon, Section, SecurityAction, SecurityValue } from './HeaderAccountMenu.styled';
+import { AccountMenu, AccountName, AccountEmail, SectionLabel, AccountIdenticon, Section, SecurityAction, SecurityValue } from './HeaderAccountMenu.styled';
 import Flex from '../../atom/Flex';
 import Button, { WarningButton } from '../../atom/Button';
 import Icon from '../../atom/Icon';
 import { colors } from '../../css/theme';
 import { Link } from '@reach/router';
+import Box from '../../atom/Box';
 
 const HeaderAccountMenu = ({ t, signOut, ...account }) => {
   const {
     name,
+    email,
     identicon,
     otpConfirm,
     emailConfirm,
@@ -33,9 +35,14 @@ const HeaderAccountMenu = ({ t, signOut, ...account }) => {
           <AccountIdenticon 
             dangerouslySetInnerHTML={{ __html: identicon }}
           />
-          <AccountName>
-            {name}
-          </AccountName>
+          <Box>
+            <AccountName>
+              {name}
+            </AccountName>
+            <AccountEmail>
+              {email}
+            </AccountEmail>
+          </Box>
         </Flex>
       </Section>
       <SectionLabel>

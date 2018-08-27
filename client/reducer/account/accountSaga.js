@@ -63,13 +63,14 @@ export function* createAccount({ payload: { email } }) {
 }
 
 function* updateAccount(account, user) {
-  const { emailConfirm, otpConfirm } = user;
+  const { emailConfirm, otpConfirm, email } = user;
   const security = [emailConfirm, otpConfirm].filter(Boolean).length;
 
   yield put(actions.updateAccountInfo({
     authenticated: true,
     ...account,
     security,
+    email,
     emailConfirm,
     otpConfirm,
   }));
