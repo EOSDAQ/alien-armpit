@@ -7,7 +7,7 @@ export const types = {
   SIGN_OUT: 'account/signOut',
   SIGN_UP: 'account/signUp',
   ORDER: 'account/order',
-  RESEND_EMAIL: 'account/resendEmail',
+  RESEND_EMAIL: 'account/RESEND_EMAIL',
   CREATE_ACCOUNT: 'account/create',
   CREATED_ACCOUNT: 'account/created',
 };

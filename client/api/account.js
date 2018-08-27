@@ -12,6 +12,12 @@ export const signUp = async (params) => {
   }
 };
 
+export const resendEmail = async (body) => {
+  const response = await axios.post(userBaseUrl + '/resend-email', body);
+  const { data: { resultData } } = response;
+  return resultData;
+}
+
 export const get = async (accountName) => {
   try {
     const response = await axios.get(`${userBaseUrl}/${accountName}`);

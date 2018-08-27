@@ -21,5 +21,4 @@ export default function* saga() {
     takeLatest(otpTypes.INIT_OTP_SAGA, otpSaga.initOtp),
     takeLatest(otpTypes.VALIDATE_OTP_SAGA, otpSaga.validateOtp),
   ]);
-
 }

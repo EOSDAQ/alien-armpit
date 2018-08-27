@@ -1,29 +1,43 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { take, cancel, fork } from 'redux-saga/effects';
 import reducer from './reducer/reducer';
-import saga from './reducer/saga';
 
-const sagaMiddleware = createSagaMiddleware();
+const RESET_SAGA = 'RESET_SAGA';
 
 function configureStore(initialState) {
+  const sagaMiddleware = createSagaMiddleware();
+
   const store = createStore(
     reducer,
     applyMiddleware(
       sagaMiddleware,
     ),
   );
-  
-  sagaMiddleware.run(saga);
 
   if (module.hot) {
-    module.hot.accept(['./reducer/reducer', './reducer/saga'], () => {
+    module.hot.accept('./reducer/reducer', () => {
       const nextReducer = require('./reducer/reducer').default;
       store.replaceReducer(nextReducer);
     })
   }
 
-  return store;
+  return {
+    ...store,
+    runSaga: (saga) => sagaMiddleware.run(
+      // dev vs prod.
+      function* main() {
+        const sagaTask = yield fork(saga);
+        yield take(RESET_SAGA);
+        yield cancel(sagaTask);
+      }
+    ),
+    cancelSaga: () => {
+      store.dispatch({
+        type: RESET_SAGA,
+      });
+    },
+  };
 }
 
-const store = configureStore();
-export default store;
+export default configureStore();

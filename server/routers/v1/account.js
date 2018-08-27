@@ -61,6 +61,33 @@ router.post('/user', [
   }
 });
 
+router.post(
+  '/user/resend-email',
+  [
+    check('email').exists(),
+    check('accountName').exists(),
+  ],
+  async (req, res) => {
+    const result = validationResult(req);
+    
+    const {
+      accountName,
+      email,
+    } = req.body;
+
+    const user = await service.getUser(accountName);
+    const emailHash = cipher.generateBase32str(20);
+    const data = await service.revokeEmail(
+      accountName,
+      email,
+      emailHash,
+    );
+
+    mailService.sendVerifyEmail(accountName, email, emailHash);
+    res.status(200).send(data);
+  },
+)
+
 router.get('/verifyEmail/:accountName/:email/:emailHash', [
   check('accountName').exists(),
   check('email').exists(),

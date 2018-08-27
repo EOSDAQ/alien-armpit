@@ -5,7 +5,6 @@ import * as accountApi from 'api/account';
 import { actions, types } from './accountReducer';
 import modal from '../modal/modalReducer';
 import { toFixed } from 'utils/format';
-import { ResendEmail } from 'pages/auth/sentEmail/SentEmail.styled';
 
 export function* authenticateScatter() {
   try {
@@ -145,7 +144,12 @@ export function* forgetScatterIdentity() {
 
 export function* resendEmail({ payload: { email }}) {
   const account = yield select(state => state.account);
-  console.log(account, email, '!!!!');
+  const data = yield call(accountApi.resendEmail, {
+    accountName: account.name,
+    email,
+  });
+
+  console.log(data, '@#@#@#@#');
 }
 
 export function* order({ payload }) {

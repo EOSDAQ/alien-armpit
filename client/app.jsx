@@ -12,8 +12,12 @@ import i18n from './i18n';
 // eslint-disable-next-line
 import Pages from 'pages/Pages';
 import store from './store';
+import saga from 'reducer/saga';
 
 const render = () => {
+  store.cancelSaga();
+  store.runSaga(saga);
+
   ReactDOM.render(
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
@@ -28,7 +32,7 @@ const render = () => {
 
 if (module.hot) {
   module.hot.accept(
-    ['./pages/Pages.jsx'],
+    ['./pages/Pages.jsx', './reducer/saga'],
     render,
   );
 }

@@ -81,7 +81,9 @@ class SentEmail extends React.Component {
 const mapStateToProps = state => state.account;
 
 const mapDispatchToProps = dispatch => ({
-  resendEmail: (payload) => { dispatch(actions.resendEmail(payload))}
+  resendEmail: (payload) => { 
+    dispatch(actions.resendEmail(payload))
+  }
 });
 
 export default connect(
