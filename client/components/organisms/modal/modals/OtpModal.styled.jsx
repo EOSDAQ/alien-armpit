@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme, { colors } from 'components/css/theme';
+import Input from '../../../atom/Input';
 
 const { fontFamily } = theme;
 
@@ -52,15 +53,12 @@ export const NextStep = styled('a')`
   float: right;
 `;
 
-export const CodeInput = styled('input')`
-  border: 1px solid rgba(158, 124, 1, 0.08);
-  border-radius: 4px;
-  background-color: ${colors.grey50};
-  height: 50px;
-  color: ${colors.grey500};
-  font-size: 24px;
-  font-weight: 700;
+export const CodeInput = styled(Input)`
+  height: 80px;
+  font-size: 40px;
+  font-family: ${fontFamily.mono};
   text-align: center;
   width: 100%;
-  margin: 20px auto 0;
+  margin: 20px 0;
+  max-width: 100%;
 `;

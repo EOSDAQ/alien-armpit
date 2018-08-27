@@ -143,8 +143,9 @@ router.post('/:accountName/otp/validate', [
     validationResult(req).throw();
     const {
       accountName,
-      code,
     } = req.params;
+
+    const { code } = req.body;
 
     const result = await service.validateOtp(accountName, code);
     if (!result || !result.otpConfirm) {

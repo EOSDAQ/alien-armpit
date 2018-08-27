@@ -8,6 +8,7 @@ import {
   Desc,
   CodeInput,
 } from './OtpModal.styled';
+import Form from '../../../molecules/Form';
 
 class OtpCheckModal extends React.Component {
   constructor(props) {
@@ -15,17 +16,14 @@ class OtpCheckModal extends React.Component {
     this.codeInput = React.createRef();
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    const { validate, viewer } = this.props;
-    const codeInput = this.codeInput.current;
-    const code = codeInput.value;
+  handleSubmit({ code }) {
+    const { validate, account } = this.props;
     if (code.length !== 6) {
       return;
     }
     validate({
       code,
-      accountName: viewer.name,
+      accountName: account.name,
     });
   }
 
@@ -41,18 +39,22 @@ class OtpCheckModal extends React.Component {
           { t('googleOtp.desc2')}
         </Desc>
         <div>
-          <form onSubmit={e => this.handleSubmit(e)}>
-            <CodeInput type="text" innerRef={this.codeInput} />
-          </form>
+          <Form onSubmit={(values) => this.handleSubmit(values)}>
+            {({ onChange }) => (
+              <CodeInput 
+                type="text"
+                name="code"
+                onChange={(e) => onChange(e)}  
+              />
+            )}
+          </Form>
         </div>
       </Wrap>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  viewer: state.account.viewer,
-});
+const mapStateToProps = ({ account }) => ({ account });
 
 const mapDispatchToProps = dispatch => ({
   validate: (payload) => { dispatch(actions.validateOtpSaga(payload)); },
