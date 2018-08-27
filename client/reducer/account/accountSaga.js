@@ -5,6 +5,7 @@ import * as accountApi from 'api/account';
 import { actions, types } from './accountReducer';
 import modal from '../modal/modalReducer';
 import { toFixed } from 'utils/format';
+import { ResendEmail } from 'pages/auth/sentEmail/SentEmail.styled';
 
 export function* authenticateScatter() {
   try {
@@ -53,11 +54,14 @@ export function* createAccount({ payload: { email } }) {
     accountName: name,
     email,
   });
-
+  
+  console.log(data);
   // TODO.
   if (data) {
     // successful
-    yield put(actions.createdAccount());
+    yield put(actions.createdAccount({
+      email,
+    }));
     navigate('/sent-email');
   }
 }
@@ -139,6 +143,11 @@ export function* forgetScatterIdentity() {
   yield put(actions.signOut());
 }
 
+export function* resendEmail({ payload: { email }}) {
+  const account = yield select(state => state.account);
+  console.log(account, email, '!!!!');
+}
+
 export function* order({ payload }) {
   let { type, price, amount, symbol } = payload;
 
@@ -188,6 +197,7 @@ const accountSaga = [
   takeEvery(types.SIGN_UP, signUp),
   takeEvery(types.CREATE_ACCOUNT, createAccount),
   takeEvery(types.ORDER, order),
+  takeEvery(types.RESEND_EMAIL, resendEmail),
   takeEvery(types.AUTHENTICATE_SCATTER, authenticateScatter),
   takeEvery(types.FORGET_SCATTER_IDENTITY, forgetScatterIdentity),
   takeEvery(types.GET_SCATTER_IDENTITY, getScatterIdentity),

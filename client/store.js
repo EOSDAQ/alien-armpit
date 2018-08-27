@@ -5,13 +5,25 @@ import saga from './reducer/saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
-  reducer,
-  applyMiddleware(
-    sagaMiddleware,
-  ),
-);
+function configureStore(initialState) {
+  const store = createStore(
+    reducer,
+    applyMiddleware(
+      sagaMiddleware,
+    ),
+  );
+  
+  sagaMiddleware.run(saga);
 
-sagaMiddleware.run(saga);
+  if (module.hot) {
+    module.hot.accept(['./reducer/reducer', './reducer/saga'], () => {
+      const nextReducer = require('./reducer/reducer').default;
+      store.replaceReducer(nextReducer);
+    })
+  }
 
+  return store;
+}
+
+const store = configureStore();
 export default store;

@@ -11,8 +11,8 @@
   },
   "sentEmail": {
     "title": "Confirmation email is sent.",
-    "desc": "Check |=email| Inbox and click <br />confirm button to use EOSDAQ." ,
-    "notReceive": "If you did not receive confirmation email from us.",
+    "desc": "We have sent a verification email to |=email|. Please activate your account with the link in this email. If you cannot find the mail, please also check the Junk/Spam folder!" ,
+    "notReceive": "If you did not receive a verification email or if you have mistyped your email address, you can resend the verification email.",
     "resend": "Resend"
   },
   "googleOtp": {

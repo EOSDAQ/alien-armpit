@@ -28,6 +28,10 @@ export const SendEmailNotReceive = styled('p')`
   border-top: 1px solid #e5e5e5;
 `;
 
+export const ResendEmail = styled('div')`
+
+`;
+
 export const SentEmailResendLink = styled('a')`
   color: ${colors.primary500};
   padding-left: 4px;
