@@ -32,10 +32,19 @@ export function* restoreSession() {
 
 export function* signUp() {
   const account = yield getScatterIdentity();
-  if (account) {
+  if (!account) {
+    return;
+  }
+
+  try {
+    let user = yield call(accountApi.get, account.name);
+    yield forgetScatterIdentity();
+    alert('already signed up! Please go to sign in');
+  } catch(e) {
     yield put(actions.updateAccountInfo(account));
     navigate('/signup');
   }
+
 }
 
 export function* createAccount({ payload: { email } }) {
