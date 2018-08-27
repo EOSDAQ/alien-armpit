@@ -4,7 +4,7 @@ const envConfig = {};
 const envKeys = Object.keys(process.env || {});
 
 envKeys.forEach((key) => {
-  if (!process.env.key) {
+  if (!process.env[key]) {
     return;
   }
   envConfig[camelCase(key)] = process.env[key];
