@@ -96,7 +96,7 @@ const MainTransaction = (props) => {
                           <Text
                             color={i === 0 ? 'primary' : 'grey400'}
                             fontSize={i === 0 ? 24 : 14}
-                            fontWeight={i === 0 && 700}
+                            fontWeight={i === 0 ? 700 : 400}
                           >
                             {item.text}
                           </Text>
