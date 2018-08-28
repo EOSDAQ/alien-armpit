@@ -13,6 +13,7 @@ import {
   SigninDesc,
 } from './Signup.styled';
 import SigninForm from './SignupForm';
+import { Redirect } from '@reach/router';
 
 class Signin extends React.Component {
   onSubmit({ email }) {
@@ -30,7 +31,10 @@ class Signin extends React.Component {
   }
 
   render() {
-    const { t, name } = this.props;
+    const { t, authenticated, name } = this.props;
+    if (authenticated) {
+      return <Redirect to="/" noThrow />;
+    }
 
     return (
       <React.Fragment>

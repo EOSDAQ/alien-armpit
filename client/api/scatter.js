@@ -126,6 +126,7 @@ export const bid = async (data) => {
 
 export const authenticateScatter = async () => {
   const result = await scatter.authenticate();
+  console.log(result);
 }
 
 export const getScatterIdentity = async () => {

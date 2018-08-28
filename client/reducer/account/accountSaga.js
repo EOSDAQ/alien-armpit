@@ -18,7 +18,6 @@ export function* authenticateScatter() {
 
 export function* restoreSession() {
   const account = yield getScatterIdentity();
-
   const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
   if (data) {
     const { user } = data;
@@ -103,6 +102,8 @@ export function* signIn() {
     const { user } = data;
     
     yield updateAccount(account, user);
+    console.log(signIn);
+    // localStorage.setItem()
     const { otpConfirm } = user;
 
     if (otpConfirm) {

@@ -19,6 +19,7 @@ import Form from 'components/molecules/Form';
 import Input from 'components/atom/Input';
 import Button from 'components/atom/Button';
 import { actions } from 'reducer/account/accountReducer';
+import { Redirect } from '@reach/router';
 
 class SentEmail extends React.Component {
   resendEmail(values) {
@@ -30,7 +31,12 @@ class SentEmail extends React.Component {
     const {
       t,
       email,
+      emailConfirm,
     } = this.props;
+
+    if (emailConfirm) {
+      return <Redirect to="/" noThrow />
+    }
 
     const desc = t('sentEmail.desc').replace('|=email|', `<span>${email}</span>`);
 
