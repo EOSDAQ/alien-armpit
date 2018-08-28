@@ -186,7 +186,6 @@ export function* order({ payload }) {
       })
     }
   } catch (e) {
-    console.log(e.code);
     if (!e.code) {
       // 스캐터 오류가 아님.
       console.error(e);

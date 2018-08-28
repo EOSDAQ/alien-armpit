@@ -19,7 +19,7 @@ const getUser = async (accountName) => {
     } = response;
 
     // record not found
-    if (status === 404 && data.resultCode === '0404') {
+    if (status > 400 || data.resultCode === '0404') {
       return null;
     }
 

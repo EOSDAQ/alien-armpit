@@ -68,14 +68,13 @@ router.post(
     check('accountName').exists(),
   ],
   async (req, res) => {
-    const result = validationResult(req);
+    validationResult(req).throw();
     
     const {
       accountName,
       email,
     } = req.body;
 
-    const user = await service.getUser(accountName);
     const emailHash = cipher.generateBase32str(20);
     const data = await service.revokeEmail(
       accountName,
