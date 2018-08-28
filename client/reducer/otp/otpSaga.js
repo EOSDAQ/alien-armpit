@@ -14,17 +14,11 @@ export function* initOtp({ payload }) {
 }
 
 export function* validateOtp({ payload }) {
-  try {
-    const result = yield call(api.validateOtp, payload);
-    console.log(result);
-    if (!result.success) {
-      alert('authentication fail');
-      return;
-    }
-
-    alert('authentication success');
-  } catch (e) {
-    console.log(e);
+  const { data, error } = yield call(api.validateOtp, payload);
+  if (error) {
+    alert('Invalid code');
+    return;
   }
+
   yield put(modalReducer.actions.closeModal());
 }

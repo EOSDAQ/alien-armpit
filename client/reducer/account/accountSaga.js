@@ -5,42 +5,52 @@ import * as accountApi from 'api/account';
 import { actions, types } from './accountReducer';
 import modal from '../modal/modalReducer';
 import { toFixed } from 'utils/format';
+import { proxy } from 'api/apis';
 
 export function* authenticateScatter() {
   try {
     yield call(scatterApi.authenticateScatter);
     yield restoreSession();
-    // yield getScatterIdentity({});
   } catch (e) {
+
   }
 }
 
 export function* restoreSession() {
   const account = yield getScatterIdentity();
-  if (!account) {
-    return;
+
+  const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
+  if (data) {
+    const { user } = data;
+    yield updateAccount(account, user);
+
+    if (user.otpConfirm) {
+      yield put(modal.actions.openModal({
+        type: 'OTP_CHECK',
+      }));
+    }
   }
 
-  try {
-    let user = yield call(accountApi.get, account.name);
-    yield updateAccount(account, user);
-  } catch(e) {
+  if (error) {
     yield forgetScatterIdentity();
-    return;
   }
 }
 
 export function* signUp() {
   const account = yield getScatterIdentity();
+
   if (!account) {
     return;
   }
 
-  try {
-    let user = yield call(accountApi.get, account.name);
+  const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
+  // user가 이미 있으면, 이미 회원가입이 된 것이므로 에러 표시를 해준다.
+  if (data) {
     yield forgetScatterIdentity();
     alert('already signed up! Please go to sign in');
-  } catch(e) {
+  }
+
+  if (error) {
     yield put(actions.updateAccountInfo(account));
     navigate('/signup');
   }
@@ -54,7 +64,6 @@ export function* createAccount({ payload: { email } }) {
     email,
   });
   
-  console.log(data);
   // TODO.
   if (data) {
     // successful
@@ -81,16 +90,29 @@ function* updateAccount(account, user) {
 
 export function* signIn() {
   const account = yield getScatterIdentity();
-  
-  try {
-    const user = yield call(accountApi.get, account.name);
+  if (!account) return;
+
+  const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
+
+  if (error) {
+    alert('Account is not registered!');
+    return;
+  }
+
+  if (data) {
+    const { user } = data;
+    
     yield updateAccount(account, user);
-  } catch(err) {
-    // 지금은 signIn 실패했을 때 임시적으로 alert를 띄워준다.
-    alert('Account is not registered');
-    yield forgetScatterIdentity();
-    // yield put(actions.updateAccountInfo(account));
-    // navigate('/signup');
+    const { otpConfirm } = user;
+
+    if (otpConfirm) {
+      yield put(modal.actions.openModal({
+        type: 'OTP_CHECK',
+      }));
+    } else {
+    }
+
+    return;
   }
 }
 
@@ -98,18 +120,6 @@ export function* getScatterIdentity() {
   try {
     const account = yield call(scatterApi.getScatterIdentity);
     return account;
-    // yield put(actions.updateAccountInfo({ account }));
-    // yield signIn({ account });
-    // if (!isOtpConfirmed) {
-    //   yield put(modal.actions.openModal({
-    //     type: 'OTP_INIT',
-    //   }));
-    //   return;
-    // }
-
-    // yield put(modal.actions.openModal({
-    //   type: 'OTP_CHECK',
-    // }));
   } catch (e) {
 
     if (!e.code) {

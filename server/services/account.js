@@ -101,7 +101,7 @@ const validateOtp = async (accountName, code) => {
     const response = await axios.post(url, qs.stringify({ code }));
     return response.data;
   } catch (e) {
-    const { response, request } = e;
+    const { response } = e;
     const { status, data } = response;
     if (status === 400 && data.resultCode === '1101') {
       return null;

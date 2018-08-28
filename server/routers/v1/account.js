@@ -10,8 +10,8 @@ router.get('/user/:accountName', [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
-    // validationResult(req).throw();
-    console.log(req.params);
+    validationResult(req).throw();
+    
     const {
       accountName,
     } = req.params;
@@ -83,7 +83,7 @@ router.post(
       emailHash,
     );
 
-    mailService.sendVerifyEmail(accountName, email, emailHash);
+    mailService.sendVerifyEmail(req, accountName, email, emailHash);
     res.status(200).send(data);
   },
 )
@@ -101,17 +101,11 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
       emailHash,
     } = req.params;
 
-    // Backend will verify this key(tempHash) with tempUser and authorize user.
-    // [SUCCESS] -> go to /register/success
-    // [FAIL] -> go to /register/fail
-    // res.redirect(`/register/success#${key}`);
-    const result = await service.confirmEmail(accountName, email, emailHash);    
-    if (!result.emailConfirm) {
-    }
+    const result = await service.confirmEmail(accountName, email, emailHash);
+    res.redirect('/');
   } catch (e) {
     next(e);
   }
-  res.redirect('/');
 });
 
 router.post('/:accountName/otp/init/', [
