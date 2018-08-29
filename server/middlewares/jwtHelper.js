@@ -10,7 +10,7 @@ const {
   jwtRefreshKey,
 } = require('../config');
 
-const authenticate = async (req, res, next) => {
+const validate = async (req, res, next) => {
   const { cookies } = req;
   const { accessToken, refreshToken: refreshStoreKey } = jwt.getTokensFromCookie(cookies);
   let refreshResult;
@@ -52,5 +52,5 @@ const authenticate = async (req, res, next) => {
 };
 
 module.exports = {
-  authenticate,
+  validate,
 };

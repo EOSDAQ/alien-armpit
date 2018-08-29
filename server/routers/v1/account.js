@@ -3,6 +3,10 @@ const { check, validationResult } = require('express-validator/check');
 const cipher = require('../../services/cipher');
 const service = require('../../services/account');
 const mailService = require('../../services/mail');
+const jwt = require('../../modules/jwt');
+const jwtHelper = require('../../middlewares/jwtHelper');
+
+const { validate } = jwtHelper;
 
 const router = express.Router();
 
@@ -11,7 +15,6 @@ router.get('/user/:accountName', [
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
-    
     const {
       accountName,
     } = req.params;
@@ -61,6 +64,33 @@ router.post('/user', [
   }
 });
 
+router.post('/user/signin', [
+  check('accountName').exists(),
+], async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const {
+      accountName,
+    } = req.body;
+
+    const user = await service.signin(accountName);
+    await jwt.login(res, user);
+    res.status(200).send({ success: true });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/user/signout', (req, res) => {
+  const { cookies } = req;
+  jwt.signout(res, cookies);
+  res.status(200).send({ success: true });
+});
+
+router.get('/user/validate', validate, (req, res) => {
+  res.status(200).send({ success: true });
+});
+
 router.post(
   '/user/resend-email',
   [
@@ -69,7 +99,7 @@ router.post(
   ],
   async (req, res) => {
     validationResult(req).throw();
-    
+
     const {
       accountName,
       email,
@@ -85,7 +115,7 @@ router.post(
     mailService.sendVerifyEmail(req, accountName, email, emailHash);
     res.status(200).send(data);
   },
-)
+);
 
 router.get('/verifyEmail/:accountName/:email/:emailHash', [
   check('accountName').exists(),
@@ -100,7 +130,7 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
       emailHash,
     } = req.params;
 
-    const result = await service.confirmEmail(accountName, email, emailHash);
+    await service.confirmEmail(accountName, email, emailHash);
     res.redirect('/');
   } catch (e) {
     next(e);

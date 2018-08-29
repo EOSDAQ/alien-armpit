@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const awsParamStore = require('aws-param-store');
 const config = require('./config');
 const middlewares = require('./middlewares');
 
@@ -23,6 +24,16 @@ app.use('/api', router);
 
 middlewares(app);
 
+awsParamStore.getParametersByPath('/eosdaq/devel', {
+  region: 'ap-northeast-2',
+}).then((parameters) => {
+  console.log('AWS PARAM STORE GET SUCCESS !!!!!!!!!!!!!!')
+  console.log(parameters);
+}).catch((err) => {
+  console.log('AWS PARAM STORE GET FAIL !!!!!!!!!!!!!!')
+  console.log(err);
+});
+
 
 // app.use((req, res, next) => {
 //   const err = new Error('Not Found');
@@ -36,7 +47,7 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  res.status(err.status).send({
+  res.status(err.status || 500).send({
     success: false,
     name: err.name,
     resultMsg: err.message,

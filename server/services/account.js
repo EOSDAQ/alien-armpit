@@ -7,7 +7,7 @@ const userBaseUrl = `${routePath}/user`;
 
 const getUser = async (accountName) => {
   const url = `${userBaseUrl}/${accountName}`;
-  
+
   try {
     const response = await axios.get(url);
     return response.data.resultData;
@@ -41,6 +41,16 @@ const deleteUser = async (accountName) => {
   const url = `${userBaseUrl}/${accountName}`;
   try {
     const response = await axios.delete(url);
+    return response.data;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+const signin = async (accountName) => {
+  const url = `${userBaseUrl}/${accountName}/login`;
+  try {
+    const response = await axios.post(url, { accountName });
     return response.data;
   } catch (e) {
     throw new Error(e);

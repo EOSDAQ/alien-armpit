@@ -45,6 +45,7 @@
   "dependencies": {
     "@reach/router": "^1.1.1",
     "async-redis": "^1.1.4",
+    "aws-param-store": "^2.0.0",
     "aws-sdk": "^2.304.0",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",

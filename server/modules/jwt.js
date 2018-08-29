@@ -34,7 +34,7 @@ const getToken = (data, key, expires) => (
   jwt.sign(data, key, { expiresIn: expires })
 );
 
-const login = async (res, user) => {
+const signin = async (res, user) => {
   const accessToken = getToken(user, jwtAccessKey, jwtAccessTokenExpires);
   const { accountName } = user;
   const refreshStoreKey = await getRefreshStoreKey();
@@ -43,7 +43,7 @@ const login = async (res, user) => {
   setTokenOnCookie(res, accessToken, refreshStoreKey);
 };
 
-const logout = (res, cookies) => {
+const signout = (res, cookies) => {
   res.cookie('tokens', '');
   const { refreshToken: refreshKey } = getTokensFromCookie(cookies);
   if (refreshKey) {
@@ -75,8 +75,8 @@ const verify = (token, key) => {
 module.exports = {
   setTokenOnCookie,
   getToken,
-  login,
-  logout,
+  signin,
+  signout,
   getTokensFromCookie,
   verify,
 };

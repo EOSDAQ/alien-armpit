@@ -11,12 +11,6 @@ envKeys.forEach((key) => {
 });
 
 const commonConfig = {
-  googleOtp: {
-    qrCode: {
-      url: 'https://chart.googleapis.com/chart',
-      param: 'chs=80x80&cht=qr&chl=80x80&chld=M|0&cht=qr&chl=otpauth://totp/eosdaq.com:{{accountName}}%3Fsecret%3D',
-    },
-  },
   mail: {
     service: 'Gmail',
     auth: {
@@ -29,9 +23,9 @@ const commonConfig = {
   },
   tiffanyApi: `${envConfig.tiffanyApi}/api/v1/eosdaq`,
   burgundyApi: `${envConfig.burgundyApi}/api/v1`,
-  jwtAccessKey: 'jwtAccessKey',
+  jwtAccessKey: 'ca71593c2c84-4918-8162-106067ac5529',
+  jwtRefreshKey: '85cfd2aa-caa9-45dc-ac6d-915a9f8daa10',
   jwtAccessTokenExpires: 10,
-  jwtRefreshKey: 'jwtRefreshKey',
   jwtRefreshTokenExpires: 120,
 };
 
