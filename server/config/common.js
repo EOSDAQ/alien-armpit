@@ -29,6 +29,10 @@ const commonConfig = {
   },
   tiffanyApi: `${envConfig.tiffanyApi}/api/v1/eosdaq`,
   burgundyApi: `${envConfig.burgundyApi}/api/v1`,
+  jwtAccessKey: 'jwtAccessKey',
+  jwtAccessTokenExpires: 10,
+  jwtRefreshKey: 'jwtRefreshKey',
+  jwtRefreshTokenExpires: 120,
 };
 
 const config = Object.assign({}, envConfig, commonConfig);

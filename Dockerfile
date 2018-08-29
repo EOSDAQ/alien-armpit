@@ -1,5 +1,6 @@
 FROM node:alpine
 
+RUN apk add --no-cache ca-certificates
 WORKDIR /usr/src/app
 
 COPY package*.json ./
