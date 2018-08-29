@@ -102,8 +102,6 @@ export function* signIn() {
     const { user } = data;
     
     yield updateAccount(account, user);
-    console.log(signIn);
-    // localStorage.setItem()
     const { otpConfirm } = user;
 
     if (otpConfirm) {
@@ -155,10 +153,16 @@ export function* forgetScatterIdentity() {
 
 export function* resendEmail({ payload: { email }}) {
   const account = yield select(state => state.account);
-  const data = yield call(accountApi.resendEmail, {
+  const { data, error } = yield call(accountApi.resendEmail, {
     accountName: account.name,
     email,
   });
+
+  if (error) {
+    alert('Failed to send email');
+    console.log(error);
+    return;
+  }
 
   yield put(actions.updateAccountInfo({
     email,

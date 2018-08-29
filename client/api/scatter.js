@@ -133,10 +133,12 @@ export const getScatterIdentity = async () => {
   const {
     publicKey: scatterPublicKey,
     accounts,
+    ...props,
   } = await scatter.getIdentity({
     accounts: [network],
   });
 
+  console.log(props, scatterPublicKey);
   let account;
 
   if (Array.isArray(accounts)) {

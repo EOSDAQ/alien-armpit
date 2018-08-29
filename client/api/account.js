@@ -13,11 +13,8 @@ export const signUp = async (params) => {
   }
 };
 
-export const resendEmail = async (body) => {
-  const response = await axios.post(userBaseUrl + '/resend-email', body);
-  const { data: { resultData } } = response;
-  return resultData;
-}
+export const resendEmail = body =>
+  proxy.post(`/account/user/resend-email`, body);
 
 export const API_TYPES = {
   RESEND_EMAIL: '/resend-email',

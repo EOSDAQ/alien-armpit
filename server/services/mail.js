@@ -4,29 +4,33 @@ const { renderToStaticMarkup } = require('react-dom/server');
 const mail = require('nodemailer');
 const config = require('../config');
 
-const renderEmail = (path, ...props) => {
+const renderEmail = (path, lng, ...props) => {
   const sheet = new ServerStyleSheet();
   const app = importJsx(path);
 
   let dom = renderToStaticMarkup(
-    app(sheet, ...props),
+    app(sheet, lng, ...props),
   );
 
   const styles = sheet.getStyleTags();
   const [_, className] = /="(.+)"/.exec(styles);
   const classes = className.split(' ');
-  
   const styleMap = classes.reduce((res, className) => {
-    const [_, style] = new RegExp(`\.${className}{(.+)}`).exec(styles);
-    res[className] = style;
+    const match = new RegExp(`\.${className}{(.+)}`).exec(styles);
+    if (match) {
+      const [_, style] = match;
+      res[className] = style;
+    }
     return res;
   }, {});
 
-  dom = dom.replace(/class="[\w-]+\s([\w-]+)"/g, (_, key) => {
+  dom = dom.replace(/class="[\w-]+\s([\w-]+)"/g, (match, key) => {
     let style = styleMap[key];
     if (style) {
       return `style="${style}"`;
-    };
+    } else {
+      return match;
+    }
   });
 
   return `
@@ -39,6 +43,7 @@ const renderEmail = (path, ...props) => {
 }
 
 const sendVerifyEmail = async (req, accountName, email, hash) => {
+  const lng = req.headers['language'];
   const smtp = mail.createTransport(config.mail);
   const splittedEmail = email.split('@');
   const baseUrl = req.protocol + '://' + req.get('host');
@@ -47,6 +52,7 @@ const sendVerifyEmail = async (req, accountName, email, hash) => {
   try {
     const html = renderEmail(
       '../resource/VerifyEmail.jsx',
+      lng,
       url,
       accountName,
       email,

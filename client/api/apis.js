@@ -15,12 +15,27 @@ class Api {
     return this.baseURI + url;
   }
 
+  buildHeaders() {
+    return {
+      headers: {
+        'language': localStorage.getItem('i18nextLng'),
+      },
+    };
+  }
+
   get(url, params) {
-    return this.execute(this.client.get(this.buildURI(url)));
+    return this.execute(this.client.get(
+      this.buildURI(url),
+      this.buildHeaders(),
+    ));
   }
 
   post(url, body) {
-    return this.execute(this.client.post(this.buildURI(url), body));
+    return this.execute(this.client.post(
+      this.buildURI(url),
+      body,
+      this.buildHeaders(),
+    ));
   }
 
   async execute(fetch) {
