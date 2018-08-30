@@ -1,25 +1,47 @@
 /* pkg 실행 시 사용될 모듈을 명시하지 않으면 package에 포함이 되지 않으므로
   사용하지 않는 모듈도 로드 */
-const env = process.env.NODE_ENV || 'local';
+const env = process.env.ENV || 'devel';
 
-if (env === 'local') {
-  require('dotenv').config();
-}
-
+const awsParamStore = require('aws-param-store');
+const camelCase = require('camelcase');
 const path = require('path');
-const local = require('./local');
-const development = require('./development');
-const production = require('./production');
+const devel = require('./devel');
+const stage = require('./stage');
+const prod = require('./prod');
 const commonConfig = require('./common');
 
+let config = devel;
 
-let config = local;
-
-if (env === 'production') {
-  config = production;
-} else if (env === 'development') {
-  config = development;
+if (env === 'prod') {
+  config = prod;
+} else if (env === 'stage') {
+  config = stage;
 }
+
+const paramPath = `/eosdaq/${env}`;
+const getAwsParamStore = async () => {
+  try {
+    const params = await awsParamStore.getParametersByPath(paramPath, {
+      region: 'ap-northeast-2',
+    });
+
+    params.map((param) => {
+      const type = camelCase(param.Name.replace(`${paramPath}/`, ''));
+
+      if (type === 'tiffanyApi') {
+        config[type] = `${param.Value}/api/v1/eosdaq`;
+      } else if (type === 'burgundyApi') {
+        config[type] = `${param.Value}/api/v1`;
+      } else {
+        config[type] = param.Value;
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+getAwsParamStore();
 
 config = Object.assign({}, commonConfig, config);
 config.env = env;
