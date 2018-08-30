@@ -1,21 +1,55 @@
-version: '2'
+version: '3'
 
 services:
 
-  alien_armpit:    
-    container_name: alien_armpit
-    image: eosdaq/alien_armpit    
-    build: .
-    ports:
-      - '3000:3000'
+  # alien_armpit:    
+  #   container_name: alien_armpit
+  #   image: eosdaq/alien_armpit    
+  #   build: .
+  #   ports:
+  #     - '3000:3000'
     
-  nginx:
-    container_name: nginx
-    image: nginx
-    build: 
-      context: .
-      dockerfile: Dockerfile.nginx
+  # nginx:
+  #   container_name: nginx
+  #   image: nginx
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile.nginx
+  #   ports:
+  #     - '3031:80'
+
+  burgundy:
     ports:
-      - '3031:80'
+      - "18889:1313"
+    image: eosdaq/burgundy
+    networks:
+      - eos_net
+    # deploy:
+    #   replicas: 1
+    depends_on:
+      - eos_db
+    environment:
+      - EOSDAQMANAGE=${EOSDAQMANAGE}
+      - EOS_HOST=http://local_nodeos
+      - EOS_PORT=8888
+      - DB_HOST=eos_db
+      - DB_USER=eosdaquser
+      - DB_PASS=eosdaqvotmdnjem
+      - ENV=devel
+  db:
+    ports:
+      - "3306:3306"
+    image: mariadb
+    networks:
+      - eos_net
+    environment:
+        MYSQL_ROOT_PASSWORD: eosdaqvotmdnjem
+        MYSQL_DATABASE: eosdaq
+        MYSQL_USER: eosdaquser
+        MYSQL_PASSWORD: eosdaqvotmdnjem
+networks:
+  eos_net:
+      external: true
+
 
   
