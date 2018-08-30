@@ -4,7 +4,7 @@
     "coinName": "코인이름",
     "currentPrice": "현재가",
     "dayChange": "전일대비",
-    "dayVolume": "거래량"
+    "volume": "거래량"
   },
   "chart": {
     "24hVolume": "거래량(최근 24시간)",

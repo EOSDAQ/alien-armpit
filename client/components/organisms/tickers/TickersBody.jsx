@@ -19,7 +19,7 @@ import {
 import ChangeDetector from 'components/molecules/ChangeDetector';
 import Icon from '../../atom/Icon';
 import { IconButton } from '../../atom/Button';
-import { actions } from 'reducer/tickers/tickersReducer';
+import { actions } from 'reducer/tokens/tokensReducer';
 import { tickersSheetRowColumns } from 'components/styleConstants';
 import { toFixed } from 'utils/format';
 
@@ -30,7 +30,7 @@ const toMillion = (number) => {
 
 const TickersBody = (props) => {
   const {
-    coinList,
+    tokens,
     toggleFavorite,
     t,
   } = props;
@@ -38,51 +38,48 @@ const TickersBody = (props) => {
   const scrollStyle = { style: { height: 360 } };
   const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
   const million = t('million');
+
   return (
     <Scrollbars {...scrollOptions}>
-      {coinList.map((coin) => {
-        const buy = coin.dayChange > 0;
-        const to = `${coin.symbol}_${coin.baseSymbol}`;
-        const currentPrice = toFixed(4, coin.currentPrice / 1000);
+      {tokens.map((token) => {
+        const buy = token.dayChange > 0;
+        const currentPrice = toFixed(4, token.currentPrice / 1000);
 
         return (
           <TickersRow
-            key={coin.name}
+            key={token.pair}
             columns={tickersSheetRowColumns}
           >
             <FavoriteCell>
-              <IconButton onClick={() => { toggleFavorite(coin.coinCode); }}>
-                <Icon type={coin.favorite ? 'starred' : 'star'} />
+              <IconButton onClick={() => { toggleFavorite(token.pair); }}>
+                <Icon type={token.favorite ? 'starred' : 'star'} />
               </IconButton>
             </FavoriteCell>
             <CoinNameCell>
-              <CoinIcon url={coin.coinIconUrl} />
+              <CoinIcon url={token.coinIconUrl} />
               <Link // TODO. prevent history being pushed when it is active.
-                to={`/exchange/${to}`}
+                to={`/exchange/${token.pair}`}
               >
                 <CoinNameText>
-                  {coin.name}
+                  {token.name}
                 </CoinNameText>
                 <CoinCodeText>
-                  {`${coin.symbol}/${coin.baseSymbol}`}
+                  {`${token.symbol}/${token.baseSymbol}`}
                 </CoinCodeText>
               </Link>
             </CoinNameCell>
             <CurrentPriceCell buy={buy}>
               {currentPrice}
               <ChangeDetector
-                value={coin.currentPrice}
+                value={token.currentPrice}
               />
             </CurrentPriceCell>
             <DayChangeCell buy={buy}>
-              {coin.dayChange}
+              {token.dayChange}
               %
             </DayChangeCell>
             <DayVolumeCell>
-              {toMillion(coin.dayVolume)}
-              <DayVolumeUnitText>
-                {million}
-              </DayVolumeUnitText>
+              {toFixed(4, token.volume / 10000)}
             </DayVolumeCell>
           </TickersRow>
         );
@@ -92,7 +89,7 @@ const TickersBody = (props) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  toggleFavorite: (coinCode) => { dispatch(actions.toggleFavorite({ coinCode })); },
+  toggleFavorite: (pair) => { dispatch(actions.toggleFavorite({ pair })); },
 });
 
 export default connect(

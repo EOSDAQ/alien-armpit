@@ -32,8 +32,6 @@ export const actions = {
 const defaultState = {
   selectedTab: 'EOS',
   box: {
-    coinList: [],
-    filteredCoinList: [],
     sort: {
       field: 'dayVolume',
       order: -1,
@@ -48,9 +46,9 @@ const selectedTab = handleActions({
 }, defaultState.selectedTab);
 
 const box = handleActions({
-  [types.UPDATE_COIN_LIST]: (state, { payload: coinList }) => ({
+  [types.UPDATE_COIN_LIST]: (state, { payload: { result } }) => ({
     ...state,
-    coinList,
+    tokens: result,
   }),
   [types.UPDATE_FILTERED_COIN_LIST]: (state) => {
     const {
@@ -101,9 +99,9 @@ const box = handleActions({
       },
     };
   },
-  [types.UPDATE_SEARCH_VALUE]: (state, { payload: searchValue }) => ({
+  [types.UPDATE_SEARCH_VALUE]: (state, { payload: { value } }) => ({
     ...state,
-    searchValue,
+    searchValue: value,
   }),
   [types.TOGGLE_SHOW_FAVORITES]: state => ({
     ...state,

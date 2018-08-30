@@ -4,7 +4,7 @@
     "coinName": "Name",
     "currentPrice": "Last Price",
     "dayChange": "Change",
-    "dayVolume": "Volume"
+    "volume": "Volume"
   },
   "chart": {
     "24hVolume": "24h Volume",

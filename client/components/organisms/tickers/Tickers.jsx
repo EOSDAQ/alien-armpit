@@ -29,6 +29,40 @@ class Tickers extends React.Component {
     updateSearchValue(value);
   }
 
+  filterTokens() {
+    const { tokens, box } = this.props;
+    const { searchValue, showFavorites, sort } = box;
+    
+    let filtered = [ ...tokens ];
+
+    filtered = filtered.filter((c) => {
+      if (searchValue) {
+        const match = new RegExp(searchValue, 'i').exec(c.name + c.symbol);
+        if (!match) return false;
+      }
+
+      if (showFavorites) {
+        if (!c.favorite) return false;
+      }
+
+      return true;
+    });
+
+    const { field, order } = sort;
+
+    filtered = filtered.sort((a, b) => {
+      let compare;
+      if (typeof a[field] === 'string') {
+        compare = a[field].toUpperCase() > b[field].toUpperCase();
+      } else {
+        compare = a[field] > b[field];
+      }
+      return compare ? order : -order;
+    });
+
+    return filtered;
+  }
+
   render() {
     const {
       selectedTab,
@@ -36,10 +70,12 @@ class Tickers extends React.Component {
       updateSelectedTab,
       toggleShowFavorites,
     } = this.props;
+
     const {
-      filteredCoinList,
       showFavorites,
     } = box;
+
+    const tokens = this.filterTokens();
 
     return (
       <SheetWrapper>
@@ -53,21 +89,29 @@ class Tickers extends React.Component {
           updateSelectedTab={updateSelectedTab}
         />
         <TickersSubHeader />
-        <TickersBody coinList={filteredCoinList} />
+        <TickersBody tokens={tokens} />
       </SheetWrapper>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.tickers,
-});
+const mapStateToProps = state => {
+  const { box } = state.tickers;
+  const tokens = box.tokens && box.tokens
+    .map(pair => state.tokens[pair])
+    .filter(Boolean);
+
+  return {
+    ...state.tickers,
+    tokens: tokens || [],
+  }
+};
 
 const mapDispatchToProps = dispatch => ({
   updateSelectedTab: (tabId) => { dispatch(actions.updateSelectedTab(tabId)); },
   loadCoins: () => { dispatch(actions.loadCoins()); },
-  updateSearchValue: (value) => { dispatch(actions.updateSearchValueSaga(value)); },
-  toggleShowFavorites: () => { dispatch(actions.toggleShowFavoritesSaga()); },
+  updateSearchValue: (value) => { dispatch(actions.updateSearchValue({ value })); },
+  toggleShowFavorites: () => { dispatch(actions.toggleShowFavorites()); },
 });
 
 export default connect(

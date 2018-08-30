@@ -59,7 +59,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateSort: field => dispatch(actions.updateSortSaga({ field })),
+  updateSort: field => dispatch(actions.updateSort({ field })),
 });
 
 export default connect(

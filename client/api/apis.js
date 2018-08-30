@@ -62,7 +62,9 @@ class Api {
   }
 }
 
-// const { data, error } = await apiv1.get(API_TYPES.RESEND_EMAIL, body);
+const tiffanyApi = document.querySelector(`meta[property='api:tiffany']`)
+  .getAttribute('content');
 
 export const proxy = new Api('/api/v1');
-export const burgundy = new Api('${burgundy}/api/v1');
+export const tiffany = new Api(tiffanyApi);
+// export const tiffany = new Api();

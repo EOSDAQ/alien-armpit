@@ -8,7 +8,13 @@ const renderer = (app) => {
     const { rootPath, staticPath } = config;
     const htmlPath = path.resolve(rootPath, staticPath.slice(1), 'index.html');
     let docStr = fs.readFileSync(htmlPath, 'utf-8');
-    docStr = docStr.replace(/{{nonce}}/g, res.locals.nonce);
+    const { tiffanyApi } = config;
+    docStr = docStr.replace(/{{nonce}}/g, res.locals.nonce); 
+    docStr = docStr.replace(
+      /{{api}}/g, 
+      `<meta property="api:tiffany" content=${tiffanyApi}>`,
+    );
+    
     res.send(docStr);
   });
 };

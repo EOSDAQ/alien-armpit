@@ -1,28 +1,31 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions, types } from './tickersReducer';
 import { actions as tokensActions } from '../tokens/tokensReducer';
-import * as api from 'api/tickers';
+import { tiffany } from 'api/apis';
 
 export function* loadCoins() {
-  try {
-    const tickers = yield call(api.loadCoins);
-    yield put(actions.updateCoinList(tickers));
-    yield put(tokensActions.updateTokens({
-      tokens: tickers,
-    }));
-    yield put(actions.updateFilteredCoinList());
-  } catch(err) {
-    console.log(err);
+  const { data, error } = yield call(tiffany.get, '/ticker');
+  if (data) {
+    const { Tickers: tickers } = data.resultData;
+
+    const { result, tokens } = tickers.reduce((res, ticker) => {
+      const pair = `${ticker.symbol}_${ticker.baseSymbol}`;
+      res.result.push(pair);
+      res.tokens[pair] = { 
+        ...ticker, 
+        pair,
+        dayChange: (ticker.currentPrice - ticker.prevPrice) / Math.max(ticker.prevPrice, 1),
+      };
+      return res;
+    }, { result: [], tokens: {} });
+
+    yield put(actions.updateCoinList({ result }));
+    yield put(tokensActions.updateTokens({ tokens }));
   }
 }
 
 export function* toggleShowFavorites() {
   yield put(actions.toggleShowFavorites());
-  yield put(actions.updateFilteredCoinList());
-}
-
-export function* updateSort({ payload }) {
-  yield put(actions.updateSort(payload));
   yield put(actions.updateFilteredCoinList());
 }
 
@@ -32,7 +35,6 @@ export function* updateSearchValue({ payload }) {
 }
 
 const tickersSaga = [
-  takeLatest(types.UPDATE_SORT_SAGA, updateSort),
   takeLatest(types.UPDATE_SEARCH_VALUE_SAGA, updateSearchValue),
   takeLatest(types.TOGGLE_SHOW_FAVORITES_SAGA, toggleShowFavorites),
   takeLatest(types.LOAD_COINS, loadCoins),

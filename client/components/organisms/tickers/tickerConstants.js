@@ -5,5 +5,5 @@ export const tickersFields = [
   { field: 'coinName' },
   { field: 'currentPrice' },
   { field: 'dayChange' },
-  { field: 'dayVolume' },
+  { field: 'volume' },
 ];

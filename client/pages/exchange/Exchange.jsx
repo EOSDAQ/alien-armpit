@@ -1,6 +1,4 @@
 import React from 'react';
-import { Redirect, Router, Match } from '@reach/router';
-import { translate } from 'react-i18next';
 import Socket from 'components/organisms/socket/Socket';
 import Header from 'components/organisms/header/Header';
 import Footer from 'components/organisms/Footer';
@@ -40,6 +38,7 @@ class Exchange extends React.PureComponent {
                   <ExchangeChart code={code} />
                   <ExchangeRightBottom>
                     <OrderForm code={code} />
+                    <OrderLog code={code} />
                   </ExchangeRightBottom>
                 </Box>
               )}
