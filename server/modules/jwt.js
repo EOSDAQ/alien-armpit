@@ -39,7 +39,7 @@ const signin = async (res, user) => {
   const { accountName } = user;
   const refreshStoreKey = await getRefreshStoreKey();
   const refreshToken = getToken({ accountName }, jwtRefreshKey, jwtRefreshTokenExpires);
-  redis.set(refreshStoreKey, refreshToken, 'EX', jwtRefreshTokenExpires);
+  // redis.set(refreshStoreKey, refreshToken, 'EX', jwtRefreshTokenExpires);
   setTokenOnCookie(res, accessToken, refreshStoreKey);
 };
 

@@ -31,17 +31,20 @@ const validate = async (req, res, next) => {
       throw new NotAuthorizedError();
     }
 
-    refreshToken = await redis.get(refreshStoreKey);
-    refreshResult = jwt.verify(refreshToken, jwtRefreshKey);
-    if (!refreshResult.success) {
-      redis.del(refreshStoreKey);
-      throw new NotAuthorizedError();
-    }
+    // temp
+    throw new NotAuthorizedError();
 
-    const { accountName } = refreshResult.token;
-    const user = await accountService.getUser(accountName);
-    const newAccessToken = jwt.getToken(user, jwtAccessKey, jwtAccessTokenExpires);
-    jwt.setTokenOnCookie(res, newAccessToken, refreshStoreKey);
+    // refreshToken = await redis.get(refreshStoreKey);
+    // refreshResult = jwt.verify(refreshToken, jwtRefreshKey);
+    // if (!refreshResult.success) {
+    //   redis.del(refreshStoreKey);
+    //   throw new NotAuthorizedError();
+    // }
+
+    // const { accountName } = refreshResult.token;
+    // const user = await accountService.getUser(accountName);
+    // const newAccessToken = jwt.getToken(user, jwtAccessKey, jwtAccessTokenExpires);
+    // jwt.setTokenOnCookie(res, newAccessToken, refreshStoreKey);
   } catch (e) {
     next(e);
     return;

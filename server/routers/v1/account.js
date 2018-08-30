@@ -34,12 +34,14 @@ router.get('/user/:accountName', [
 
 router.post('/user', [
   check('accountName').exists(),
+  check('accountHash').exists(),
   check('email').exists(),
 ], async (req, res) => {
   try {
     validationResult(req).throw();
     const {
       accountName,
+      accountHash,
       email,
     } = req.body;
 
@@ -52,6 +54,7 @@ router.post('/user', [
     } else {
       data = await service.createUser({
         accountName,
+        accountHash,
         email,
         emailHash,
       });
@@ -66,14 +69,16 @@ router.post('/user', [
 
 router.post('/user/signin', [
   check('accountName').exists(),
+  check('accountHash').exists(),
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
     const {
       accountName,
+      accountHash,
     } = req.body;
 
-    const user = await service.signin(accountName);
+    const user = await service.signin(accountName, accountHash);
     await jwt.login(res, user);
     res.status(200).send({ success: true });
   } catch (e) {

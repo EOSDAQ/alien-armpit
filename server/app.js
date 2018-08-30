@@ -24,14 +24,14 @@ app.use('/api', router);
 
 middlewares(app);
 
-awsParamStore.getParametersByPath('/eosdaq/devel', {
+awsParamStore.getParameter('/eosdaq/devel/burgundy_api', {
   region: 'ap-northeast-2',
 }).then((parameters) => {
-  console.log('AWS PARAM STORE GET SUCCESS !!!!!!!!!!!!!!')
-  console.log(parameters);
+  // console.log('AWS PARAM STORE GET SUCCESS !!!!!!!!!!!!!!')
+  // console.log(parameters);
 }).catch((err) => {
-  console.log('AWS PARAM STORE GET FAIL !!!!!!!!!!!!!!')
-  console.log(err);
+  // console.log('AWS PARAM STORE GET FAIL !!!!!!!!!!!!!!')
+  // console.log(err);
 });
 
 

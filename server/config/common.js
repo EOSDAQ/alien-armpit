@@ -25,7 +25,7 @@ const commonConfig = {
   burgundyApi: `${envConfig.burgundyApi}/api/v1`,
   jwtAccessKey: 'ca71593c2c84-4918-8162-106067ac5529',
   jwtRefreshKey: '85cfd2aa-caa9-45dc-ac6d-915a9f8daa10',
-  jwtAccessTokenExpires: 10,
+  jwtAccessTokenExpires: 28800,
   jwtRefreshTokenExpires: 120,
 };
 

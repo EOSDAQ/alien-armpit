@@ -47,10 +47,10 @@ const deleteUser = async (accountName) => {
   }
 };
 
-const signin = async (accountName) => {
+const signin = async (accountName, accountHash) => {
   const url = `${userBaseUrl}/${accountName}/login`;
   try {
-    const response = await axios.post(url, { accountName });
+    const response = await axios.post(url, { accountName, accountHash });
     return response.data;
   } catch (e) {
     throw new Error(e);
@@ -68,7 +68,7 @@ const confirmEmail = async (accountName, email, emailHash) => {
 };
 
 const revokeEmail = async (accountName, email, emailHash) => {
-  const url = `${userBaseUrl}/${accountName}/revokeEmail`;  
+  const url = `${userBaseUrl}/${accountName}/revokeEmail`;
   try {
     const response = await axios.delete(url, {
       data: { email, emailHash },
@@ -126,6 +126,7 @@ module.exports = {
   getUser,
   createUser,
   deleteUser,
+  signin,
   confirmEmail,
   revokeEmail,
   initOtp,
