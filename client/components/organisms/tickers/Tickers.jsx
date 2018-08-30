@@ -10,23 +10,9 @@ import TickersBody from './TickersBody';
 import TickersSearch from './TickersSearch';
 
 class Tickers extends React.Component {
-  constructor(props) {
-    super(props);
-    this.debouncedHandleChange = debounce(this.debouncedHandleChange, 300);
-  }
-
   componentDidMount() {
     const { loadCoins } = this.props;
     loadCoins();
-  }
-
-  handleChange(event) {
-    this.debouncedHandleChange(event.value);
-  }
-
-  debouncedHandleChange(value) {
-    const { updateSearchValue } = this.props;
-    updateSearchValue(value);
   }
 
   filterTokens() {
@@ -68,7 +54,6 @@ class Tickers extends React.Component {
       selectedTab,
       box,
       updateSelectedTab,
-      toggleShowFavorites,
     } = this.props;
 
     const {
@@ -79,11 +64,7 @@ class Tickers extends React.Component {
 
     return (
       <SheetWrapper>
-        <TickersSearch
-          onSearch={value => this.debouncedHandleChange(value)}
-          showFavorites={showFavorites}
-          toggleShowFavorites={() => toggleShowFavorites()}
-        />
+        <TickersSearch showFavorites={showFavorites} />
         <TickersHeader
           selectedTab={selectedTab}
           updateSelectedTab={updateSelectedTab}
@@ -110,8 +91,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   updateSelectedTab: (tabId) => { dispatch(actions.updateSelectedTab(tabId)); },
   loadCoins: () => { dispatch(actions.loadCoins()); },
-  updateSearchValue: (value) => { dispatch(actions.updateSearchValue({ value })); },
-  toggleShowFavorites: () => { dispatch(actions.toggleShowFavorites()); },
 });
 
 export default connect(
