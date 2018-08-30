@@ -19,7 +19,11 @@ class TickersSearch extends React.PureComponent {
   }
 
   render() {
-    const { toggleShowFavorites, showFavorites } = this.props;
+    const { 
+      toggleShowFavorites, 
+      showFavorites, 
+    } = this.props;
+
     return (
       <Flex
         height={38}

@@ -15,6 +15,10 @@ class Tickers extends React.Component {
     loadCoins();
   }
 
+  componentWillUnmount() {
+    // should reset searchValue and showFavorites etc...
+  }
+
   filterTokens() {
     const { tokens, box } = this.props;
     const { searchValue, showFavorites, sort } = box;
@@ -64,7 +68,9 @@ class Tickers extends React.Component {
 
     return (
       <SheetWrapper>
-        <TickersSearch showFavorites={showFavorites} />
+        <TickersSearch
+          showFavorites={showFavorites}
+        />
         <TickersHeader
           selectedTab={selectedTab}
           updateSelectedTab={updateSelectedTab}
