@@ -5,40 +5,42 @@ import Tab from '../../molecules/Tab';
 import { TickersTab } from './TickersHeader.styled';
 import { tickersTabs } from './tickerConstants';
 
-const TickersHeader = (props) => {
-  const {
-    t,
-    updateSelectedTab,
-    selectedTab,
-  } = props;
-  const selectedIdx = tickersTabs.findIndex(tab => selectedTab === tab);
-
-  return (
-    <SheetHeader>
-      <Tab selectedIndex={selectedIdx}>
-        {
-          tickersTabs.map((tabId, i) => (
-            <TickersTab
-              key={tabId}
-              role={i === selectedIdx ? 'current' : 'tab'}
-              tabIndex={i === selectedIdx ? -1 : 0}
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
+class TickersHeader extends React.PureComponent {
+  render() {
+    const {
+      t,
+      updateSelectedTab,
+      selectedTab,
+    } = this.props;
+    const selectedIdx = tickersTabs.findIndex(tab => selectedTab === tab);
+  
+    return (
+      <SheetHeader>
+        <Tab selectedIndex={selectedIdx}>
+          {
+            tickersTabs.map((tabId, i) => (
+              <TickersTab
+                key={tabId}
+                role={i === selectedIdx ? 'current' : 'tab'}
+                tabIndex={i === selectedIdx ? -1 : 0}
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    updateSelectedTab(tabId);
+                  }
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
                   updateSelectedTab(tabId);
-                }
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                updateSelectedTab(tabId);
-              }}
-            >
-              {t(`tickers.${tabId}`, { defaultValue: tabId })}
-            </TickersTab>
-          ))
-        }
-      </Tab>
-    </SheetHeader>
-  );
+                }}
+              >
+                {t(`tickers.${tabId}`, { defaultValue: tabId })}
+              </TickersTab>
+            ))
+          }
+        </Tab>
+      </SheetHeader>
+    );
+  }
 };
 
 export default translate('exchange')(TickersHeader);
