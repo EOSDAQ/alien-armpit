@@ -13,6 +13,7 @@ import {
   SentEmailResendLink,
   SentEmailImg,
   ResendEmail,
+  Wrapper,
 } from './SentEmail.styled';
 import { Container } from 'components/atom/Box';
 import Form from 'components/molecules/Form';
@@ -30,13 +31,15 @@ class SentEmail extends React.Component {
   render() {
     const {
       t,
-      email,
-      emailConfirm,
+      viewer: {
+        email,
+        emailConfirm,
+      },
     } = this.props;
 
-    // if (emailConfirm) {
-    //   return <Redirect to="/" noThrow />
-    // }
+    if (emailConfirm) {
+      return <Redirect to="/" noThrow />
+    }
 
     const desc = t('sentEmail.desc').replace('|=email|', `<span>${email}</span>`);
 
@@ -47,14 +50,12 @@ class SentEmail extends React.Component {
       >
         <Header />
         <Container flex={1}>
-          <Flex justifyContent="center" pt={85} pb={85}>
+          <Wrapper>
             <SentEmailGuide>
               <SentEmailHeading>
                 {t('sentEmail.title')}
               </SentEmailHeading>
-              <SentEmailDesc>
-                {desc}
-              </SentEmailDesc>
+              <SentEmailDesc dangerouslySetInnerHTML={{ __html: desc }} />
               <SendEmailNotReceive>
                 {t('sentEmail.notReceive')}
               </SendEmailNotReceive>
@@ -66,6 +67,7 @@ class SentEmail extends React.Component {
                     <div>
                       <Input type="email" name="email" onChange={onChange} />
                       <Button
+                        withChrome
                         onClick={e => submit(e)}
                       >
                         {t('sentEmail.resend')}
@@ -76,7 +78,7 @@ class SentEmail extends React.Component {
               </ResendEmail>
             </SentEmailGuide>
             <SentEmailImg src={`${staticPath.images}/mail-example.png`} />
-          </Flex>
+          </Wrapper>
         </Container>
         <Footer />
       </Flex>

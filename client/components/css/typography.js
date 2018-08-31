@@ -4,12 +4,12 @@ const { fontFamily } = theme;
 
 export const mixin = {
   headingLarge: `
-    font-size: 30px;
-    foht-weight: 700;
-    font-family: ${fontFamily.notosans};
+    font-size: 36px;
+    font-weight: 500;
+    font-family: ${fontFamily.sans};
     color: ${colors.grey800};
+    letter-spacing: -.4px;
   `,
-
   textMedium: `
     font-size: 16px;
     line-height: 1.5;

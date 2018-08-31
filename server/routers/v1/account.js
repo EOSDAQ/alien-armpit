@@ -35,7 +35,6 @@ router.get('/user/:accountName', [
   }
 });
 
-
 router.get('/viewer', async (req, res) => {
   const result = jwt.getTokensFromCookie(req.cookies);
   const payload = jwt.verify(result.accessToken, jwtAccessKey);

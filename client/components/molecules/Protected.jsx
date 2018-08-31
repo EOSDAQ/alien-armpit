@@ -24,8 +24,8 @@ const Unauthorized = () => {
 }
 
 const Protected = (props) => {
-  const { authenticated } = props;
-  if (!authenticated) {
+  const { viewer } = props;
+  if (!viewer) {
     return <Unauthorized />;
   }
 

@@ -2,13 +2,18 @@ import styled from 'styled-components';
 import { colors } from 'components/css/theme';
 import { mixin } from 'components/css/typography';
 
+export const Wrapper = styled('div')`
+  padding: 80px 0;
+  display: flex;
+  align-items: flex-start;
+`;
+
 export const SentEmailGuide = styled('div')`
   margin-right: 92px;
 `;
 
 export const SentEmailHeading = styled('h2')`
   ${mixin.headingLarge};
-  padding-top: 20px;
 `;
 
 export const SentEmailDesc = styled('p')`
@@ -38,6 +43,7 @@ export const SentEmailResendLink = styled('a')`
 `;
 
 export const SentEmailImg = styled('img')`
-  width: 492px;
-  height: 405px;
+  width: 420px;
+  height: auto;
+  display: block;
 `;

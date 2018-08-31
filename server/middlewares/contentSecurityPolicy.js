@@ -9,7 +9,8 @@ const generateUuid = (req, res, next) => {
 
 const cspDirectives = {
   defaultSrc: ["'self'"],
-  connectSrc: ["'self'", '*.tradingview.com', '*.ap-northeast-2.compute.amazonaws.com:18890', '*.ap-northeast-2.compute.amazonaws.com:18888'],
+  connectSrc: ["'self'", '*.tradingview.com',
+  '*.ap-northeast-2.compute.amazonaws.com:18890', '*.ap-northeast-2.compute.amazonaws.com:18888'],
   baseUri: ["'self'"],
   frameSrc: ["'self'"],
   // onlyForProduction

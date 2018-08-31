@@ -8,27 +8,31 @@ const scale = (props) => {
 
   if (large) {
     return ` 
-      height: 62px;
+      height: 50px;
     `;
   }
 
   if (small) {
     return `
-      height: 36px;
+      height: 30px;
       font-size: 14px;
     `;
   }
 
   return `
-    height: 50px;    
+    height: 40px;    
   `;
 };
 
 const Button = styled.button`
   width: ${({ width }) => (width || 'auto')};
   border: none;
+
+  ${({ withChrome }) => withChrome && css`
+    border: 1px solid #ddd;
+  `}
+
   margin: 0px;
-  padding: 0px 8px;
   background: transparent;
   color: inherit;
   font: inherit;
@@ -39,7 +43,6 @@ const Button = styled.button`
   cursor: pointer;
   display: flex;
   align-items: flex-end;
-  width: 100%;
   justify-content: center;
   ${justifyContent}
   ${scale}
