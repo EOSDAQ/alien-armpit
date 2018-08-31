@@ -21,11 +21,17 @@ export function* initOtp({ payload }) {
 }
 
 export function* validateOtp({ payload }) {
+  yield put(apiActions.fetchQuery(payload));
   const { data, error } = yield call(api.validateOtp, payload);
   if (error) {
     alert('Invalid code');
-    return;
+  } else {
+    yield put(modalReducer.actions.closeModal());
   }
 
-  yield put(modalReducer.actions.closeModal());
+  yield put(apiActions.updateQuery({
+    ...payload,
+    error,
+  }));
+
 }

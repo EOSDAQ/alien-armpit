@@ -17,3 +17,11 @@ export const replaceAndBuildArray = (source, condition, replacement) => {
 
   return result;
 };
+
+export const buildActionCacheKey = (action) => {
+  const { type, payload } = action;
+  return [
+    type,
+    payload && JSON.stringify(payload),
+  ].filter(Boolean).join(':');
+}

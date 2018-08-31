@@ -1,4 +1,5 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from 'reducer/otp/otpReducer';
 import { translate } from 'react-i18next';
@@ -9,58 +10,52 @@ import {
   CodeInput,
 } from './OtpModal.styled';
 import Form from '../../../molecules/Form';
+import Mutation from '../../../molecules/Mutation';
 
-class OtpCheckModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.codeInput = React.createRef();
-  }
-
-  handleSubmit({ code }) {
-    const { validate, account } = this.props;
-    if (code.length !== 6) {
-      return;
-    }
-    validate({
-      code,
-      accountName: account.name,
-    });
-  }
-
+class OtpCheckModal extends React.PureComponent {
   render() {
-    const { t } = this.props;
+    const { t, viewer } = this.props;
 
     return(
-      <Wrap>
-        <Title>
-          { t('googleOtp.title2')}
-        </Title>
-        <Desc>
-          { t('googleOtp.desc2')}
-        </Desc>
-        <div>
-          <Form onSubmit={(values) => this.handleSubmit(values)}>
-            {({ onChange }) => (
-              <CodeInput 
-                type="text"
-                name="code"
-                onChange={(e) => onChange(e)}  
-              />
-            )}
-          </Form>
-        </div>
-      </Wrap>
+      <Mutation
+        action={actions.validateOtpSaga}
+      >
+        {(validate, { loading, error }) => {
+          return (
+            <Wrap>
+              <Title>
+                { t('googleOtp.title2')}
+              </Title>
+              <Desc>
+                { t('googleOtp.desc2')}
+              </Desc>
+              <div>
+                <Form onSubmit={({ code }) => {
+                  validate({
+                    code,
+                    accountName: viewer.accountName,
+                  });
+                }}>
+                  {({ onChange }) => (
+                    <CodeInput 
+                      type="text"
+                      name="code"
+                      onChange={(e) => onChange(e)}  
+                    />
+                  )}
+                </Form>
+              </div>
+            </Wrap>
+          );
+        }}
+      </Mutation>
     );
   }
 }
 
-const mapStateToProps = ({ account }) => ({ account });
+const mapStateToProps = ({ account }) => ({ viewer: account.viewer });
 
-const mapDispatchToProps = dispatch => ({
-  validate: (payload) => { dispatch(actions.validateOtpSaga(payload)); },
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(translate('sign')(OtpCheckModal));
+export default compose(
+  connect(mapStateToProps),
+  translate('sign')
+)(OtpCheckModal);

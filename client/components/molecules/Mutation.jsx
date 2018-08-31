@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { buildActionCacheKey } from 'utils/utils';
 
 class Mutation extends React.Component {
   componentDidMount() {
@@ -10,11 +11,18 @@ class Mutation extends React.Component {
   }
 
   act(payload) {
-    const { 
+    let { 
       dispatch,
       action,
       cacheKey,
     } = this.props;
+
+    if (typeof action == 'function') {
+      // deferred mutation
+
+       action = action(payload);
+       cacheKey = buildActionCacheKey(action);
+    }
 
     const enhancedAction = {
       ...action,
@@ -30,7 +38,7 @@ class Mutation extends React.Component {
   render() {
     const { cache } = this.props;
     const defaultCache = {
-      loading: true,
+      loading: false,
       error: null,
     }
 

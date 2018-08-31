@@ -34,8 +34,6 @@ export default handleActions({
   },
   [types.UPDATE_QUERY]: (state, { payload }) => {
     const { cacheKey, error = null } = payload;
-    console.log(cacheKey, error, payload);
-
     const target = state[cacheKey] || {};
     const timestamp = Date.now();
     return {
