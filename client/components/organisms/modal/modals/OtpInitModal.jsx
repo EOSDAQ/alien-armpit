@@ -15,6 +15,7 @@ import {
   NextStep,
 } from './OtpModal.styled';
 import Message from '../../../molecules/Message';
+import Mutation from '../../../molecules/Mutation';
 
 class OtpInitModal extends React.Component {
   constructor(props) {
@@ -27,12 +28,12 @@ class OtpInitModal extends React.Component {
   componentDidMount() {
     const {
       initOtp,
-      account,
+      viewer,
       otpKey,
     } = this.props;
 
     !otpKey && initOtp({
-      accountName: account.name
+      accountName: viewer.accountName
     });
   }
 
@@ -47,45 +48,51 @@ class OtpInitModal extends React.Component {
   render() {
     const {
       t,
-      account,
+      viewer,
       otpKey,
     } = this.props;
 
     return (
-      <Wrap>
-        <Title>
-          { t('googleOtp.title')}
-        </Title>
-        <Desc>
-          { t('googleOtp.desc') }
-        </Desc>
-        <Label>
-          { t('googleOtp.qrCode') }
-        </Label>
-        <QrCodeWrap>
-          { otpKey && <QRCode value={`otpauth://totp/eosdaq.com:${account.name}?secret=${otpKey}&issuer=EOSDAQ`} /> }
-        </QrCodeWrap>
-        <Label>
-          { t('googleOtp.backupKey') }
-        </Label>
-        <BackupKey>
-          {otpKey}
-        </BackupKey>
-        <Caution>
-          <Message warning>
-            { t('googleOtp.caution') }
-          </Message>
-        </Caution>
-        <NextStep href="#" onClick={e => this.handleNextStepClick(e)}>
-          { t('googleOtp.nextStep') }
-        </NextStep>
-      </Wrap>
+      <Mutation>
+        {(mutate, { error, loading }) => {
+          return (
+            <Wrap>
+              <Title>
+                { t('googleOtp.title')}
+              </Title>
+              <Desc>
+                { t('googleOtp.desc') }
+              </Desc>
+              <Label>
+                { t('googleOtp.qrCode') }
+              </Label>
+              <QrCodeWrap>
+                { otpKey && <QRCode value={`otpauth://totp/eosdaq.com:${viewer.name}?secret=${otpKey}&issuer=EOSDAQ`} /> }
+              </QrCodeWrap>
+              <Label>
+                { t('googleOtp.backupKey') }
+              </Label>
+              <BackupKey>
+                {otpKey}
+              </BackupKey>
+              <Caution>
+                <Message warning>
+                  { t('googleOtp.caution') }
+                </Message>
+              </Caution>
+              <NextStep href="#" onClick={e => this.handleNextStepClick(e)}>
+                { t('googleOtp.nextStep') }
+              </NextStep>
+            </Wrap>
+          );
+        }}
+      </Mutation>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  account: state.account,
+  viewer: state.account.viewer,
   ...state.otp,
 });
 

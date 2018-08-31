@@ -53,7 +53,6 @@ class Query extends React.Component {
   render() {
     const defaultCache = {
       loading: true,
-      data: null,
       error: null,
     }
 

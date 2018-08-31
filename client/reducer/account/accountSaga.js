@@ -141,11 +141,6 @@ export function* getScatterIdentity() {
   }
 }
 
-export function* forgetScatterIdentity() {
-  yield call(scatterApi.forgetScatterIdentity);
-  yield put(actions.signOut());
-}
-
 export function* resendEmail({ payload: { email }}) {
   const account = yield select(state => state.account);
   const { data, error } = yield call(accountApi.resendEmail, {
@@ -240,7 +235,6 @@ const accountSaga = [
   takeEvery(types.ORDER, order),
   takeEvery(types.RESEND_EMAIL, resendEmail),
   takeEvery(types.AUTHENTICATE_SCATTER, authenticateScatter),
-  takeEvery(types.FORGET_SCATTER_IDENTITY, forgetScatterIdentity),
   takeEvery(types.GET_SCATTER_IDENTITY, getScatterIdentity),
 ];
 

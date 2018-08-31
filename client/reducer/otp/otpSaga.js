@@ -4,13 +4,13 @@ import { actions as otpActions } from './otpReducer';
 import modalReducer from '../modal/modalReducer';
 
 export function* initOtp({ payload }) {
-  try {
-    const result = yield call(api.initOtp, payload);
-    const { resultData: { accountName, otpKey } } = result;
-    yield put(otpActions.updateData({ otpKey }));
-  } catch (e) {
-    console.log(e);
+  const { data, error } = yield call(api.initOtp, payload);
+  if (error) {
+    return;
   }
+
+  const { resultData: { otpKey } } = data;
+  yield put(otpActions.updateData({ otpKey }));
 }
 
 export function* validateOtp({ payload }) {
