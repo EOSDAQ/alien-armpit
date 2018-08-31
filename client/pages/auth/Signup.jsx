@@ -32,9 +32,9 @@ class Signin extends React.Component {
 
   render() {
     const { t, authenticated, name } = this.props;
-    if (authenticated) {
-      return <Redirect to="/" noThrow />;
-    }
+    // if (authenticated) {
+    //   return <Redirect to="/" noThrow />;
+    // }
 
     return (
       <React.Fragment>

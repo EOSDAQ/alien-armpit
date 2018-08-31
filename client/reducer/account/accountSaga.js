@@ -6,11 +6,11 @@ import { actions, types } from './accountReducer';
 import modal from '../modal/modalReducer';
 import { toFixed } from 'utils/format';
 import { proxy } from 'api/apis';
+import * as apiReducer from '../api/apiReducer';
 
 export function* authenticateScatter() {
   try {
     yield call(scatterApi.authenticateScatter);
-    yield restoreSession();
   } catch (e) {
 
   }
@@ -37,40 +37,34 @@ export function* restoreSession() {
 
 export function* signUp() {
   const account = yield getScatterIdentity();
-
   if (!account) {
     return;
   }
 
-  const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
-  // user가 이미 있으면, 이미 회원가입이 된 것이므로 에러 표시를 해준다.
-  if (data) {
-    yield forgetScatterIdentity();
-    alert('already signed up! Please go to sign in');
-  }
-
-  if (error) {
-    yield put(actions.updateAccountInfo(account));
-    navigate('/signup');
-  }
-
+  yield put(actions.updateAccountInfo(account));
+  navigate('/signup');
 }
 
 export function* createAccount({ payload: { email } }) {
-  const { name } = yield select(state => state.account);
-  const data = yield call(accountApi.signUp, {
-    accountName: name,
+  const accountHash = yield call(scatterApi.authenticateScatter);
+  const { name: accountName } = yield select(state => state.account);
+
+  const body = {
+    accountHash,
+    accountName,
     email,
-  });
-  
-  // TODO.
-  if (data) {
-    // successful
+  };
+
+  const { data, error } = yield call(accountApi.signUp, body);
+
+  if (!error) {
+    // successfully signed up.
+    console.log('will navigate');
+    navigate('/sent-email');
     yield put(actions.createdAccount({
       email,
     }));
-    navigate('/sent-email');
-  }
+  };
 }
 
 function* updateAccount(account, user) {
@@ -91,16 +85,16 @@ export function* signIn() {
   const account = yield getScatterIdentity();
   if (!account) return;
 
-  const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
+  const { name: accountName } = account;
+  const accountHash = yield call(scatterApi.authenticateScatter);
 
-  if (error) {
-    alert('Account is not registered!');
-    return;
-  }
+  const {
+    data,
+    error,
+  } = yield call(accountApi.signIn, { accountName, accountHash });
 
   if (data) {
     const { user } = data;
-    
     yield updateAccount(account, user);
     const { otpConfirm } = user;
 
@@ -111,6 +105,7 @@ export function* signIn() {
     } else {
     }
 
+    location.href = '/';
     return;
   }
 }
@@ -120,7 +115,7 @@ export function* getScatterIdentity() {
     const account = yield call(scatterApi.getScatterIdentity);
     return account;
   } catch (e) {
-
+    console.error(e);
     if (!e.code) {
       // 스캐터 오류가 아님.
       console.error(e);
@@ -214,9 +209,33 @@ export function* order({ payload }) {
   }
 }
 
+function* signOut() {
+  yield call(scatterApi.forgetScatterIdentity);
+  yield call(accountApi.signOut);
+  location.href = '/';
+}
+
+function* getViewer({ payload }) {
+  yield put(apiReducer.actions.fetchQuery(payload));
+  const { data, error } = yield call(proxy.get, '/account/viewer');
+  if (data) {
+    yield put(actions.updateViewer(data));
+    yield put(apiReducer.actions.updateQuery(payload));
+  }
+
+  if (error) {
+    yield put(apiReducer.actions.updateQuery({
+      ...payload,
+      error,
+    }));
+  }
+}
+
 const accountSaga = [
-  takeEvery(types.SIGN_IN, signIn),
   takeEvery(types.SIGN_UP, signUp),
+  takeEvery(types.SIGN_IN, signIn),
+  takeEvery(types.SIGN_OUT, signOut),
+  takeEvery(types.GET_VIEWER, getViewer),
   takeEvery(types.CREATE_ACCOUNT, createAccount),
   takeEvery(types.ORDER, order),
   takeEvery(types.RESEND_EMAIL, resendEmail),

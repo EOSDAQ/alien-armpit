@@ -7,6 +7,9 @@ const jwt = require('../../modules/jwt');
 const jwtHelper = require('../../middlewares/jwtHelper');
 
 const { validate } = jwtHelper;
+const {
+  jwtAccessKey,
+} = require('../../config');
 
 const router = express.Router();
 
@@ -32,42 +35,75 @@ router.get('/user/:accountName', [
   }
 });
 
-router.post('/user', [
+
+router.get('/viewer', async (req, res) => {
+  const result = jwt.getTokensFromCookie(req.cookies);
+  const payload = jwt.verify(result.accessToken, jwtAccessKey);
+  const { token } = payload;
+
+  if (!token) {
+    res.status(401).send();
+  }
+
+  const { accountName } = token;
+  const viewer = await service.getUser(accountName);
+  res.status(200).send({ viewer });
+});
+
+router.post('/signup', [
   check('accountName').exists(),
   check('accountHash').exists(),
   check('email').exists(),
 ], async (req, res) => {
   try {
     validationResult(req).throw();
-    const {
-      accountName,
-      accountHash,
-      email,
-    } = req.body;
-
-    const user = await service.getUser(accountName);
-    const emailHash = cipher.generateBase32str(20);
-
-    let data;
-    if (user) {
-      data = await service.revokeEmail(accountName, email, emailHash);
-    } else {
-      data = await service.createUser({
-        accountName,
-        accountHash,
-        email,
-        emailHash,
-      });
-    }
-
-    mailService.sendVerifyEmail(accountName, email, emailHash);
-    res.status(200).send(data);
   } catch (e) {
-    res.status(e.status || 500).send({ success: false });
+    console.error(e);
   }
+
+  const {
+    accountName,
+    accountHash,
+    email,
+  } = req.body;
+  
+  
+  try {
+    const emailHash = cipher.generateBase32str(20);
+    // 통과했다고 가정하고 진행.
+    // const data = await service.createUser({
+    //   accountName,
+    //   accountHash,
+    //   email,
+    //   emailHash,
+    // });
+    mailService.sendVerifyEmail(accountName, email, emailHash);
+    await jwt.signin(res, { accountName });
+    res.status(200).json();
+  } catch (e) {
+    console.error(e);
+    return;
+  }
+
+
+    // const user = await service.getUser(accountName);
+
+    // let data;
+    // if (user) {
+    //   data = await service.revokeEmail(accountName, email, emailHash);
+    // } else {
+    //   data = await service.createUser({
+    //     accountName,
+    //     accountHash,
+    //     email,
+    //     emailHash,
+    //   });
+    // }
+
+    // res.status(200).send(data);
 });
 
-router.post('/user/signin', [
+router.post('/signin', [
   check('accountName').exists(),
   check('accountHash').exists(),
 ], async (req, res, next) => {
@@ -78,15 +114,18 @@ router.post('/user/signin', [
       accountHash,
     } = req.body;
 
-    const user = await service.signin(accountName, accountHash);
-    await jwt.login(res, user);
-    res.status(200).send({ success: true });
+    // replace with service.signin
+    const user = await service.getUser(accountName);
+    await jwt.signin(res, {
+      accountName,
+    });
+    res.status(200).send({ user });
   } catch (e) {
     next(e);
   }
 });
 
-router.get('/user/signout', (req, res) => {
+router.post('/signout', (req, res) => {
   const { cookies } = req;
   jwt.signout(res, cookies);
   res.status(200).send({ success: true });

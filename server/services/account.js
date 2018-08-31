@@ -48,7 +48,8 @@ const deleteUser = async (accountName) => {
 };
 
 const signin = async (accountName, accountHash) => {
-  const url = `${userBaseUrl}/${accountName}/login`;
+  const url = `${userBaseUrl}/${accountName}/signin`;
+  console.log('signed with::', url, { accountName, accountHash });
   try {
     const response = await axios.post(url, { accountName, accountHash });
     return response.data;

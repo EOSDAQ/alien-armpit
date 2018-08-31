@@ -1,3 +1,5 @@
+import jdenticon from 'jdenticon';
+
 export const types = {
   AUTHENTICATE_SCATTER: 'account/authenticateScatter',
   GET_SCATTER_IDENTITY: 'account/getScatterIdentity',
@@ -7,6 +9,8 @@ export const types = {
   SIGN_OUT: 'account/signOut',
   SIGN_UP: 'account/signUp',
   ORDER: 'account/order',
+  GET_VIEWER: 'account/viewer/GET',
+  UPDATE_VIEWER: 'account/viewer/UPDATE',
   RESEND_EMAIL: 'account/RESEND_EMAIL',
   CREATE_ACCOUNT: 'account/create',
   CREATED_ACCOUNT: 'account/created',
@@ -27,6 +31,14 @@ export const actions = {
   }),
   updateAccountInfo: payload => ({
     type: types.UPDATE_ACCOUNT_INFO,
+    payload,
+  }),
+  getViewer: payload => ({
+    type: types.GET_VIEWER,
+    payload,
+  }),
+  updateViewer: payload => ({
+    type: types.UPDATE_VIEWER,
     payload,
   }),
   createAccount: payload => ({
@@ -61,10 +73,25 @@ export const actions = {
 
 const initialState = {
   authenticated: false,
+  viewer: null,
 };
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.UPDATE_VIEWER: {
+      const { payload: { viewer } } = action;
+      let identicon = jdenticon
+        .toSvg(viewer.accountName, 32)
+        .replace(/(width|height)="\d+"/g, '');
+      
+      return {
+        ...state,
+        viewer: {
+          ...viewer,
+          identicon,
+        }
+      };
+    }
     case types.UPDATE_ACCOUNT_INFO:
       return {
         ...state,
@@ -79,9 +106,6 @@ const accountReducer = (state = initialState, action) => {
         ...action.payload,
         authenticated: true,
       }
-    case types.SIGN_OUT:
-      return initialState;
-
     default:
       return state;
   }

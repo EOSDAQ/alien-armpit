@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
 const redis = require('../modules/redis');
+
 const {
   jwtAccessKey,
   jwtAccessTokenExpires,
@@ -10,10 +11,11 @@ const {
 
 const getRefreshStoreKey = async () => {
   const refreshKey = randToken.uid(64);
-  const isExist = await redis.exists(refreshKey);
-  if (isExist) {
-    return getRefreshStoreKey();
+  const keyInRedis = await redis.get(refreshKey);
+  if (keyInRedis) {
+    return keyInRedis;
   }
+  
   return refreshKey;
 };
 
@@ -36,19 +38,24 @@ const getToken = (data, key, expires) => (
 
 const signin = async (res, user) => {
   const accessToken = getToken(user, jwtAccessKey, jwtAccessTokenExpires);
-  const { accountName } = user;
   const refreshStoreKey = await getRefreshStoreKey();
-  const refreshToken = getToken({ accountName }, jwtRefreshKey, jwtRefreshTokenExpires);
+  // const { accountName } = user;
+  // const refreshToken = getToken({ accountName }, jwtRefreshKey, jwtRefreshTokenExpires);
   // redis.set(refreshStoreKey, refreshToken, 'EX', jwtRefreshTokenExpires);
   setTokenOnCookie(res, accessToken, refreshStoreKey);
 };
 
 const signout = (res, cookies) => {
-  res.cookie('tokens', '');
-  const { refreshToken: refreshKey } = getTokensFromCookie(cookies);
-  if (refreshKey) {
-    redis.del(refreshKey);
+  try {
+    const { refreshToken: refreshKey } = getTokensFromCookie(cookies);
+    if (refreshKey) {
+      redis.del(refreshKey);
+    }
+  } catch(e) {
+    console.error(e);
   }
+
+  res.clearCookie('tokens');
 };
 
 const getTokensFromCookie = (cookies) => {
@@ -58,11 +65,11 @@ const getTokensFromCookie = (cookies) => {
 
 const verify = (token, key) => {
   const result = {};
-
   try {
     result.token = jwt.verify(token, key);
     result.success = true;
   } catch (e) {
+    console.error(e);
     result.success = false;
     if (e.name === 'TokenExpiredError') {
       result.expired = true;

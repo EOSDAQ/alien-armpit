@@ -48,7 +48,7 @@ class Scatter {
 
   onLoad() {
     this.set(window.scatter);
-    store.dispatch(actions.authenticateScatter());
+    // store.dispatch(actions.authenticateScatter());
     window.scatter = null;
   }
 
@@ -126,7 +126,7 @@ export const bid = async (data) => {
 
 export const authenticateScatter = async () => {
   const result = await scatter.authenticate();
-  console.log(result);
+  return result;
 }
 
 export const getScatterIdentity = async () => {
@@ -138,7 +138,6 @@ export const getScatterIdentity = async () => {
     accounts: [network],
   });
 
-  console.log(props, scatterPublicKey);
   let account;
 
   if (Array.isArray(accounts)) {

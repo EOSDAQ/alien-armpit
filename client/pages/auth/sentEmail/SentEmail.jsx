@@ -34,9 +34,9 @@ class SentEmail extends React.Component {
       emailConfirm,
     } = this.props;
 
-    if (emailConfirm) {
-      return <Redirect to="/" noThrow />
-    }
+    // if (emailConfirm) {
+    //   return <Redirect to="/" noThrow />
+    // }
 
     const desc = t('sentEmail.desc').replace('|=email|', `<span>${email}</span>`);
 

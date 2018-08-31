@@ -14,7 +14,7 @@ import modal from 'reducer/modal/modalReducer';
 
 const HeaderAccountMenu = ({ t, signOut, initOtp, closeDropdown, ...account }) => {
   const {
-    name,
+    accountName,
     email,
     identicon,
     otpConfirm,
@@ -48,7 +48,7 @@ const HeaderAccountMenu = ({ t, signOut, initOtp, closeDropdown, ...account }) =
           />
           <Box>
             <AccountName>
-              {name}
+              {accountName}
             </AccountName>
             <AccountEmail>
               {email}
@@ -85,7 +85,7 @@ const HeaderAccountMenu = ({ t, signOut, initOtp, closeDropdown, ...account }) =
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  signOut: () => dispatch(actions.forgetScatterIdentity()),
+  signOut: () => dispatch(actions.signOut()),
   initOtp: () => dispatch(modal.actions.openModal({
     type: 'OTP_INIT',
   })),

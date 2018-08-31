@@ -67,7 +67,11 @@ class Query extends React.Component {
 
 const mapStateToProps = (state, props) => {
   let { action } = props;
-  const cacheKey = `${action.type}:${JSON.stringify(action.payload)}`;
+  const payload = action.payload 
+    ? ':' + JSON.stringify(action.payload)
+    : '';
+  
+  const cacheKey = `${action.type}${payload}`;
   return {
     cacheKey,
     dispatching: state.api.dispatching,
