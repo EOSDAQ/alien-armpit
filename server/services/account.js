@@ -1,28 +1,30 @@
 const axios = require('axios');
 const qs = require('querystring');
 const config = require('../config');
+const request = require('../modules/request');
 
 const routePath = `${config.burgundyApi}/acct`;
 const userBaseUrl = `${routePath}/user`;
 
-const getUser = async (accountName) => {
+const getUser = async (accountName, accessToken) => {
   const url = `${userBaseUrl}/${accountName}`;
 
   try {
-    const response = await axios.get(url);
-    return response.data.resultData;
+    const { data } = await request('get', url, null, { accessToken });
+    return data.resultData;
   } catch (e) {
     const { response } = e;
+    if (!response) {
+      throw new Error(e);    
+    }
     const {
       status,
       data,
     } = response;
-
     // record not found
     if (status > 400 || data.resultCode === '0404') {
       return null;
     }
-
     throw new Error(e);
   }
 };
@@ -40,8 +42,8 @@ const createUser = async (user) => {
 const deleteUser = async (accountName) => {
   const url = `${userBaseUrl}/${accountName}`;
   try {
-    const response = await axios.delete(url);
-    return response.data;
+    const { data } = await request('delete', url, null, { accessToken });
+    return data;
   } catch (e) {
     throw new Error(e);
   }
@@ -61,31 +63,28 @@ const signin = async (accountName, accountHash) => {
 const confirmEmail = async (accountName, email, emailHash) => {
   const url = `${userBaseUrl}/${accountName}/confirmEmail`;
   try {
-    const response = await axios.post(url, { email, emailHash });
-    return response.data;
+    const { data } = await request('post', url, { email, emailHash });
+    return data;
   } catch (e) {
     throw new Error(e);
   }
 };
 
-const revokeEmail = async (accountName, email, emailHash) => {
+const revokeEmail = async (accountName, email, emailHash, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/revokeEmail`;
   try {
-    const response = await axios.delete(url, {
-      data: { email, emailHash },
-    });
-
-    return response.data;
+    const { data } = await request('delete', url, { email, emailHash }, { accessToken });
+    return data;
   } catch (e) {
     throw new Error(e);
   }
 };
 
-const initOtp = async (accountName) => {
+const initOtp = async (accountName, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/newOTP`;
   try {
-    const response = await axios.post(url);
-    return response.data;
+    const { data, status } = await request('post', url, null, { accessToken });
+    return data;
   } catch (e) {
     const { response } = e;
     const { status, data } = response;
@@ -96,11 +95,11 @@ const initOtp = async (accountName) => {
   }
 };
 
-const revokeOtp = async (accountName) => {
+const revokeOtp = async (accountName, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/revokeOTP`;
   try {
-    const response = await axios.delete(url);
-    return response.data;
+    const data = await request('delete', url, null, { accessToken });
+    return data;
   } catch (e) {
     throw new Error(e);
   }
@@ -109,8 +108,8 @@ const revokeOtp = async (accountName) => {
 const validateOtp = async (accountName, code) => {
   const url = `${userBaseUrl}/${accountName}/validateOTP`;
   try {
-    const response = await axios.post(url, qs.stringify({ code }));
-    return response.data;
+    const data = await request('post', url, qs.stringify({ code }), { accessToken });
+    return data;
   } catch (e) {
     const { response } = e;
     const { status, data } = response;

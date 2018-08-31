@@ -19,31 +19,23 @@ if (env === 'prod') {
 }
 
 const paramPath = `/eosdaq/${env}`;
-const getAwsParamStore = async () => {
-  try {
-    const params = await awsParamStore.getParametersByPath(paramPath, {
-      region: 'ap-northeast-2',
-    });
+const params = awsParamStore.getParametersByPathSync(paramPath, {
+  region: 'ap-northeast-2',
+});
 
-    params.map((param) => {
-      const type = camelCase(param.Name.replace(`${paramPath}/`, ''));
-
-      if (type === 'tiffanyApi') {
-        config[type] = `${param.Value}/api/v1/eosdaq`;
-      } else if (type === 'burgundyApi') {
-        config[type] = `${param.Value}/api/v1`;
-      } else {
-        config[type] = param.Value;
-      }
-    });
-  } catch (e) {
-    console.log(e);
+params.map((param) => {
+  const type = camelCase(param.Name.replace(`${paramPath}/`, ''));
+  if (type === 'tiffanyApi') {
+    config[type] = `${param.Value}/api/v1/eosdaq`;
+  } else if (type === 'burgundyApi') {
+    config[type] = `${param.Value}/api/v1`;
+  } else {
+    config[type] = param.Value;
   }
-};
-
-getAwsParamStore();
+});
 
 config = Object.assign({}, commonConfig, config);
 config.env = env;
 config.rootPath = path.resolve(__dirname, '..', '..');
+
 module.exports = config;

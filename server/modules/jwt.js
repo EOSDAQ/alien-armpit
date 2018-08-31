@@ -63,6 +63,14 @@ const getTokensFromCookie = (cookies) => {
   return tokensStr ? JSON.parse(tokensStr) : '';
 };
 
+const getAccessTokenFromCookie = (cookies) => {
+  const tokens = getTokensFromCookie(cookies);
+  if (!tokens) {
+    return;
+  }
+  return tokens.accessToken || '';
+};
+
 const verify = (token, key) => {
   const result = {};
   try {
@@ -85,5 +93,7 @@ module.exports = {
   signin,
   signout,
   getTokensFromCookie,
+  getAccessTokenFromCookie,
   verify,
+  decode: jwt.decode,
 };

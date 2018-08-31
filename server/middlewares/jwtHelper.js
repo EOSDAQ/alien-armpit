@@ -10,7 +10,7 @@ const {
   jwtRefreshKey,
 } = require('../config');
 
-const validate = async (req, res, next) => {
+const jwtValidate = async (req, res, next) => {
   const { cookies } = req;
   const { accessToken, refreshToken: refreshStoreKey } = jwt.getTokensFromCookie(cookies);
   let refreshResult;
@@ -23,6 +23,7 @@ const validate = async (req, res, next) => {
 
     const result = jwt.verify(accessToken, jwtAccessKey);
     if (result.success) {
+      setPayload(req, accessToken);
       next();
       return;
     }
@@ -45,15 +46,18 @@ const validate = async (req, res, next) => {
     // const user = await accountService.getUser(accountName);
     // const newAccessToken = jwt.getToken(user, jwtAccessKey, jwtAccessTokenExpires);
     // jwt.setTokenOnCookie(res, newAccessToken, refreshStoreKey);
+    // setPayload(newAccessToken);
   } catch (e) {
     next(e);
     return;
   }
+};
 
+const setPayload = (req, accessToken) => {
   req.locals.accessToken = accessToken;
-  next();
+  req.locals.tokenPayload = jwt.decode(accessToken, jwtAccessKey);
 };
 
 module.exports = {
-  validate,
+  jwtValidate,
 };

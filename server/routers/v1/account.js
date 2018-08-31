@@ -6,14 +6,10 @@ const mailService = require('../../services/mail');
 const jwt = require('../../modules/jwt');
 const jwtHelper = require('../../middlewares/jwtHelper');
 
-const { validate } = jwtHelper;
-const {
-  jwtAccessKey,
-} = require('../../config');
-
+const { jwtValidate } = jwtHelper;
 const router = express.Router();
 
-router.get('/user/:accountName', [
+router.get('/user/:accountName', /* jwtValidate, */ [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
@@ -21,7 +17,10 @@ router.get('/user/:accountName', [
     const {
       accountName,
     } = req.params;
-    const user = await service.getUser(accountName);
+    // const {
+    //   accessToken,
+    // } = req.locals;
+    const user = await service.getUser(accountName/*, accessToken */);
 
     res
       .status(user ? 200 : 404)
@@ -35,16 +34,18 @@ router.get('/user/:accountName', [
   }
 });
 
-router.get('/viewer', async (req, res) => {
-  const result = jwt.getTokensFromCookie(req.cookies);
-  const payload = jwt.verify(result.accessToken, jwtAccessKey);
-  const { token } = payload;
+router.get('/viewer', jwtValidate, async (req, res) => {
+  const {
+    accessToken,
+    tokenPayload,
+  } = req.locals;
 
-  if (!token) {
+  if (!accessToken) {
     res.status(401).send();
+    return;
   }
 
-  const { accountName } = token;
+  const { accountName } = tokenPayload;
   const viewer = await service.getUser(accountName);
   res.status(200).send({ viewer });
 });
@@ -53,11 +54,11 @@ router.post('/signup', [
   check('accountName').exists(),
   check('accountHash').exists(),
   check('email').exists(),
-], async (req, res) => {
+], async (req, res, next) => {
   try {
     validationResult(req).throw();
   } catch (e) {
-    console.error(e);
+    next(e);
   }
 
   const {
@@ -66,22 +67,20 @@ router.post('/signup', [
     email,
   } = req.body;
   
-  
   try {
-    const emailHash = cipher.generateBase32str(20);
-    // 통과했다고 가정하고 진행.
-    // const data = await service.createUser({
-    //   accountName,
-    //   accountHash,
-    //   email,
-    //   emailHash,
-    // });
+    const emailHash = cipher.generateBase32str(20);    
+    const data = await service.createUser({
+      accountName,
+      accountHash,
+      email,
+      emailHash,
+    });
+ 
     mailService.sendVerifyEmail(accountName, email, emailHash);
     await jwt.signin(res, { accountName });
     res.status(200).json();
   } catch (e) {
-    console.error(e);
-    return;
+    next(e);
   }
 
 
@@ -115,6 +114,10 @@ router.post('/signin', [
 
     // replace with service.signin
     const user = await service.getUser(accountName);
+    if (!user) {
+      res.status(401).send({ success: false });
+      return;
+    }
     await jwt.signin(res, {
       accountName,
     });
@@ -130,34 +133,33 @@ router.post('/signout', (req, res) => {
   res.status(200).send({ success: true });
 });
 
-router.get('/user/validate', validate, (req, res) => {
+router.get('/user/validate', jwtValidate, (req, res) => {
   res.status(200).send({ success: true });
 });
 
-router.post(
-  '/user/resend-email',
-  [
-    check('email').exists(),
-    check('accountName').exists(),
-  ],
-  async (req, res) => {
-    validationResult(req).throw();
+router.post('/user/resend-email', jwtValidate, [
+  check('email').exists(),
+  check('accountName').exists(),
+], async (req, res) => {
+  validationResult(req).throw();
+  const {
+    accountName,
+    email,
+  } = req.body;
+  const {
+    accessToken,
+  } = req.locals;
 
-    const {
-      accountName,
-      email,
-    } = req.body;
-
-    const emailHash = cipher.generateBase32str(20);
-    const data = await service.revokeEmail(
-      accountName,
-      email,
-      emailHash,
-    );
-
-    mailService.sendVerifyEmail(req, accountName, email, emailHash);
-    res.status(200).send(data);
-  },
+  const emailHash = cipher.generateBase32str(20);
+  const data = await service.revokeEmail(
+    accountName,
+    email,
+    emailHash,
+    accessToken,
+  );
+  mailService.sendVerifyEmail(req, accountName, email, emailHash);
+  res.status(200).send(data);
+}
 );
 
 router.get('/verifyEmail/:accountName/:email/:emailHash', [
@@ -172,7 +174,7 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
       email,
       emailHash,
     } = req.params;
-
+    
     await service.confirmEmail(accountName, email, emailHash);
     res.redirect('/');
   } catch (e) {
@@ -180,7 +182,7 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
   }
 });
 
-router.post('/:accountName/otp/init/', [
+router.post('/:accountName/otp/init/', jwtValidate, [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
@@ -188,20 +190,22 @@ router.post('/:accountName/otp/init/', [
     const {
       accountName,
     } = req.params;
+    const {
+      accessToken,
+    } = req.locals;
     let result;
-    result = await service.initOtp(accountName);
+    result = await service.initOtp(accountName, accessToken);
     if (result.resultCode === '1000') {
-      await service.revokeOtp(accountName);
-      result = await service.initOtp(accountName);
+      await service.revokeOtp(accountName, accessToken);
+      result = await service.initOtp(accountName, accessToken);
     }
     res.status(200).send(result);
   } catch (e) {
-    console.log(e);
     next(e);
   }
 });
 
-router.post('/:accountName/otp/validate', [
+router.post('/:accountName/otp/validate', jwtValidate, [
   check('code').exists(),
 ], async (req, res, next) => {
   try {
@@ -209,9 +213,12 @@ router.post('/:accountName/otp/validate', [
     const {
       accountName,
     } = req.params;
+    const {
+      accessToken,
+    } = req.locals;
 
     const { code } = req.body;
-    const result = await service.validateOtp(accountName, code);
+    const result = await service.validateOtp(accountName, code, accessToken);
     if (!result) {
       res.status(401).send({ success: false });
       return;

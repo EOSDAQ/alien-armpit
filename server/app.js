@@ -9,17 +9,19 @@ const middlewares = require('./middlewares');
 const router = require('./routers/router');
 
 const app = express();
-// const { env } = config;
+const { env } = config;
 const staticPath = path.join(__dirname, `../${config.staticPath}`);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use((req, res, next) => {
+  req.locals = {};
+  next();
+});
 
 app.use('/static', express.static(staticPath));
 app.use('/api', router);
-
-
 middlewares(app);
 
 // app.use((req, res, next) => {
@@ -33,13 +35,18 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500).send({
+  const result = {
     success: false,
     name: err.name,
     resultMsg: err.message,
     resultCode: err.code,
-  });
+  };
+
+ 	if (env !== 'prod') {
+ 		result.stack = err.stack;
+ 	}
+
+  res.status(err.status || 500).send(result);
 });
 
 module.exports = app;
