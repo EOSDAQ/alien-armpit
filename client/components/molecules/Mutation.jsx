@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 class Mutation extends React.Component {
   componentDidMount() {
-
+    const { actOnMount, cache } = this.props;
+    if (actOnMount && !cache) {
+      this.act();
+    }
   }
 
   act(payload) {
@@ -45,6 +48,7 @@ const mapStateToProps = (state, props) => {
     : '';
   
   const cacheKey = `${action.type}${payload}`;
+
   return {
     cacheKey,
     dispatching: state.api.dispatching,

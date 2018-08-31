@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import theme, { colors } from 'components/css/theme';
 import Input from '../../../atom/Input';
+import Loader from '../../../atom/Loader';
 
 const { fontFamily } = theme;
 
@@ -30,8 +31,16 @@ export const Label = styled('div')`
 `;
 
 export const QrCodeWrap = styled('div')`
-  padding-top: 12px;
+  margin-top: 12px;
   width: 160px;
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  background: #fafafa;
+`;
+
+export const QrCodeLoader = styled(Loader)`
+  animation-duration: 2s;
 `;
 
 export const BackupKey = styled('div')`

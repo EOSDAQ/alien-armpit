@@ -13,35 +13,19 @@ import {
   BackupKey,
   Caution,
   NextStep,
+  QrCodeLoader,
 } from './OtpModal.styled';
 import Message from '../../../molecules/Message';
 import Mutation from '../../../molecules/Mutation';
 
 class OtpInitModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isDrawn: false,
-    };
-  }
-
-  componentDidMount() {
-    const {
-      initOtp,
-      viewer,
-      otpKey,
-    } = this.props;
-
-    !otpKey && initOtp({
-      accountName: viewer.accountName
-    });
-  }
-
   handleNextStepClick(e) {
+    e.preventDefault();
+
     const {
       showOtpCheckModal,
     } = this.props;
-    e.preventDefault();
+
     showOtpCheckModal();
   }
 
@@ -53,7 +37,12 @@ class OtpInitModal extends React.Component {
     } = this.props;
 
     return (
-      <Mutation>
+      <Mutation
+        action={actions.initOtpSaga({
+          accountName: viewer.accountName,
+        })}
+        actOnMount
+      >
         {(mutate, { error, loading }) => {
           return (
             <Wrap>
@@ -67,7 +56,8 @@ class OtpInitModal extends React.Component {
                 { t('googleOtp.qrCode') }
               </Label>
               <QrCodeWrap>
-                { otpKey && <QRCode value={`otpauth://totp/eosdaq.com:${viewer.name}?secret=${otpKey}&issuer=EOSDAQ`} /> }
+                {loading && <QrCodeLoader />}
+                {otpKey && <QRCode value={`otpauth://totp/eosdaq.com:${viewer.accountName}?secret=${otpKey}&issuer=EOSDAQ`} /> }
               </QrCodeWrap>
               <Label>
                 { t('googleOtp.backupKey') }
