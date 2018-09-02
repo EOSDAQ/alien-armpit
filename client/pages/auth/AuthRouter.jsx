@@ -2,12 +2,14 @@ import React from 'react';
 import { Router } from '@reach/router';
 import Signup from './Signup';
 import SentEmail from './sentEmail/SentEmail';
-import Protected from 'components/molecules/Protected';
+import { Protected, ReverseProtected } from 'components/molecules/Protected';
 
 const SignRouter = () => {
   return (
     <Router path="/">
-      <Signup path="signup" />
+    	<ReverseProtected path="signup">
+    		<Signup path="/" />	
+    	</ReverseProtected>
       <Protected path="sent-email">
         <SentEmail path="/" />
       </Protected>
