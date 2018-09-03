@@ -49,7 +49,7 @@ services:
         MYSQL_PASSWORD: eosdaqvotmdnjem
 networks:
   eos_net:
-    driver: bridge
+    external: true
 
 
   
