@@ -46,7 +46,7 @@ router.post('/signup', [
       return;
     }
  
-    mailService.sendVerifyEmail(accountName, email, emailHash);
+    mailService.sendVerifyEmail(req, accountName, email, emailHash);
     await jwt.signin(res, { accountName });
     const viewer = await service.getUser(accountName);
     res.status(201).json({ viewer });

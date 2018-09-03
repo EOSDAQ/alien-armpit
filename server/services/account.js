@@ -109,7 +109,7 @@ const revokeOtp = async (accountName, accessToken) => {
   }
 };
 
-const validateOtp = async (accountName, code) => {
+const validateOtp = async (accountName, code, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/validateOTP`;
   
   try {
