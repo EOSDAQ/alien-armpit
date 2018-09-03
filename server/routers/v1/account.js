@@ -40,16 +40,12 @@ router.post('/signup', [
       email,
       emailHash,
     });
-<<<<<<< HEAD
 
     if (!data) {
       res.status(409).send({ success: false });
       return;
     }
  
-=======
-    
->>>>>>> feat(orderbook): restore orderbook api to use tiffany api directly
     mailService.sendVerifyEmail(accountName, email, emailHash);
     await jwt.signin(res, { accountName });
     const viewer = await service.getUser(accountName);
