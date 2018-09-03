@@ -26,7 +26,7 @@ const HeaderAccountMenu = ({ t, signOut, initOtp, closeDropdown, ...account }) =
       name: t('menu.emailConfirm'),
       value: emailConfirm,
       onClick: () => {
-        navigate('/sent-email');
+        navigate('/resend-email');
       }
     },
     { 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Wrapper, Content, Code, Desc } from './Protected.styled';
 import Header from '../organisms/header/Header';
 import Footer from '../organisms/Footer';
+import { getValueFromStrKey } from 'utils/utils';
 
 const Unauthorized = () => {
   return (
@@ -24,27 +25,30 @@ const Unauthorized = () => {
   )
 }
 
-const HasNoAuth = (props) => {
-  const { viewer } = props;
-  if (!viewer) {
-    return <Unauthorized />;
+const ShowWhenHasViewer = (props) => (
+  props.account.viewer ? props.children : <Unauthorized />
+);
+
+const ShowWhenHasNoViewer = (props) => {
+  const {
+    showState,
+    account,
+  } = props;
+
+  if (showState) {
+    const keys = Object.keys(showState);
+    const value = getValueFromStrKey(props, keys[0]);
+    if (value === showState[keys[0]]) {
+      return props.children;
+    }
   }
 
-  return props.children;
-}
+  return account.viewer ? <Unauthorized /> : props.children
+};
 
-const HasAuth = (props) => {
-  const { viewer } = props;
-  if (viewer) {
-    return <Redirect to="/" noThrow />;
-  }
-  return props.children;
-}
+const mapStateToProps = (state, props) => ({
+  ...state
+});
 
-const mapStateToProps = (state, props) => {
-  const { account } = state;
-  return account;
-}
-
-export const ReverseProtected = connect(mapStateToProps)(HasAuth);
-export const Protected = connect(mapStateToProps)(HasNoAuth);
+export const Protected = connect(mapStateToProps)(ShowWhenHasViewer);
+export const ReverseProtected = connect(mapStateToProps)(ShowWhenHasNoViewer);

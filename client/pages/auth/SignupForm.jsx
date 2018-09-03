@@ -3,31 +3,31 @@ import { translate } from 'react-i18next';
 import Button from 'components/atom/Button';
 import { email as emailValidation } from 'utils/validations';
 import {
-  SigninInputWrap,
-  SigninLabel,
-  SigninInput,
-  SigninError,
-  SigninPolicy,
+  SignupInputWrap,
+  SignupLabel,
+  SignupInput,
+  SignupError,
+  SignupPolicy,
 } from './SignupForm.styled';
 import Form from 'components/molecules/Form';
 import Input from 'components/atom/Input';
 
-const SigninForm = (props) => {
+const SignupForm = (props) => {
   const { t, onSubmit } = props;
-  const policy = t('signin.policy');
+  const policy = t('signup.policy');
   const test = /(\$\{\w+\})/g;
 
   const tokens = {
     termsOfService: {
-      name: t('signin.policyTerms'),
+      name: t('signup.policyTerms'),
       link: '/terms_of_service',
     },
     privacyPolicy: {
-      name: t('signin.policyPrivacy'),
+      name: t('signup.policyPrivacy'),
       link: '/privacy_policy',
     },
     cookieUse: {
-      name: t('signin.policyCookie'),
+      name: t('signup.policyCookie'),
       link: '/privacy_option',
     },
   };
@@ -59,15 +59,15 @@ const SigninForm = (props) => {
             label="Email"
             onChange={onChange}
           />
-          <SigninPolicy>
+          <SignupPolicy>
             {policyArr.map((str, i) => (
               <span key={i}>
                 {str}
               </span>
             ))}
-          </SigninPolicy>
+          </SignupPolicy>
           <Button type="submit" primary width="373px" justifyContent="center" large>
-            {t('signin.register')}
+            {t('signup.register')}
           </Button>
         </React.Fragment>
       )}
@@ -75,4 +75,4 @@ const SigninForm = (props) => {
   );
 };
 
-export default translate('sign')(SigninForm);
+export default translate('sign')(SignupForm);

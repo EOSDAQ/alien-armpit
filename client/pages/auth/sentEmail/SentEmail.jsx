@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { translate, Trans } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { staticPath } from 'constants/constants';
 import Flex from 'components/atom/Flex';
 import Footer from 'components/organisms/Footer';
@@ -12,7 +12,6 @@ import {
   SendEmailNotReceive,
   SentEmailResendLink,
   SentEmailImg,
-  ResendEmail,
   Wrapper,
 } from './SentEmail.styled';
 import { Container } from 'components/atom/Box';
@@ -20,7 +19,6 @@ import Form from 'components/molecules/Form';
 import Input from 'components/atom/Input';
 import Button from 'components/atom/Button';
 import { actions } from 'reducer/account/accountReducer';
-import { Redirect } from '@reach/router';
 
 class SentEmail extends React.Component {
   resendEmail(values) {
@@ -31,18 +29,10 @@ class SentEmail extends React.Component {
   render() {
     const {
       t,
-      viewer: {
-        email,
-        emailConfirm,
-      },
+      email,
     } = this.props;
-
-    if (emailConfirm) {
-      return <Redirect to="/" noThrow />
-    }
-
+  
     const desc = t('sentEmail.desc').replace('|=email|', `<span>${email}</span>`);
-
     return (
       <Flex 
         height="100vh"
@@ -59,7 +49,7 @@ class SentEmail extends React.Component {
               <SendEmailNotReceive>
                 {t('sentEmail.notReceive')}
               </SendEmailNotReceive>
-              <ResendEmail>
+              <div>
                 <Form
                   onSubmit={(values) => this.resendEmail(values)}
                 >
@@ -75,7 +65,7 @@ class SentEmail extends React.Component {
                     </div>
                   )}
                 </Form>
-              </ResendEmail>
+              </div>
             </SentEmailGuide>
             <SentEmailImg src={`${staticPath.images}/mail-example.png`} />
           </Wrapper>

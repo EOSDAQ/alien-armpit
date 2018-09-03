@@ -14,6 +14,8 @@ export const types = {
   RESEND_EMAIL: 'account/RESEND_EMAIL',
   CREATE_ACCOUNT: 'account/create',
   CREATED_ACCOUNT: 'account/created',
+  RESET_SENT_EMAIL: 'account/sentEmail/RESET',
+  CHECK_SENT_EMAIL: 'account/sentEmail/CHECK',
 };
 
 export const actions = {
@@ -69,11 +71,20 @@ export const actions = {
     type: types.ORDER,
     payload,
   }),
+  resetSentEmail: payload => ({
+    type: types.RESET_SENT_EMAIL,
+    payload,
+  }),
+  checkSentEmail: payload => ({
+    type: types.CHECK_SENT_EMAIL,
+    payload,
+  }),
 };
 
 const initialState = {
   authenticated: false,
   viewer: null,
+  sentEmail: false,
 };
 
 const accountReducer = (state = initialState, action) => {
@@ -83,7 +94,6 @@ const accountReducer = (state = initialState, action) => {
       let identicon = jdenticon
         .toSvg(viewer.accountName, 32)
         .replace(/(width|height)="\d+"/g, '');
-      
       return {
         ...state,
         viewer: {
@@ -106,6 +116,10 @@ const accountReducer = (state = initialState, action) => {
         ...action.payload,
         authenticated: true,
       }
+    case types.RESET_SENT_EMAIL:
+      return { ...state, sentEmail: false };
+    case types.CHECK_SENT_EMAIL:
+      return { ...state, sentEmail: true };
     default:
       return state;
   }

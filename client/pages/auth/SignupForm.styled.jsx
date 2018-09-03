@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { colors } from 'components/css/theme';
 import { GreyBorderInput } from 'components/atom/Input';
 
-export const SigninLabel = styled('label')`
+export const SignupLabel = styled('label')`
   font-size: 14px;
   font-weight: 500;
   color: ${colors.grey500};
@@ -10,15 +10,15 @@ export const SigninLabel = styled('label')`
   display: block;
 `;
 
-export const SigninInputWrap = styled('div')`
+export const SignupInputWrap = styled('div')`
   position: relative;
 `;
 
-export const SigninInput = GreyBorderInput.extend`
+export const SignupInput = GreyBorderInput.extend`
   margin-top: 8px;
 `;
 
-export const SigninPolicy = styled('p')`  
+export const SignupPolicy = styled('p')`  
   font-size: 13px;
   font-weight: 500;
   line-height: 1.56;
@@ -30,7 +30,7 @@ export const SigninPolicy = styled('p')`
   }
 `;
 
-export const SigninError = styled('p')`
+export const SignupError = styled('p')`
   position: absolute;
   color: ${colors.red600};
   font-size: 14px;

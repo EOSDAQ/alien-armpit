@@ -57,14 +57,17 @@ export function* createAccount({ payload: { email } }) {
 
   const { data, error } = yield call(accountApi.signUp, body);
 
-  if (!error) {
-    // successfully signed up.
-    console.log('will navigate');
-    navigate('/sent-email');
-    yield put(actions.createdAccount({
-      email,
-    }));
-  };
+  // TODO 
+  if (error) {
+    alert(error.statusText);
+    return;
+  }
+
+  yield put(actions.createdAccount({
+    email,
+  }));
+  yield put(actions.checkSentEmail());
+  yield put(actions.updateViewer(data));
 }
 
 function* updateAccount(account, user) {
@@ -142,9 +145,9 @@ export function* getScatterIdentity() {
 }
 
 export function* resendEmail({ payload: { email }}) {
-  const account = yield select(state => state.account);
+  const viewer = yield select(state => state.account.viewer);
   const { data, error } = yield call(accountApi.resendEmail, {
-    accountName: account.name,
+    accountName: viewer.accountName,
     email,
   });
 

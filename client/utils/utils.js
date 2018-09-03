@@ -25,3 +25,20 @@ export const buildActionCacheKey = (action) => {
     payload && JSON.stringify(payload),
   ].filter(Boolean).join(':');
 }
+
+export const getValueFromStrKey = (obj, str) => {
+  const keys = str.split('.');
+  let value = obj;
+  let failed;
+  keys.map(key => {
+    if (typeof value[key] === 'undefined') {
+      failed = true;
+      return;
+    }
+    value = value[key];
+  });
+  if (failed) {
+    return undefined;
+  }
+  return value;
+};

@@ -9,47 +9,6 @@ const jwtHelper = require('../../middlewares/jwtHelper');
 const { jwtValidate } = jwtHelper;
 const router = express.Router();
 
-router.get('/user/:accountName', /* jwtValidate, */ [
-  check('accountName').exists(),
-], async (req, res, next) => {
-  try {
-    validationResult(req).throw();
-    const {
-      accountName,
-    } = req.params;
-    // const {
-    //   accessToken,
-    // } = req.locals;
-    const user = await service.getUser(accountName/*, accessToken */);
-
-    res
-      .status(user ? 200 : 404)
-      .send({
-        success: !!user,
-        resultCode: user ? '0000' : '1000',
-        user,
-      });
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.get('/viewer', jwtValidate, async (req, res) => {
-  const {
-    accessToken,
-    tokenPayload,
-  } = req.locals;
-
-  if (!accessToken) {
-    res.status(401).send();
-    return;
-  }
-
-  const { accountName } = tokenPayload;
-  const viewer = await service.getUser(accountName);
-  res.status(200).send({ viewer });
-});
-
 router.post('/signup', [
   check('accountName').exists(),
   check('accountHash').exists(),
@@ -68,6 +27,12 @@ router.post('/signup', [
   } = req.body;
   
   try {
+    const tokens = jwt.getTokensFromCookie(req.cookies);
+    if (tokens) {
+      res.status(406).send({ success: false });
+      return;
+    }
+
     const emailHash = cipher.generateBase32str(20);    
     const data = await service.createUser({
       accountName,
@@ -75,30 +40,19 @@ router.post('/signup', [
       email,
       emailHash,
     });
+
+    if (!data) {
+      res.status(409).send({ success: false });
+      return;
+    }
  
     mailService.sendVerifyEmail(accountName, email, emailHash);
     await jwt.signin(res, { accountName });
-    res.status(200).json();
+    const viewer = await service.getUser(accountName);
+    res.status(201).json({ viewer });
   } catch (e) {
     next(e);
   }
-
-
-    // const user = await service.getUser(accountName);
-
-    // let data;
-    // if (user) {
-    //   data = await service.revokeEmail(accountName, email, emailHash);
-    // } else {
-    //   data = await service.createUser({
-    //     accountName,
-    //     accountHash,
-    //     email,
-    //     emailHash,
-    //   });
-    // }
-
-    // res.status(200).send(data);
 });
 
 router.post('/signin', [
@@ -133,32 +87,35 @@ router.post('/signout', (req, res) => {
   res.status(200).send({ success: true });
 });
 
-router.get('/user/validate', jwtValidate, (req, res) => {
+router.get('/validate', jwtValidate, (req, res) => {
   res.status(200).send({ success: true });
 });
 
 router.post('/user/resend-email', jwtValidate, [
   check('email').exists(),
   check('accountName').exists(),
-], async (req, res) => {
-  validationResult(req).throw();
-  const {
-    accountName,
-    email,
-  } = req.body;
-  const {
-    accessToken,
-  } = req.locals;
+], async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const {
+      accountName,
+      email,
+    } = req.body;
+    const {
+      accessToken,
+    } = req.locals;
 
-  const emailHash = cipher.generateBase32str(20);
-  const data = await service.revokeEmail(
-    accountName,
-    email,
-    emailHash,
-    accessToken,
-  );
-  mailService.sendVerifyEmail(req, accountName, email, emailHash);
-  res.status(200).send(data);
+    const emailHash = cipher.generateBase32str(20);
+    const data = await service.revokeEmail(
+      accountName,
+      emailHash,
+      accessToken,
+    );
+    mailService.sendVerifyEmail(req, accountName, email, emailHash);
+    res.status(200).send(data);
+  } catch (e) {
+    next(e);
+  }
 }
 );
 
@@ -228,6 +185,47 @@ router.post('/:accountName/otp/validate', jwtValidate, [
   } catch (e) {
     next(e);
   }
+});
+
+router.get('/user/:accountName', /* jwtValidate, */ [
+  check('accountName').exists(),
+], async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const {
+      accountName,
+    } = req.params;
+    // const {
+    //   accessToken,
+    // } = req.locals;
+    const user = await service.getUser(accountName/*, accessToken */);
+
+    res
+      .status(user ? 200 : 404)
+      .send({
+        success: !!user,
+        resultCode: user ? '0000' : '1000',
+        user,
+      });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/viewer', jwtValidate, async (req, res) => {
+  const {
+    accessToken,
+    tokenPayload,
+  } = req.locals;
+
+  if (!accessToken) {
+    res.status(401).send();
+    return;
+  }
+
+  const { accountName } = tokenPayload;
+  const viewer = await service.getUser(accountName);
+  res.status(200).send({ viewer });
 });
 
 module.exports = router;

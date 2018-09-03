@@ -8,14 +8,26 @@ import Header from 'components/organisms/header/Header';
 import Flex from 'components/atom/Flex';
 import Icon from 'components/atom/Icon';
 import {
-  SigninWrapper,
-  SigninHeader,
-  SigninDesc,
+  SignupWrapper,
+  SignupHeader,
+  SignupDesc,
 } from './Signup.styled';
-import SigninForm from './SignupForm';
+import SignupForm from './SignupForm';
+import SentEmail from './sentEmail/SentEmail';
 import { Redirect } from '@reach/router';
 
-class Signin extends React.Component {
+class Signup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+    }
+  }
+
+  componentDidMount() {
+    this.props.resetSentEmail();
+  }
+
   onSubmit({ email }) {
     const {
       name,
@@ -27,30 +39,40 @@ class Signin extends React.Component {
       return;
     }
 
+    this.setState({ email });
     createAccount({ email });
   }
 
   render() {
-    const { t, authenticated, name } = this.props;
-    // if (authenticated) {
-    //   return <Redirect to="/" noThrow />;
-    // }
+    const {
+      t,
+      authenticated,
+      name,
+      sentEmail,
+    } = this.props;
+    const {
+      email,
+    } = this.state;
+
+    if (sentEmail) {
+      return <SentEmail email={email} />;
+    }
 
     return (
       <React.Fragment>
         <div>
           <Header />
           <Flex alignItems="center" justifyContent="center" pt={85} pb={85}>
-            <SigninWrapper>
+            <SignupWrapper>
               <Icon type="logoText" width={130} />
-              <SigninHeader>
-                {t('signin.title')}
-              </SigninHeader>
-              <SigninDesc>
-                {t('signin.desc').replace('${accountName}', name)}
-              </SigninDesc>
-              <SigninForm onSubmit={value => this.onSubmit(value)} />
-            </SigninWrapper>
+              <SignupHeader>
+                {t('signup.title')}
+              </SignupHeader>
+              <SignupDesc>
+                {t('signup.desc').replace('${accountName}', name)}
+              </SignupDesc>
+              <SignupForm onSubmit={value => this.onSubmit(value)} />
+            </SignupWrapper>
           </Flex>
           <Footer />
         </div>
@@ -64,6 +86,7 @@ const mapStateToProps = state => state.account;
 
 const mapDispatchToProps = dispatch => ({
   createAccount: (payload) => dispatch(actions.createAccount(payload)),
+  resetSentEmail: () => dispatch(actions.resetSentEmail()),
 });
 
 export default compose(
@@ -72,4 +95,4 @@ export default compose(
     mapDispatchToProps,
   ),
   translate('sign'),
-)(Signin);
+)(Signup);

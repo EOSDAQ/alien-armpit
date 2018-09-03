@@ -14,15 +14,11 @@ const getUser = async (accountName, accessToken) => {
     return data.resultData;
   } catch (e) {
     const { response } = e;
-    if (!response) {
-      throw new Error(e);    
+    if (!response || response.status < 400) {
+      throw new Error(e);  
     }
-    const {
-      status,
-      data,
-    } = response;
     // record not found
-    if (status > 400 || data.resultCode === '0404') {
+    if (response.data.resultCode === '0404') {
       return null;
     }
     throw new Error(e);
@@ -32,10 +28,16 @@ const getUser = async (accountName, accessToken) => {
 const createUser = async (user) => {
   const url = `${userBaseUrl}`;
   try {
-    const response = await axios.post(url, { ...user });
+    const response = await request('post', url, { ...user });
     return response.data;
   } catch (e) {
-    throw new Error(e);
+    const { response } = e;
+    if (!response || response.status < 400) {
+      throw new Error(e);  
+    }
+    if (response.data.resultCode === '1000') {
+      return false;
+    }
   }
 };
 
@@ -70,12 +72,13 @@ const confirmEmail = async (accountName, email, emailHash) => {
   }
 };
 
-const revokeEmail = async (accountName, email, emailHash, accessToken) => {
+const revokeEmail = async (accountName, emailHash, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/revokeEmail`;
   try {
-    const { data } = await request('delete', url, { email, emailHash }, { accessToken });
+    const { data } = await request('delete', url, { emailHash }, { accessToken });
     return data;
   } catch (e) {
+    console.log(e.response)
     throw new Error(e);
   }
 };

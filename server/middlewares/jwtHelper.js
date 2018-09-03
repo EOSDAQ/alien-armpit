@@ -29,10 +29,12 @@ const jwtValidate = async (req, res, next) => {
     }
 
     if (!result.expired) {
+      jwt.signout(res, cookies);
       throw new NotAuthorizedError();
     }
 
     // temp
+    jwt.signout(res, cookies);
     throw new NotAuthorizedError();
 
     // refreshToken = await redis.get(refreshStoreKey);
@@ -49,7 +51,6 @@ const jwtValidate = async (req, res, next) => {
     // setPayload(newAccessToken);
   } catch (e) {
     next(e);
-    return;
   }
 };
 
