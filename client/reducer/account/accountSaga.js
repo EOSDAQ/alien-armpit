@@ -8,14 +8,6 @@ import { toFixed } from 'utils/format';
 import { proxy } from 'api/apis';
 import * as apiReducer from '../api/apiReducer';
 
-export function* authenticateScatter() {
-  try {
-    yield call(scatterApi.authenticateScatter);
-  } catch (e) {
-
-  }
-}
-
 export function* restoreSession() {
   const account = yield getScatterIdentity();
   const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
@@ -85,6 +77,7 @@ function* updateAccount(account, user) {
 }
 
 export function* signIn() {
+  yield call(scatterApi.forgetScatterIdentity);
   const account = yield getScatterIdentity();
   if (!account) return;
 
@@ -95,6 +88,12 @@ export function* signIn() {
     data,
     error,
   } = yield call(accountApi.signIn, { accountName, accountHash });
+
+  if (error) {
+    yield call(scatterApi.forgetScatterIdentity);
+    alert('Provided account is not registered');
+    return;
+  }
 
   if (data) {
     const { user } = data;
@@ -237,7 +236,6 @@ const accountSaga = [
   takeEvery(types.CREATE_ACCOUNT, createAccount),
   takeEvery(types.ORDER, order),
   takeEvery(types.RESEND_EMAIL, resendEmail),
-  takeEvery(types.AUTHENTICATE_SCATTER, authenticateScatter),
   takeEvery(types.GET_SCATTER_IDENTITY, getScatterIdentity),
 ];
 

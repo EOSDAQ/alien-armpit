@@ -1,23 +1,6 @@
 version: '3'
 
 services:
-
-  # alien_armpit:    
-  #   container_name: alien_armpit
-  #   image: eosdaq/alien_armpit    
-  #   build: .
-  #   ports:
-  #     - '3000:3000'
-    
-  # nginx:
-  #   container_name: nginx
-  #   image: nginx
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile.nginx
-  #   ports:
-  #     - '3031:80'
-
   burgundy:
     ports:
       - "18889:1313"

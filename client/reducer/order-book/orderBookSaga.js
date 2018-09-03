@@ -6,7 +6,7 @@ import * as apiReducer from '../api/apiReducer';
 export function* fetchOrderBook({ payload }) {
   try {
     yield put(apiReducer.actions.fetchQuery(payload));
-    const data = yield call(api.loadOrderBook, payload);
+    const { data, error } = yield call(api.loadOrderBook, payload);
     yield put(orderBookReducer.actions.updateOrderBook({
       data,
       ...payload,

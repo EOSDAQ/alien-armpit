@@ -34,6 +34,10 @@ params.map((param) => {
   }
 });
 
+if (env === 'devel') {
+  config['burgundyApi'] = 'http://local.eosdaq.com:18889/api/v1';
+}
+
 config = Object.assign({}, commonConfig, config);
 config.env = env;
 config.rootPath = path.resolve(__dirname, '..', '..');

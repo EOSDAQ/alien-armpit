@@ -27,6 +27,7 @@ const getUser = async (accountName, accessToken) => {
 
 const createUser = async (user) => {
   const url = `${userBaseUrl}`;
+
   try {
     const response = await request('post', url, { ...user });
     return response.data;
@@ -110,6 +111,7 @@ const revokeOtp = async (accountName, accessToken) => {
 
 const validateOtp = async (accountName, code) => {
   const url = `${userBaseUrl}/${accountName}/validateOTP`;
+  
   try {
     const data = await request('post', url, qs.stringify({ code }), { accessToken });
     return data;

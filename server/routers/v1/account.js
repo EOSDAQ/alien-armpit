@@ -40,17 +40,22 @@ router.post('/signup', [
       email,
       emailHash,
     });
+<<<<<<< HEAD
 
     if (!data) {
       res.status(409).send({ success: false });
       return;
     }
  
+=======
+    
+>>>>>>> feat(orderbook): restore orderbook api to use tiffany api directly
     mailService.sendVerifyEmail(accountName, email, emailHash);
     await jwt.signin(res, { accountName });
     const viewer = await service.getUser(accountName);
     res.status(201).json({ viewer });
   } catch (e) {
+    console.error(e);
     next(e);
   }
 });
@@ -170,12 +175,14 @@ router.post('/:accountName/otp/validate', jwtValidate, [
     const {
       accountName,
     } = req.params;
+
     const {
       accessToken,
     } = req.locals;
 
     const { code } = req.body;
     const result = await service.validateOtp(accountName, code, accessToken);
+
     if (!result) {
       res.status(401).send({ success: false });
       return;

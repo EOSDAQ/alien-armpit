@@ -1,7 +1,4 @@
-import axios from 'axios';
+import { tiffany } from './apis';
 
-export const loadOrderBook = async ({ symbol }) => {
-  const url = `/api/v1/orderbook/${symbol.split('_')[0]}`;
-  const { data } = await axios.get(url);
-  return data;
-};
+export const loadOrderBook = async ({ symbol }) =>
+  tiffany.get(`/orderbook/${symbol.split('_')[0]}`);

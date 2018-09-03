@@ -1,7 +1,6 @@
 import jdenticon from 'jdenticon';
 
 export const types = {
-  AUTHENTICATE_SCATTER: 'account/authenticateScatter',
   GET_SCATTER_IDENTITY: 'account/getScatterIdentity',
   FORGET_SCATTER_IDENTITY: 'account/forgetScatterIdentity',
   UPDATE_ACCOUNT_INFO: 'account/UPDATE_ACCOUNT_INFO',
@@ -19,10 +18,6 @@ export const types = {
 };
 
 export const actions = {
-  authenticateScatter: payload => ({
-    type: types.AUTHENTICATE_SCATTER,
-    payload,
-  }),
   getScatterIdentity: payload => ({
     type: types.GET_SCATTER_IDENTITY,
     payload,

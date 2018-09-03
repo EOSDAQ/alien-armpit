@@ -1,7 +1,7 @@
 const uuidv4 = require('uuid/v4');
 const csp = require('helmet-csp');
 const config = require('../config');
-
+const url = require('url');
 const generateUuid = (req, res, next) => {
   res.locals.nonce = uuidv4();
   next();
@@ -9,8 +9,11 @@ const generateUuid = (req, res, next) => {
 
 const cspDirectives = {
   defaultSrc: ["'self'"],
-  connectSrc: ["'self'", '*.tradingview.com',
-  '*.ap-northeast-2.compute.amazonaws.com:18890', '*.ap-northeast-2.compute.amazonaws.com:18888'],
+  connectSrc: [
+    "'self'", 
+    '*.tradingview.com',
+    url.parse(config.tiffanyApi).host,
+  ],
   baseUri: ["'self'"],
   frameSrc: ["'self'"],
   // onlyForProduction

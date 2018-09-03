@@ -68,7 +68,6 @@ const sendVerifyEmail = async (req, accountName, email, hash) => {
     const result = await smtp.sendMail(mailOptions);
     return result;
   } catch (err) {
-    console.error(err);
     throw new Error(err);
   }
 };
