@@ -33,21 +33,24 @@ router.post('/signup', [
       return;
     }
 
+    await jwt.signin(res, { accountName });
+    const accessToken = getAccessTokenFromCookie(req.cookies);
     const emailHash = cipher.generateBase32str(20);    
     const data = await service.createUser({
       accountName,
       accountHash,
       email,
       emailHash,
-    });
+    }, accessToken);
 
+    // TODO error status 조건 추가 필요 
     if (!data) {
+      jwt.signout(res, req.cookies);
       res.status(409).send({ success: false });
       return;
     }
  
     mailService.sendVerifyEmail(req, accountName, email, emailHash);
-    await jwt.signin(res, { accountName });
     const viewer = await service.getUser(accountName);
     res.status(201).json({ viewer });
   } catch (e) {
@@ -222,7 +225,7 @@ router.get('/viewer', jwtValidate, async (req, res) => {
   } = req.locals;
 
   if (!accessToken) {
-    res.status(401).send();
+    res.status(401).send({});
     return;
   }
 
