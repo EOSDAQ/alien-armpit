@@ -15,7 +15,6 @@ const request = async (meth, url, data, opt) => {
 
   args.push(options);
   const response = await axios[method]( ...args );
-  console.log(response.headers);
   const { status, data: resultData } = response;
   return { status, data: resultData };
 };

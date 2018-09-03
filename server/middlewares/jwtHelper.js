@@ -10,43 +10,56 @@ const {
   jwtRefreshKey,
 } = require('../config');
 
-const jwtValidate = async (req, res, next) => {
+const validate = async (req, res) => {
   const { cookies } = req;
   const { accessToken, refreshToken: refreshStoreKey } = jwt.getTokensFromCookie(cookies);
   let refreshResult;
   let refreshToken;
 
+  if (!accessToken || !refreshStoreKey) {
+    throw new NotAuthorizedError();
+  }
+
+  const result = jwt.verify(accessToken, jwtAccessKey);
+  if (result.success) {
+    setPayload(req, accessToken);
+    return;
+  }
+
+  if (!result.expired) {
+    jwt.signout(res, cookies);
+    throw new NotAuthorizedError();
+  }
+
+  refreshToken = await redis.get(refreshStoreKey);
+  refreshResult = jwt.verify(refreshToken, jwtRefreshKey);
+  if (!refreshResult.success) {
+    redis.del(refreshStoreKey);
+    throw new NotAuthorizedError();
+  }
+
+  const { accountName } = refreshResult.token;
+  const user = await accountService.getUser(accountName);
+  const newAccessToken = jwt.signToken(user, jwtAccessKey, jwtAccessTokenExpires);
+  jwt.setTokenOnCookie(res, newAccessToken, refreshStoreKey);
+  setPayload(newAccessToken);
+}
+
+const jwtValidate = async (req, res, next) => {
   try {
-    if (!accessToken || !refreshStoreKey) {
-      throw new NotAuthorizedError();
-    }
-
-    const result = jwt.verify(accessToken, jwtAccessKey);
-    if (result.success) {
-      setPayload(req, accessToken);
-      next();
-      return;
-    }
-
-    if (!result.expired) {
-      jwt.signout(res, cookies);
-      throw new NotAuthorizedError();
-    }
-
-    refreshToken = await redis.get(refreshStoreKey);
-    refreshResult = jwt.verify(refreshToken, jwtRefreshKey);
-    if (!refreshResult.success) {
-      redis.del(refreshStoreKey);
-      throw new NotAuthorizedError();
-    }
-
-    const { accountName } = refreshResult.token;
-    const user = await accountService.getUser(accountName);
-    const newAccessToken = jwt.getToken(user, jwtAccessKey, jwtAccessTokenExpires);
-    jwt.setTokenOnCookie(res, newAccessToken, refreshStoreKey);
-    setPayload(newAccessToken);
+    await validate(req, res);
   } catch (e) {
     next(e);
+  }
+  next();
+};
+
+const isJwtValid = async (req, res) => {
+  try {
+    await validate(req, res);
+    return true;
+  } catch (e) {
+    return false;
   }
 };
 
@@ -57,4 +70,5 @@ const setPayload = (req, accessToken) => {
 
 module.exports = {
   jwtValidate,
+  isJwtValid,
 };

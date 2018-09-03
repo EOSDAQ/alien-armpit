@@ -32,16 +32,16 @@ const setTokenOnCookie = (res, accessToken, refreshStoreKey) => {
   });
 };
 
-const getToken = (data, key, expires) => (
+const signToken = (data, key, expires) => (
   jwt.sign(data, key, { expiresIn: expires })
 );
 
 const signin = async (res, user) => {
-  const accessToken = getToken(user, jwtAccessKey, jwtAccessTokenExpires);
+  const accessToken = signToken(user, jwtAccessKey, jwtAccessTokenExpires);
   const refreshStoreKey = await getRefreshStoreKey();
-  // const { accountName } = user;
-  // const refreshToken = getToken({ accountName }, jwtRefreshKey, jwtRefreshTokenExpires);
-  // redis.set(refreshStoreKey, refreshToken, 'EX', jwtRefreshTokenExpires);
+  const { accountName } = user;
+  const refreshToken = signToken({ accountName }, jwtRefreshKey, jwtRefreshTokenExpires);
+  redis.set(refreshStoreKey, refreshToken, 'EX', jwtRefreshTokenExpires);
   setTokenOnCookie(res, accessToken, refreshStoreKey);
 };
 
@@ -89,7 +89,7 @@ const verify = (token, key) => {
 
 module.exports = {
   setTokenOnCookie,
-  getToken,
+  signToken,
   signin,
   signout,
   getTokensFromCookie,
