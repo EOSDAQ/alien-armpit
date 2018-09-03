@@ -13,7 +13,6 @@ const OrderForm = (props) => {
   
   return (
     <SheetWrapper>
-      {!authenticated && <OrderFormDisabled />}
       <Flex>
         {types.map(type => (
           <OrderFormPanel

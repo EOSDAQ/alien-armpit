@@ -22,7 +22,7 @@ jdenticon.config = {
 
 const network = {
   blockchain: 'eos',
-  host: 'ec2-13-124-118-0.ap-northeast-2.compute.amazonaws.com',
+  host: 'local.eosdaq.com',
   port: 18888,
   protocol: 'http',
   chainId: 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'

@@ -177,7 +177,7 @@ export function* order({ payload }) {
   let { type, price, amount, symbol } = payload;
 
   try {
-    const from = yield select(s => s.account.name);
+    const from = yield select(s => s.account.viewer.accountName);
 
     if (type === 'bid') {
       yield call(scatterApi.bid, {
