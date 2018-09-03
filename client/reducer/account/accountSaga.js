@@ -28,6 +28,12 @@ export function* restoreSession() {
 }
 
 export function* signUp() {
+  try {
+    yield call(scatterApi.forgetScatterIdentity);
+  } catch(e) {
+    console.error(e);
+  }
+
   const account = yield getScatterIdentity();
   if (!account) {
     return;
@@ -77,7 +83,11 @@ function* updateAccount(account, user) {
 }
 
 export function* signIn() {
-  yield call(scatterApi.forgetScatterIdentity);
+  try {
+    yield call(scatterApi.forgetScatterIdentity);
+  } catch(e) {
+    console.error(e);
+  }
   const account = yield getScatterIdentity();
   if (!account) return;
 

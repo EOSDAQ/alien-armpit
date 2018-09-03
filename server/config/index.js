@@ -18,6 +18,7 @@ if (env === 'prod') {
   config = stage;
 }
 
+
 const paramPath = `/eosdaq/${env}`;
 const params = awsParamStore.getParametersByPathSync(paramPath, {
   region: 'ap-northeast-2',
