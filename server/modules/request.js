@@ -9,6 +9,8 @@ const request = async (meth, url, data, opt) => {
 
   if ([ 'post', 'put', 'patch' ].indexOf(method) > -1) {
     args.push(data);
+  } else if (method === 'delete') {
+    args.push({ data });
   } else {
     options.params = {data};
   }
@@ -27,9 +29,9 @@ const setJwtHeader = (options) => {
   }
 
   options.headers['Authorization'] = `Bearer ${accessToken}`;
-  console.log('before ', options);
+  // console.log('before ', options);
   delete options.accessToken;
-  console.log(options);
+  // console.log(options);
   return options;
 };
 

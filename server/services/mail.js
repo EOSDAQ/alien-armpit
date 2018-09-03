@@ -48,6 +48,8 @@ const sendVerifyEmail = async (req, accountName, email, hash) => {
   const splittedEmail = email.split('@');
   const baseUrl = req.protocol + '://' + req.get('host');
   const url = `${baseUrl}/api/v1/account/verifyEmail/${accountName}/${email}/${hash}`;
+
+  console.log('-------', url);
   
   try {
     const html = renderEmail(

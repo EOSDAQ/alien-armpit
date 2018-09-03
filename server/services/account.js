@@ -75,11 +75,12 @@ const confirmEmail = async (accountName, email, emailHash) => {
 
 const revokeEmail = async (accountName, emailHash, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/revokeEmail`;
+
   try {
     const { data } = await request('delete', url, { emailHash }, { accessToken });
     return data;
   } catch (e) {
-    console.log(e.response)
+    console.log(e.response.data);
     throw new Error(e);
   }
 };

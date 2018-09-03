@@ -101,6 +101,7 @@ router.post('/user/resend-email', jwtValidate, [
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
+
     const {
       accountName,
       email,
