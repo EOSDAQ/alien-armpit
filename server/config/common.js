@@ -9,6 +9,4 @@ module.exports = {
       refreshToken: '1/p2bBGv4tlK1fzHQvGctZsRDhLW4LCFJoSuZyGZs6328',
     },
   },
-  jwtAccessTokenExpires: 28800,
-  jwtRefreshTokenExpires: 120,
 };
