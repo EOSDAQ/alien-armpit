@@ -1,32 +1,29 @@
 // eslint-disable-next-line
 /* global scatter */
-
 import Eos from 'eosjs';
 import jdenticon from 'jdenticon';
-import { actions } from 'reducer/account/accountReducer';
-import store from '../store';
 
-jdenticon.config = {
-  // hues: [170, 180, 195, 210],
-  // lightness: {
-  //   color: [.5, .5],
-  //   grayscale: [1, 1],
-  // },
-  // saturation: {
-  //   color: [.9, 1],
-  //   grayscale: [0, 0],
-  // },
-  // backColor: "#000",
-  // replaceMode: "once"
-};
+const chainId = document.querySelector('meta[property="eos:chainId"]')
+  .getAttribute('content');
+const chainUrl = document.querySelector('meta[property="eos:chainUrl"]')
+  .getAttribute('content');
+
+const {
+  protocol,
+  host,
+} = new URL(chainUrl);
+
+const [_, port] = /:(\d+)/.exec(chainUrl);
 
 const network = {
   blockchain: 'eos',
-  host: 'local.eosdaq.com',
-  port: 18888,
-  protocol: 'http',
-  chainId: 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
+  host,
+  port,
+  protocol: protocol.slice(0, -1),
+  chainId,
 };
+
+console.log(network);
 
 class CustomScatterError extends Error {
   constructor({ code, message }) {
@@ -48,7 +45,6 @@ class Scatter {
 
   onLoad() {
     this.set(window.scatter);
-    // store.dispatch(actions.authenticateScatter());
     window.scatter = null;
   }
 
@@ -116,7 +112,6 @@ export const ask = async (data) => {
 export const bid = async (data) => {
   const { token } = data;
   const contract = await scatter.contract(token.account);
-  
   try {
     const result = await contract.transfer(
       data.from, 

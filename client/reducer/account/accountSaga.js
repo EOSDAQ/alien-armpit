@@ -108,7 +108,11 @@ export function* signIn() {
 
   if (data) {
     const { user } = data;
-    yield updateAccount(account, user);
+    console.log(user);
+    yield put(actions.updateViewer({
+      viewer: user,
+    }));
+
     const { otpConfirm } = user;
 
     if (otpConfirm) {

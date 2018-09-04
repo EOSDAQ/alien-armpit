@@ -11,11 +11,17 @@ const renderer = (app) => {
     const { rootPath, staticPath } = config;
     const htmlPath = path.resolve(rootPath, staticPath.slice(1), 'index.html');
     let docStr = fs.readFileSync(htmlPath, 'utf-8');
-    const { tiffanyApi } = config;
+    const { 
+      tiffanyApi,
+      eosChainid,
+      clientEosUrl,
+    } = config;
     const hasValidToken = await isJwtValid(req, res);
     docStr = docStr.replace(/{{nonce}}/g, res.locals.nonce); 
     docStr = docStr.replace(/{{tiffanyApi}}/g, tiffanyApi || '');
     docStr = docStr.replace(/{{hasToken}}/g, hasValidToken);
+    docStr = docStr.replace(/{{eosChainId}}/g, eosChainid);
+    docStr = docStr.replace(/{{eosChainUrl}}/g, clientEosUrl);
     res.send(docStr);
   });
 };
