@@ -53,7 +53,6 @@ class Pages extends React.Component {
     return (
       <React.Fragment>
         <Router>
-          <Redirect from="/exchange" to="/exchange/IPOS_SYS" noThrow />
           {routes.map(({ path , Component }) => (
             <Component key={path} path={path} />
           ))}

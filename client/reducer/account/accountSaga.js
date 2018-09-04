@@ -219,7 +219,11 @@ export function* order({ payload }) {
   } catch (e) {
     if (!e.code) {
       // 스캐터 오류가 아님.
-      console.error(e);
+      try {
+        const err = JSON.parse(e.message);
+        console.log(err);
+      } catch(err) {
+      }
       return;
     }
 

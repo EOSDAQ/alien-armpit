@@ -14,7 +14,7 @@ class Header extends React.Component {
     super(props);
 
     this.navs = [
-      { title: 'exchange', link: '/exchange' },
+      { title: 'exchange', link: '/exchange/HORUS_EOS' },
       { title: 'wallet', link: '/wallet' },
       { title: 'support', link: '/support' },
     ];

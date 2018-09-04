@@ -123,7 +123,9 @@ export const bid = async (data) => {
     const { transaction: { transaction }, processed } = result;
     alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
   } catch(e) {
-    console.error(e);
+    const errObj = JSON.parse(e);
+    console.log(errObj);
+    console.log(e.message, '----FROM SAGA');
   }
 }
 
