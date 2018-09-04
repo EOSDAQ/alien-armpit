@@ -33,7 +33,6 @@ const createUser = async (user, accessToken) => {
     return response.data;
   } catch (e) {
     const { response } = e;
-    console.log(e);
     if (!response || response.status < 400) {
       throw new Error(e);  
     }
@@ -43,7 +42,7 @@ const createUser = async (user, accessToken) => {
   }
 };
 
-const deleteUser = async (accountName) => {
+const deleteUser = async (accountName, accessToken) => {
   const url = `${userBaseUrl}/${accountName}`;
   try {
     const { data } = await request('delete', url, null, { accessToken });
@@ -54,7 +53,7 @@ const deleteUser = async (accountName) => {
 };
 
 const signin = async (accountName, accountHash) => {
-  const url = `${userBaseUrl}/${accountName}/signin`;
+  const url = `${userBaseUrl}/signin`;
   console.log('signed with::', url, { accountName, accountHash });
   try {
     const response = await axios.post(url, { accountName, accountHash });
