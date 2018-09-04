@@ -27,7 +27,6 @@ const getUser = async (accountName, accessToken) => {
 
 const createUser = async (user, accessToken) => {
   const url = `${userBaseUrl}`;
-
   try {
     const response = await request('post', url, { ...user }, { accessToken });
     return response.data;

@@ -43,6 +43,7 @@ const signin = async (res, user) => {
   const refreshToken = signToken({ accountName }, jwtRefreshKey, jwtRefreshTokenExpires);
   redis.set(refreshStoreKey, refreshToken, 'EX', jwtRefreshTokenExpires);
   setTokenOnCookie(res, accessToken, refreshStoreKey);
+  return { accessToken, refreshToken: refreshStoreKey };
 };
 
 const signout = (res, cookies) => {

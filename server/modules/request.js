@@ -23,15 +23,11 @@ const request = async (meth, url, data, opt) => {
 
 const setJwtHeader = (options) => {
   const { accessToken } = options;
-
   if (!accessToken) {
     return options;
   }
-
   options.headers['Authorization'] = `Bearer ${accessToken}`;
-  // console.log('before ', options);
   delete options.accessToken;
-  // console.log(options);
   return options;
 };
 

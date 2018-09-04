@@ -33,8 +33,8 @@ router.post('/signup', [
       return;
     }
 
-    await jwt.signin(res, { accountName });
-    const accessToken = getAccessTokenFromCookie(req.cookies);
+    const newTokens = await jwt.signin(res, { accountName });
+    const { accessToken } = newTokens;
     const emailHash = cipher.generateBase32str(20);    
     const data = await service.createUser({
       accountName,
@@ -54,7 +54,7 @@ router.post('/signup', [
     const viewer = await service.getUser(accountName);
     res.status(201).json({ viewer });
   } catch (e) {
-    console.error(e);
+    jwt.signout(res, req.cookies);
     next(e);
   }
 });
