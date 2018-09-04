@@ -27,6 +27,7 @@ const getUser = async (accountName, accessToken) => {
 
 const createUser = async (user, accessToken) => {
   const url = `${userBaseUrl}`;
+
   try {
     const response = await request('post', url, { ...user }, { accessToken });
     return response.data;
@@ -56,8 +57,10 @@ const signin = async (accountName, accountHash) => {
   console.log('signed with::', url, { accountName, accountHash });
   try {
     const response = await axios.post(url, { accountName, accountHash });
+    console.log('SIGNIN response >> ', response);
     return response.data;
   } catch (e) {
+    console.log('SIGNIN error >> ', response);
     throw new Error(e);
   }
 };

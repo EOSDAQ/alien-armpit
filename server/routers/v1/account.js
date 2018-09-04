@@ -43,6 +43,7 @@ router.post('/signup', [
       emailHash,
     }, accessToken);
 
+    console.log('CREATE USER RESULT >> ', data);
     // TODO error status 조건 추가 필요 
     if (!data) {
       jwt.signout(res, req.cookies);
@@ -71,6 +72,7 @@ router.post('/signin', [
     } = req.body;
 
     const user = await service.signin(accountName, accountHash);
+    console.log('SIGNIN router User >>', user);
     if (!user) {
       res.status(401).send({ success: false });
       return;
