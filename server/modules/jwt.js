@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
 const redis = require('../modules/redis');
+const config = require('../config');
 
 const {
   jwtAccessKey,
@@ -24,12 +25,15 @@ const setTokenOnCookie = (res, accessToken, refreshStoreKey) => {
     return;
   }
   const tokenStr = JSON.stringify({ accessToken, refreshToken: refreshStoreKey });
-  res.cookie('tokens', tokenStr, {
+  const cookieOptions = {
     expires: 0,
     httpOnly: true,
     sameSite: 'Lax',
-    // secure: true,  // this is for https
-  });
+  };
+  if (config.env !== 'devel') {
+    cookieOptions.secure = true;
+  }
+  res.cookie('tokens', tokenStr, cookieOptions);
 };
 
 const signToken = (data, key, expires) => (
