@@ -12,9 +12,9 @@ const cspDirectives = {
   connectSrc: [
     "'self'", 
     '*.tradingview.com',
-    'local.eosdaq.com:18888',
-    '*.eosnewyork.io',
-    url.parse(config.tiffanyApi).host,
+    url.parse(config.clientEosUrl).hostname,
+    url.parse(config.burgundyApi).hostname,
+    url.parse(config.tiffanyApi).hostname,
   ],
   baseUri: ["'self'"],
   frameSrc: ["'self'"],
