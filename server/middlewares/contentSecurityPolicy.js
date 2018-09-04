@@ -13,7 +13,6 @@ const cspDirectives = {
     "'self'", 
     '*.tradingview.com',
     url.parse(config.clientEosUrl).hostname,
-    url.parse(config.burgundyApi).hostname,
     url.parse(config.tiffanyApi).hostname,
   ],
   baseUri: ["'self'"],
