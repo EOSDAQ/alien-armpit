@@ -70,8 +70,7 @@ router.post('/signin', [
       accountHash,
     } = req.body;
 
-    // replace with service.signin
-    const user = await service.getUser(accountName);
+    const user = await service.signin(accountName, accountHash);
     if (!user) {
       res.status(401).send({ success: false });
       return;
