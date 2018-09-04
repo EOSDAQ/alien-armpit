@@ -7,12 +7,13 @@ import { actions } from 'reducer/account/accountReducer';
 import { OrderFormDisabled } from './OrderForm.styled';
 
 const OrderForm = (props) => {
-  const { authenticated, token, order } = props;
+  const { viewer, token, order } = props;
   if (!token) return null;
   const types = ['ask', 'bid'];
-  
+
   return (
     <SheetWrapper>
+      {!viewer && <OrderFormDisabled />}
       <Flex>
         {types.map(type => (
           <OrderFormPanel
@@ -32,6 +33,7 @@ const OrderForm = (props) => {
 const mapStateToProps = (state, { code }) => {
   return {
     authenticated: state.account.authenticated,
+    viewer: state.account.viewer,
     code,
     token: state.tokens[code],
   }

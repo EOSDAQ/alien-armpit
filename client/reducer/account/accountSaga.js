@@ -182,6 +182,11 @@ export function* order({ payload }) {
    * identity가 바뀐 경우를 대비해 다시 identity를 갖고 온다.
    */
   const viewer = yield select(state => state.account.viewer);
+  if (!viewer) {
+    alert('You must be signed-in to continue this action!');
+    return;
+  }
+
   const account = yield call(scatterApi.getScatterIdentity);
 
   if (!account) {
