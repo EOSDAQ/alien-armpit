@@ -19,6 +19,7 @@ const OrderForm = (props) => {
             key={type}
             type={type}
             symbol={token.symbol}
+            token={token}
             baseSymbol={token.baseSymbol}
             order={order}
           />

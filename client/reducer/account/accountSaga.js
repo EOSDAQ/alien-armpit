@@ -13,6 +13,7 @@ export function* restoreSession() {
   const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
   if (data) {
     const { user } = data;
+    console.log(user);
     yield updateAccount(account, user);
 
     if (user.otpConfirm) {
@@ -111,13 +112,14 @@ export function* signIn() {
     const { otpConfirm } = user;
 
     if (otpConfirm) {
-      yield put(modal.actions.openModal({
-        type: 'OTP_CHECK',
-      }));
+      yield call(navigate, '/');
+      // yield put(modal.actions.openModal({
+      //   type: 'OTP_CHECK',
+      // }));
     } else {
+      location.href = '/';
     }
 
-    location.href = '/';
     return;
   }
 }
@@ -174,7 +176,7 @@ export function* resendEmail({ payload: { email }}) {
 }
 
 export function* order({ payload }) {
-  let { type, price, amount, symbol } = payload;
+  let { type, price, amount, symbol, token } = payload;
 
   try {
     const from = yield select(s => s.account.viewer.accountName);
@@ -183,6 +185,7 @@ export function* order({ payload }) {
       yield call(scatterApi.bid, {
         price: parseFloat(price),
         amount: toFixed(4, amount) + ' ' + symbol,
+        token,
         from,
       })
     } else {
@@ -226,8 +229,18 @@ function* getViewer({ payload }) {
   yield put(apiReducer.actions.fetchQuery(payload));
   const { data, error } = yield call(proxy.get, '/account/viewer');
   if (data) {
+    const exist = yield  select(state => state.account.viewer);
     yield put(actions.updateViewer(data));
     yield put(apiReducer.actions.updateQuery(payload));
+
+    if (!exist) {
+      if (data.viewer.otpConfirm) {
+        yield put(modal.actions.openModal({
+          type: 'OTP_CHECK',
+        }));
+      }
+    }
+    
   }
 
   if (error) {

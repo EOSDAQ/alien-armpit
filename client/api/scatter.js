@@ -114,9 +114,17 @@ export const ask = async (data) => {
 };
 
 export const bid = async (data) => {
-  const contract = await scatter.contract('oo1122334455');
+  const { token } = data;
+  console.log(token);
+  const contract = await scatter.contract(token.account);
   try {
-    const result = await contract.transfer(data.from, 'eosdaqoooo2o', data.amount, data.price.toFixed(4));
+    const result = await contract.transfer(
+      data.from, 
+      'eosdaqoooo2o', 
+      data.amount, 
+      data.price.toFixed(4)
+    );
+
     const { transaction: { transaction }, processed } = result;
     alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
   } catch(e) {

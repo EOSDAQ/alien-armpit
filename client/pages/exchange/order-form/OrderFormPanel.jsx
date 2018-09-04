@@ -32,6 +32,7 @@ const OrderForm = (props) => {
     symbol,
     baseSymbol,
     order,
+    token,
   } = props;
 
   const fields = ['price', 'amount'];
@@ -43,6 +44,7 @@ const OrderForm = (props) => {
           order({
             ...values,
             type,
+            token,
             symbol,
           })
         }}
