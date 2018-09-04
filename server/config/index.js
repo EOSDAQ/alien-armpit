@@ -38,6 +38,7 @@ params.map((param) => {
 if (env === 'devel') {
   config['burgundyApi'] = 'http://local.eosdaq.com:18889/api/v1';
   config['tiffanyApi'] = 'https://dev.eosdaq.com/api/v1/eosdaq';
+  config['redisHost'] = 'local.eosdaq.com';
 }
 
 config = Object.assign({}, commonConfig, config);
