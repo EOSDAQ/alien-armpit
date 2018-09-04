@@ -6,7 +6,10 @@ const mailService = require('../../services/mail');
 const jwt = require('../../modules/jwt');
 const jwtHelper = require('../../middlewares/jwtHelper');
 
-const { jwtValidate } = jwtHelper;
+const {
+  jwtValidate,
+  validateAccount,
+} = jwtHelper;
 const router = express.Router();
 
 router.post('/signup', [
@@ -38,7 +41,6 @@ router.post('/signup', [
       email,
       emailHash,
     });
-    console.log('CREATE USER RESULT >> ', data);
     // TODO error status 조건 추가 필요 
     if (!data) {
       res.status(409).send({ success: false });
@@ -68,7 +70,6 @@ router.post('/signin', [
     } = req.body;
 
     const user = await service.signin(accountName, accountHash);
-    console.log('SIGNIN router User >>', user);
     if (!user) {
       res.status(401).send({ success: false });
       return;
@@ -92,13 +93,12 @@ router.get('/validate', jwtValidate, (req, res) => {
   res.status(200).send({ success: true });
 });
 
-router.post('/user/resend-email', jwtValidate, [
+router.post('/user/resend-email', jwtValidate, validateAccount, [
   check('email').exists(),
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
-
     const {
       accountName,
       email,
@@ -106,7 +106,6 @@ router.post('/user/resend-email', jwtValidate, [
     const {
       accessToken,
     } = req.locals;
-
     const emailHash = cipher.generateBase32str(20);
     const data = await service.revokeEmail(
       accountName,
@@ -152,7 +151,7 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
   }
 });
 
-router.post('/:accountName/otp/init/', jwtValidate, [
+router.post('/:accountName/otp/init/', jwtValidate, validateAccount, [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
@@ -175,7 +174,7 @@ router.post('/:accountName/otp/init/', jwtValidate, [
   }
 });
 
-router.post('/:accountName/otp/validate', jwtValidate, [
+router.post('/:accountName/otp/validate', jwtValidate, validateAccount, [
   check('code').exists(),
 ], async (req, res, next) => {
   try {
@@ -202,7 +201,7 @@ router.post('/:accountName/otp/validate', jwtValidate, [
   }
 });
 
-router.get('/user/:accountName', jwtValidate, [
+router.get('/user/:accountName', jwtValidate, validateAccount, [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {

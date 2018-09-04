@@ -1,6 +1,7 @@
 const redis = require('../modules/redis');
 const {
   NotAuthorizedError,
+  WrongUserHasTokenError,
 } = require('../modules/errors');
 const accountService = require('../services/account');
 const jwt = require('../modules/jwt');
@@ -68,7 +69,25 @@ const setPayload = (req, accessToken) => {
   req.locals.tokenPayload = jwt.decode(accessToken, jwtAccessKey);
 };
 
+const validateAccount = (req, res, next) => {
+  if (!req.locals.accessToken) {
+    return;
+  }
+  const accountName = req.params.accountName
+                      || req.body.accountName
+                      || req.query.accountName;
+  if (!accountName) {
+    next();
+  }
+  const { tokenPayload } = req.locals;
+  if (accountName !== tokenPayload.accountName) {
+    next(new WrongUserHasTokenError());
+  }
+  next();
+};
+
 module.exports = {
   jwtValidate,
   isJwtValid,
+  validateAccount,
 };

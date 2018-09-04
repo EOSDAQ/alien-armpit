@@ -57,10 +57,8 @@ const signin = async (accountName, accountHash) => {
   console.log('signed with::', url, { accountName, accountHash });
   try {
     const response = await axios.post(url, { accountName, accountHash });
-    console.log('SIGNIN response >> ', response);
     return response.data;
   } catch (e) {
-    console.log('SIGNIN error >> ', e);
     throw new Error(e);
   }
 };
