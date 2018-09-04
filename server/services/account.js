@@ -62,10 +62,10 @@ const signin = async (accountName, accountHash) => {
   }
 };
 
-const confirmEmail = async (accountName, email, emailHash) => {
+const confirmEmail = async (accountName, email, emailHash, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/confirmEmail`;
   try {
-    const { data } = await request('post', url, { email, emailHash });
+    const { data } = await request('post', url, { email, emailHash }, { accessToken });
     return data;
   } catch (e) {
     throw new Error(e);

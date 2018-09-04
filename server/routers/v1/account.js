@@ -136,8 +136,19 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
       email,
       emailHash,
     } = req.params;
-    
-    await service.confirmEmail(accountName, email, emailHash);
+
+    // TODO 수정 필요 - 현재는 강제 signout 후 새 token 발급
+    jwt.signout(res, req.cookies);
+    const newTokens = await jwt.signin(res, { accountName });
+    const { accessToken } = newTokens; 
+    result = await service.confirmEmail(accountName, email, emailHash, accessToken);
+
+    if (!result.resultData.emailConfirm) {
+      jwt.signout(res, req.cookies);
+      res.status(401).send('failed to confirm email');
+      return;
+    }
+
     res.redirect('/');
   } catch (e) {
     next(e);
