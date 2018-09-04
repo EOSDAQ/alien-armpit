@@ -19,7 +19,6 @@ router.post('/signup', [
   } catch (e) {
     next(e);
   }
-
   const {
     accountName,
     accountHash,
@@ -32,27 +31,26 @@ router.post('/signup', [
       res.status(406).send({ success: false });
       return;
     }
-    
     const emailHash = cipher.generateBase32str(20);    
     const data = await service.createUser({
       accountName,
       accountHash,
       email,
       emailHash,
-    }, accessToken);
-
+    });
     console.log('CREATE USER RESULT >> ', data);
     // TODO error status 조건 추가 필요 
     if (!data) {
       res.status(409).send({ success: false });
       return;
     }
- 
-    await jwt.signin(res, { accountName });
+    const newTokens = await jwt.signin(res, { accountName });
+    const { accessToken } = newTokens;
     mailService.sendVerifyEmail(req, accountName, email, emailHash);
     const viewer = await service.getUser(accountName, accessToken);
     res.status(201).json({ viewer });
   } catch (e) {
+    console.log(e);
     jwt.signout(res, req.cookies);
     next(e);
   }

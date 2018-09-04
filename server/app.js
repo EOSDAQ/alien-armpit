@@ -16,13 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use((req, res, next) => {
   res.set({
-    'X-Frame-Options': 'DENY',
+    'X-Frame-Options': 'SAMEORIGIN',
     'X-Content-Type-Options': 'nosniff',
-    'X-XSS-Protection': '"1; mode=block"',
+    'X-XSS-Protection': '1; mode=block',
     'Referrer-Policy': 'no-referrer',
     'X-Download-Options': 'noopen',
     'X-Permitted-Cross-Domain-Policies': 'none',
-    'Strict-Transport-Security': '"max-age=631152000; includeSubdomains"',
+    'Strict-Transport-Security': 'max-age=631152000; includeSubdomains',
     //'Expect-Ct': '"max-age=86400; report-uri=https://report-uri.io/example-ct"',
     //'Expect-Staple': '"max-age=31536000; report-uri=https://report-uri.io/r/default/staple/reportOnly; includeSubDomains; preload"',
     //'X-Request-Id': '',
