@@ -82,7 +82,6 @@ const verify = (token, key) => {
     result.token = jwt.verify(token, key);
     result.success = true;
   } catch (e) {
-    console.error(e);
     result.success = false;
     if (e.name === 'TokenExpiredError') {
       result.expired = true;
