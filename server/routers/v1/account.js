@@ -51,7 +51,7 @@ router.post('/signup', [
     }
  
     mailService.sendVerifyEmail(req, accountName, email, emailHash);
-    const viewer = await service.getUser(accountName);
+    const viewer = await service.getUser(accountName, accessToken);
     res.status(201).json({ viewer });
   } catch (e) {
     jwt.signout(res, req.cookies);
@@ -204,7 +204,7 @@ router.post('/:accountName/otp/validate', jwtValidate, [
   }
 });
 
-router.get('/user/:accountName', /* jwtValidate, */ [
+router.get('/user/:accountName', jwtValidate, [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
@@ -212,10 +212,10 @@ router.get('/user/:accountName', /* jwtValidate, */ [
     const {
       accountName,
     } = req.params;
-    // const {
-    //   accessToken,
-    // } = req.locals;
-    const user = await service.getUser(accountName/*, accessToken */);
+    const {
+      accessToken,
+    } = req.locals;
+    const user = await service.getUser(accountName, accessToken);
 
     res
       .status(user ? 200 : 404)
@@ -230,19 +230,23 @@ router.get('/user/:accountName', /* jwtValidate, */ [
 });
 
 router.get('/viewer', jwtValidate, async (req, res) => {
-  const {
-    accessToken,
-    tokenPayload,
-  } = req.locals;
+  try {
+    const {
+      accessToken,
+      tokenPayload,
+    } = req.locals;
 
-  if (!accessToken) {
-    res.status(401).send({});
-    return;
+    if (!accessToken) {
+      res.status(401).send({});
+      return;
+    }
+
+    const { accountName } = tokenPayload;
+    const viewer = await service.getUser(accountName, accessToken);
+    res.status(200).send({ viewer });
+  } catch(e) {
+    next(e);
   }
-
-  const { accountName } = tokenPayload;
-  const viewer = await service.getUser(accountName);
-  res.status(200).send({ viewer });
 });
 
 module.exports = router;
