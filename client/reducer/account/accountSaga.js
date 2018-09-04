@@ -190,7 +190,7 @@ export function* order({ payload }) {
 
   if (viewer.accountName !== account.name) {
     alert('Scatter Identity is different from currently signed-in account! ARE YOU ATTACKING US? If not, please sign out and proceed to sign-in again');
-    
+
     return;
   }
 
@@ -236,7 +236,11 @@ export function* order({ payload }) {
 }
 
 function* signOut() {
-  yield call(scatterApi.forgetScatterIdentity);
+  try {
+    yield call(scatterApi.forgetScatterIdentity);
+  } catch(err) {
+    console.error(err.message);
+  }
   yield call(accountApi.signOut);
   location.href = '/';
 }
