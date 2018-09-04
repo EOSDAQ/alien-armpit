@@ -10,7 +10,7 @@ const request = async (meth, url, data, opt) => {
   if ([ 'post', 'put', 'patch' ].indexOf(method) > -1) {
     args.push(data);
   } else if (method === 'delete') {
-    args.push({ data });
+    options.data = data;
   } else {
     options.params = {data};
   }
