@@ -33,6 +33,7 @@ const createUser = async (user, accessToken) => {
     return response.data;
   } catch (e) {
     const { response } = e;
+    console.log(e);
     if (!response || response.status < 400) {
       throw new Error(e);  
     }
