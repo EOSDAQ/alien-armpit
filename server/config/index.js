@@ -18,7 +18,6 @@ if (env === 'prod') {
   config = stage;
 }
 
-
 const paramPath = `/eosdaq/${env}`;
 const params = awsParamStore.getParametersByPathSync(paramPath, {
   region: 'ap-northeast-2',
@@ -27,13 +26,15 @@ const params = awsParamStore.getParametersByPathSync(paramPath, {
 params.map((param) => {
   const type = camelCase(param.Name.replace(`${paramPath}/`, ''));
   if (type === 'tiffanyApi') {
-    config[type] = `${param.Value}/api/v1/eosdaq`;
+    config[type] = `${param.Value}`;
   } else if (type === 'burgundyApi') {
     config[type] = `${param.Value}/api/v1`;
   } else {
     config[type] = param.Value;
   }
 });
+
+console.log(config);
 
 if (env === 'devel') {
   config['burgundyApi'] = 'http://local.eosdaq.com:18889/api/v1';
