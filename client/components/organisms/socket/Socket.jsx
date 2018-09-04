@@ -13,7 +13,7 @@ class Socket extends React.Component {
 
   componentDidMount() {
     const { handleMessage } = this.props;
-    const targetUrl = gConfig.socketUrl;
+    const targetUrl = gConfig ? gConfig.socketUrl : '';
     const sockjs = new SockJS(targetUrl);
     sockjs.onmessage = (e) => {
       handleMessage(e.msg);
