@@ -108,22 +108,17 @@ export function* signIn() {
 
   if (data) {
     const { user } = data;
-    console.log(user);
     yield put(actions.updateViewer({
       viewer: user,
     }));
 
-    const { otpConfirm } = user;
+    /**
+     * otpConfirm이 되어있는 사용자의 경우에는,
+     * signIn 메소드 후에 otp 인증 페이지로 이동하고,
+     * 그 후에 token을 발급받아 refresh 하는 방식으로 바꿔야함.
+     */
 
-    if (otpConfirm) {
-      yield call(navigate, '/');
-      // yield put(modal.actions.openModal({
-      //   type: 'OTP_CHECK',
-      // }));
-    } else {
-      location.href = '/';
-    }
-
+    location.href = '/';
     return;
   }
 }
@@ -182,8 +177,25 @@ export function* resendEmail({ payload: { email }}) {
 export function* order({ payload }) {
   let { type, price, amount, symbol, token } = payload;
 
+  /**
+   * token 인증 방식으로 바꼈으므로, 중간에 scatter가 lock되거나,
+   * identity가 바뀐 경우를 대비해 다시 identity를 갖고 온다.
+   */
+  const viewer = yield select(state => state.account.viewer);
+  const account = yield call(scatterApi.getScatterIdentity);
+
+  if (!account) {
+    return;
+  }
+
+  if (viewer.accountName !== account.name) {
+    alert('Scatter Identity is different from currently signed-in account! ARE YOU ATTACKING US? If not, please sign out and proceed to sign-in again');
+    
+    return;
+  }
+
   try {
-    const from = yield select(s => s.account.viewer.accountName);
+    const from = account.name;
 
     if (type === 'bid') {
       yield call(scatterApi.bid, {
