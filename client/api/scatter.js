@@ -79,6 +79,16 @@ class Scatter {
     return scatter.forgetIdentity(...args);
   }
 
+  getArbitrarySignature(publicKey, data, whatfor, isHash) {
+    const scatter = this.get();
+    return scatter.getArbitrarySignature(
+      publicKey,
+      data,
+      whatfor,
+      isHash,
+    );
+  }
+
   get eos() {
     const scatter = this.get();
     const eos = scatter.eos(network, Eos, {});
@@ -97,9 +107,10 @@ class Scatter {
 const scatter = new Scatter();
 
 export const ask = async (data) => {
+  const { token } = data;
   const result = await scatter.transfer(
     data.from,
-    'eosdaqoooo2o',
+    token.contractAccount,
     data.amount,
     data.price.toFixed(4),
   );
@@ -115,8 +126,8 @@ export const bid = async (data) => {
   try {
     const result = await contract.transfer(
       data.from, 
-      'eosdaqoooo2o', 
-      data.amount, 
+      token.contractAccount, 
+      data.amount,
       data.price.toFixed(4)
     );
 
@@ -131,6 +142,7 @@ export const bid = async (data) => {
 
 export const authenticateScatter = async () => {
   const result = await scatter.authenticate();
+  // console.log(result);
   return result;
 }
 
@@ -142,6 +154,15 @@ export const getScatterIdentity = async () => {
   } = await scatter.getIdentity({
     accounts: [network],
   });
+  
+  // const sig = await scatter.getArbitrarySignature(
+  //   'EOS5ur6NmeN2XdfhZfDtHJWX5uhQPBV5sageY9xu2WyYE36NFqNdB',
+  //   'SIG_K1_K8eN2Re2wVA7wNJof3CahXtQwE5Bv2DMxRvDaBssrrUcyKSYAcqbicz6jBejXMZ6woBu5kh6sLHcEjSGdsDj3jjonh2C1h',
+  //   'authorization',
+  //   true,
+  // );
+
+  // console.log(sig);
 
   let account;
 

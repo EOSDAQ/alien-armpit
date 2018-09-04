@@ -90,6 +90,8 @@ export function* signIn() {
     console.error(e);
   }
   const account = yield getScatterIdentity();
+  const hash = yield call(scatterApi.authenticateScatter);
+  console.log(hash);
   if (!account) return;
 
   const { name: accountName } = account;
