@@ -115,8 +115,8 @@ export const ask = async (data) => {
 
 export const bid = async (data) => {
   const { token } = data;
-  console.log(token);
   const contract = await scatter.contract(token.account);
+  
   try {
     const result = await contract.transfer(
       data.from, 
