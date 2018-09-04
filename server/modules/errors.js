@@ -15,6 +15,14 @@ class NotAuthorizedError extends BaseError {
   }
 }
 
+class WrongUserHasTokenError extends BaseError {
+  constructor(fields) {
+    super('Token owner is wrong', 401, '1401');
+    this.fields = fields || {};
+  }
+}
+
 module.exports = {
   NotAuthorizedError,
+  WrongUserHasTokenError,
 };

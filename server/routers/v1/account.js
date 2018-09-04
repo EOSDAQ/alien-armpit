@@ -9,7 +9,10 @@ const jwt = require('../../modules/jwt');
 const jwtHelper = require('../../middlewares/jwtHelper');
 const { NotAuthorizedError } = require('../../modules/errors');
 
-const { jwtValidate } = jwtHelper;
+const {
+  jwtValidate,
+  validateAccount,
+} = jwtHelper;
 const router = express.Router();
 
 router.post('/signup', [
@@ -121,13 +124,12 @@ router.get('/validate', jwtValidate, (req, res) => {
   res.status(200).send({ success: true });
 });
 
-router.post('/user/resend-email', jwtValidate, [
+router.post('/user/resend-email', jwtValidate, validateAccount, [
   check('email').exists(),
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
-
     const {
       accountName,
       email,
@@ -135,7 +137,6 @@ router.post('/user/resend-email', jwtValidate, [
     const {
       accessToken,
     } = req.locals;
-
     const emailHash = cipher.generateBase32str(20);
     const data = await service.revokeEmail(
       accountName,
@@ -181,7 +182,7 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
   }
 });
 
-router.post('/:accountName/otp/init/', jwtValidate, [
+router.post('/:accountName/otp/init/', jwtValidate, validateAccount, [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {
@@ -204,7 +205,7 @@ router.post('/:accountName/otp/init/', jwtValidate, [
   }
 });
 
-router.post('/:accountName/otp/validate', jwtValidate, [
+router.post('/:accountName/otp/validate', jwtValidate, validateAccount, [
   check('code').exists(),
 ], async (req, res, next) => {
   try {
@@ -231,7 +232,7 @@ router.post('/:accountName/otp/validate', jwtValidate, [
   }
 });
 
-router.get('/user/:accountName', jwtValidate, [
+router.get('/user/:accountName', jwtValidate, validateAccount, [
   check('accountName').exists(),
 ], async (req, res, next) => {
   try {

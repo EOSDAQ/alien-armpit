@@ -28,7 +28,6 @@ const getUser = async (accountName, accessToken) => {
 const createUser = async (user, accessToken) => {
   const url = `${userBaseUrl}`;
   return request('post', url, { ...user }, { accessToken });
-
 };
 
 const deleteUser = async (accountName, accessToken) => {
@@ -62,8 +61,7 @@ const revokeEmail = async (accountName, emailHash, accessToken) => {
   try {
     const { data } = await request('delete', url, { emailHash }, { accessToken });
     return data;
-  } catch (e) {
-    console.log(e.response.data);
+  } catch (e) {    
     throw new Error(e);
   }
 };
