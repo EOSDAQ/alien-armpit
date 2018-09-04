@@ -60,7 +60,7 @@ const signin = async (accountName, accountHash) => {
     console.log('SIGNIN response >> ', response);
     return response.data;
   } catch (e) {
-    console.log('SIGNIN error >> ', response);
+    console.log('SIGNIN error >> ', e);
     throw new Error(e);
   }
 };
