@@ -67,12 +67,13 @@ export function* createAccount({ payload: { email } }) {
     alert(error.statusText);
     return;
   }
- 
-  yield put(actions.createdAccount({
-    email,
-  }));
-  yield put(actions.checkSentEmail());
-  yield put(actions.updateViewer(data));
+  console.log(data)
+
+  // yield put(actions.createdAccount({
+  //   email,
+  // }));
+  // yield put(actions.checkSentEmail());
+  // yield put(actions.updateViewer(data));
 }
 
 function* updateAccount(account, user) {
