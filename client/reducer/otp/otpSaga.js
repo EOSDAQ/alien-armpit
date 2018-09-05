@@ -1,7 +1,8 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import * as api from 'api/otp';
-import { actions as otpActions } from './otpReducer';
+import { actions as otpActions, types } from './otpReducer';
 import { actions as apiActions } from '../api/apiReducer';
+import { actions as accountActions } from '../account/accountReducer';
 import modalReducer from '../modal/modalReducer';
 
 export function* initOtp({ payload }) {
@@ -22,16 +23,33 @@ export function* initOtp({ payload }) {
 
 export function* validateOtp({ payload }) {
   yield put(apiActions.fetchQuery(payload));
-  const { data, error } = yield call(api.validateOtp, payload);
+  const { error } = yield call(api.validateOtp, payload);
   if (error) {
     alert('Invalid code');
   } else {
     yield put(modalReducer.actions.closeModal());
+    yield put(accountActions.updateOtpConfirm());
   }
 
   yield put(apiActions.updateQuery({
     ...payload,
     error,
   }));
-
 }
+
+export function* signinWithOtp({ payload }) {
+  const { error } = yield call(api.validateOtp, payload);
+  if (error) {
+    alert('Invalid code');
+  } else {
+    // yield put(modalReducer.actions.closeModal());
+  }
+}
+
+const otpSaga = [
+  takeLatest(types.INIT_OTP_SAGA, initOtp),
+  takeLatest(types.VALIDATE_OTP_SAGA, validateOtp),
+  takeLatest(types.SIGNIN_WITH_OTP_SAGA, signinWithOtp),
+];
+
+export default otpSaga;

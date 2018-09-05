@@ -10,6 +10,7 @@ export const types = {
   ORDER: 'account/order',
   GET_VIEWER: 'account/viewer/GET',
   UPDATE_VIEWER: 'account/viewer/UPDATE',
+  UPDATE_OTP_CONFIRM: 'account/viewer/UPDATE_OTP_CONFIRM',
   RESEND_EMAIL: 'account/RESEND_EMAIL',
   CREATE_ACCOUNT: 'account/create',
   CREATED_ACCOUNT: 'account/created',
@@ -36,6 +37,10 @@ export const actions = {
   }),
   updateViewer: payload => ({
     type: types.UPDATE_VIEWER,
+    payload,
+  }),
+  updateOtpConfirm: payload => ({
+    type: types.UPDATE_OTP_CONFIRM,
     payload,
   }),
   createAccount: payload => ({
@@ -78,6 +83,9 @@ export const actions = {
 
 const initialState = {
   authenticated: false,
+  authorized: {
+    otp: false,
+  },
   viewer: null,
   sentEmail: false,
 };
@@ -86,7 +94,7 @@ const accountReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.UPDATE_VIEWER: {
       const { payload: { viewer } } = action;
-      let identicon = jdenticon
+      const identicon = jdenticon
         .toSvg(viewer.accountName, 32)
         .replace(/(width|height)="\d+"/g, '');
       return {
@@ -94,9 +102,14 @@ const accountReducer = (state = initialState, action) => {
         viewer: {
           ...viewer,
           identicon,
-        }
+        },
       };
     }
+    case types.UPDATE_OTP_CONFIRM:
+      return {
+        ...state,
+        viewer: { ...state.viewer, otpConfirm: true },
+      };
     case types.UPDATE_ACCOUNT_INFO:
       return {
         ...state,
@@ -110,7 +123,7 @@ const accountReducer = (state = initialState, action) => {
         security: 0,
         ...action.payload,
         authenticated: true,
-      }
+      };
     case types.RESET_SENT_EMAIL:
       return { ...state, sentEmail: false };
     case types.CHECK_SENT_EMAIL:
