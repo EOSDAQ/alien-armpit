@@ -36,30 +36,39 @@ app.use('/static', express.static(staticPath));
 app.use('/api', router);
 middlewares(app);
 
-// app.use((req, res, next) => {
-//   const err = new Error('Not Found');
-//   err.status = 404;
-//   next(createError(err));
-// });
-
 // error handler
 app.use((err, req, res, next) => {
-  
   // set locals, only providing error in development
   res.locals.message = err.message;
-  const result = {
-    data: {
-      success: false,
-      name: err.name,
-      resultMsg: err.message,
-      resultCode: err.code,  
-    }
-  };
+  
+  let result;
+
+  if (err.isBoom) {
+    const { payload } = err.output;
+    result = {
+      data: {
+        success: false,
+        name: payload.message,
+        resultMsg: payload.message,
+        resultCode: payload.statusCode,
+      }
+    };
+  } else {
+    result = {
+      data: {
+        success: false,
+        name: err.name || err.statusText,
+        resultMsg: err.message || err.statusText,
+        resultCode: err.code || err.status,  
+      }
+    };
+  }
 
  	if (env !== 'prod') {
  		result.stack = err.stack;
- 	}
-  res.status(err.status || 500).send(result);
+   }
+   
+  res.status(result.data.resultCode).send(result);
   return;
 });
 

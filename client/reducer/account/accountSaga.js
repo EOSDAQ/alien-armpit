@@ -1,3 +1,4 @@
+import ecc from 'eosjs-ecc';
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { navigate } from '@reach/router';
 import * as scatterApi from 'api/scatter';
@@ -40,17 +41,21 @@ export function* signUp() {
     return;
   }
 
+
   yield put(actions.updateAccountInfo(account));
   navigate('/signup');
 }
 
 export function* createAccount({ payload: { email } }) {
-  const accountHash = yield call(scatterApi.authenticateScatter);
-  const { name: accountName } = yield select(state => state.account);
+  const account = yield call(getScatterIdentity);
+  if (!account) {
+    return;
+  }
 
   const body = {
-    accountHash,
-    accountName,
+    accountHash: account.sig,
+    accountName: account.name,
+    accountPublicKey: account.publicKey,
     email,
   };
 
@@ -61,12 +66,13 @@ export function* createAccount({ payload: { email } }) {
     alert(error.statusText);
     return;
   }
+  console.log(data)
 
-  yield put(actions.createdAccount({
-    email,
-  }));
-  yield put(actions.checkSentEmail());
-  yield put(actions.updateViewer(data));
+  // yield put(actions.createdAccount({
+  //   email,
+  // }));
+  // yield put(actions.checkSentEmail());
+  // yield put(actions.updateViewer(data));
 }
 
 function* updateAccount(account, user) {
@@ -90,17 +96,22 @@ export function* signIn() {
     console.error(e);
   }
   const account = yield getScatterIdentity();
-  const hash = yield call(scatterApi.authenticateScatter);
-  console.log(hash);
   if (!account) return;
 
-  const { name: accountName } = account;
-  const accountHash = yield call(scatterApi.authenticateScatter);
+  const { 
+    name: accountName,
+    sig: accountHash,
+    publicKey: accountPublicKey,
+  } = account;
 
   const {
     data,
     error,
-  } = yield call(accountApi.signIn, { accountName, accountHash });
+  } = yield call(accountApi.signIn, { 
+    accountName,
+    accountHash,
+    accountPublicKey,
+  });
 
   if (error) {
     yield call(scatterApi.forgetScatterIdentity);
@@ -125,7 +136,7 @@ export function* signIn() {
   }
 }
 
-export function* getScatterIdentity() {
+function* getScatterIdentity() {
   try {
     const account = yield call(scatterApi.getScatterIdentity);
     return account;
@@ -156,7 +167,7 @@ export function* getScatterIdentity() {
   }
 }
 
-export function* resendEmail({ payload: { email }}) {
+function* resendEmail({ payload: { email }}) {
   const viewer = yield select(state => state.account.viewer);
   const { data, error } = yield call(accountApi.resendEmail, {
     accountName: viewer.accountName,
@@ -176,7 +187,7 @@ export function* resendEmail({ payload: { email }}) {
   alert('Verification email sent');
 }
 
-export function* order({ payload }) {
+function* order({ payload }) {
   let { type, price, amount, symbol, token } = payload;
 
   /**

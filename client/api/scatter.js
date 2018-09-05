@@ -1,7 +1,8 @@
 // eslint-disable-next-line
 /* global scatter */
 import Eos from 'eosjs';
-import jdenticon from 'jdenticon';
+import ecc from 'eosjs-ecc';
+import { AccountName } from 'components/organisms/header/HeaderAccountMenu.styled';
 
 const chainId = document.querySelector('meta[property="eos:chainId"]')
   .getAttribute('content');
@@ -23,7 +24,7 @@ const network = {
   chainId,
 };
 
-console.log(network);
+console.log('EOS Network configured!', network);
 
 class CustomScatterError extends Error {
   constructor({ code, message }) {
@@ -45,7 +46,7 @@ class Scatter {
 
   onLoad() {
     this.set(window.scatter);
-    window.scatter = null;
+    // window.scatter = null;
   }
 
   set(instance) {
@@ -122,9 +123,8 @@ export const ask = async (data) => {
 
 export const bid = async (data) => {
   const { token } = data;
-  const contract = await scatter.contract(token.account);
   try {
-    const result = await contract.transfer(
+    const result = await scatter.transfer(
       data.from, 
       token.contractAccount, 
       data.amount,
@@ -150,22 +150,11 @@ export const getScatterIdentity = async () => {
   const {
     publicKey: scatterPublicKey,
     accounts,
-    ...props,
   } = await scatter.getIdentity({
     accounts: [network],
   });
   
-  // const sig = await scatter.getArbitrarySignature(
-  //   'EOS5ur6NmeN2XdfhZfDtHJWX5uhQPBV5sageY9xu2WyYE36NFqNdB',
-  //   'SIG_K1_K8eN2Re2wVA7wNJof3CahXtQwE5Bv2DMxRvDaBssrrUcyKSYAcqbicz6jBejXMZ6woBu5kh6sLHcEjSGdsDj3jjonh2C1h',
-  //   'authorization',
-  //   true,
-  // );
-
-  // console.log(sig);
-
   let account;
-
   if (Array.isArray(accounts)) {
     // filter through...
     [account] = accounts;
@@ -175,12 +164,20 @@ export const getScatterIdentity = async () => {
     throw Error('No viable account');
   }
 
-  let identicon = jdenticon.toSvg(scatterPublicKey, 32);
-  identicon = identicon.replace(/(width|height)="\d+"/g, '');
+  const { permissions } = await scatter.eos.getAccount(account.name);
+  const eosAccount = permissions.filter(({ perm_name }) => perm_name === account.authority)[0]
+  const { required_auth: { keys: [{ key: publicKey }] }} = eosAccount;
+
+  const sig = await scatter.getArbitrarySignature(
+    publicKey,
+    account.name,
+    'Authentication',
+  );
 
   return {
     ...account,
-    identicon,
+    publicKey,
+    sig,
   };
 };
 

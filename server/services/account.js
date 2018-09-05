@@ -27,19 +27,8 @@ const getUser = async (accountName, accessToken) => {
 
 const createUser = async (user, accessToken) => {
   const url = `${userBaseUrl}`;
+  return request('post', url, { ...user }, { accessToken });
 
-  try {
-    const response = await request('post', url, { ...user }, { accessToken });
-    return response.data;
-  } catch (e) {
-    const { response } = e;
-    if (!response || response.status < 400) {
-      throw new Error(e);  
-    }
-    if (response.data.resultCode === '1000') {
-      return false;
-    }
-  }
 };
 
 const deleteUser = async (accountName, accessToken) => {
@@ -54,15 +43,7 @@ const deleteUser = async (accountName, accessToken) => {
 
 const signin = async (accountName, accountHash) => {
   const url = `${userBaseUrl}/signin`;
-  console.log('signed with::', url, { accountName, accountHash });
-  try {
-    const response = await axios.post(url, { accountName, accountHash });
-    console.log('SIGNIN response >> ', response);
-    return response.data;
-  } catch (e) {
-    console.log('SIGNIN error >> ', e);
-    throw new Error(e);
-  }
+  return axios.post(url, { accountName, accountHash });
 };
 
 const confirmEmail = async (accountName, email, emailHash, accessToken) => {

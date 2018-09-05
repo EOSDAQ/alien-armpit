@@ -1,10 +1,13 @@
 const express = require('express');
+const Boom = require('boom');
+const ecc = require('../../modules/ecc');
 const { check, validationResult } = require('express-validator/check');
 const cipher = require('../../services/cipher');
 const service = require('../../services/account');
 const mailService = require('../../services/mail');
 const jwt = require('../../modules/jwt');
 const jwtHelper = require('../../middlewares/jwtHelper');
+const { NotAuthorizedError } = require('../../modules/errors');
 
 const { jwtValidate } = jwtHelper;
 const router = express.Router();
@@ -12,6 +15,7 @@ const router = express.Router();
 router.post('/signup', [
   check('accountName').exists(),
   check('accountHash').exists(),
+  check('accountPublicKey').exists(),
   check('email').exists(),
 ], async (req, res, next) => {
   try {
@@ -22,63 +26,81 @@ router.post('/signup', [
   const {
     accountName,
     accountHash,
+    accountPublicKey,
     email,
   } = req.body;
   
+  const tokens = jwt.getTokensFromCookie(req.cookies);
+  if (tokens) {
+    res.status(406).send({ success: false });
+    return;
+  }
+
+  const verified = ecc.verify(
+    accountHash,
+    accountName,
+    accountPublicKey,
+  );
+
+  if (!verified) {
+    return next(new NotAuthorizedError())
+  }
+
+  const emailHash = cipher.generateBase32str(20);
+
   try {
-    const tokens = jwt.getTokensFromCookie(req.cookies);
-    if (tokens) {
-      res.status(406).send({ success: false });
-      return;
-    }
-    const emailHash = cipher.generateBase32str(20);    
-    const data = await service.createUser({
+    await service.createUser({
       accountName,
       accountHash,
       email,
       emailHash,
     });
-    console.log('CREATE USER RESULT >> ', data);
-    // TODO error status 조건 추가 필요 
-    if (!data) {
-      res.status(409).send({ success: false });
-      return;
-    }
-    const newTokens = await jwt.signin(res, { accountName });
-    const { accessToken } = newTokens;
+  } catch (e) {
+    const { response: { resultMsg }} = e;
+    return next(Boom.conflict(resultMsg));
+  }
+
+  // successfully created user
+  try {
+    const { accessToken } = await jwt.signin(res, { accountName });
     mailService.sendVerifyEmail(req, accountName, email, emailHash);
     const viewer = await service.getUser(accountName, accessToken);
     res.status(201).json({ viewer });
   } catch (e) {
-    console.log(e);
     jwt.signout(res, req.cookies);
-    next(e);
+    next(e)
   }
 });
 
 router.post('/signin', [
   check('accountName').exists(),
   check('accountHash').exists(),
+  check('accountPublicKey').exists(),
 ], async (req, res, next) => {
-  try {
-    validationResult(req).throw();
-    const {
-      accountName,
-      accountHash,
-    } = req.body;
+  validationResult(req).throw();
+  
+  const {
+    accountName,
+    accountHash,
+    accountPublicKey,
+  } = req.body;
 
-    const user = await service.signin(accountName, accountHash);
-    console.log('SIGNIN router User >>', user);
-    if (!user) {
-      res.status(401).send({ success: false });
-      return;
-    }
-    await jwt.signin(res, {
-      accountName,
-    });
-    res.status(200).send({ user });
-  } catch (e) {
-    next(e);
+  const isValid = ecc.verify(
+    accountHash,
+    accountName,
+    accountPublicKey,
+  );
+
+  if (!isValid) {
+    next(new NotAuthorizedError());
+  }
+
+  try {
+    let user = await service.signin(accountName, accountHash);
+    await jwt.signin(res, { accountName });
+    res.send({ user });
+  } catch(e) {
+    next(e.response)
   }
 });
 
