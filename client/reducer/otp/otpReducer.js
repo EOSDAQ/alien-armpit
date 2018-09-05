@@ -2,6 +2,7 @@ export const types = {
   INIT_OTP_SAGA: 'otp/INIT_OTP_SAGA',
   UPDATE_DATA: 'otp/UPDATE_DATA',
   VALIDATE_OTP_SAGA: 'otp/VALIDATE_OTP_SAGA',
+  SIGNIN_WITH_OTP_SAGA: 'otp/SIGNIN_WITH_OTP_SAGA',
 };
 
 export const actions = {
@@ -15,6 +16,10 @@ export const actions = {
   }),
   validateOtpSaga: payload => ({
     type: types.VALIDATE_OTP_SAGA,
+    payload,
+  }),
+  signinWithOtp: payload => ({
+    type: types.SIGNIN_WITH_OTP_SAGA,
     payload,
   }),
 };

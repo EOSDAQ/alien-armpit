@@ -1,5 +1,8 @@
 import ecc from 'eosjs-ecc';
-import { call, put, select, takeEvery } from 'redux-saga/effects';
+import {
+  call, put, select, takeEvery,
+} from 'redux-saga/effects';
+
 import { navigate } from '@reach/router';
 import * as scatterApi from 'api/scatter';
 import * as accountApi from 'api/account';
@@ -14,7 +17,6 @@ export function* restoreSession() {
   const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
   if (data) {
     const { user } = data;
-    console.log(user);
     yield updateAccount(account, user);
 
     if (user.otpConfirm) {
@@ -58,10 +60,9 @@ export function* createAccount({ payload: { email } }) {
     accountPublicKey: account.publicKey,
     email,
   };
-
   const { data, error } = yield call(accountApi.signUp, body);
 
-  // TODO 
+  // TODO
   if (error) {
     alert(error.statusText);
     return;
@@ -187,7 +188,9 @@ function* resendEmail({ payload: { email }}) {
 }
 
 function* order({ payload }) {
-  let { type, price, amount, symbol, token } = payload;
+  let {
+    type, price, amount, symbol, token,
+  } = payload;
 
   /**
    * token 인증 방식으로 바꼈으므로, 중간에 scatter가 lock되거나,
@@ -270,18 +273,15 @@ function* getViewer({ payload }) {
   yield put(apiReducer.actions.fetchQuery(payload));
   const { data, error } = yield call(proxy.get, '/account/viewer');
   if (data) {
-    const exist = yield  select(state => state.account.viewer);
+    const exist = yield select(state => state.account.viewer);
     yield put(actions.updateViewer(data));
     yield put(apiReducer.actions.updateQuery(payload));
 
     if (!exist) {
       if (data.viewer.otpConfirm) {
-        yield put(modal.actions.openModal({
-          type: 'OTP_CHECK',
-        }));
+        navigate('/signin-otp');
       }
     }
-    
   }
 
   if (error) {

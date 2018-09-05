@@ -16,37 +16,42 @@ import {
 } from './Exchange.styled';
 import Sticky from 'components/molecules/Sticky';
 import Box from 'components/atom/Box';
+import Curtain from 'components/molecules/Curtain';
 
 class Exchange extends React.PureComponent {
   render() {
     const { code } = this.props;
     return (
-      <ExchangeBody>
-        <Header />
-        <ExchangeContainer large>
-          <ExchangeLeftSide>
-            <Tickers code={code} />
-            <OrderBook code={code} />
-          </ExchangeLeftSide>
-          <ExchangeRightSide>
-            <Sticky>
-              {style => (
-                <Box
-                  style={style}
-                  position="sticky"
-                >
-                  <ExchangeChart code={code} />
-                  <ExchangeRightBottom>
-                    <OrderForm code={code} />
-                    <OrderLog code={code} />
-                  </ExchangeRightBottom>
-                </Box>
-              )}
-            </Sticky>
-          </ExchangeRightSide>
-        </ExchangeContainer>
-        <Footer />
-      </ExchangeBody>
+      <Curtain
+        condition="signinWithOtpReverse"
+      >
+        <ExchangeBody>
+          <Header />
+          <ExchangeContainer large>
+            <ExchangeLeftSide>
+              <Tickers code={code} />
+              <OrderBook code={code} />
+            </ExchangeLeftSide>
+            <ExchangeRightSide>
+              <Sticky>
+                {style => (
+                  <Box
+                    style={style}
+                    position="sticky"
+                  >
+                    <ExchangeChart code={code} />
+                    <ExchangeRightBottom>
+                      <OrderForm code={code} />
+                      <OrderLog code={code} />
+                    </ExchangeRightBottom>
+                  </Box>
+                )}
+              </Sticky>
+            </ExchangeRightSide>
+          </ExchangeContainer>
+          <Footer />
+        </ExchangeBody>
+      </Curtain>
     );
   }
 }

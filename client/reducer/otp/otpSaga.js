@@ -28,7 +28,7 @@ export function* validateOtp({ payload }) {
     alert('Invalid code');
   } else {
     yield put(modalReducer.actions.closeModal());
-    yield put(accountActions.updateOtpConfirm());
+    yield put(accountActions.checkOtpConfirm());
   }
 
   yield put(apiActions.updateQuery({
@@ -37,12 +37,12 @@ export function* validateOtp({ payload }) {
   }));
 }
 
-export function* signinWithOtp({ payload }) {
-  const { error } = yield call(api.validateOtp, payload);
+export function* signinWithOtp({ payload: code }) {
+  const { error } = yield call(api.validateOtp, code);
   if (error) {
     alert('Invalid code');
   } else {
-    // yield put(modalReducer.actions.closeModal());
+    yield put(accountActions.checkOtpAuth);
   }
 }
 

@@ -68,8 +68,13 @@ injectGlobal`
   }
 
   // eosdaq custom.
+
   a {
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
+  }
+
+  html, body, #app, div[role=group] {
+    height: 100%;
   }
 `;

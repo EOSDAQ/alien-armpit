@@ -23,6 +23,7 @@
     "caution": "Please save this key on paper. This key will allow you to recover your Google Authentication in case of phone loss.",
     "nextStep": "Proceed to next step >",
     "title2": "2단계 인증",
-    "desc2": "Google Authenticator 앱에서 생성된 6자리 코드를 입력해주세요"
+    "desc2": "Google Authenticator 앱에서 생성된 6자리 코드를 입력해주세요",
+    "titleSignin": "Google OTP Authentication"
   }
 }

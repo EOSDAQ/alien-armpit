@@ -8,9 +8,10 @@ export const types = {
   SIGN_OUT: 'account/signOut',
   SIGN_UP: 'account/signUp',
   ORDER: 'account/order',
+  CHECK_OTP_AUTH: 'account/authorized/CHECK_OTP_AUTH',
   GET_VIEWER: 'account/viewer/GET',
   UPDATE_VIEWER: 'account/viewer/UPDATE',
-  UPDATE_OTP_CONFIRM: 'account/viewer/UPDATE_OTP_CONFIRM',
+  CHECK_OTP_CONFIRM: 'account/viewer/CHECK_OTP_CONFIRM  ',
   RESEND_EMAIL: 'account/RESEND_EMAIL',
   CREATE_ACCOUNT: 'account/create',
   CREATED_ACCOUNT: 'account/created',
@@ -31,6 +32,10 @@ export const actions = {
     type: types.UPDATE_ACCOUNT_INFO,
     payload,
   }),
+  checkOtpAuth: payload => ({
+    type: types.CHECK_OTP_AUTH,
+    payload,
+  }),
   getViewer: payload => ({
     type: types.GET_VIEWER,
     payload,
@@ -39,8 +44,8 @@ export const actions = {
     type: types.UPDATE_VIEWER,
     payload,
   }),
-  updateOtpConfirm: payload => ({
-    type: types.UPDATE_OTP_CONFIRM,
+  checkOtpConfirm: payload => ({
+    type: types.CHECK_OTP_CONFIRM,
     payload,
   }),
   createAccount: payload => ({
@@ -105,7 +110,12 @@ const accountReducer = (state = initialState, action) => {
         },
       };
     }
-    case types.UPDATE_OTP_CONFIRM:
+    case types.CHECK_OTP_AUTH:
+      return {
+        ...state,
+        authorized: { ...state.authorized, otp: true },
+      };
+    case types.CHECK_OTP_CONFIRM:
       return {
         ...state,
         viewer: { ...state.viewer, otpConfirm: true },

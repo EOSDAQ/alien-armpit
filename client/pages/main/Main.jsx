@@ -7,18 +7,21 @@ import MainTransaction from './MainTransaction';
 import MainHero from './MainHero';
 import MainDashboard from './MainDashboard';
 import MainComing from './MainComing';
+import Curtain from 'components/molecules/Curtain';
 
 const Main = () => (
-  <div>
-    <MainComing />
-    <Header />
-    <MainDashboard />
-    <MainHero />
-    <MainWallet />
-    <MainTransaction />
-    <MainHolder />
-    <Footer />
-  </div>
+  <Curtain condition="signinWithOtpReverse">
+    <div>
+      <MainComing />
+      <Header />
+      <MainDashboard />
+      <MainHero />
+      <MainWallet />
+      <MainTransaction />
+      <MainHolder />
+      <Footer />
+    </div>
+  </Curtain>
 );
 
 export default Main;
