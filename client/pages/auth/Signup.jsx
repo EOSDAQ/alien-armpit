@@ -14,14 +14,13 @@ import {
 } from './Signup.styled';
 import SignupForm from './SignupForm';
 import SentEmail from './sentEmail/SentEmail';
-import { Redirect } from '@reach/router';
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-    }
+    };
   }
 
   componentDidMount() {
@@ -46,7 +45,6 @@ class Signup extends React.Component {
   render() {
     const {
       t,
-      authenticated,
       name,
       sentEmail,
     } = this.props;
@@ -69,7 +67,7 @@ class Signup extends React.Component {
                 {t('signup.title')}
               </SignupHeader>
               <SignupDesc>
-                {t('signup.desc').replace('${accountName}', name)}
+                {t('signup.desc').replace('{accountName}', name)}
               </SignupDesc>
               <SignupForm onSubmit={value => this.onSubmit(value)} />
             </SignupWrapper>
@@ -85,7 +83,7 @@ class Signup extends React.Component {
 const mapStateToProps = state => state.account;
 
 const mapDispatchToProps = dispatch => ({
-  createAccount: (payload) => dispatch(actions.createAccount(payload)),
+  createAccount: payload => dispatch(actions.createAccount(payload)),
   resetSentEmail: () => dispatch(actions.resetSentEmail()),
 });
 

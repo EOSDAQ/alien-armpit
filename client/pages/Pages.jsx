@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Router } from '@reach/router';
+import { Router } from '@reach/router';
 import Modal from 'components/organisms/modal/Modal';
 import Exchange from './exchange/Exchange';
 

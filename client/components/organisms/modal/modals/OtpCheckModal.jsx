@@ -57,5 +57,5 @@ const mapStateToProps = ({ account }) => ({ viewer: account.viewer });
 
 export default compose(
   connect(mapStateToProps),
-  translate('sign')
+  translate('sign'),
 )(OtpCheckModal);

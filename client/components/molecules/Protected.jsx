@@ -1,7 +1,8 @@
 import React from 'react';
-import { Redirect } from '@reach/router';
 import { connect } from 'react-redux';
-import { Wrapper, Content, Code, Desc } from './Protected.styled';
+import {
+  Wrapper, Content, Code, Desc,
+} from './Protected.styled';
 import Header from '../organisms/header/Header';
 import Footer from '../organisms/Footer';
 import { getValueFromStrKey } from 'utils/utils';
@@ -22,10 +23,10 @@ const Unauthorized = () => {
       </Content>
       <Footer />
     </Wrapper>
-  )
-}
+  );
+};
 
-const ShowWhenHasViewer = (props) => (
+const ShowWhenHasViewer = props => (
   props.account.viewer ? props.children : <Unauthorized />
 );
 
@@ -43,11 +44,11 @@ const ShowWhenHasNoViewer = (props) => {
     }
   }
 
-  return account.viewer ? <Unauthorized /> : props.children
+  return account.viewer ? <Unauthorized /> : props.children;
 };
 
 const mapStateToProps = (state, props) => ({
-  ...state
+  ...state,
 });
 
 export const Protected = connect(mapStateToProps)(ShowWhenHasViewer);

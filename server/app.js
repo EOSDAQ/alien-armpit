@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+// const logger = require('morgan');
 const config = require('./config');
 const middlewares = require('./middlewares');
 
@@ -23,12 +23,11 @@ app.use((req, res, next) => {
     'X-Download-Options': 'noopen',
     'X-Permitted-Cross-Domain-Policies': 'none',
     'Strict-Transport-Security': 'max-age=631152000; includeSubdomains',
-    //'Expect-Ct': '"max-age=86400; report-uri=https://report-uri.io/example-ct"',
-    //'Expect-Staple': '"max-age=31536000; report-uri=https://report-uri.io/r/default/staple/reportOnly; includeSubDomains; preload"',
-    //'X-Request-Id': '',
-    //'x-dns-prefetch-control': '',
+    // 'Expect-Ct': '"max-age=86400; report-uri=https://report-uri.io/example-ct"',
+    // 'Expect-Staple': '"max-age=31536000; report-uri=https://report-uri.io/r/default/staple/reportOnly; includeSubDomains; preload"',
+    // 'X-Request-Id': '',
+    // 'x-dns-prefetch-control': '',
   });
-   
   req.locals = {};
   next();
 });
@@ -40,7 +39,6 @@ middlewares(app);
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  
   let result;
 
   if (err.isBoom) {
@@ -51,7 +49,7 @@ app.use((err, req, res, next) => {
         name: payload.message,
         resultMsg: payload.message,
         resultCode: payload.statusCode,
-      }
+      },
     };
   } else {
     result = {
@@ -59,15 +57,15 @@ app.use((err, req, res, next) => {
         success: false,
         name: err.name || err.statusText,
         resultMsg: err.message || err.statusText,
-        resultCode: err.code || err.status,  
-      }
+        resultCode: err.code || err.status,
+      },
     };
   }
 
- 	if (env !== 'prod') {
- 		result.stack = err.stack;
-   }
-   
+  if (env !== 'prod') {
+    result.stack = err.stack;
+  }
+
   res.status(result.data.resultCode).send(result);
   return;
 });
