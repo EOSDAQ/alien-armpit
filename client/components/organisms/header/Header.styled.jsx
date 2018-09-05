@@ -9,6 +9,7 @@ export const HeaderStyled = styled('nav')`
   top: 0;
   z-index: 10;
   height: 44px;
+  min-height: 44px;
   background: #141a2a;
   color: ${colors.grey100};
 `;
