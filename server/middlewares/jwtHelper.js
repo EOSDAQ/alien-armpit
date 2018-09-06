@@ -40,8 +40,8 @@ const validate = async (req, res) => {
   }
 
   const { accountName } = refreshResult.token;
-  const user = await accountService.getUser(accountName);
-  const newAccessToken = jwt.signToken(user, jwtAccessKey, jwtAccessTokenExpires);
+  await accountService.getUser(accountName);
+  const newAccessToken = jwt.signToken({ accountName }, jwtAccessKey, jwtAccessTokenExpires);
   jwt.setTokenOnCookie(res, newAccessToken, refreshStoreKey);
   setPayload(newAccessToken);
 }

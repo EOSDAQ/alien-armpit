@@ -13,7 +13,7 @@ export function* initOtp({ payload }) {
     return;
   }
 
-  const { resultData: { otpKey } } = data;
+  const { otpKey } = data;
   yield put(otpActions.updateData({ otpKey }));
   yield put(apiActions.updateQuery({
     ...payload,
@@ -21,13 +21,14 @@ export function* initOtp({ payload }) {
   }));
 }
 
-export function* validateOtp({ payload }) {
+export function* validateOtp({ payload: code }) {
   yield put(apiActions.fetchQuery(payload));
-  const { error } = yield call(api.validateOtp, payload);
+  const { error } = yield call(api.validateOtp, code);
   if (error) {
     alert('Invalid code');
   } else {
     yield put(modalReducer.actions.closeModal());
+    yield put(accountActions.checkOtpAuth());
     yield put(accountActions.checkOtpConfirm());
   }
 
@@ -42,7 +43,7 @@ export function* signinWithOtp({ payload: code }) {
   if (error) {
     alert('Invalid code');
   } else {
-    yield put(accountActions.checkOtpAuth);
+    yield put(accountActions.checkOtpAuth());
   }
 }
 

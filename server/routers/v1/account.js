@@ -149,7 +149,7 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
   check('accountName').exists(),
   check('email').exists(),
   check('emailHash').exists(),
-], async (req, res, next) => {
+], async (req, res) => {
   validationResult(req).throw();
 
   const {
@@ -196,31 +196,22 @@ router.post('/:accountName/otp/init/', jwtValidate, validateAccount, [
   }
 });
 
-router.post('/:accountName/otp/validate', jwtValidate, validateAccount, [
+router.post('/otp/validate', jwtValidate, [
   check('code').exists(),
-], async (req, res, next) => {
-  try {
-    validationResult(req).throw();
-    const {
-      accountName,
-    } = req.params;
+], async (req, res) => {
+  validationResult(req).throw();
+  const {
+    accessToken,
+    tokenPayload,
+  } = req.locals;
 
-    const {
-      accessToken,
-    } = req.locals;
-
-    const { code } = req.body;
-    const result = await service.validateOtp(accountName, code, accessToken);
-
-    if (!result) {
-      res.status(401).send({ success: false });
-      return;
-    }
-
-    res.status(200).send({ success: true });
-  } catch (e) {
-    next(e);
-  }
+  const { accountName } = tokenPayload;
+  const { code } = req.body;
+  console.log(code);
+  const data = await service.validateOtp(accountName, code, accessToken);
+  console.log(data);
+  // Will always yield sucess data (threw Error in service.validateOtp)
+  res.status(200).send({ success: true });
 });
 
 router.get('/viewer', jwtValidate, async (req, res) => {
@@ -229,12 +220,12 @@ router.get('/viewer', jwtValidate, async (req, res) => {
     tokenPayload,
   } = req.locals;
 
-  console.log('PAYLOAD', accessToken, tokenPayload);
   if (!accessToken) {
     throw HttpError.Unauthorized();
   }
-
+  
   const { accountName } = tokenPayload;
+  console.log(accountName, accessToken, tokenPayload);
   const data = await service.getUser(accountName, accessToken);
   res.status(200).send(data);
 });

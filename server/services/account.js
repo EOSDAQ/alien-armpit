@@ -90,17 +90,12 @@ const revokeOtp = async (accountName, accessToken) => {
 
 const validateOtp = async (accountName, code, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/validateOTP`;
-  try {
-    const data = await request('post', url, qs.stringify({ code }), { accessToken });
-    return data;
-  } catch (e) {
-    const { response } = e;
-    const { status, data } = response;
-    if (status === 400 && data.resultCode === '1101') {
-      return null;
-    }
 
-    throw new Error(e);
+  try {
+    const { data } = await request('post', url, qs.stringify({ code }), { accessToken });
+    return data;
+  } catch(err) {
+    throw HttpError.Unauthorized();
   }
 };
 

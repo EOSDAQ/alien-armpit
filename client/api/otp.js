@@ -5,5 +5,5 @@ import { proxy } from './apis';
 export const initOtp = async ({ accountName }) => 
   proxy.post(`/account/${accountName}/otp/init`);
 
-export const validateOtp = async ({ accountName, code }) =>
-  proxy.post(`/account/${accountName}/otp/validate`, { code });
+export const validateOtp = async (code) =>
+  proxy.post(`/account/otp/validate`, { code });
