@@ -7,7 +7,7 @@ const fail = { success: false, to: null };
 
 class Curtain extends React.PureComponent {
   signinWithOtpReverse() {
-    fail.to = <Redirect to="/signin-otp" />;
+    fail.to = <Redirect to="/signin-otp" noThrow />;
     const { viewer, authorized } = this.props;
     if (!viewer) {
       return success;
@@ -19,7 +19,7 @@ class Curtain extends React.PureComponent {
   }
 
   signinWithOtp() {
-    fail.to = <Redirect to="/" />;
+    fail.to = <Redirect to="/" noThrow />;
     const { viewer, authorized } = this.props;
     if (!viewer) {
       return fail;
