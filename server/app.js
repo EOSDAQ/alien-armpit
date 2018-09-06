@@ -11,6 +11,7 @@ const router = require('./routers/router');
 const app = express();
 const { env } = config;
 const staticPath = path.join(__dirname, `../${config.staticPath}`);
+app.disable('x-powered-by');
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
