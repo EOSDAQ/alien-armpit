@@ -32,32 +32,39 @@ export function* restoreSession() {
 }
 
 export function* signUp() {
-  try {
-    yield call(scatterApi.forgetScatterIdentity);
-  } catch(e) {
-    console.error(e);
-  }
+  // try {
+  //   yield call(scatterApi.forgetScatterIdentity);
+  // } catch(e) {
+  //   console.error(e);
+  // }
 
-  const account = yield getScatterIdentity();
-  if (!account) {
-    return;
-  }
+  // const payload = yield getScatterIdentity();
+  // if (!payload) return;
 
+  // const {
+  //   account,
+  //   signature,
+  //   identity,
+  // } = payload;
 
-  yield put(actions.updateAccountInfo(account));
+  // yield put(actions.updateAccountInfo(account));
   navigate('/signup');
 }
 
 export function* createAccount({ payload: { email } }) {
-  const account = yield call(getScatterIdentity);
-  if (!account) {
-    return;
-  }
+  const payload = yield call(getScatterIdentity);
+  if (!payload) return;
+
+  const {
+    signature,
+    identity,
+    account,
+  } = payload;
 
   const body = {
-    accountHash: account.sig,
+    signature,
+    publicKey: identity.publicKey,
     accountName: account.name,
-    accountPublicKey: account.publicKey,
     email,
   };
   const { data, error } = yield call(accountApi.signUp, body);

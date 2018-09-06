@@ -1,3 +1,5 @@
+require('express-async-errors');
+
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -38,6 +40,7 @@ middlewares(app);
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
+  console.log(err);
   res.locals.message = err.message;
   let result;
 

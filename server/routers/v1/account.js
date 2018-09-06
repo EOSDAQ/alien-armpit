@@ -1,5 +1,6 @@
 const express = require('express');
 const Boom = require('boom');
+const HttpError = require('http-errors');
 const ecc = require('../../modules/ecc');
 const { check, validationResult } = require('express-validator/check');
 const cipher = require('../../services/cipher');
@@ -17,36 +18,32 @@ const router = express.Router();
 
 router.post('/signup', [
   check('accountName').exists(),
-  check('accountHash').exists(),
-  check('accountPublicKey').exists(),
+  check('signature').exists(),
+  check('publicKey').exists(),
   check('email').exists(),
 ], async (req, res, next) => {
-  try {
-    validationResult(req).throw();
-  } catch (e) {
-    next(e);
-  }
+  validationResult(req).throw();
+
   const {
     accountName,
-    accountHash,
-    accountPublicKey,
+    signature,
+    publicKey,
     email,
   } = req.body;
   
-  const tokens = jwt.getTokensFromCookie(req.cookies);
+  // const tokens = jwt.getTokensFromCookie(req.cookies);
 
-  if (tokens) {
-    return next(Boom.notAcceptable('Cannot register whilst signed-in'));
-  }
-
+  // if (tokens) {
+  //   return next(Boom.notAcceptable('Cannot register whilst signed-in'));
+  // }
   const verified = ecc.verify(
-    accountHash,
-    accountName,
-    accountPublicKey,
+    signature,
+    req.hostname,
+    publicKey,
   );
 
-  if (!verified) {
-    return next(new NotAuthorizedError())
+  if (verified) {
+    throw new HttpError.Unauthorized();
   }
 
   const emailHash = cipher.generateBase32str(20);
@@ -57,8 +54,9 @@ router.post('/signup', [
       accountHash,
       email,
       emailHash,
-    });
+    })
   } catch (e) {
+    console.error(e);
     const { response: { resultMsg }} = e;
     return next(Boom.conflict(resultMsg));
   }
@@ -81,7 +79,6 @@ router.post('/signin', [
   check('publicKey').exists(),
 ], async (req, res, next) => {
   validationResult(req).throw();
-  // publickKey is scatter publicKey
 
   const {
     accountName,
@@ -110,7 +107,7 @@ router.post('/signin', [
     await jwt.signin(res, { accountName });
     res.send({ user });
   } catch(e) {
-    next(e.response)
+    next(e.response);
   }
 });
 

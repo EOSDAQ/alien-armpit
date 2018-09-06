@@ -33,10 +33,10 @@ class Signup extends React.Component {
       createAccount,
     } = this.props;
 
-    if (!name) {
-      alert('need accountName');
-      return;
-    }
+    // if (!name) {
+    //   alert('need accountName');
+    //   return;
+    // }
 
     this.setState({ email });
     createAccount({ email });
