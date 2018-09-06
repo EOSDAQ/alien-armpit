@@ -15,7 +15,7 @@ const getUser = async (accountName, accessToken) => {
   } catch (e) {
     const { response } = e;
     if (!response || response.status < 400) {
-      throw new Error(e);  
+      throw new Error(e);
     }
     // record not found
     if (response.data.resultCode === '0404') {
@@ -26,7 +26,7 @@ const getUser = async (accountName, accessToken) => {
 };
 
 const createUser = async (user, accessToken) => {
-  const url = `${userBaseUrl}`;
+  const url = `${userBaseUrl}/${user.accountName}`;
 
   try {
     const response = await request('post', url, { ...user }, { accessToken });
@@ -34,7 +34,7 @@ const createUser = async (user, accessToken) => {
   } catch (e) {
     const { response } = e;
     if (!response || response.status < 400) {
-      throw new Error(e);  
+      throw new Error(e);
     }
     if (response.data.resultCode === '1000') {
       return false;
@@ -53,7 +53,7 @@ const deleteUser = async (accountName, accessToken) => {
 };
 
 const signin = async (accountName, accountHash) => {
-  const url = `${userBaseUrl}/signin`;
+  const url = `${userBaseUrl}/${accountName}/signin`;
   console.log('signed with::', url, { accountName, accountHash });
   try {
     const response = await axios.post(url, { accountName, accountHash });

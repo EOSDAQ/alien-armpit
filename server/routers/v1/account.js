@@ -27,21 +27,26 @@ router.post('/signup', [
     accountHash,
     email,
   } = req.body;
-  
+
   try {
     const tokens = jwt.getTokensFromCookie(req.cookies);
     if (tokens) {
-      res.status(406).send({ success: false });
-      return;
+      const { token: data, success } = jwt.verify(tokens);
+      if (success && data.accountName === req.body.accountName) {
+        res.status(406).send({ success: false });
+        return;
+      }
+      jwt.signout(res, req.cookies);
     }
-    const emailHash = cipher.generateBase32str(20);    
+
+    const emailHash = cipher.generateBase32str(20);
     const data = await service.createUser({
       accountName,
       accountHash,
       email,
       emailHash,
     });
-    // TODO error status 조건 추가 필요 
+    // TODO error status 조건 추가 필요
     if (!data) {
       res.status(409).send({ success: false });
       return;
@@ -240,6 +245,9 @@ router.get('/viewer', jwtValidate, async (req, res) => {
 
     const { accountName } = tokenPayload;
     const viewer = await service.getUser(accountName, accessToken);
+    if (!viewer) {
+      jwt.signout(res, req.cookies);
+    }
     res.status(200).send({ viewer });
   } catch(e) {
     next(e);
