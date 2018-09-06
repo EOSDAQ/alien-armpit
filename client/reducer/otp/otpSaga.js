@@ -21,9 +21,9 @@ export function* initOtp({ payload }) {
   }));
 }
 
-export function* validateOtp({ payload: code }) {
+export function* validateOtp({ payload }) {
   yield put(apiActions.fetchQuery(payload));
-  const { error } = yield call(api.validateOtp, code);
+  const { error } = yield call(api.validateOtp, payload.code);
   if (error) {
     alert('Invalid code');
   } else {

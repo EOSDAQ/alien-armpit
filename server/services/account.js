@@ -17,10 +17,10 @@ const getUser = async (accountName, accessToken) => {
   }
 };
 
-const createUser = async (user, accessToken) => {
-  const url = `${userBaseUrl}`;
+const createUser = async (user) => {
+  const url = `${userBaseUrl}/${user.accountName}`;
   try {
-    const { data } = await request('post', url, { ...user }, { accessToken });
+    const { data } = await request('post', url, { ...user });
     return data;
   } catch(err) {
     throw HttpError.Conflict('Account already exists');
