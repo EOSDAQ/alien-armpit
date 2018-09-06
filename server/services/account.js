@@ -9,36 +9,15 @@ const userBaseUrl = `${routePath}/user`;
 
 const getUser = async (accountName, accessToken) => {
   const url = `${userBaseUrl}/${accountName}`;
-
   try {
-<<<<<<< HEAD
     const { data } = await request('get', url, null, { accessToken });
-    return data.resultData;
-  } catch (e) {
-    const { response } = e;
-    if (!response || response.status < 400) {
-      throw new Error(e);
-    }
-    // record not found
-    if (response.data.resultCode === '0404') {
-      return null;
-    }
-    throw new Error(e);
-=======
-    const data = await request('get', url, null, { accessToken });
     return data;
   } catch(e) {
-    console.error(e);
     throw HttpError.NotFound();
->>>>>>> feat(api): change api data scheme to match backend
   }
 };
 
 const createUser = async (user, accessToken) => {
-<<<<<<< HEAD
-  const url = `${userBaseUrl}/${user.accountName}`;
-  return request('post', url, { ...user }, { accessToken });
-=======
   const url = `${userBaseUrl}`;
   try {
     const { data } = await request('post', url, { ...user }, { accessToken });
@@ -46,7 +25,6 @@ const createUser = async (user, accessToken) => {
   } catch(err) {
     throw HttpError.Conflict('Account already exists');
   }
->>>>>>> feat(api): change api data scheme to match backend
 };
 
 const deleteUser = async (accountName, accessToken) => {

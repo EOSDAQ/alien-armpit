@@ -12,46 +12,15 @@ import { toFixed } from 'utils/format';
 import { proxy } from 'api/apis';
 import * as apiReducer from '../api/apiReducer';
 
-export function* restoreSession() {
-  const account = yield getScatterIdentity();
-  const { data, error } = yield call(proxy.get, `/account/user/${account.name}`);
-  if (data) {
-    const { user } = data;
-    yield updateAccount(account, user);
+function* restoreSession() {
 
-    if (user.otpConfirm) {
-      yield put(modal.actions.openModal({
-        type: 'OTP_CHECK',
-      }));
-    }
-  }
-
-  if (error) {
-    yield forgetScatterIdentity();
-  }
 }
 
-export function* signUp() {
-  // try {
-  //   yield call(scatterApi.forgetScatterIdentity);
-  // } catch(e) {
-  //   console.error(e);
-  // }
-
-  // const payload = yield getScatterIdentity();
-  // if (!payload) return;
-
-  // const {
-  //   account,
-  //   signature,
-  //   identity,
-  // } = payload;
-
-  // yield put(actions.updateAccountInfo(account));
+function* signUp() {
   navigate('/signup');
 }
 
-export function* createAccount({ payload: { email } }) {
+function* createAccount({ payload: { email } }) {
   const payload = yield call(getScatterIdentity);
   if (!payload) return;
 
@@ -71,8 +40,8 @@ export function* createAccount({ payload: { email } }) {
 
   // TODO
   if (error) {
-    console.log(error);
-    alert(error.statusText);
+    alert(error.resultMsg);
+    yield call(scatterApi.forgetScatterIdentity);
     return;
   }
   
@@ -80,21 +49,7 @@ export function* createAccount({ payload: { email } }) {
   yield put(actions.updateViewer({ viewer: data }));
 }
 
-function* updateAccount(account, user) {
-  const { emailConfirm, otpConfirm, email } = user;
-  const security = [emailConfirm, otpConfirm].filter(Boolean).length;
-
-  yield put(actions.updateAccountInfo({
-    authenticated: true,
-    ...account,
-    security,
-    email,
-    emailConfirm,
-    otpConfirm,
-  }));
-}
-
-export function* signIn() {
+function* signIn() {
   try {
     yield call(scatterApi.forgetScatterIdentity);
   } catch(e) {
@@ -113,7 +68,7 @@ export function* signIn() {
     identity,
   } = payload;
 
-  const { data, error } = yield call(accountApi.signIn, { 
+  const { data: viewer, error } = yield call(accountApi.signIn, { 
     accountName: account.name,
     publicKey: identity.publicKey,
     signature,
@@ -125,12 +80,12 @@ export function* signIn() {
     return;
   }
 
-  if (data) {
-    const { user } = data;
-    yield put(actions.updateViewer({
-      viewer: user,
-    }));
+  if (viewer) {
+    if (viewer.optConfirm) {
+      return navigate('/signin-otp');
+    }
 
+    yield put(actions.updateViewer({ viewer }));
     /**
      * otpConfirm이 되어있는 사용자의 경우에는,
      * signIn 메소드 후에 otp 인증 페이지로 이동하고,
