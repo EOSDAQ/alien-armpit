@@ -207,9 +207,8 @@ router.post('/otp/validate', jwtValidate, [
 
   const { accountName } = tokenPayload;
   const { code } = req.body;
-  console.log(code);
-  const data = await service.validateOtp(accountName, code, accessToken);
-  console.log(data);
+  await service.validateOtp(accountName, code, accessToken);
+  
   // Will always yield sucess data (threw Error in service.validateOtp)
   res.status(200).send({ success: true });
 });
