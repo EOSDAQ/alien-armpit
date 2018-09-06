@@ -5,8 +5,12 @@ import { tiffany } from 'api/apis';
 
 export function* loadCoins() {
   const { data, error } = yield call(tiffany.get, '/ticker');
+  if (error) {
+    return;
+  }
+
   if (data) {
-    const { Tickers: tickers } = data.resultData;
+    const { Tickers: tickers } = data;
 
     const { result, tokens } = tickers.reduce((res, ticker) => {
       const pair = `${ticker.symbol}_${ticker.baseSymbol}`;

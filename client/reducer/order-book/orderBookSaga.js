@@ -7,10 +7,16 @@ export function* fetchOrderBook({ payload }) {
   try {
     yield put(apiReducer.actions.fetchQuery(payload));
     const { data, error } = yield call(api.loadOrderBook, payload);
+
+    if (error) {
+      return;
+    }
+
     yield put(orderBookReducer.actions.updateOrderBook({
       data,
       ...payload,
     }));
+
     yield put(apiReducer.actions.updateQuery(payload));
   } catch (e) {
     console.error(e);

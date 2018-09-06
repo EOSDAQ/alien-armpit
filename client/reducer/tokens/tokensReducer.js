@@ -25,7 +25,7 @@ export default handleActions({
   [types.TOGGLE_FAVORITE]: (tokens, { payload }) => {
     const { pair } = payload;
     const token = tokens[pair];
-
+    // TODO. backend should change too.
     return {
       ...tokens,
       [pair]: {

@@ -12,6 +12,7 @@ const OrderBookLoader = () => {
           style={{
             background: '#f4f4f4',
             position: 'relative',
+            overflow: 'hidden',
           }}
         >
           <SheetRow 
