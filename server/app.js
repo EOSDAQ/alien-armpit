@@ -40,35 +40,29 @@ middlewares(app);
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
-  console.log(err);
   res.locals.message = err.message;
-  let result;
+  
+  let result = {
+    data: {
+      success: false,
+      name: err.name,
+      resultMsg: err.message,
+      resultCode: err.status,  
+    }
+  };
 
-  if (err.isBoom) {
-    const { payload } = err.output;
-    result = {
-      data: {
-        success: false,
-        name: payload.message,
-        resultMsg: payload.message,
-        resultCode: payload.statusCode,
-      },
-    };
+ 	if (env !== 'prod') {
+ 		result.stack = err.stack;
   } else {
-    result = {
-      data: {
-        success: false,
-        name: err.name || err.statusText,
-        resultMsg: err.message || err.statusText,
-        resultCode: err.code || err.status,
-      },
-    };
+    console.log('\n');
+    console.log('ERROR START=============================');
+    console.log(`* Message: ${result.data.resultMsg}`);
+    console.log(`* Status: ${result.data.resultCode}`);
+    console.log(`* Stack: ${err.stack}`);
+    console.log('ERROR END=============================');
+    console.log('\n');
   }
-
-  if (env !== 'prod') {
-    result.stack = err.stack;
-  }
-
+   
   res.status(result.data.resultCode).send(result);
   return;
 });
