@@ -1,8 +1,6 @@
 // eslint-disable-next-line
 /* global scatter */
 import Eos from 'eosjs';
-import ecc from 'eosjs-ecc';
-import { AccountName } from 'components/organisms/header/HeaderAccountMenu.styled';
 
 const chainId = document.querySelector('meta[property="eos:chainId"]')
   .getAttribute('content');
@@ -142,14 +140,15 @@ export const bid = async (data) => {
 
 export const authenticateScatter = async () => {
   const result = await scatter.authenticate();
+  
   // console.log(result);
   return result;
 }
 
 export const getScatterIdentity = async () => {
   const {
-    publicKey: scatterPublicKey,
     accounts,
+    ...identity,
   } = await scatter.getIdentity({
     accounts: [network],
   });
@@ -164,20 +163,12 @@ export const getScatterIdentity = async () => {
     throw Error('No viable account');
   }
 
-  const { permissions } = await scatter.eos.getAccount(account.name);
-  const eosAccount = permissions.filter(({ perm_name }) => perm_name === account.authority)[0]
-  const { required_auth: { keys: [{ key: publicKey }] }} = eosAccount;
-
-  const sig = await scatter.getArbitrarySignature(
-    publicKey,
-    account.name,
-    'Authentication',
-  );
+  const signature = await scatter.authenticate();
 
   return {
-    ...account,
-    publicKey,
-    sig,
+    signature,
+    identity,
+    account,
   };
 };
 

@@ -31,9 +31,9 @@ router.post('/signup', [
   } = req.body;
   
   const tokens = jwt.getTokensFromCookie(req.cookies);
+
   if (tokens) {
-    res.status(406).send({ success: false });
-    return;
+    return next(Boom.notAcceptable('Cannot register whilst signed-in'));
   }
 
   const verified = ecc.verify(
@@ -74,29 +74,36 @@ router.post('/signup', [
 
 router.post('/signin', [
   check('accountName').exists(),
-  check('accountHash').exists(),
-  check('accountPublicKey').exists(),
+  check('signature').exists(),
+  check('publicKey').exists(),
 ], async (req, res, next) => {
   validationResult(req).throw();
-  
+  // publickKey is scatter publicKey
+
   const {
     accountName,
-    accountHash,
-    accountPublicKey,
+    signature,
+    publicKey,
   } = req.body;
 
+  let user;
+  try {
+    user = await service.getUser(accountName);
+  } catch(err) {
+    return next(Boom.notFound());
+  }
+
   const isValid = ecc.verify(
-    accountHash,
-    accountName,
-    accountPublicKey,
+    signature,
+    req.hostname,
+    publicKey,
   );
 
   if (!isValid) {
-    next(new NotAuthorizedError());
+    return next(Boom.unauthorized());
   }
 
   try {
-    let user = await service.signin(accountName, accountHash);
     await jwt.signin(res, { accountName });
     res.send({ user });
   } catch(e) {

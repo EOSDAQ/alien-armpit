@@ -66,13 +66,12 @@ export function* createAccount({ payload: { email } }) {
     alert(error.statusText);
     return;
   }
-  console.log(data)
-
-  // yield put(actions.createdAccount({
-  //   email,
-  // }));
-  // yield put(actions.checkSentEmail());
-  // yield put(actions.updateViewer(data));
+ 
+  yield put(actions.createdAccount({
+    email,
+  }));
+  yield put(actions.checkSentEmail());
+  yield put(actions.updateViewer(data));
 }
 
 function* updateAccount(account, user) {
@@ -95,22 +94,23 @@ export function* signIn() {
   } catch(e) {
     console.error(e);
   }
-  const account = yield getScatterIdentity();
-  if (!account) return;
 
-  const { 
-    name: accountName,
-    sig: accountHash,
-    publicKey: accountPublicKey,
-  } = account;
+  const payload = yield getScatterIdentity();
+  if (!payload) {
+    // handle error later.
+    return;
+  }
 
   const {
-    data,
-    error,
-  } = yield call(accountApi.signIn, { 
-    accountName,
-    accountHash,
-    accountPublicKey,
+    signature,
+    account,
+    identity,
+  } = payload;
+
+  const { data, error } = yield call(accountApi.signIn, { 
+    accountName: account.name,
+    publicKey: identity.publicKey,
+    signature,
   });
 
   if (error) {
@@ -141,7 +141,6 @@ function* getScatterIdentity() {
     const account = yield call(scatterApi.getScatterIdentity);
     return account;
   } catch (e) {
-    console.error(e);
     if (!e.code) {
       // 스캐터 오류가 아님.
       console.error(e);
