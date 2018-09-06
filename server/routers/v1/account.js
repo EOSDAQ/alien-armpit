@@ -1,5 +1,4 @@
 const express = require('express');
-const Boom = require('boom');
 const HttpError = require('http-errors');
 const ecc = require('../../modules/ecc');
 const { check, validationResult } = require('express-validator/check');
@@ -8,7 +7,6 @@ const service = require('../../services/account');
 const mailService = require('../../services/mail');
 const jwt = require('../../modules/jwt');
 const jwtHelper = require('../../middlewares/jwtHelper');
-const { NotAuthorizedError } = require('../../modules/errors');
 
 const {
   jwtValidate,
@@ -60,7 +58,6 @@ router.post('/signup', [
 
   await service.createUser({
     accountName,
-    accountHash: signature,
     email,
     emailHash,
   });
@@ -224,7 +221,6 @@ router.get('/viewer', jwtValidate, async (req, res) => {
   }
   
   const { accountName } = tokenPayload;
-  console.log(accountName, accessToken, tokenPayload);
   const data = await service.getUser(accountName, accessToken);
   res.status(200).send(data);
 });
