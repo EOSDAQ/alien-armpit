@@ -17,8 +17,15 @@ const request = async (meth, url, data, opt) => {
 
   args.push(options);
   const response = await axios[method]( ...args );
-  const { status, data: resultData } = response;
-  return { status, data: resultData };
+  const { status, data: _data } = response;
+
+  return {
+    success: true,
+    trID: _data.trID,
+    resultCode: status,
+    resultMsg: _data.resultMsg,
+    resultData: _data.resultData,
+  };
 };
 
 const setJwtHeader = (options) => {

@@ -46,18 +46,12 @@ class Api {
 
     try {
       const response = await fetch;
-      res.data = response.data;
+      res.data = response.data.resultData;
     } catch (err) {
-      const { response } = err;
-
-      res.error = {
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers,
-        error: response.data,
-      };
+      const { response: { data } } = err;
+      res.error = data;
     }
-
+    
     return res;
   }
 }

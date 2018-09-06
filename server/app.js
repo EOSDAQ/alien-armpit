@@ -44,12 +44,10 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   
   let result = {
-    data: {
-      success: false,
-      name: err.name,
-      resultMsg: err.message,
-      resultCode: err.status,  
-    }
+    success: false,
+    resultMsg: err.message,
+    resultCode: err.status,
+    resultData: null,
   };
 
  	if (env !== 'prod') {
@@ -57,14 +55,14 @@ app.use((err, req, res, next) => {
   } else {
     console.log('\n');
     console.log('ERROR START=============================');
-    console.log(`* Message: ${result.data.resultMsg}`);
-    console.log(`* Status: ${result.data.resultCode}`);
+    console.log(`* Message: ${result.resultMsg}`);
+    console.log(`* Status: ${result.resultCode}`);
     console.log(`* Stack: ${err.stack}`);
     console.log('ERROR END=============================');
     console.log('\n');
   }
    
-  res.status(result.data.resultCode).send(result);
+  res.status(result.resultCode).send(result);
   return;
 });
 

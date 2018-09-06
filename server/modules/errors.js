@@ -1,3 +1,5 @@
+const HttpError = require('http-errors');
+
 class BaseError extends Error {
   constructor(message, status, code) {
     super(message);
@@ -25,4 +27,5 @@ class WrongUserHasTokenError extends BaseError {
 module.exports = {
   NotAuthorizedError,
   WrongUserHasTokenError,
+  HttpError,
 };

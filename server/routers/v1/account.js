@@ -42,7 +42,7 @@ router.post('/signup', [
     publicKey,
   );
 
-  if (verified) {
+  if (!verified) {
     throw new HttpError.Unauthorized();
   }
 
@@ -58,27 +58,21 @@ router.post('/signup', [
 
   const emailHash = cipher.generateBase32str(20);
 
-  try {
-    await service.createUser({
-      accountName,
-      email,
-      emailHash,
-    });
-  } catch (e) {
-    console.error(e);
-    const { response: { resultMsg } } = e;
-    return next(Boom.conflict(resultMsg));
-  }
+  await service.createUser({
+    accountName,
+    accountHash: signature,
+    email,
+    emailHash,
+  });
 
-  // successfully created user
   try {
     const { accessToken } = await jwt.signin(res, { accountName });
     mailService.sendVerifyEmail(req, accountName, email, emailHash);
-    const viewer = await service.getUser(accountName, accessToken);
-    res.status(201).json({ viewer });
+    const data = await service.getUser(accountName, accessToken);
+    res.status(201).json(data);
   } catch (e) {
     jwt.signout(res, req.cookies);
-    next(e)
+    throw e;
   }
 });
 

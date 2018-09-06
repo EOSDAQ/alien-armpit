@@ -1,6 +1,7 @@
 const axios = require('axios');
 const qs = require('querystring');
 const config = require('../config');
+const { HttpError } = require('../modules/errors');
 const request = require('../modules/request');
 
 const routePath = `${config.burgundyApi}/acct`;
@@ -10,6 +11,7 @@ const getUser = async (accountName, accessToken) => {
   const url = `${userBaseUrl}/${accountName}`;
 
   try {
+<<<<<<< HEAD
     const { data } = await request('get', url, null, { accessToken });
     return data.resultData;
   } catch (e) {
@@ -22,12 +24,29 @@ const getUser = async (accountName, accessToken) => {
       return null;
     }
     throw new Error(e);
+=======
+    const data = await request('get', url, null, { accessToken });
+    return data;
+  } catch(e) {
+    console.error(e);
+    throw HttpError.NotFound();
+>>>>>>> feat(api): change api data scheme to match backend
   }
 };
 
 const createUser = async (user, accessToken) => {
+<<<<<<< HEAD
   const url = `${userBaseUrl}/${user.accountName}`;
   return request('post', url, { ...user }, { accessToken });
+=======
+  const url = `${userBaseUrl}`;
+  try {
+    const { data } = await request('post', url, { ...user }, { accessToken });
+    return data;
+  } catch(err) {
+    throw HttpError.Conflict('Account already exists');
+  }
+>>>>>>> feat(api): change api data scheme to match backend
 };
 
 const deleteUser = async (accountName, accessToken) => {

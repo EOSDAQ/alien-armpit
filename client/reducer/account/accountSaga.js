@@ -71,16 +71,13 @@ export function* createAccount({ payload: { email } }) {
 
   // TODO
   if (error) {
+    console.log(error);
     alert(error.statusText);
     return;
   }
-  console.log(data)
-
-  // yield put(actions.createdAccount({
-  //   email,
-  // }));
-  // yield put(actions.checkSentEmail());
-  // yield put(actions.updateViewer(data));
+  
+  yield put(actions.checkSentEmail());
+  yield put(actions.updateViewer({ viewer: data }));
 }
 
 function* updateAccount(account, user) {
@@ -279,14 +276,14 @@ function* signOut() {
 
 function* getViewer({ payload }) {
   yield put(apiReducer.actions.fetchQuery(payload));
-  const { data, error } = yield call(proxy.get, '/account/viewer');
-  if (data) {
+  const { data: viewer, error } = yield call(proxy.get, '/account/viewer');
+  if (viewer) {
     const exist = yield select(state => state.account.viewer);
-    yield put(actions.updateViewer(data));
+    yield put(actions.updateViewer({ viewer }));
     yield put(apiReducer.actions.updateQuery(payload));
 
     if (!exist) {
-      if (data.viewer.otpConfirm) {
+      if (viewer.otpConfirm) {
         navigate('/signin-otp');
       }
     }
