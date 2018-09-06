@@ -46,18 +46,27 @@ router.post('/signup', [
     throw new HttpError.Unauthorized();
   }
 
+  // const tokens = jwt.getTokensFromCookie(req.cookies);
+  // if (tokens) {
+  //   const { token: data, success } = jwt.verify(tokens);
+  //   if (success && data.accountName === req.body.accountName) {
+  //     res.status(406).send({ success: false });
+  //     return;
+  //   }
+  //   jwt.signout(res, req.cookies);
+  // }
+
   const emailHash = cipher.generateBase32str(20);
 
   try {
     await service.createUser({
       accountName,
-      accountHash,
       email,
       emailHash,
-    })
+    });
   } catch (e) {
     console.error(e);
-    const { response: { resultMsg }} = e;
+    const { response: { resultMsg } } = e;
     return next(Boom.conflict(resultMsg));
   }
 
@@ -106,7 +115,7 @@ router.post('/signin', [
   try {
     await jwt.signin(res, { accountName });
     res.send({ user });
-  } catch(e) {
+  } catch (e) {
     next(e.response);
   }
 });
@@ -145,8 +154,7 @@ router.post('/user/resend-email', jwtValidate, validateAccount, [
   } catch (e) {
     next(e);
   }
-}
-);
+});
 
 router.get('/verifyEmail/:accountName/:email/:emailHash', [
   check('accountName').exists(),
@@ -164,7 +172,7 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
     // TODO 수정 필요 - 현재는 강제 signout 후 새 token 발급
     jwt.signout(res, req.cookies);
     const newTokens = await jwt.signin(res, { accountName });
-    const { accessToken } = newTokens; 
+    const { accessToken } = newTokens;
     result = await service.confirmEmail(accountName, email, emailHash, accessToken);
 
     if (!result.resultData.emailConfirm) {
@@ -254,7 +262,7 @@ router.get('/user/:accountName', jwtValidate, validateAccount, [
   }
 });
 
-router.get('/viewer', jwtValidate, async (req, res) => {
+router.get('/viewer', jwtValidate, async (req, res, next) => {
   try {
     const {
       accessToken,
@@ -268,14 +276,17 @@ router.get('/viewer', jwtValidate, async (req, res) => {
 
     const { accountName } = tokenPayload;
     const viewer = await service.getUser(accountName, accessToken);
+    if (!viewer) {
+      jwt.signout(res, req.cookies);
+    }
     res.status(200).send({ viewer });
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 });
 
 // TODO method => delete로 변경, 로그인 유저와 삭제 대상 유저의 일치 여부 확인 필요
-router.get('/user/:accountName/delete', jwtValidate, async (req, res) => {
+router.get('/user/:accountName/delete', jwtValidate, async (req, res, next) => {
   try {
     const {
       accountName,
@@ -286,7 +297,7 @@ router.get('/user/:accountName/delete', jwtValidate, async (req, res) => {
 
     const result = await service.deleteUser(accountName, accessToken);
     res.status(200).send({ success: true });
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 });

@@ -15,7 +15,7 @@ const getUser = async (accountName, accessToken) => {
   } catch (e) {
     const { response } = e;
     if (!response || response.status < 400) {
-      throw new Error(e);  
+      throw new Error(e);
     }
     // record not found
     if (response.data.resultCode === '0404') {
@@ -26,7 +26,7 @@ const getUser = async (accountName, accessToken) => {
 };
 
 const createUser = async (user, accessToken) => {
-  const url = `${userBaseUrl}`;
+  const url = `${userBaseUrl}/${user.accountName}`;
   return request('post', url, { ...user }, { accessToken });
 };
 
@@ -41,7 +41,7 @@ const deleteUser = async (accountName, accessToken) => {
 };
 
 const signin = async (accountName, accountHash) => {
-  const url = `${userBaseUrl}/signin`;
+  const url = `${userBaseUrl}/${accountName}/signin`;
   return axios.post(url, { accountName, accountHash });
 };
 
@@ -61,7 +61,7 @@ const revokeEmail = async (accountName, emailHash, accessToken) => {
   try {
     const { data } = await request('delete', url, { emailHash }, { accessToken });
     return data;
-  } catch (e) {    
+  } catch (e) {
     throw new Error(e);
   }
 };
@@ -93,7 +93,6 @@ const revokeOtp = async (accountName, accessToken) => {
 
 const validateOtp = async (accountName, code, accessToken) => {
   const url = `${userBaseUrl}/${accountName}/validateOTP`;
-  
   try {
     const data = await request('post', url, qs.stringify({ code }), { accessToken });
     return data;
