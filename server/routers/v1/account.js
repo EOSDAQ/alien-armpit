@@ -93,9 +93,10 @@ router.post('/signin', [
   if (!isValid) {
     throw HttpError.Unauthorized();
   }
-  const user = await service.getUser(accountName);
+
   try {
-    await jwt.signin(res, { accountName });
+    const { accessToken } = await jwt.signin(res, { accountName });
+    const user = await service.getUser(accountName, accessToken);
     res.send(user);
   } catch (e) {
     next(e);
