@@ -161,7 +161,7 @@ function* order({ payload }) {
     return;
   }
 
-  const account = yield call(scatterApi.getScatterIdentity);
+  const { account } = yield call(scatterApi.getScatterIdentity);
 
   if (!account) {
     return;
