@@ -20,10 +20,10 @@ export const SignupInput = GreyBorderInput.extend`
 
 export const SignupPolicy = styled('p')`  
   font-size: 13px;
-  font-weight: 500;
-  line-height: 1.56;
+  line-height: 1.6;
   padding-top: 46px;
   padding-bottom: 18px;
+  color: ${colors.grey500};
 
   a.link {
     color: ${colors.blue500};

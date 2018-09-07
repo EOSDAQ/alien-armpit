@@ -28,15 +28,11 @@ class Signup extends React.Component {
   }
 
   onSubmit({ email }) {
+    console.log('hey?');
+
     const {
-      name,
       createAccount,
     } = this.props;
-
-    // if (!name) {
-    //   alert('need accountName');
-    //   return;
-    // }
 
     this.setState({ email });
     createAccount({ email });
@@ -58,21 +54,18 @@ class Signup extends React.Component {
 
     return (
       <React.Fragment>
-        <div>
-          <Header />
-          <Flex alignItems="center" justifyContent="center" pt={85} pb={85}>
-            <SignupWrapper>
-              <Icon type="logoText" width={130} />
-              <SignupHeader>
-                {t('signup.title')}
-              </SignupHeader>
-              <SignupDesc dangerouslySetInnerHTML={{__html: t('signup.desc')}} />              
-              <SignupForm onSubmit={value => this.onSubmit(value)} />
-            </SignupWrapper>
-          </Flex>
-          <Footer />
-        </div>
-        {this.props.children}
+        <Header />
+        <Flex alignItems="center" justifyContent="center" pt={85} pb={85}>
+          <SignupWrapper>
+            <Icon type="logoText" width={130} fill="#0086D1" />
+            <SignupHeader>
+              {t('signup.title')}
+            </SignupHeader>
+            <SignupDesc dangerouslySetInnerHTML={{__html: t('signup.desc')}} />              
+            <SignupForm onSubmit={value => this.onSubmit(value)} />
+          </SignupWrapper>
+        </Flex>
+        <Footer />
       </React.Fragment>
     );
   }

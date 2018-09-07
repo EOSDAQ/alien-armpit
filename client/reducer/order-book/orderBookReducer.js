@@ -13,7 +13,8 @@ export const actions = {
 const defaultState = {};
 
 const reducer = handleActions({
-  [types.UPDATE_ORDER_BOOK]: (state, { payload: { data, symbol } }) => {
+  [types.UPDATE_ORDER_BOOK]: (state, { payload: { data, symbol, baseSymbol } }) => {
+
     let { bid, ask } = data;
     const slicedBid = bid ? bid.slice(0, 8) : [];
     const slicedAsk = ask ? ask.slice(-8) : [];
@@ -42,7 +43,7 @@ const reducer = handleActions({
     ask = [...new Array(8 - ask.length).fill(false), ...ask];
     bid = [ ...bid, ...new Array(8 - bid.length).fill(false) ];
     const [maxVolumeOrder] = [ ...orders].sort((a, b) => a.volume > b.volume ? -1 : 1);
-    
+
     const info = {
       totalBidQuotes: bid.reduce((res, o) => res += (o.volume || 0), 0),
       totalAskQuotes: ask.reduce((res, o) => res += (o.volume || 0), 0),
@@ -50,7 +51,7 @@ const reducer = handleActions({
     }
     return {
       ...state,
-      [symbol]: {
+      [`${symbol}_${baseSymbol}`]: {
         ask,
         bid,
         info,

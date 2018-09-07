@@ -4,7 +4,7 @@ import { colors } from 'components/css/theme';
 export const SignupWrapper = styled('div')`
   width: 668px;
   padding: 102px 86px 105px 137px;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
 `;
 
 export const SignupHeader = styled('h2')`

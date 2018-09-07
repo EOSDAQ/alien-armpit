@@ -35,17 +35,20 @@ class ExchangeOrderBook extends React.Component {
     const {
       token, ask, bid, info,
     } = this.props;
+
+    if (!token) return null;
     const scrollStyle = { style: { height: 512 } };
     const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
-    if (!token) return null;
-
-    const payload = { symbol: `${token.symbol}_${token.baseSymbol}` };
+    const {
+      symbol,
+      baseSymbol,
+    } = token;
 
     return (
       <OrderBookWrapper>
         <OrderBookHeader />
         <Query
-          action={actions.fetchOrderBook(payload)}
+          action={actions.fetchOrderBook({ symbol, baseSymbol })}
           pollInterval={4000}
         >
           {({ loading, error }) => {

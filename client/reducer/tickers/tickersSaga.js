@@ -4,7 +4,8 @@ import { actions as tokensActions } from '../tokens/tokensReducer';
 import { tiffany } from 'api/apis';
 
 export function* loadCoins() {
-  const { data, error } = yield call(tiffany.get, '/ticker');
+  const { data, error } = yield call(tiffany.get, '/symbol');
+  
   if (error) {
     return;
   }

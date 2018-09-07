@@ -1,12 +1,12 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { setScatter } from 'api/scatter';
-import Icon from '../../atom/Icon';
+import { translate } from 'react-i18next';
 import { TextButton } from '../../atom/Button';
 import Text from '../../atom/Text';
 import Flex from '../../atom/Flex';
 import { actions } from 'reducer/account/accountReducer';
-import { ViewerIdenticon } from './HeaderAuthenticate.styled';
+import { ViewerIdenticon, AuthLink } from './HeaderAuthenticate.styled';
 import Select from '../../molecules/Select';
 import HeaderAccountMenu from './HeaderAccountMenu';
 import Query from '../../molecules/Query';
@@ -15,12 +15,10 @@ class HeaderAuthenticate extends React.Component {
   render() {
     const {
       account,
-      signIn,
-      signUp,
+      t,
     } = this.props;
 
     const {
-      authenticated,
       viewer,
     } = account;
 
@@ -31,21 +29,12 @@ class HeaderAuthenticate extends React.Component {
           if (error) {
             return (
               <div>
-                <TextButton onClick={() => signIn()}>
-                  <Flex alignItems="flex-end">
-                    <Text fontSize={14} mr={4}>
-                      Sign In
-                    </Text>
-                  </Flex>
-                </TextButton>
-                <TextButton onClick={() => signUp()}>
-                  <Flex alignItems="flex-end">
-                    <Text fontSize={14} mr={4}>
-                      Sign Up with
-                    </Text>
-                    <Icon type="scatter" width={50} />
-                  </Flex>
-                </TextButton>
+                <AuthLink to="#" onClick={_ => this.props.signIn()}>
+                  {t('signin')}
+                </AuthLink>
+                <AuthLink to="/signup">
+                  {t('signup')}
+                </AuthLink>
               </div>
             );
           }
@@ -70,13 +59,14 @@ class HeaderAuthenticate extends React.Component {
 }
 
 const mapStateToProps = ({ account }) => ({ account });
-
 const mapDispatchToProps = dispatch => ({
-  signUp: payload => dispatch(actions.signUp(payload)),
-  signIn: payload => dispatch(actions.signIn(payload)),
-});
+  signIn: p => dispatch(actions.signIn(p)),
+})
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  translate('gnb'),
 )(HeaderAuthenticate);
