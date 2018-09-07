@@ -77,15 +77,13 @@ router.post('/signin', [
   check('accountName').exists(),
   check('signature').exists(),
   check('publicKey').exists(),
-], async (req, res, next) => {
+], async (req, res) => {
   validationResult(req).throw();
-
   const {
     accountName,
     signature,
     publicKey,
   } = req.body;
-
   const data = await service.signin(accountName);
   const isValid = ecc.verify(
     signature,
@@ -95,12 +93,8 @@ router.post('/signin', [
   if (!isValid) {
     throw HttpError.Unauthorized();
   }
-  try {
-    await jwt.signin(res, { accountName });
-    res.send(data);
-  } catch(e) {
-    next(e.response);
-  }
+  await jwt.signin(res, { accountName });
+  res.send(data);
 });
 
 router.post('/signout', (req, res) => {
