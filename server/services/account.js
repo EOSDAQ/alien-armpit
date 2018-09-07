@@ -1,13 +1,16 @@
-const axios = require('axios');
 const qs = require('querystring');
 const config = require('../config');
 const { HttpError } = require('../modules/errors');
+const logger = require('../modules/logger');
 const request = require('../modules/request');
+const jwt = require('../modules/jwt');
 
 const routePath = `${config.burgundyApi}/acct`;
 const userBaseUrl = `${routePath}/user`;
 
 const getUser = async (accountName, accessToken) => {
+  logger.debug('service/account getUser(): accountName=%s', accountName);
+  jwt.checkAccessToken(accessToken);
   const url = `${userBaseUrl}/${accountName}`;
   try {
     const { data } = await request('get', url, null, { accessToken });
@@ -18,6 +21,7 @@ const getUser = async (accountName, accessToken) => {
 };
 
 const createUser = async (user) => {
+  logger.debug('service/account createUser(): accountName=%s', user.accountName);
   const url = `${userBaseUrl}/${user.accountName}`;
   try {
     const { data } = await request('post', url, { ...user });
@@ -28,6 +32,8 @@ const createUser = async (user) => {
 };
 
 const deleteUser = async (accountName, accessToken) => {
+  logger.debug('service/account deleteUser(): accountName=%s', accountName);
+  jwt.checkAccessToken(accessToken);
   const url = `${userBaseUrl}/${accountName}`;
   try {
     const { data } = await request('delete', url, null, { accessToken });
@@ -38,6 +44,7 @@ const deleteUser = async (accountName, accessToken) => {
 };
 
 const signin = async (accountName) => {
+  logger.log('debug', 'service/account signin(): accountName=%s', accountName);
   const url = `${userBaseUrl}/${accountName}/signin`;
   try {
     const { data } = await request('post', url, { accountName });
@@ -48,6 +55,7 @@ const signin = async (accountName) => {
 };
 
 const confirmEmail = async (accountName, email, emailHash, accessToken) => {
+  logger.debug('service/account confirmEmail(): accountName=%s', accountName);
   const url = `${userBaseUrl}/${accountName}/confirmEmail`;
   try {
     const { data } = await request('post', url, { email, emailHash }, { accessToken });
@@ -58,6 +66,8 @@ const confirmEmail = async (accountName, email, emailHash, accessToken) => {
 };
 
 const revokeEmail = async (accountName, emailHash, accessToken) => {
+  logger.debug('service/account revokeEmail(): accountName=%s', accountName);
+  jwt.checkAccessToken(accessToken);
   const url = `${userBaseUrl}/${accountName}/revokeEmail`;
 
   try {
@@ -69,6 +79,8 @@ const revokeEmail = async (accountName, emailHash, accessToken) => {
 };
 
 const initOtp = async (accountName, accessToken) => {
+  logger.debug('service/account initOtp: accountName=%s', accountName);
+  jwt.checkAccessToken(accessToken);
   const url = `${userBaseUrl}/${accountName}/newOTP`;
   try {
     const { data, status } = await request('post', url, null, { accessToken });
@@ -84,6 +96,8 @@ const initOtp = async (accountName, accessToken) => {
 };
 
 const revokeOtp = async (accountName, accessToken) => {
+  logger.debug('service/account revokeOtp: accountName=%s', accountName);
+  jwt.checkAccessToken(accessToken);
   const url = `${userBaseUrl}/${accountName}/revokeOTP`;
   try {
     const data = await request('delete', url, null, { accessToken });
@@ -94,6 +108,8 @@ const revokeOtp = async (accountName, accessToken) => {
 };
 
 const validateOtp = async (accountName, code, accessToken) => {
+  logger.debug('service/account validateOtp: accountName=%s', accountName);
+  jwt.checkAccessToken(accessToken);
   const url = `${userBaseUrl}/${accountName}/validateOTP`;
 
   try {

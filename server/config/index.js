@@ -24,21 +24,9 @@ const params = awsParamStore.getParametersByPathSync(paramPath, {
 });
 
 params.map((param) => {
-  const type = camelCase(param.Name.replace(`${paramPath}/`, ''));
-  if (type === 'tiffanyApi') {
-    config[type] = `${param.Value}`;
-  } else if (type === 'burgundyApi') {
-    config[type] = `${param.Value}/api/v1`;
-  } else {
-    config[type] = param.Value;
-  }
+  const type = camelCase(param.Name.replace(`${paramPath}/`, ''));  
+  config[type] = param.Value;
 });
-
-if (env === 'devel') {
-  config['burgundyApi'] = 'http://local.eosdaq.com:18889/api/v1';
-  config['tiffanyApi'] = 'https://dev.eosdaq.com/api/v1/eosdaq';
-  config['redisHost'] = 'local.eosdaq.com';
-}
 
 config = Object.assign({}, commonConfig, config);
 config.env = env;

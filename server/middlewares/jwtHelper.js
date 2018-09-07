@@ -1,6 +1,6 @@
 const redis = require('../modules/redis');
 const {
-  NotAuthorizedError,
+  JwtNotAuthorizedError,
   WrongUserHasTokenError,
 } = require('../modules/errors');
 const accountService = require('../services/account');
@@ -13,11 +13,11 @@ const {
 
 const validate = async (req, res) => {
   const { cookies } = req;
-  const { accessToken, refreshToken: refreshStoreKey } = jwt.getTokensFromCookie(cookies);  
+  const { accessToken, refreshToken: refreshStoreKey } = jwt.getTokensFromCookie(cookies);
 
   if (!accessToken || !refreshStoreKey) {
     jwt.signout(res, cookies);
-    throw new NotAuthorizedError();
+    throw JwtNotAuthorizedError;
   }
 
   const result = jwt.verify(accessToken, jwtAccessKey);
@@ -28,14 +28,14 @@ const validate = async (req, res) => {
 
   if (!result.expired) {
     jwt.signout(res, cookies);
-    throw new NotAuthorizedError();
+    throw JwtNotAuthorizedError;
   }
 
   const refreshToken = await redis.get(refreshStoreKey);
   const refreshResult = jwt.verify(refreshToken, jwtRefreshKey);
   if (!refreshResult.success) {
     jwt.signout(res, cookies);
-    throw new NotAuthorizedError();
+    throw JwtNotAuthorizedError;
   }
 
   const { accountName } = refreshResult.token;
@@ -80,7 +80,7 @@ const validateAccount = (req, res, next) => {
   }
   const { tokenPayload } = req.locals;
   if (accountName !== tokenPayload.accountName) {
-    next(new WrongUserHasTokenError());
+    next(WrongUserHasTokenError);
   }
   next();
 };

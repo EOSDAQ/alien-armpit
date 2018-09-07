@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
 const redis = require('../modules/redis');
 const config = require('../config');
+const { NeedAccessTokenError } = require('../modules/errors');
 
 const {
   jwtAccessKey,
@@ -91,6 +92,13 @@ const verify = (token, key) => {
   return result;
 };
 
+const checkAccessToken = (accessToken) => {
+  if (accessToken) {
+    return true;
+  }
+  throw NeedAccessTokenError;
+};
+
 module.exports = {
   setTokenOnCookie,
   signToken,
@@ -100,4 +108,5 @@ module.exports = {
   getAccessTokenFromCookie,
   verify,
   decode: jwt.decode,
+  checkAccessToken,
 };

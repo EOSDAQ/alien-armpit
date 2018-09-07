@@ -58,7 +58,8 @@ app.use((err, req, res, next) => {
     console.log('ERROR START=============================');
     console.log(`* Url: ${req.protocol}//${req.get('host')}${req.originalUrl}`);
     console.log(`* Message: ${result.data.resultMsg}`);
-    console.log(`* Status: ${result.data.resultCode}`);
+    console.log(`* Status: ${result.status}`);
+    console.log(`* resultCode: ${result.data.code}`);
     console.log(`* Stack: ${err.stack}`);
     console.log('ERROR END=============================');
     console.log('\n');

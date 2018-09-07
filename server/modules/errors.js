@@ -1,31 +1,12 @@
 const HttpError = require('http-errors');
 
-class BaseError extends Error {
-  constructor(message, status, code) {
-    super(message);
-    this.name = this.constructor.name;
-    Error.captureStackTrace(this, this.constructor);
-    this.status = status || 500;
-    this.code = code;
-  }
-}
-
-class NotAuthorizedError extends BaseError {
-  constructor(fields) {
-    super('Authorization failed', 401, '0401');
-    this.fields = fields || {};
-  }
-}
-
-class WrongUserHasTokenError extends BaseError {
-  constructor(fields) {
-    super('Token owner is wrong', 401, '1401');
-    this.fields = fields || {};
-  }
-}
+const JwtNotAuthorizedError = HttpError(401, 'Jwt Authorization failed', { code: 1401 });
+const WrongUserHasTokenError = HttpError(401, 'Token owner is wrong', { code: 2401 });
+const NeedAccessTokenError = HttpError(400, 'It needs Access Token for paramter', { code: 1400 });
 
 module.exports = {
-  NotAuthorizedError,
+  JwtNotAuthorizedError,
   WrongUserHasTokenError,
+  NeedAccessTokenError,
   HttpError,
 };
