@@ -1,6 +1,21 @@
 version: '3'
 
 services:
+  tiffanyblue:
+    ports:
+      - "18890:1323"
+    image: eosdaq/tiffanyblue
+    networks:
+      - eos_net
+    depends_on:
+      - eos_db
+    environment:
+     - DB_HOST=eos_db
+     - DB_PORT=3306
+     - DB_NAME=eosdaq
+     - AWS_ON=false
+     - DB_USER=eosdaquser
+     - DB_PASS=eosdaqvotmdnjem
   burgundy:
     ports:
       - "18889:1313"
