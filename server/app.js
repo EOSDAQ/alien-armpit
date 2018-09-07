@@ -44,11 +44,12 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
 
   const result = {
+    status: err.status,
     data: {
       success: false,
       name: err.name,
       resultMsg: err.message,
-      resultCode: err.status,
+      resultCode: err.code,
     },
   };
 
@@ -63,7 +64,7 @@ app.use((err, req, res, next) => {
     console.log('\n');
   }
 
-  res.status(result.data.resultCode).send(result);
+  res.status(result.status).send(result);
 });
 
 module.exports = app;
