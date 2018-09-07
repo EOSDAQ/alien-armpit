@@ -55,6 +55,7 @@ app.use((err, req, res, next) => {
   if (env !== 'prod') {
     console.log('\n');
     console.log('ERROR START=============================');
+    console.log(`* Url: ${req.protocol}//${req.get('host')}${req.originalUrl}`);
     console.log(`* Message: ${result.data.resultMsg}`);
     console.log(`* Status: ${result.data.resultCode}`);
     console.log(`* Stack: ${err.stack}`);
