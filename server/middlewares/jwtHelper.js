@@ -13,11 +13,10 @@ const {
 
 const validate = async (req, res) => {
   const { cookies } = req;
-  const { accessToken, refreshToken: refreshStoreKey } = jwt.getTokensFromCookie(cookies);
-  let refreshResult;
-  let refreshToken;
+  const { accessToken, refreshToken: refreshStoreKey } = jwt.getTokensFromCookie(cookies);  
 
   if (!accessToken || !refreshStoreKey) {
+    jwt.signout(res, cookies);
     throw new NotAuthorizedError();
   }
 
@@ -32,10 +31,10 @@ const validate = async (req, res) => {
     throw new NotAuthorizedError();
   }
 
-  refreshToken = await redis.get(refreshStoreKey);
-  refreshResult = jwt.verify(refreshToken, jwtRefreshKey);
+  const refreshToken = await redis.get(refreshStoreKey);
+  const refreshResult = jwt.verify(refreshToken, jwtRefreshKey);
   if (!refreshResult.success) {
-    redis.del(refreshStoreKey);
+    jwt.signout(res, cookies);
     throw new NotAuthorizedError();
   }
 
@@ -44,7 +43,7 @@ const validate = async (req, res) => {
   const newAccessToken = jwt.signToken({ accountName }, jwtAccessKey, jwtAccessTokenExpires);
   jwt.setTokenOnCookie(res, newAccessToken, refreshStoreKey);
   setPayload(newAccessToken);
-}
+};
 
 const jwtValidate = async (req, res, next) => {
   try {
