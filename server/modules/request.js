@@ -20,6 +20,7 @@ const request = async (meth, url, data, opt) => {
   const { status, data: _data } = response;
 
   return {
+    status,
     data: {
       success: true,
       trID: _data.trID,

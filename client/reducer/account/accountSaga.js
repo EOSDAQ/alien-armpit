@@ -37,10 +37,9 @@ function* createAccount({ payload: { email } }) {
     email,
   };
   const { data, error } = yield call(accountApi.signUp, body);
-
   // TODO
   if (error) {
-    alert(error.resultMsg);
+    alert(error.data.resultMsg);
     yield call(scatterApi.forgetScatterIdentity);
     return;
   }

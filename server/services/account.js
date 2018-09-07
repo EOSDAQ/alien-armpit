@@ -39,7 +39,12 @@ const deleteUser = async (accountName, accessToken) => {
 
 const signin = async (accountName) => {
   const url = `${userBaseUrl}/${accountName}/signin`;
-  return axios.post(url, { accountName });
+  try {
+    const { data } = await request('post', url, { accountName });
+    return data;
+  } catch (e) {
+    throw HttpError.NotFound();
+  }
 };
 
 const confirmEmail = async (accountName, email, emailHash, accessToken) => {
