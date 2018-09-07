@@ -42,28 +42,27 @@ middlewares(app);
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  
-  let result = {
-    success: false,
-    resultMsg: err.message,
-    resultCode: err.status,
-    resultData: null,
+
+  const result = {
+    data: {
+      success: false,
+      name: err.name,
+      resultMsg: err.message,
+      resultCode: err.status,
+    },
   };
 
- 	if (env !== 'prod') {
- 		result.stack = err.stack;
-  } else {
+  if (env !== 'prod') {
     console.log('\n');
     console.log('ERROR START=============================');
-    console.log(`* Message: ${result.resultMsg}`);
-    console.log(`* Status: ${result.resultCode}`);
+    console.log(`* Message: ${result.data.resultMsg}`);
+    console.log(`* Status: ${result.data.resultCode}`);
     console.log(`* Stack: ${err.stack}`);
     console.log('ERROR END=============================');
     console.log('\n');
   }
-   
-  res.status(result.resultCode).send(result);
-  return;
+
+  res.status(result.data.resultCode).send(result);
 });
 
 module.exports = app;
