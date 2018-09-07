@@ -12,6 +12,7 @@ const cspDirectives = {
   connectSrc: [
     "'self'", 
     '*.tradingview.com',
+    url.parse(config.clientEosUrl).host,
     url.parse(config.clientEosUrl).hostname,
     url.parse(config.tiffanyApi).hostname,
   ],

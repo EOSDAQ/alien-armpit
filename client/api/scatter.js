@@ -9,7 +9,7 @@ const chainUrl = document.querySelector('meta[property="eos:chainUrl"]')
 
 const {
   protocol,
-  host,
+  hostname: host,
 } = new URL(chainUrl);
 
 const [_, port] = /:(\d+)/.exec(chainUrl);
@@ -107,7 +107,9 @@ const scatter = new Scatter();
 
 export const ask = async (data) => {
   const { token } = data;
-  const result = await scatter.transfer(
+  const contract = await scatter.contract(token.account);
+  console.log(token)
+  const result = await contract.transfer(
     data.from,
     token.contractAccount,
     data.amount,
@@ -121,6 +123,7 @@ export const ask = async (data) => {
 
 export const bid = async (data) => {
   const { token } = data;
+
   try {
     const result = await scatter.transfer(
       data.from, 

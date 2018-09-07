@@ -127,7 +127,7 @@ const OrderForm = (props) => {
                   small
                   isAsk={type === 'ask'}
                 >
-                  {`${symbol} ${type === 'ask' ? '매수' : '매도'}`}
+                  {`${symbol} ${type === 'ask' ? '매도' : '매수'}`}
                 </OrderFormButton>
               </OrderFormAction>
             </React.Fragment>

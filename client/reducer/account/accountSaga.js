@@ -175,18 +175,19 @@ function* order({ payload }) {
 
   try {
     const from = account.name;
-
+    
     if (type === 'bid') {
       yield call(scatterApi.bid, {
         price: parseFloat(price),
-        amount: toFixed(4, amount) + ' ' + symbol,
+        amount: toFixed(4, amount * price) + ` ${token.baseSymbol}`,
         token,
         from,
       })
     } else {
       yield call(scatterApi.ask, {
         price: parseFloat(price),
-        amount: toFixed(4, amount * price) + ' SYS',
+        amount: toFixed(4, amount) + ' ' + symbol,
+        token,
         from,
       })
     }

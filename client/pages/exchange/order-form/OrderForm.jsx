@@ -9,7 +9,7 @@ import { OrderFormDisabled } from './OrderForm.styled';
 const OrderForm = (props) => {
   const { viewer, token, order } = props;
   if (!token) return null;
-  const types = ['ask', 'bid'];
+  const types = ['bid', 'ask'];
 
   return (
     <SheetWrapper>

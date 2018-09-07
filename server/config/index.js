@@ -39,6 +39,7 @@ if (env === 'devel') {
   config['tiffanyApi'] = 'https://dev.eosdaq.com/api/v1/eosdaq';
   config['redisHost'] = 'local.eosdaq.com';
 }
+
 config = Object.assign({}, commonConfig, config);
 config.env = env;
 config.rootPath = path.resolve(__dirname, '..', '..');

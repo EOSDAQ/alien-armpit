@@ -25,10 +25,10 @@ export const OrderFormAction = styled('div')`
 export const OrderFormButton = styled(Button)`
   width: 100%;
   justify-content: center;
-  background-color: ${({ isAsk }) => (isAsk ? colors.red500 : colors.blue500)};
+  background-color: ${({ isAsk }) => (!isAsk ? colors.red500 : colors.blue500)};
   color: #fff;
 
   &:hover {
-    background-color: ${({ isAsk }) => (isAsk ? colors.red600 : colors.blue600)};
+    background-color: ${({ isAsk }) => (!isAsk ? colors.red600 : colors.blue600)};
   }
 `;
