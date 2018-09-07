@@ -86,18 +86,15 @@ router.post('/signin', [
     publicKey,
   } = req.body;
 
-  const data = await service.getUser(accountName);
-  
+  const data = await service.signin(accountName);
   const isValid = ecc.verify(
     signature,
     req.hostname,
     publicKey,
   );
-    
   if (!isValid) {
     throw HttpError.Unauthorized();
   }
-    
   try {
     await jwt.signin(res, { accountName });
     res.send(data);

@@ -37,9 +37,9 @@ const deleteUser = async (accountName, accessToken) => {
   }
 };
 
-const signin = async (accountName, accountHash) => {
+const signin = async (accountName) => {
   const url = `${userBaseUrl}/${accountName}/signin`;
-  return axios.post(url, { accountName, accountHash });
+  return axios.post(url, { accountName });
 };
 
 const confirmEmail = async (accountName, email, emailHash, accessToken) => {
