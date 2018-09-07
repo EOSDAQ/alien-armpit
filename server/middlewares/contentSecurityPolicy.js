@@ -10,11 +10,11 @@ const generateUuid = (req, res, next) => {
 const cspDirectives = {
   defaultSrc: ["'self'"],
   connectSrc: [
-    "'self'", 
+    "'self'",
     '*.tradingview.com',
     url.parse(config.clientEosUrl).host,
     url.parse(config.clientEosUrl).hostname,
-    url.parse(config.tiffanyApi).hostname,
+    url.parse(config.tiffanyApi).host,
   ],
   baseUri: ["'self'"],
   frameSrc: ["'self'"],
