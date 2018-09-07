@@ -1,7 +1,7 @@
 {
   "signup": {
     "title": "EOSDAQ 계정을 만듭니다",
-    "desc": "${accountName}님 환영합니다. 가장 안전한 탈중앙화 거래소, EOSDAQ을 사용하기 까지 한 단계가 남아있습니다. 이메일 주소를 아래에 입력한 후 인증해주세요.",
+    "desc": "가장 안전한 탈중앙화 거래소, EOSDAQ을 사용하기 까지 한 단계가 남아있습니다. 이메일 주소를 아래에 입력한 후 인증해주세요.",
     "policy": "By signing up, you agree to the ${termsOfService} and ${privacyPolicy}, including ${cookieUse}. Others will be able to find you by email or phone number when provided",
     "policyTerms": "Terms of Service",
     "policyPrivacy": "Privacy Policy",

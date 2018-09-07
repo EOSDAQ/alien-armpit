@@ -66,9 +66,7 @@ class Signup extends React.Component {
               <SignupHeader>
                 {t('signup.title')}
               </SignupHeader>
-              <SignupDesc>
-                {t('signup.desc').replace('{accountName}', name)}
-              </SignupDesc>
+              <SignupDesc dangerouslySetInnerHTML={{__html: t('signup.desc')}} />              
               <SignupForm onSubmit={value => this.onSubmit(value)} />
             </SignupWrapper>
           </Flex>
