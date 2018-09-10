@@ -105,6 +105,17 @@ class Scatter {
 
 const scatter = new Scatter();
 
+export const getCurrencyBalance = async (code, account, symbol) => {
+  try {
+    const assets = await scatter.eos.getCurrencyBalance(code, account, symbol);
+    console.log(assets);
+
+    return assets;
+  } catch(err) {
+    console.error(err);
+  }
+}
+
 export const ask = async (data) => {
   const { token } = data;
   const contract = await scatter.contract(token.account);
