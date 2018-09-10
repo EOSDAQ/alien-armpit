@@ -17,12 +17,9 @@ class OrderLog extends React.PureComponent {
     const { tab, code } = this.props;
     const [symbol] = code.split('_');
     if (tab === 'tradeHistory') {
-      return <TradeHistory symbol={symbol} />
+      return <TradeHistory symbol={symbol} />;
     }
-
-    if (tab === 'openOrders') {
-      return <OpenOrders symbol={symbol} />
-    }
+    return <OpenOrders symbol={symbol} listType={tab} />;
   }
 
   render() {
@@ -32,7 +29,7 @@ class OrderLog extends React.PureComponent {
     } = this.props;
     const scrollStyle = { style: { height: 302 } };
     const scrollOptions = Object.assign({}, scrollbarsOptions, scrollStyle);
-  
+
     return (
       <OrderLogWrapper>
         <OrderLogHeader

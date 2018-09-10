@@ -1,13 +1,11 @@
 const express = require('express');
-const HttpError = require('http-errors');
-
 const {
   getUserOrderbook,
+  getUserTx,
 } = require('../../services/symbol');
 
 const {
   jwtValidate,
-  validateAccount,
 } = require('../../middlewares/jwtHelper');
 
 const router = express.Router();
@@ -21,8 +19,15 @@ router.get('/:symbol/tx', async (req, res) => {
 router.get('/:symbol/user/:accountName/orderbook', jwtValidate, async (req, res) => {
   const { symbol, accountName } = req.params;
   const { accessToken } = req.locals;
-  
   const data = await getUserOrderbook(accountName, symbol, accessToken);
+  res.json(data);
+});
+
+// 개인 토큰 체결내역
+router.get('/:symbol/user/:accountName/tx', jwtValidate, async (req, res) => {
+  const { symbol, accountName } = req.params;
+  const { accessToken } = req.locals;
+  const data = await getUserTx(accountName, symbol, accessToken);
   res.json(data);
 });
 

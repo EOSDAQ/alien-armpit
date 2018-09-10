@@ -21,6 +21,7 @@
   "orderLog": {
     "tradeHistory": "Trade History",
     "openOrders": "Open Orders",
+    "closeOrders": "Close Orders",
     "volume": "Volume",
     "price": "Price",
     "time": "Time"

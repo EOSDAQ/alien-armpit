@@ -8,6 +8,8 @@ export const types = {
   UPDATE_TRADE_HISTORY: 'tradeHistory/update',
   FETCH_OPEN_ORDERS: 'openOrders/fetch',
   UPDATE_OPEN_ORDERS: 'openOrders/update',
+  FETCH_CLOSE_ORDERS: 'closeOrders/fetch',
+  UPDATE_CLOSE_ORDERS: 'closeOrders/update',
   FETCH_USER_TRADE_HISTORY: 'userTradeHistory/fetch',
   UPDATE_USER_TRADE_HISTORY: 'userTradeHistory/update',
 };
@@ -18,6 +20,8 @@ export const actions = {
   updateTradeHistory: createAction(types.UPDATE_TRADE_HISTORY),
   fetchOpenOrders: createAction(types.FETCH_OPEN_ORDERS),
   updateOpenOrders: createAction(types.UPDATE_OPEN_ORDERS),
+  fetchCloseOrders: createAction(types.FETCH_CLOSE_ORDERS),
+  updateCloseOrders: createAction(types.UPDATE_CLOSE_ORDERS),
 };
 
 const defaultState = {
@@ -34,7 +38,7 @@ const tradeHistory = handleActions({
     return {
       ...state,
       [symbol]: transactions,
-    }
+    };
   },
 }, {});
 
@@ -44,12 +48,23 @@ const openOrders = handleActions({
     return {
       ...state,
       [symbol]: orders,
-    }
-  }
+    };
+  },
+}, {});
+
+const closeOrders = handleActions({
+  [types.UPDATE_CLOSE_ORDERS]: (state, { payload }) => {
+    const { symbol, orders } = payload;
+    return {
+      ...state,
+      [symbol]: orders,
+    };
+  },
 }, {});
 
 export default combineReducers({
   tab,
   tradeHistory,
   openOrders,
+  closeOrders,
 });

@@ -19,8 +19,9 @@
     "totalAmount": "총 잔량"
   },
   "orderLog": {
-    "tradeHistory": "거래기록",
-    "openOrders": "매체결내역",
+    "tradeHistory": "거래기록",    
+    "openOrders": "미체결내역",
+    "closeOrders": "체결내역",
     "volume": "체결량",
     "price": "체결가격",
     "time": "체결시간"
