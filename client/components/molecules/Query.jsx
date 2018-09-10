@@ -8,9 +8,13 @@ class Query extends React.Component {
   }
 
   componentDidMount() {
-    const { cache } = this.props;
+    const { cache, pollInterval } = this.props;
     if (!cache) {
       this.dispatchAction();
+    }
+
+    if (pollInterval) {
+      this.pollAction();
     }
   }
 
@@ -22,17 +26,41 @@ class Query extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { dispatching, cacheKey, cache } = this.props;
+    const { dispatching, cacheKey, cache, pollInterval } = this.props;
     if (dispatching) return;
 
     if (cacheKey != prevProps.cacheKey) {
+      this.clearPollAgent();
+
+      if (pollInterval) {
+        this.pollAction();
+      }
+
       if (!cache) {
         this.dispatchAction();
       }
     }
   }
 
-  dispatchAction() {
+  clearPollAgent() {
+    let { pollAgent } = this;
+    if (pollAgent) {
+      clearInterval(pollAgent);
+      pollAgent = null;
+    }
+    return;
+  }
+
+  pollAction() {
+    const { pollInterval } = this.props;
+    this.clearPollAgent();
+
+    this.pollAgent = setInterval(() => {
+      this.dispatchAction(true);
+    }, pollInterval);
+  }
+
+  dispatchAction(poll) {
     const {
       dispatch,
       action,
@@ -43,6 +71,7 @@ class Query extends React.Component {
       ...action,
       payload: {
         ...action.payload,
+        poll,
         cacheKey,
       }
     };

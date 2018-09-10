@@ -51,7 +51,7 @@ class ExchangeOrderBook extends React.Component {
           action={actions.fetchOrderBook({ symbol, baseSymbol })}
           pollInterval={4000}
         >
-          {({ loading, error }) => {
+          {({ loading, polling, error }) => {
             if (loading) {
               return <OrderBookLoader />;
             }
@@ -59,6 +59,7 @@ class ExchangeOrderBook extends React.Component {
             return (
               <React.Fragment>
                 <Scrollbars {...scrollOptions}>
+                  {polling && '...receiving data'}
                   <Flex>
                     <OrderBookList
                       orderList={ask}

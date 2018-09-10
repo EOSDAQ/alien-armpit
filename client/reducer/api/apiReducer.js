@@ -19,12 +19,14 @@ const defaultState = {
 
 export default handleActions({
   [types.FETCH_QUERY]: (state, { payload }) => {
-    const { cacheKey } = payload;
+    const { cacheKey, poll } = payload;
+
     return {
       ...state,
       dispatching: true,
       [cacheKey]: {
-        loading: true,
+        ...(state[cacheKey] || {}),
+        ...(!poll ? { loading: true } : { polling: true }),
         error: null,
         meta: {
           timestamp: Date.now(),
@@ -33,7 +35,7 @@ export default handleActions({
     };
   },
   [types.UPDATE_QUERY]: (state, { payload }) => {
-    const { cacheKey, error = null } = payload;
+    const { cacheKey, poll, error = null } = payload;
     const target = state[cacheKey] || {};
     const timestamp = Date.now();
     return {
@@ -42,6 +44,7 @@ export default handleActions({
       [cacheKey]: {
         ...target,
         loading: false,
+        ...(!poll ? { loading: false } : { polling: false }),
         error,
         meta: {
           duration: timestamp - target.meta.timestamp,
