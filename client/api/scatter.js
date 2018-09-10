@@ -18,6 +18,7 @@ const network = {
   blockchain: 'eos',
   host,
   port,
+  httpEndpoint: chainUrl,
   protocol: protocol.slice(0, -1),
   chainId,
 };
@@ -104,13 +105,12 @@ class Scatter {
 }
 
 const scatter = new Scatter();
+const eos = Eos(network);
 
-export const getCurrencyBalance = async (code, account, symbol) => {
+export const getCurrencyBalance = async ({ code, account }) => {
   try {
-    const assets = await scatter.eos.getCurrencyBalance(code, account, symbol);
-    console.log(assets);
-
-    return assets;
+    const [balance] = await eos.getCurrencyBalance(code, account);
+    return balance;
   } catch(err) {
     console.error(err);
   }
@@ -119,7 +119,6 @@ export const getCurrencyBalance = async (code, account, symbol) => {
 export const ask = async (data) => {
   const { token } = data;
   const contract = await scatter.contract(token.account);
-  console.log(token)
   const result = await contract.transfer(
     data.from,
     token.contractAccount,

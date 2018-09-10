@@ -12,6 +12,7 @@ import Box from 'components/atom/Box';
 import { toFixed, capitalize } from 'utils/format';
 import { Code } from 'components/atom/Text';
 import Form from 'components/molecules/Form';
+import Balance from './balance/Balance';
 
 const OrderFormField = ({ input }) => (
   <OrderFormInput 
@@ -121,6 +122,7 @@ const OrderForm = (props) => {
                   />
                 </InputControl>
               </Box>
+              <Balance token={token} isBase={type === 'bid'} />
               <OrderFormAction>
                 <OrderFormButton
                   type="submit"

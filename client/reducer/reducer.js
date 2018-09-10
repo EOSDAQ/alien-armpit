@@ -8,6 +8,7 @@ import modal from './modal/modalReducer';
 import orderBookReducer from './order-book/orderBookReducer';
 import tokensReducer from './tokens/tokensReducer';
 import apiReducer from './api/apiReducer';
+import balanceReducer from './balance/balanceReducer';
 
 const reducer = combineReducers({
   api: apiReducer,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   orderBook: orderBookReducer.reducer,
   orderLog: orderLogReducer,
   otp: otpReducer,
+  balance: balanceReducer,
 });
 
 export default reducer;

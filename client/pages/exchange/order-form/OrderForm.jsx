@@ -10,22 +10,24 @@ const OrderForm = (props) => {
   const { viewer, token, order } = props;
   if (!token) return null;
   const types = ['bid', 'ask'];
-
+  
   return (
     <SheetWrapper>
       {!viewer && <OrderFormDisabled />}
-      <Flex>
-        {types.map(type => (
-          <OrderFormPanel
-            key={type}
-            type={type}
-            symbol={token.symbol}
-            token={token}
-            baseSymbol={token.baseSymbol}
-            order={order}
-          />
-        ))}
-      </Flex>
+      {viewer && (
+        <Flex>
+          {types.map(type => (
+            <OrderFormPanel
+              key={type}
+              type={type}
+              symbol={token.symbol}
+              token={token}
+              baseSymbol={token.baseSymbol}
+              order={order}
+            />
+          ))}
+        </Flex>
+      )}
     </SheetWrapper>
   );
 }
