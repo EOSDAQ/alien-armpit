@@ -14,7 +14,7 @@ class Header extends React.Component {
     super(props);
 
     this.navs = [
-      { title: 'exchange', link: '/exchange/HORUS_EOS' },
+      { title: 'exchange', link: `/exchange/HORUS_${gOption.baseCurrency}` },
       { title: 'wallet', link: '/wallet' },
       { title: 'support', link: '/support' },
     ];

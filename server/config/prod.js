@@ -3,4 +3,5 @@ module.exports = {
   staticPath: '/dist',
   socketUrl: '/echo',
   logLevel: 'info',
+  baseCurrency: 'EOS',
 };

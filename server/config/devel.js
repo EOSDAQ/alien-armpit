@@ -3,4 +3,5 @@ module.exports = {
   staticPath: '/public',
   socketUrl: '/echo',
   logLevel: 'debug',
+  baseCurrency: 'SYS',
 };
