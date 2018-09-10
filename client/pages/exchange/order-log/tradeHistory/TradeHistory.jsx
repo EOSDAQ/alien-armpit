@@ -17,42 +17,38 @@ class TradeHistory extends React.Component {
           if (loading) {
             return 'loading...';
           }
-
           return (
             <div>
-              {rows.map((row) => {
-                return (
-                  <SheetRow 
-                    key={row.id}
-                    columns="1fr 1fr 1fr"
-                  >
-                    <OrderLogAmount>
-                      {row.volume / 10000}
-                    </OrderLogAmount>
-                    <OrderLogPrice>
-                      {row.price / 10000}
-                    </OrderLogPrice>
-                    <OrderLogTime>
-                      {format(row.orderTime, 'h:m MMM.D')}
-                    </OrderLogTime>
-                  </SheetRow>
-                )
-              })}
+              {rows.map(row => (
+                <SheetRow
+                  key={row.id}
+                  columns="1fr 1fr 1fr"
+                >
+                  <OrderLogAmount>
+                    {row.volume / 10000}
+                  </OrderLogAmount>
+                  <OrderLogPrice>
+                    {row.price / 10000}
+                  </OrderLogPrice>
+                  <OrderLogTime>
+                    {format(row.orderTime, 'h:m MMM.D')}
+                  </OrderLogTime>
+                </SheetRow>
+              ))}
             </div>
-          )
+          );
         }}
       </Query>
-    )
+    );
   }
 }
 
 const mapStateToProps = ({ orderLog }, { symbol }) => {
   const txs = orderLog.tradeHistory[symbol];
-
   return {
-    rows: txs,
-  }
-}
+    rows: txs || [],
+  };
+};
 
 export default connect(
   mapStateToProps,
