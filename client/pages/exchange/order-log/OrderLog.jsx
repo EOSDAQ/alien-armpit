@@ -19,7 +19,7 @@ class OrderLog extends React.PureComponent {
     if (tab === 'tradeHistory') {
       return <TradeHistory symbol={symbol} />;
     }
-    return <OpenOrders symbol={symbol} listType={tab} />;
+    return <OpenOrders symbol={symbol} pair={code} listType={tab} />;
   }
 
   render() {

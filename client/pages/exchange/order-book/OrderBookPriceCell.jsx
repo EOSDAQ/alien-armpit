@@ -23,7 +23,7 @@ const OrderBookPriceCell = (props) => {
     >
       <OrderBookAskingPrice>
         <Number>
-          {toFixed(4, price.toLocaleString())}
+          {toFixed(4, price).toLocaleString()}
         </Number>
       </OrderBookAskingPrice>
       <OrderBookChange>

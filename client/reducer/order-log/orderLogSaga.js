@@ -3,6 +3,7 @@ import {
 } from 'redux-saga/effects';
 import { types, actions } from './orderLogReducer';
 import { tiffany, proxy } from 'api/apis';
+import * as scatterApi from 'api/scatter';
 import { actions as apiActions } from '../api/apiReducer';
 
 function* fetchTradeHistory({ payload }) {
@@ -49,10 +50,20 @@ function* fetchCloseOrders({ payload }) {
   yield put(apiActions.updateQuery(payload));
 }
 
+function* cancelOrder({ payload }) {
+  const { id, type, pair } = payload;
+
+  const { accountName } = yield select(state => state.account.viewer);
+  const { contractAccount, account } = yield select(state => state.tokens[pair]);
+
+  yield call(scatterApi.cancelOrder, { id, type, contractAccount, account, accountName });
+}
+
 const orderLogSaga = [
   takeEvery(types.FETCH_TRADE_HISTORY, fetchTradeHistory),
   takeEvery(types.FETCH_OPEN_ORDERS, fetchOpenOrders),
   takeEvery(types.FETCH_CLOSE_ORDERS, fetchCloseOrders),
+  takeEvery(types.CANCEL_ORDER, cancelOrder),
 ];
 
 export default orderLogSaga;

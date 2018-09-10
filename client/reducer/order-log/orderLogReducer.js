@@ -10,8 +10,7 @@ export const types = {
   UPDATE_OPEN_ORDERS: 'openOrders/update',
   FETCH_CLOSE_ORDERS: 'closeOrders/fetch',
   UPDATE_CLOSE_ORDERS: 'closeOrders/update',
-  FETCH_USER_TRADE_HISTORY: 'userTradeHistory/fetch',
-  UPDATE_USER_TRADE_HISTORY: 'userTradeHistory/update',
+  CANCEL_ORDER: 'order/cancel',
 };
 
 export const actions = {
@@ -22,6 +21,7 @@ export const actions = {
   updateOpenOrders: createAction(types.UPDATE_OPEN_ORDERS),
   fetchCloseOrders: createAction(types.FETCH_CLOSE_ORDERS),
   updateCloseOrders: createAction(types.UPDATE_CLOSE_ORDERS),
+  cancelOrder: createAction(types.CANCEL_ORDER),
 };
 
 const defaultState = {

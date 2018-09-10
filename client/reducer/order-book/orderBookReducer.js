@@ -15,7 +15,6 @@ const defaultState = {};
 const reducer = handleActions({
   [types.UPDATE_ORDER_BOOK]: (state, { payload: { data, symbol, baseSymbol } }) => {
     let { bid, ask } = data;
-
     const slicedBid = bid ? bid.slice(0, 8) : [];
     const slicedAsk = ask ? ask.slice(-8) : [];
 

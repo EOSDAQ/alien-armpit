@@ -7,6 +7,14 @@ import { OrderLogAmount, OrderLogPrice } from '../OrderLog.styled';
 import { toFixed } from 'utils/format';
 
 class OpenOrders extends React.PureComponent {
+  onCancelOrder(order) {
+    const { pair, cancelOrder } = this.props;
+    cancelOrder({
+      pair,
+      ...order,
+    });
+  }
+
   render() {
     const {
       orders,
@@ -33,10 +41,10 @@ class OpenOrders extends React.PureComponent {
           return (
             // use order.transactionId for SheetRow key
             <div>
-              {orders.map((order, i) => {
+              {orders.map((order) => {
                 return (
                   <SheetRow
-                    key={i}
+                    key={order.id + '_' + order.type}
                     columns="1fr 1fr 1fr 1fr"
                   >
                     <OrderLogAmount>
@@ -45,7 +53,7 @@ class OpenOrders extends React.PureComponent {
                     <OrderLogPrice>
                       {toFixed(4, order.price / 10000)}
                     </OrderLogPrice>
-                    <div>
+                    <div onClick={() => this.onCancelOrder(order)}>
                       Cancel
                     </div>
                   </SheetRow>
@@ -67,6 +75,11 @@ const mapStateToProps = ({ orderLog }, { symbol, listType }) => {
   };
 };
 
+const mapDispatchToProps = dispatch => ({
+  cancelOrder: payload => dispatch(actions.cancelOrder(payload)),
+});
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(OpenOrders);

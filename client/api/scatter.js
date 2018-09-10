@@ -91,26 +91,39 @@ class Scatter {
 
   get eos() {
     const scatter = this.get();
-    const eos = scatter.eos(network, Eos, {});
-    return eos;
+    return scatter.eos(network, Eos, { expireInSeconds: 60 })
   }
 
   transfer(...args) {
-    return this.eos.transfer(...args);
+    const scatter = this.get();
+    return scatter.eos.transfer(...args);
   }
 
   contract(...args) {
-    return this.eos.contract(...args);
+    const scatter = this.get();
+    return scatter.eos.contract(...args);
   }
 }
 
 const scatter = new Scatter();
-const eos = Eos(network);
 
 export const getCurrencyBalance = async ({ code, account }) => {
   try {
-    const [balance] = await eos.getCurrencyBalance(code, account);
+    const [balance] = await scatter.eos.getCurrencyBalance(code, account);
     return balance;
+  } catch(err) {
+    console.error(err);
+  }
+}
+
+export const cancelOrder = async ({ id, type, account, accountName, contractAccount }) => {
+  try {
+    const contract = await scatter.eos.contract(contractAccount);
+    const result = await contract.cancelorder(accountName, id, type > 1 ? 0 : 1, {
+      authorization: [`${accountName}@active`],
+    });
+    
+    alert(`Successfully canceled order! txID: ${result.transaction_id}`);
   } catch(err) {
     console.error(err);
   }
@@ -118,7 +131,7 @@ export const getCurrencyBalance = async ({ code, account }) => {
 
 export const ask = async (data) => {
   const { token } = data;
-  const contract = await scatter.contract(token.account);
+  const contract = await scatter.eos.contract(token.account);
   const result = await contract.transfer(
     data.from,
     token.contractAccount,
@@ -135,7 +148,7 @@ export const bid = async (data) => {
   const { token } = data;
 
   try {
-    const result = await scatter.transfer(
+    const result = await scatter.eos.transfer(
       data.from, 
       token.contractAccount, 
       data.amount,
