@@ -50,7 +50,14 @@ const signin = async (accountName) => {
     const { data } = await request('post', url, { accountName });
     return data;
   } catch (e) {
-    throw HttpError.NotFound();
+    const { response } = e;
+    if (!response) {
+      throw HttpError.UnknownError();
+    }
+    if (response.status === 404 && response.data.resultCode === '1101') {
+      throw HttpError.NotFound();
+    }
+    throw HttpError.UnknownError();
   }
 };
 
