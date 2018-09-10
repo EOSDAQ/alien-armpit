@@ -1,9 +1,11 @@
 const express = require('express');
+const HttpError = require('http-errors');
 const service = require('../../services/orderBook');
 
 const router = express.Router();
 
-router.get('/:symbol', async (req, res, next) => {
+// 개인의 미체결내역
+router.get('/symbol/:symbol/user/:accountName/orderBook', async (req, res, next) => {
   try {
     const { symbol } = req.params;
     const data = await service.getSymbolData(symbol);

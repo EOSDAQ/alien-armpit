@@ -1,9 +1,8 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { Link } from '@reach/router';
-import Box, { Container } from '../../atom/Box';
+import { Container } from '../../atom/Box';
 import Flex from '../../atom/Flex';
-import Text from '../../atom/Text';
 import Language from '../language/Language';
 import { HeaderStyled, HeaderNavItem } from './Header.styled';
 import HeaderAuthenticate from './HeaderAuthenticate';
