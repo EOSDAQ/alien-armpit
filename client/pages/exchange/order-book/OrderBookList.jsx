@@ -17,7 +17,7 @@ const OrderBookList = (props) => {
       {
         orderList.map((orderBunch, i) => orderBunch ? (
           <OrderBookRow
-            key={orderBunch.price} // eslint-disable-line
+            key={orderBunch.price + orderBunch.type}
             orderBunch={orderBunch}
             maxQuotes={maxQuotes}
             isUpside={isUpside}
