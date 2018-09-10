@@ -49,7 +49,7 @@ class ExchangeOrderBook extends React.Component {
         <OrderBookHeader />
         <Query
           action={actions.fetchOrderBook({ symbol, baseSymbol })}
-          pollInterval={4000}
+          pollInterval={3000}
         >
           {({ loading, polling, error }) => {
             if (loading) {

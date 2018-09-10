@@ -28,6 +28,7 @@ class OpenOrders extends React.PureComponent {
             ? actions.fetchOpenOrders({ symbol })
             : actions.fetchCloseOrders({ symbol })
         }
+        pollInterval={3000}
       >
         {({ loading, error }) => {
           if (loading) {

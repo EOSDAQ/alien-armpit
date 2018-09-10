@@ -12,6 +12,7 @@ class TradeHistory extends React.Component {
     return (
       <Query
         action={actions.fetchTradeHistory({ symbol })}
+        pollInterval={3000}
       >
         {({ loading, error }) => {
           if (loading) {
