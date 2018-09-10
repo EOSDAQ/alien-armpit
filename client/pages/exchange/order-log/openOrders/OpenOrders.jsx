@@ -4,6 +4,7 @@ import Query from 'components/molecules/Query';
 import { actions } from 'reducer/order-log/orderLogReducer';
 import { SheetRow } from 'components/molecules/Sheet';
 import { OrderLogAmount, OrderLogPrice } from '../OrderLog.styled';
+import { toFixed } from 'utils/format';
 
 class OpenOrders extends React.PureComponent {
   render() {
@@ -32,22 +33,25 @@ class OpenOrders extends React.PureComponent {
           return (
             // use order.transactionId for SheetRow key
             <div>
-              {orders.map((order, i) => (
-                <SheetRow
-                  key={i}
-                  columns="1fr 1fr 1fr 1fr"
-                >
-                  <OrderLogAmount>
-                    {order.volume / 10000}
-                  </OrderLogAmount>
-                  <OrderLogPrice>
-                    {order.price / 10000}
-                  </OrderLogPrice>
-                  <div>
-                    Cancel
-                  </div>
-                </SheetRow>
-              ))}
+              {orders.map((order, i) => {
+                return (
+                  <SheetRow
+                    key={i}
+                    columns="1fr 1fr 1fr 1fr"
+                  >
+                    <OrderLogAmount>
+                      {toFixed(4, order.volume / 10000)}
+                    </OrderLogAmount>
+                    <OrderLogPrice>
+                      {toFixed(4, order.price / 10000)}
+                    </OrderLogPrice>
+                    <div>
+                      Cancel
+                    </div>
+                  </SheetRow>
+                );
+              })}
+
             </div>
           );
         }}

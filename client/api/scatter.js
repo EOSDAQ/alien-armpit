@@ -143,6 +143,7 @@ export const bid = async (data) => {
     );
 
     const { transaction: { transaction }, processed } = result;
+    console.log(result);
     alert(`성공적으로 주문을 올렸습니다. ID(${processed.id}). Block(${transaction.ref_block_num}). ${processed.elapsed}ms`);
   } catch(e) {
     const errObj = JSON.parse(e);

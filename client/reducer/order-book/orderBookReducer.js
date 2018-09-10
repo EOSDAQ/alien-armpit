@@ -14,8 +14,8 @@ const defaultState = {};
 
 const reducer = handleActions({
   [types.UPDATE_ORDER_BOOK]: (state, { payload: { data, symbol, baseSymbol } }) => {
-
     let { bid, ask } = data;
+
     const slicedBid = bid ? bid.slice(0, 8) : [];
     const slicedAsk = ask ? ask.slice(-8) : [];
 
@@ -23,16 +23,7 @@ const reducer = handleActions({
       .map(order => {
         order.change = 0;
         order.price = (order.price || 0) / 10000;
-        if (order.type === 1) {
-          order.volume = order.volume / order.price / 10000;
-        } else {
-          order.volume = (order.volume || 0) / 10000;
-        }
-        // if (!info) {
-        //   order['change'] = 0
-        // } else {
-        //   order['change'] = (order.price - info.prevPrice) / info.prevPrice;
-        // }
+        order.volume = (order.volume || 0) / 10000;
         return order;
       })
       .sort((a, b) => b.price - a.price);

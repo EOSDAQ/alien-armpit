@@ -13,6 +13,7 @@ const OrderBookAmountCell = (props) => {
     maxQuotes,
     isUpside,
   } = props;
+
   return (
     <OrderBookAmount isUpside={isUpside}>
       <OrderBookAmountNum isUpside={isUpside}>
