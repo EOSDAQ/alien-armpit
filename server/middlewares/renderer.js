@@ -17,11 +17,14 @@ const renderer = (app) => {
       clientEosUrl,
     } = config;
     const hasValidToken = await isJwtValid(req, res);
+
+    // TODO. filter gOption from config.
     docStr = docStr.replace(/{{nonce}}/g, res.locals.nonce); 
     docStr = docStr.replace(/{{tiffanyApi}}/g, tiffanyApi || '');
     docStr = docStr.replace(/{{hasToken}}/g, hasValidToken);
     docStr = docStr.replace(/{{eosChainId}}/g, eosChainid);
     docStr = docStr.replace(/{{eosChainUrl}}/g, clientEosUrl);
+    docStr = docStr.replace(/{{gOption}}/g, JSON.stringify(config));
     res.send(docStr);
   });
 };
