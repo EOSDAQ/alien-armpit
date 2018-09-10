@@ -10,6 +10,7 @@ import {
 import OrderLogHeader from './OrderLogHeader';
 import OrderLogSubHeader from './OrderLogSubHeader';
 import TradeHistory from './tradeHistory/TradeHistory';
+import OpenOrders from './openOrders/OpenOrders';
 
 class OrderLog extends React.PureComponent {
   renderTabContent() {
@@ -17,6 +18,10 @@ class OrderLog extends React.PureComponent {
     const [symbol] = code.split('_');
     if (tab === 'tradeHistory') {
       return <TradeHistory symbol={symbol} />
+    }
+
+    if (tab === 'openOrders') {
+      return <OpenOrders symbol={symbol} />
     }
   }
 
