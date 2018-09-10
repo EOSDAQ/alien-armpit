@@ -77,9 +77,17 @@ const OrderForm = (props) => {
                         const pos = e.target.selectionEnd;
                         const { value } = e.target;
                         const otherKey = name === 'price' ? 'amount' : 'price';
+                        let total;
+
+                        if (name === 'price') {
+                          total = values[otherKey] * 1 / value
+                        } else {
+                          total = values[otherKey] * value
+                        }
+
                         setValues({
                           [name]: toFixed(4, value, { appendZero: false }),
-                          total: toFixed(4, values[otherKey] * value)
+                          total: toFixed(4, total)
                         });
 
                         setTimeout(() => {

@@ -119,7 +119,7 @@ export const getCurrencyBalance = async ({ code, account }) => {
 export const cancelOrder = async ({ id, type, account, accountName, contractAccount }) => {
   try {
     const contract = await scatter.eos.contract(contractAccount);
-    const result = await contract.cancelorder(accountName, id, type > 1 ? 0 : 1, {
+    const result = await contract.cancelorder(accountName, id, type, {
       authorization: [`${accountName}@active`],
     });
     

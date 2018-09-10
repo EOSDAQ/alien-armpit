@@ -21,8 +21,13 @@ const reducer = handleActions({
     const orders = slicedAsk.concat(slicedBid)
       .map(order => {
         order.change = 0;
+
+        if (order.type === 0) {
+          order.volume = order.volume / order.price;
+        } else {
+          order.volume = (order.volume || 0) / 10000;
+        }
         order.price = (order.price || 0) / 10000;
-        order.volume = (order.volume || 0) / 10000;
         return order;
       })
       .sort((a, b) => b.price - a.price);
