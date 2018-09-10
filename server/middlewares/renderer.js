@@ -11,20 +11,21 @@ const renderer = (app) => {
     const { rootPath, staticPath } = config;
     const htmlPath = path.resolve(rootPath, staticPath.slice(1), 'index.html');
     let docStr = fs.readFileSync(htmlPath, 'utf-8');
-    const { 
+    const {
       tiffanyApi,
       eosChainid,
       clientEosUrl,
     } = config;
     const hasValidToken = await isJwtValid(req, res);
-
-    // TODO. filter gOption from config.
-    docStr = docStr.replace(/{{nonce}}/g, res.locals.nonce); 
-    docStr = docStr.replace(/{{tiffanyApi}}/g, tiffanyApi || '');
-    docStr = docStr.replace(/{{hasToken}}/g, hasValidToken);
-    docStr = docStr.replace(/{{eosChainId}}/g, eosChainid);
-    docStr = docStr.replace(/{{eosChainUrl}}/g, clientEosUrl);
-    docStr = docStr.replace(/{{gOption}}/g, JSON.stringify(config));
+    const gOption = JSON.stringify({
+      baseCurrency: config.baseCurrency,
+    });
+    docStr = docStr.replace(/{{nonce}}/g, res.locals.nonce)
+      .replace(/{{tiffanyApi}}/g, tiffanyApi || '')
+      .replace(/{{hasToken}}/g, hasValidToken)
+      .replace(/{{eosChainId}}/g, eosChainid)
+      .replace(/{{eosChainUrl}}/g, clientEosUrl)
+      .replace(/{{gOption}}/g, gOption);
     res.send(docStr);
   });
 };
