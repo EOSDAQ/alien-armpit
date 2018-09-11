@@ -239,7 +239,7 @@ function* getViewer({ payload, next }) {
     }
   }
   
-  yield next();
+  yield next({ error });
 }
 
 const accountSaga = [
