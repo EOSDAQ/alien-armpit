@@ -27,4 +27,5 @@ export const OrderLogAmount = styled(OrderLogCell)`
 `;
 
 export const OrderLogTime = styled(OrderLogCell)`
+
 `;

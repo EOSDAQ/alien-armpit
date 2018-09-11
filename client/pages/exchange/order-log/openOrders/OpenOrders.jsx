@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { format } from 'date-fns';
 import Query from 'components/molecules/Query';
 import { actions } from 'reducer/order-log/orderLogReducer';
 import { SheetRow } from 'components/molecules/Sheet';
-import { OrderLogAmount, OrderLogPrice } from '../OrderLog.styled';
+import { OrderLogAmount, OrderLogPrice, OrderLogTime } from '../OrderLog.styled';
 import { toFixed } from 'utils/format';
+import { OrderCancel } from './Orders.styled';
+import Icon from 'components/atom/Icon';
 
 class OpenOrders extends React.PureComponent {
   onCancelOrder(order) {
@@ -46,7 +49,7 @@ class OpenOrders extends React.PureComponent {
                 return (
                   <SheetRow
                     key={order.id + '_' + order.type}
-                    columns="1fr 1fr 1fr 1fr"
+                    columns="1fr 1fr 1fr"
                   >
                     <OrderLogAmount>
                       {toFixed(4, order.volume / 10000)}
@@ -54,9 +57,17 @@ class OpenOrders extends React.PureComponent {
                     <OrderLogPrice>
                       {toFixed(4, order.price / 10000)}
                     </OrderLogPrice>
-                    <div onClick={() => this.onCancelOrder(order)}>
-                      Cancel
-                    </div>
+                    {listType === 'openOrders'
+                      ? (
+                        <OrderCancel onClick={() => this.onCancelOrder(order)}>
+                          <Icon type="trash" fill="#444" />
+                        </OrderCancel>
+                      ) : (
+                        <OrderLogTime>
+                          {format(order.orderTime, 'h:m MMM.D')}
+                        </OrderLogTime>
+                      )
+                    }
                   </SheetRow>
                 );
               })}
