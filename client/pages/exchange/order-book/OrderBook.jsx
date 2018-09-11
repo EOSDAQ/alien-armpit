@@ -59,7 +59,6 @@ class ExchangeOrderBook extends React.Component {
             return (
               <React.Fragment>
                 <Scrollbars {...scrollOptions}>
-                  {polling && '...receiving data'}
                   <Flex>
                     <OrderBookList
                       orderList={ask}

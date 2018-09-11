@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'reducer/api/apiReducer';
 
-class Query extends React.Component {
+class Query extends React.PureComponent {
   constructor(props) {
     super(props);
     this.pollAgent = null;
@@ -87,6 +87,7 @@ class Query extends React.Component {
     if (!cache) {
       cache = defaultCache;
     }
+
     return this.props.children(cache);
   }
 }

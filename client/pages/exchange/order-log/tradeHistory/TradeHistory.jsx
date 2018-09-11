@@ -6,7 +6,7 @@ import { actions } from 'reducer/order-log/orderLogReducer';
 import { SheetRow } from 'components/molecules/Sheet';
 import { OrderLogPrice, OrderLogTime, OrderLogAmount } from '../OrderLog.styled';
 
-class TradeHistory extends React.Component {
+class TradeHistory extends React.PureComponent {
   render() {
     const { symbol, rows } = this.props;
     return (
@@ -14,7 +14,7 @@ class TradeHistory extends React.Component {
         action={actions.fetchTradeHistory({ symbol })}
         pollInterval={3000}
       >
-        {({ loading, error }) => {
+        {({ loading, error, polling }) => {
           if (loading) {
             return 'loading...';
           }

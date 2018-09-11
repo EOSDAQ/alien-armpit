@@ -27,9 +27,6 @@ export default handleActions({
         ...(state[cacheKey] || {}),
         ...(!poll ? { loading: true } : { polling: true }),
         error: null,
-        meta: {
-          timestamp: Date.now(),
-        }
       },
     };
   },
@@ -45,10 +42,6 @@ export default handleActions({
         loading: false,
         ...(!poll ? { loading: false } : { polling: false }),
         error,
-        meta: {
-          duration: timestamp - target.meta.timestamp,
-          timestamp,
-        }
       },
     };
   }
