@@ -21,14 +21,13 @@ router.post('/signup', [
   check('email').exists(),
 ], async (req, res, next) => {
   validationResult(req).throw();
-
   const {
     accountName,
     signature,
     publicKey,
     email,
   } = req.body;
-  
+  const reqId = req.id;
   // const tokens = jwt.getTokensFromCookie(req.cookies);
 
   // if (tokens) {
@@ -39,7 +38,6 @@ router.post('/signup', [
     req.hostname,
     publicKey,
   );
-
   if (!verified) {
     throw new HttpError.Unauthorized();
   }
@@ -55,17 +53,16 @@ router.post('/signup', [
   // }
 
   const emailHash = cipher.generateBase32str(20);
-
   await service.createUser({
     accountName,
     email,
     emailHash,
-  });
+  }, { reqId });
 
   try {
     const { accessToken } = await jwt.signin(res, { accountName });
     mailService.sendVerifyEmail(req, accountName, email, emailHash);
-    const data = await service.getUser(accountName, accessToken);
+    const data = await service.getUser(accountName, { accessToken, reqId });
     res.status(201).json(data);
   } catch (e) {
     jwt.signout(res, req.cookies);
@@ -84,7 +81,7 @@ router.post('/signin', [
     signature,
     publicKey,
   } = req.body;
-  await service.signin(accountName);
+  await service.signin(accountName, { reqId: req.id });
   const isValid = ecc.verify(
     signature,
     req.hostname,
@@ -96,7 +93,7 @@ router.post('/signin', [
 
   try {
     const { accessToken } = await jwt.signin(res, { accountName });
-    const user = await service.getUser(accountName, accessToken);
+    const user = await service.getUser(accountName, { accessToken, reqId: req.id });
     res.send(user);
   } catch (e) {
     next(e);
@@ -116,14 +113,12 @@ router.get('/validate', jwtValidate, (req, res) => {
 router.post('/user/resend-email', jwtValidate, validateAccount, [
   check('email').exists(),
   check('accountName').exists(),
-], async (req, res, next) => {
+], async (req, res) => {
   validationResult(req).throw();
-
   const {
     accountName,
     email,
   } = req.body;
-
   const {
     accessToken,
   } = req.locals;
@@ -132,7 +127,7 @@ router.post('/user/resend-email', jwtValidate, validateAccount, [
   const data = await service.revokeEmail(
     accountName,
     emailHash,
-    accessToken,
+    { accessToken, reqId: req.id },
   );
 
   mailService.sendVerifyEmail(req, accountName, email, emailHash);
@@ -145,7 +140,6 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
   check('emailHash').exists(),
 ], async (req, res) => {
   validationResult(req).throw();
-
   const {
     accountName,
     email,
@@ -155,8 +149,11 @@ router.get('/verifyEmail/:accountName/:email/:emailHash', [
   // TODO 수정 필요 - 현재는 강제 signout 후 새 token 발급
   jwt.signout(res, req.cookies);
   const newTokens = await jwt.signin(res, { accountName });
-  const { accessToken } = newTokens; 
-  const result = await service.confirmEmail(accountName, email, emailHash, accessToken);
+  const { accessToken } = newTokens;
+  const result = await service.confirmEmail(
+    accountName, email, emailHash,
+    { accessToken, reqId: req.id },
+  );
 
   if (!result.resultData.emailConfirm) {
     jwt.signout(res, req.cookies);
@@ -179,10 +176,10 @@ router.post('/:accountName/otp/init/', jwtValidate, validateAccount, [
       accessToken,
     } = req.locals;
     let result;
-    result = await service.initOtp(accountName, accessToken);
+    result = await service.initOtp(accountName, { accessToken, reqId: req.id });
     if (result.resultCode === '1000') {
-      await service.revokeOtp(accountName, accessToken);
-      result = await service.initOtp(accountName, accessToken);
+      await service.revokeOtp(accountName, { accessToken, reqId: req.id });
+      result = await service.initOtp(accountName, { accessToken, reqId: req.id });
     }
     res.status(200).send(result);
   } catch (e) {
@@ -201,7 +198,7 @@ router.post('/otp/validate', jwtValidate, [
 
   const { accountName } = tokenPayload;
   const { code } = req.body;
-  await service.validateOtp(accountName, code, accessToken);
+  await service.validateOtp(accountName, code, { accessToken, reqId: req.id });
   
   // Will always yield sucess data (threw Error in service.validateOtp)
   res.status(200).send({ success: true });
@@ -216,9 +213,9 @@ router.get('/viewer', jwtValidate, async (req, res) => {
   if (!accessToken) {
     throw HttpError.Unauthorized();
   }
-  
+
   const { accountName } = tokenPayload;
-  const data = await service.getUser(accountName, accessToken);
+  const data = await service.getUser(accountName, { accessToken, reqId: req.id });
   res.status(200).send(data);
 });
 
@@ -232,7 +229,7 @@ router.get('/user/:accountName/delete', jwtValidate, async (req, res, next) => {
       accessToken,
     } = req.locals;
 
-    const result = await service.deleteUser(accountName, accessToken);
+    await service.deleteUser(accountName, { accessToken, reqId: req.id });
     res.status(200).send({ success: true });
   } catch (e) {
     next(e);

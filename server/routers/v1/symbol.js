@@ -19,7 +19,7 @@ router.get('/:symbol/tx', async (req, res) => {
 router.get('/:symbol/user/:accountName/orderbook', jwtValidate, async (req, res) => {
   const { symbol, accountName } = req.params;
   const { accessToken } = req.locals;
-  const data = await getUserOrderbook(accountName, symbol, accessToken);
+  const data = await getUserOrderbook(accountName, symbol, { accessToken, reqId: req.id });
   res.json(data);
 });
 
@@ -27,7 +27,7 @@ router.get('/:symbol/user/:accountName/orderbook', jwtValidate, async (req, res)
 router.get('/:symbol/user/:accountName/tx', jwtValidate, async (req, res) => {
   const { symbol, accountName } = req.params;
   const { accessToken } = req.locals;
-  const data = await getUserTx(accountName, symbol, accessToken);
+  const data = await getUserTx(accountName, symbol, { accessToken, reqId: req.id });
   res.json(data);
 });
 

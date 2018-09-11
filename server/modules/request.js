@@ -6,7 +6,7 @@ const request = async (meth, url, data, opt) => {
   const args = [url];
   let options = opt || {};
   options.headers = options.headers || {};
-  options = setJwtHeader(options);
+  options = setHeaderOptions(options);
   if (['post', 'put', 'patch'].indexOf(method) > -1) {
     args.push(data);
   } else if (method === 'delete') {
@@ -32,13 +32,19 @@ const request = async (meth, url, data, opt) => {
   };
 };
 
-const setJwtHeader = (options) => {
-  const { accessToken } = options;
-  if (!accessToken) {
-    return options;
+const setHeaderOptions = (opt) => {
+  const options = opt;
+  const { accessToken, reqId } = options;
+  if (accessToken) {
+    options.headers['Authorization'] = `Bearer ${accessToken}`;
+    delete options.accessToken;
   }
-  options.headers['Authorization'] = `Bearer ${accessToken}`;
-  delete options.accessToken;
+
+  if (reqId) {
+    options.headers['X-Request-ID'] = reqId;
+    delete options.reqId;
+  }
+
   return options;
 };
 

@@ -3,14 +3,14 @@ const request = require('../modules/request');
 const { HttpError } = require('../modules/errors');
 const config = require('../config');
 
-exports.getUserOrderbook = async (accountName, symbol, accessToken) => {
+exports.getUserOrderbook = async (accountName, symbol, headerOptions) => {
   logger.debug('service/symbol getUserOrderbook()', { accountName, symbol });
   try {
     const { data } = await request(
       'get',
       `${config.tiffanyApi}/symbol/${symbol}/user/${accountName}/orderbook`,
       null,
-      { accessToken },
+      { ...headerOptions },
     );
     return data;
   } catch (e) {
@@ -18,14 +18,14 @@ exports.getUserOrderbook = async (accountName, symbol, accessToken) => {
   }
 };
 
-exports.getUserTx = async (accountName, symbol, accessToken) => {
+exports.getUserTx = async (accountName, symbol, headerOptions) => {
   logger.debug('service/symbol getUserTx()', { accountName, symbol });
   try {
     const { data } = await request(
       'get',
       `${config.tiffanyApi}/symbol/${symbol}/user/${accountName}/tx`,
       null,
-      { accessToken },
+      { ...headerOptions },
     );
     return data;
   } catch (e) {
