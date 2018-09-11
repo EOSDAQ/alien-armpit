@@ -4,16 +4,23 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-// const logger = require('morgan');
+const morgan = require('morgan');
 const config = require('./config');
 const middlewares = require('./middlewares');
-
 const router = require('./routers/router');
+const logger = require('./modules/logger');
 
 const app = express();
 const { env } = config;
 const staticPath = path.join(__dirname, `../${config.staticPath}`);
 app.disable('x-powered-by');
+app.use(morgan('combined', {
+  stream: {
+    write(message) {
+      logger.info(message);
+    },
+  },
+}));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
