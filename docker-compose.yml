@@ -1,6 +1,13 @@
 version: '3'
 
 services:
+  alien-armpit:
+    container_name: alien-armpit
+    ports:
+      - "3000:3000"
+    build: .
+    networks:
+      - eos_net
   tiffanyblue:
     ports:
       - "18890:1323"
