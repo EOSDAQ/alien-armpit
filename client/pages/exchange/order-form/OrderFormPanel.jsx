@@ -75,18 +75,20 @@ const OrderForm = (props) => {
                       onChange={(e) => {
                         const target = e.target;
                         const pos = e.target.selectionEnd;
-                        const { value } = e.target;
+                        let { value } = e.target;
                         const otherKey = name === 'price' ? 'amount' : 'price';
                         let total;
 
+                        value = toFixed(4, value, { appendZero: false });
+
                         if (name === 'price') {
-                          total = values[otherKey] * 1 / value
+                          total = values[otherKey] * value
                         } else {
                           total = values[otherKey] * value
                         }
 
                         setValues({
-                          [name]: toFixed(4, value, { appendZero: false }),
+                          [name]: value,
                           total: toFixed(4, total)
                         });
 
@@ -117,10 +119,11 @@ const OrderForm = (props) => {
                     onChange={(e) => {
                       const target = e.target;
                       const pos = e.target.selectionEnd;
+                      const total = toFixed(4, e.target.value, { appendZero: false });
 
                       setValues({
-                        total: toFixed(4, e.target.value, { appendZero: false }),
-                        amount: toFixed(4, e.target.value / values.price),
+                        total,
+                        amount: toFixed(4, (total * 10000) / (values.price * 10000)),
                       });
 
                       setTimeout(() => {

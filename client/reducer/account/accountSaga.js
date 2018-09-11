@@ -148,14 +148,11 @@ function* resendEmail({ payload: { email }}) {
 
 function* order({ payload }) {
   let {
-    type, price, amount, symbol, token,
+    type, price, amount, total, symbol, token,
   } = payload;
 
-  /**
-   * token 인증 방식으로 바꼈으므로, 중간에 scatter가 lock되거나,
-   * identity가 바뀐 경우를 대비해 다시 identity를 갖고 온다.
-   */
   const viewer = yield select(state => state.account.viewer);
+
   if (!viewer) {
     alert('You must be signed-in to continue this action!');
     return;
@@ -179,7 +176,7 @@ function* order({ payload }) {
     if (type === 'bid') {
       yield call(scatterApi.bid, {
         price: parseFloat(price),
-        amount: toFixed(4, amount * price) + ` ${token.baseSymbol}`,
+        amount: toFixed(4, total) + ` ${token.baseSymbol}`,
         token,
         from,
       })
