@@ -3,7 +3,7 @@ import { actions, types } from './tickersReducer';
 import { actions as tokensActions } from '../tokens/tokensReducer';
 import { tiffany } from 'api/apis';
 
-export function* loadCoins() {
+export function* loadCoins({ next }) {
   const { data, error } = yield call(tiffany.get, '/symbol');
   
   if (error) {
@@ -27,6 +27,8 @@ export function* loadCoins() {
     yield put(actions.updateCoinList({ result }));
     yield put(tokensActions.updateTokens({ tokens }));
   }
+
+  yield next();
 }
 
 export function* toggleShowFavorites() {

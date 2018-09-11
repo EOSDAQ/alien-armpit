@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { actions } from 'reducer/api/apiReducer';
 
 class Query extends React.Component {
   constructor(props) {
     super(props);
     this.pollAgent = null;
+
+    this.dispatchAction = this.dispatchAction.bind(this);
   }
 
   componentDidMount() {
@@ -67,16 +70,11 @@ class Query extends React.Component {
       cacheKey,
     } = this.props;
 
-    const enhancedAction = {
-      ...action,
-      payload: {
-        ...action.payload,
-        poll,
-        cacheKey,
-      }
-    };
-
-    dispatch(enhancedAction);
+    dispatch(actions.fetchQuery({
+      query: action,
+      poll,
+      cacheKey,
+    }));
   }
 
   render() {

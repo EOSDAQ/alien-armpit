@@ -4,7 +4,7 @@ import {
 } from 'redux-actions';
 
 export const types = {
-  FETCH_QUERY: 'api/RUN_QUERY',
+  FETCH_QUERY: 'api/FETCH_QUERY',
   UPDATE_QUERY: 'api/UPDATE_QUERY',
 }
 
@@ -20,7 +20,6 @@ const defaultState = {
 export default handleActions({
   [types.FETCH_QUERY]: (state, { payload }) => {
     const { cacheKey, poll } = payload;
-
     return {
       ...state,
       dispatching: true,
@@ -34,7 +33,7 @@ export default handleActions({
       },
     };
   },
-  [types.UPDATE_QUERY]: (state, { payload }) => {
+  [types.UPDATE_QUERY]: (state, { payload, type }) => {
     const { cacheKey, poll, error = null } = payload;
     const target = state[cacheKey] || {};
     const timestamp = Date.now();

@@ -8,13 +8,9 @@ import TickersHeader from './TickersHeader';
 import TickersSubHeader from './TickersSubHeader';
 import TickersBody from './TickersBody';
 import TickersSearch from './TickersSearch';
+import Query from '../../molecules/Query';
 
-class Tickers extends React.Component {
-  componentDidMount() {
-    const { loadCoins } = this.props;
-    loadCoins();
-  }
-
+class Tickers extends React.PureComponent {
   componentWillUnmount() {
     // should reset searchValue and showFavorites etc...
   }
@@ -76,7 +72,19 @@ class Tickers extends React.Component {
           updateSelectedTab={updateSelectedTab}
         />
         <TickersSubHeader />
-        <TickersBody tokens={tokens} />
+        <Query
+          action={actions.loadCoins()}
+        >
+          {({ loading, error }) => {
+            if (loading) {
+              return '...loading';
+            }
+
+            return (
+              <TickersBody tokens={tokens} />
+            );
+          }}
+        </Query>
       </SheetWrapper>
     );
   }
@@ -96,7 +104,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   updateSelectedTab: (tabId) => { dispatch(actions.updateSelectedTab(tabId)); },
-  loadCoins: () => { dispatch(actions.loadCoins()); },
 });
 
 export default connect(

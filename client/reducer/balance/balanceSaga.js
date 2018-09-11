@@ -8,7 +8,7 @@ import { types, actions } from './balanceReducer';
 import { actions as apiActions } from '../api/apiReducer';
 import * as scatterApi from 'api/scatter';
 
-function* getCurrencyBalance({ payload }) {
+function* getCurrencyBalance({ payload, next }) {
   const { pair } = payload;
   const { accountName } = yield select(state => state.account.viewer);
   const { account } = yield select(state => state.tokens[pair]);
@@ -18,7 +18,6 @@ function* getCurrencyBalance({ payload }) {
     account: accountName,
   }
 
-  yield put(apiActions.fetchQuery(payload));
   let balance = yield call(scatterApi.getCurrencyBalance, apiPayload);
   if (!balance) {
     balance = 0;
@@ -31,11 +30,10 @@ function* getCurrencyBalance({ payload }) {
     pair,
   }));
 
-  yield put(apiActions.updateQuery(payload));
+  yield next();
 }
 
-function* getBaseBalance({ payload }) {
-  yield put(apiActions.fetchQuery(payload));
+function* getBaseBalance({ payload, next }) {
   const { accountName } = yield select(state => state.account.viewer);
 
   const apiPayload = {
@@ -55,7 +53,7 @@ function* getBaseBalance({ payload }) {
     balance,
   }));
 
-  yield put(apiActions.updateQuery(payload));
+  yield next();
 }
 
 const balanceSaga = [

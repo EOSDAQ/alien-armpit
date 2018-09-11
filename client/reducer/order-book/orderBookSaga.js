@@ -1,11 +1,9 @@
 import { call, put } from 'redux-saga/effects';
 import orderBookReducer from './orderBookReducer';
 import * as api from 'api/orderBook';
-import * as apiReducer from '../api/apiReducer';
 
-export function* fetchOrderBook({ payload }) {
+export function* fetchOrderBook({ payload, next }) {
   try {
-    yield put(apiReducer.actions.fetchQuery(payload));
     const { data, error } = yield call(api.loadOrderBook, payload);
     
     if (error) {
@@ -17,7 +15,7 @@ export function* fetchOrderBook({ payload }) {
       ...payload,
     }));
 
-    yield put(apiReducer.actions.updateQuery(payload));
+    yield next({ error });
   } catch (e) {
     console.error(e);
   }

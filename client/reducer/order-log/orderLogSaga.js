@@ -4,10 +4,8 @@ import {
 import { types, actions } from './orderLogReducer';
 import { tiffany, proxy } from 'api/apis';
 import * as scatterApi from 'api/scatter';
-import { actions as apiActions } from '../api/apiReducer';
 
-function* fetchTradeHistory({ payload }) {
-  yield put(apiActions.fetchQuery(payload));
+function* fetchTradeHistory({ payload, next }) {
 
   const { symbol } = payload;
   const { data, error } = yield call(tiffany.get, `/symbol/${symbol}/tx`);
@@ -19,11 +17,10 @@ function* fetchTradeHistory({ payload }) {
     }));
   }
 
-  yield put(apiActions.updateQuery(payload));
+  yield next();
 }
 
-function* fetchOpenOrders({ payload }) {
-  yield put(apiActions.fetchQuery(payload));
+function* fetchOpenOrders({ payload, next }) {
   const { accountName } = yield select(state => state.account.viewer);
   const { symbol } = payload;
   const { data, error } = yield call(proxy.get, `/symbol/${symbol}/user/${accountName}/orderbook`);
@@ -33,11 +30,11 @@ function* fetchOpenOrders({ payload }) {
       orders: data,
     }));
   }
-  yield put(apiActions.updateQuery(payload));
+
+  yield next();
 }
 
-function* fetchCloseOrders({ payload }) {
-  yield put(apiActions.fetchQuery(payload));
+function* fetchCloseOrders({ payload, next }) {
   const { accountName } = yield select(state => state.account.viewer);
   const { symbol } = payload;
   const { data, error } = yield call(proxy.get, `/symbol/${symbol}/user/${accountName}/tx`);
@@ -47,7 +44,8 @@ function* fetchCloseOrders({ payload }) {
       orders: data,
     }));
   }
-  yield put(apiActions.updateQuery(payload));
+
+  yield next();
 }
 
 function* cancelOrder({ payload }) {

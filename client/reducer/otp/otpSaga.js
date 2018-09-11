@@ -6,7 +6,6 @@ import { actions as accountActions } from '../account/accountReducer';
 import modalReducer from '../modal/modalReducer';
 
 export function* initOtp({ payload }) {
-  yield put(apiActions.fetchQuery(payload));
   const { data, error } = yield call(api.initOtp, payload);
 
   if (error) {
@@ -15,14 +14,9 @@ export function* initOtp({ payload }) {
 
   const { otpKey } = data;
   yield put(otpActions.updateData({ otpKey }));
-  yield put(apiActions.updateQuery({
-    ...payload,
-    error,
-  }));
 }
 
 export function* validateOtp({ payload }) {
-  yield put(apiActions.fetchQuery(payload));
   const { error } = yield call(api.validateOtp, payload.code);
   if (error) {
     alert('Invalid code');
@@ -31,11 +25,6 @@ export function* validateOtp({ payload }) {
     yield put(accountActions.checkOtpAuth());
     yield put(accountActions.checkOtpConfirm());
   }
-
-  yield put(apiActions.updateQuery({
-    ...payload,
-    error,
-  }));
 }
 
 export function* signinWithOtp({ payload: code }) {

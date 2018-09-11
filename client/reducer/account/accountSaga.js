@@ -226,13 +226,11 @@ function* signOut() {
   location.href = '/';
 }
 
-function* getViewer({ payload }) {
-  yield put(apiReducer.actions.fetchQuery(payload));
+function* getViewer({ payload, next }) {
   const { data: viewer, error } = yield call(proxy.get, '/account/viewer');
   if (viewer) {
     const exist = yield select(state => state.account.viewer);
     yield put(actions.updateViewer({ viewer }));
-    yield put(apiReducer.actions.updateQuery(payload));
 
     if (!exist) {
       if (viewer.otpConfirm) {
@@ -240,13 +238,8 @@ function* getViewer({ payload }) {
       }
     }
   }
-
-  if (error) {
-    yield put(apiReducer.actions.updateQuery({
-      ...payload,
-      error,
-    }));
-  }
+  
+  yield next();
 }
 
 const accountSaga = [

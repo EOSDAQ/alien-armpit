@@ -8,6 +8,7 @@ import tickersSaga from './tickers/tickersSaga';
 import accountSaga from './account/accountSaga';
 import orderLogSaga from './order-log/orderLogSaga';
 import balanceSaga from './balance/balanceSaga';
+import apiSaga from './api/apiSaga';
 
 export default function* saga() {
   yield all([
@@ -16,6 +17,7 @@ export default function* saga() {
     ...otpSaga,
     ...balanceSaga,
     ...orderLogSaga,
+    ...apiSaga,
     takeLatest(
       orderBookReducer.types.FETCH_ORDER_BOOK,
       orderBookSaga.fetchOrderBook,
