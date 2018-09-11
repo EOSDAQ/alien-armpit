@@ -106,10 +106,11 @@ class Scatter {
 }
 
 const scatter = new Scatter();
+const eos = Eos({...network});
 
 export const getCurrencyBalance = async ({ code, account }) => {
   try {
-    const [balance] = await scatter.eos.getCurrencyBalance(code, account);
+    const [balance] = await eos.getCurrencyBalance(code, account);
     return balance;
   } catch(err) {
     console.error(err);
